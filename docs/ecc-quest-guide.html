@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECC Quest Guide — AI-Augmented Engineer</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2128;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --gold: #f0b429;
+    --gold-dim: #7a5c13;
+    --green: #3fb950;
+    --blue: #58a6ff;
+    --red: #f85149;
+    --locked: #21262d;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 4rem;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header .boot-text {
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  header .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 1rem;
+  }
+
+  .progress-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .progress-bar-bg {
+    background: var(--locked);
+    border-radius: 99px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .reset-btn {
+    margin-top: 0.8rem;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .reset-btn:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── Layout ── */
+  main { max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+
+  /* ── Tier header ── */
+  .tier-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 2.5rem 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .tier-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Level card ── */
+  .level-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .level-card.achieved { border-color: var(--gold-dim); }
+  .level-card.locked { opacity: 0.45; pointer-events: none; }
+  .level-card.boss-card { border-color: var(--gold-dim); background: #1a1500; }
+  .level-card.boss-card.locked { border-color: var(--border); background: var(--locked); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .card-header:hover { background: var(--surface2); }
+
+  .level-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    min-width: 2rem;
+    letter-spacing: 0.05em;
+  }
+  .boss-card .level-num { color: var(--gold); }
+
+  .level-title {
+    flex: 1;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .boss-card .level-title { color: var(--gold); }
+
+  .cmd-pill {
+    font-family: monospace;
+    font-size: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--blue);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .achievement-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 99px;
+    background: var(--locked);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    white-space: nowrap;
+  }
+  .achievement-badge.earned {
+    background: #2d1f00;
+    color: var(--gold);
+    border-color: var(--gold-dim);
+    box-shadow: 0 0 8px rgba(240,180,41,0.25);
+  }
+
+  .chevron {
+    color: var(--muted);
+    font-size: 12px;
+    transition: transform 0.2s;
+    margin-left: 0.25rem;
+  }
+  .card-header.open .chevron { transform: rotate(90deg); }
+
+  /* ── Card body ── */
+  .card-body {
+    display: none;
+    padding: 0 1rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .card-body.open { display: block; }
+
+  .story-beat {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 13.5px;
+    margin: 0.75rem 0;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 1rem 0 0.4rem;
+  }
+
+  .objective-text {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .command-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.9rem;
+    margin: 0.4rem 0;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--blue);
+  }
+
+  /* ── Victory checklist ── */
+  .victory-list { list-style: none; margin-top: 0.4rem; }
+
+  .victory-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.35rem 0;
+    font-size: 14px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+  }
+  .victory-list li:last-child { border-bottom: none; }
+
+  .victory-list li.checked { color: var(--muted); text-decoration: line-through; }
+
+  .victory-list input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    cursor: pointer;
+    margin-top: 3px;
+    position: relative;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .victory-list input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .victory-list input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 0px;
+    width: 5px;
+    height: 9px;
+    border: 2px solid #000;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+
+  /* ── Boss lock ── */
+  .lock-notice {
+    display: none;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .lock-notice .lock-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+  .boss-card.locked .lock-notice { display: block; }
+
+  /* ── Final title ── */
+  #final-title {
+    display: none;
+    text-align: center;
+    margin: 3rem auto 1rem;
+    padding: 2rem;
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    background: #1a1500;
+    max-width: 480px;
+  }
+  #final-title.visible { display: block; animation: glow-in 0.6s ease; }
+
+  @keyframes glow-in {
+    from { opacity: 0; transform: scale(0.95); box-shadow: 0 0 0 rgba(240,180,41,0); }
+    to   { opacity: 1; transform: scale(1);    box-shadow: 0 0 40px rgba(240,180,41,0.2); }
+  }
+
+  #final-title .crown { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  #final-title h2 { color: var(--gold); font-size: 1.2rem; letter-spacing: 0.05em; }
+  #final-title p { color: var(--muted); font-size: 13px; margin-top: 0.5rem; }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="boot-text">INITIALISING ENGINEER PROFILE · TOOLS DETECTED: 60 AGENTS · 75 COMMANDS · 180 SKILLS</div>
+  <h1>ECC Quest Guide</h1>
+  <p class="subtitle">Complete each quest to master your tools. Earn achievements as you go.</p>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Progress</span>
+      <span id="progress-text">0 / 10 complete</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+    <button class="reset-btn" onclick="resetAll()">Reset progress</button>
+  </div>
+</header>
+
+<main id="quest-container"></main>
+
+<div id="final-title">
+  <div class="crown">&#9813;</div>
+  <h2>AI-AUGMENTED ENGINEER</h2>
+  <p>You ran the full gauntlet. Research to review. Idea to implementation.<br>Your tools are no longer new — they are yours.</p>
+</div>
+
+<script>
+const QUESTS = [
+  {
+    tier: 'STARTER',
+    levels: [
+      {
+        id: 'l1',
+        num: 'LVL 1',
+        title: 'The Planner',
+        cmd: '/plan',
+        badge: 'STRATEGIST',
+        story: 'A reckless engineer ships first and thinks later. You are not that engineer. Before a single line is written, you plan. The plan is the contract.',
+        objective: 'Think of any real task you have — a feature, a bug, a refactor. Run /plan on it right now.',
+        commands: ['/plan <your task description>'],
+        conditions: [
+          'A plan appeared with at least one identified risk',
+          'You confirmed, modified, or rejected it with a reason',
+          'No code was written before you confirmed'
+        ]
+      },
+      {
+        id: 'l2',
+        num: 'LVL 2',
+        title: 'The Keeper',
+        cmd: '/save-session + /resume',
+        badge: 'ARCHIVIST',
+        story: 'Memory is the difference between a session and a project. Without /save-session, each conversation starts from zero. The Keeper preserves what matters.',
+        objective: 'Save your current session, close Claude Code, reopen it, and resume.',
+        commands: ['/save-session', '— close Claude Code, reopen —', '/resume-session'],
+        conditions: [
+          'Session file written to ~/.claude/session-data/',
+          'On resume: briefing includes "what not to retry" section',
+          'You did not have to re-explain context from scratch'
+        ]
+      }
+    ]
+  },
+  {
+    tier: 'BUILDER',
+    levels: [
+      {
+        id: 'l3',
+        num: 'LVL 3',
+        title: 'The Test Smith',
+        cmd: '/go-test · /rust-test · /kotlin-test',
+        badge: 'TEST SMITH',
+        story: 'The weak write code and then wonder why it breaks. The Test Smith writes the test first — watches it fail — then makes it pass. RED before GREEN. Always.',
+        objective: 'Pick your language. Write a test for a function that does not exist yet. Watch it fail. Then implement. Then watch it pass.',
+        commands: ['/go-test <feature>', '/rust-test <feature>', '/kotlin-test <feature>', '/flutter-test <feature>', '/cpp-test <feature>'],
+        conditions: [
+          'Tests existed before implementation',
+          'RED step confirmed (test failed for the right reason, not "file not found")',
+          'GREEN step confirmed — all tests pass',
+          'Coverage reported at ≥ 80%'
+        ]
+      },
+      {
+        id: 'l4',
+        num: 'LVL 4',
+        title: 'The Fixer',
+        cmd: '/build-fix',
+        badge: 'WRENCH MASTER',
+        story: 'Build errors are not failures. They are directions. The Fixer reads each error as an instruction, applies the minimal change, and moves on.',
+        objective: 'Introduce a deliberate type error into any file, then let /build-fix resolve it without touching the file yourself.',
+        commands: ['/build-fix'],
+        conditions: [
+          '/build-fix detected the error without you pointing to it',
+          'Fix applied with minimal change — not a rewrite',
+          'Build passes after fix',
+          'You did not manually edit the file'
+        ]
+      }
+    ]
+  },
+  {
+    tier: 'GUARDIAN',
+    levels: [
+      {
+        id: 'l5',
+        num: 'LVL 5',
+        title: 'The Sentinel',
+        cmd: '/security-scan',
+        badge: 'SENTINEL',
+        story: 'One committed secret ends careers. The Sentinel scans before it ships — every time, no exceptions. A clean report is not luck. It is discipline.',
+        objective: 'Run a security scan on the current repository. Review every finding, even if there are zero.',
+        commands: ['/security-scan', '/security-scan . --min-severity low'],
+        conditions: [
+          'Scan completed with a full report',
+          'You read every finding (not just the count)',
+          'Any CRITICAL or HIGH findings are fixed or documented as false positives'
+        ]
+      },
+      {
+        id: 'l6',
+        num: 'LVL 6',
+        title: 'The Reviewer',
+        cmd: '/code-review',
+        badge: 'CODE GUARDIAN',
+        story: 'You are not just the author. You are also the first reader. The Reviewer catches what the author missed — before it becomes someone else\'s problem.',
+        objective: 'Stage some changes and run a local code review. Or pass a PR number for a GitHub PR.',
+        commands: ['/code-review', '/code-review <PR number>'],
+        conditions: [
+          'Review output covers all seven categories',
+          'At least one finding (even LOW) acknowledged',
+          'If a PR: review posted to GitHub with approve / request-changes decision'
+        ]
+      }
+    ]
+  },
+  {
+    tier: 'COLLABORATOR',
+    levels: [
+      {
+        id: 'l7',
+        num: 'LVL 7',
+        title: 'The Shipper',
+        cmd: '/checkpoint + /pr',
+        badge: 'SHIPPER',
+        story: 'Unshipped code is a liability. The Shipper moves work from local to live. But not carelessly — a checkpoint first, then the push, then the PR.',
+        objective: 'Create a named checkpoint, then open a pull request.',
+        commands: ['/checkpoint create pre-ship', '/pr'],
+        conditions: [
+          'Checkpoint logged to .claude/checkpoints.log',
+          'Branch pushed to remote',
+          'PR opened (draft is fine)',
+          'PR URL returned'
+        ]
+      }
+    ]
+  },
+  {
+    tier: 'MASTER',
+    levels: [
+      {
+        id: 'l8',
+        num: 'LVL 8',
+        title: 'The Learner',
+        cmd: '/learn · /instinct-status · /evolve',
+        badge: 'PATTERN SEEKER',
+        story: 'Tools can be installed. Mastery cannot. The Learner extracts signal from every session. These become instincts. Instincts become skills. Skills compound.',
+        objective: 'At the end of a real working session, run /learn. Then inspect what was captured. Then evolve it.',
+        commands: ['/learn', '/instinct-status', '/evolve'],
+        conditions: [
+          'At least one instinct saved (confidence ≥ 0.5)',
+          '/instinct-status shows it with scope (project or global)',
+          '/evolve produces at least one cluster or promotion suggestion'
+        ]
+      },
+      {
+        id: 'boss',
+        num: 'BOSS',
+        title: 'The Orchestrator',
+        cmd: '/multi-workflow',
+        badge: 'ORCHESTRATOR',
+        isBoss: true,
+        story: 'Nine levels. Nine tools. One more remains. The Orchestrator runs the full gauntlet — six phases, one task, every model working together.',
+        objective: 'Pick a real feature you want to build. Run the full multi-model workflow on it. All six phases.',
+        commands: ['/multi-workflow <your feature description>'],
+        conditions: [
+          'Phase 1 Research: context gathered, completeness scored',
+          'Phase 2 Ideation: parallel model analysis complete',
+          'Phase 3 Plan: artifact saved under .claude/plans/',
+          'Phase 4 Execute: implementation passes build + type check',
+          'Phase 5 Optimise: security + performance review complete',
+          'Phase 6 Review: ship/no-ship decision produced'
+        ]
+      }
+    ]
+  }
+];
+
+// ── State ──────────────────────────────────────────────────────────────────
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('ecc-quest-state') || '{}'); }
+  catch { return {}; }
+}
+function saveState(s) {
+  localStorage.setItem('ecc-quest-state', JSON.stringify(s));
+}
+
+let state = loadState();
+
+function getConditions(id) {
+  return state[id]?.conditions || [];
+}
+function isAchieved(id) {
+  return !!state[id]?.achieved;
+}
+function bossUnlocked() {
+  return ['l1','l2','l3','l4','l5','l6','l7','l8'].every(id => isAchieved(id));
+}
+function allComplete() {
+  return ['l1','l2','l3','l4','l5','l6','l7','l8','boss'].every(id => isAchieved(id));
+}
+
+// ── Render ─────────────────────────────────────────────────────────────────
+function render() {
+  const container = document.getElementById('quest-container');
+  container.innerHTML = '';
+
+  QUESTS.forEach(tier => {
+    const tierEl = document.createElement('div');
+    tierEl.className = 'tier-label';
+    tierEl.textContent = `TIER: ${tier.tier}`;
+    container.appendChild(tierEl);
+
+    tier.levels.forEach(q => {
+      const locked = q.isBoss && !bossUnlocked();
+      const achieved = isAchieved(q.id);
+      const conditions = getConditions(q.id);
+
+      const card = document.createElement('div');
+      card.className = `level-card${achieved ? ' achieved' : ''}${locked ? ' locked' : ''}${q.isBoss ? ' boss-card' : ''}`;
+      card.id = `card-${q.id}`;
+
+      const headerOpen = state[`open-${q.id}`];
+
+      card.innerHTML = `
+        <div class="card-header${headerOpen ? ' open' : ''}" onclick="toggleCard('${q.id}')">
+          <span class="level-num">${q.num}</span>
+          <span class="level-title">${q.title}</span>
+          <span class="cmd-pill">${q.cmd}</span>
+          <span class="achievement-badge${achieved ? ' earned' : ''}" id="badge-${q.id}">${q.badge}</span>
+          <span class="chevron">&#9658;</span>
+        </div>
+        <div class="card-body${headerOpen ? ' open' : ''}" id="body-${q.id}">
+          ${q.isBoss && locked ? `
+            <div class="lock-notice">
+              <span class="lock-icon">&#128274;</span>
+              Complete Levels 1–8 to unlock the BOSS.
+            </div>
+          ` : `
+            <p class="story-beat">${q.story}</p>
+            <div class="section-label">Objective</div>
+            <p class="objective-text">${q.objective}</p>
+            <div class="section-label">Command${q.commands.length > 1 ? 's' : ''}</div>
+            ${q.commands.map(c => `<div class="command-block">${c}</div>`).join('')}
+            <div class="section-label">Victory conditions</div>
+            <ul class="victory-list">
+              ${q.conditions.map((cond, i) => {
+                const checked = conditions[i] === true;
+                return `<li class="${checked ? 'checked' : ''}">
+                  <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleCondition('${q.id}', ${i}, ${q.conditions.length}, this.checked)">
+                  <span>${cond}</span>
+                </li>`;
+              }).join('')}
+            </ul>
+          `}
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  });
+
+  updateProgress();
+  updateFinalTitle();
+}
+
+function toggleCard(id) {
+  state[`open-${id}`] = !state[`open-${id}`];
+  saveState(state);
+  const header = document.querySelector(`#card-${id} .card-header`);
+  const body = document.getElementById(`body-${id}`);
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function toggleCondition(id, index, total, checked) {
+  if (!state[id]) state[id] = { conditions: [], achieved: false };
+  state[id].conditions[index] = checked;
+
+  // Check if all conditions met
+  const all = Array.from({ length: total }, (_, i) => state[id].conditions[i] === true);
+  const wasAchieved = state[id].achieved;
+  state[id].achieved = all.every(Boolean);
+
+  saveState(state);
+
+  // Update badge
+  const badge = document.getElementById(`badge-${id}`);
+  if (badge) badge.className = `achievement-badge${state[id].achieved ? ' earned' : ''}`;
+
+  // Update card border
+  const card = document.getElementById(`card-${id}`);
+  if (card) {
+    if (state[id].achieved) card.classList.add('achieved');
+    else card.classList.remove('achieved');
+  }
+
+  // Update li style
+  const li = document.querySelectorAll(`#card-${id} .victory-list li`);
+  li.forEach((el, i) => {
+    if (state[id].conditions[i]) el.classList.add('checked');
+    else el.classList.remove('checked');
+  });
+
+  // If boss was just unlocked, re-render to show it
+  if (!wasAchieved && state[id].achieved) {
+    if (['l1','l2','l3','l4','l5','l6','l7','l8'].includes(id) && bossUnlocked()) {
+      render();
+      return;
+    }
+  }
+
+  updateProgress();
+  updateFinalTitle();
+}
+
+function updateProgress() {
+  const ids = ['l1','l2','l3','l4','l5','l6','l7','l8','boss'];
+  const done = ids.filter(id => isAchieved(id)).length;
+  document.getElementById('progress-text').textContent = `${done} / ${ids.length} complete`;
+  document.getElementById('progress-fill').style.width = `${(done / ids.length) * 100}%`;
+}
+
+function updateFinalTitle() {
+  const el = document.getElementById('final-title');
+  if (allComplete()) el.classList.add('visible');
+  else el.classList.remove('visible');
+}
+
+function resetAll() {
+  if (!confirm('Reset all quest progress? This cannot be undone.')) return;
+  localStorage.removeItem('ecc-quest-state');
+  state = {};
+  render();
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
