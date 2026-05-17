@@ -621,6 +621,23 @@ async function main() {
     if (learnedSkillSummary) {
       additionalContextParts.push(learnedSkillSummary);
     }
+
+    const commandsDisabled = String(process.env.ECC_SESSION_COMMANDS || '').trim().toLowerCase() === 'off';
+    if (commandsDisabled) {
+      log('[SessionStart] Command registry injection disabled by ECC_SESSION_COMMANDS=off');
+    } else {
+      const registryPath = path.join(__dirname, '..', '..', 'docs', 'COMMAND-REGISTRY.json');
+      if (fs.existsSync(registryPath)) {
+        try {
+          const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+          const lines = registry.commands.map(c => `/${c.command} — ${c.description}`);
+          additionalContextParts.push(`## Available Commands (${registry.totalCommands} total)\n\n${lines.join('\n')}`);
+          log(`[SessionStart] Injected ${registry.totalCommands} commands from registry`);
+        } catch (e) {
+          process.stderr.write('[SessionStart] failed to load command registry: ' + e.message + '\n');
+        }
+      }
+    }
   }
 
   // Check for available session aliases

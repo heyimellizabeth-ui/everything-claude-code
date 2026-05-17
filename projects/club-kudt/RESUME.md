@@ -1,6 +1,6 @@
 # Club KUDT — Site Resume
 
-**Built:** May 2026 · **Pipeline:** C3 → C4 → C5 via `/chelp`
+**Built:** May 2026 · **Pipeline:** C1 → C2 → C3 → C4 → C5 via `/chelp`
 **Live:** [clubkudt.nl](https://clubkudt.nl) · **Venue:** Podium Victorie, Alkmaar
 
 ---
@@ -29,6 +29,26 @@ Promotional website for **Club KUDT** — Alkmaar's first and only queer night, 
 - **Formspree** (`xkokywzz`) — newsletter form backend
 - **Hosting:** Hostinger shared hosting (or any static host)
 - **Deploy:** Upload contents of this folder to `public_html/`
+
+---
+
+## C1 — Full Web Project from Scratch
+
+- **PRD**: spec'd audience (queer community, Alkmaar), layout goals (dark theme, red accent, mobile-first), component scope
+- **Plan**: 5-page pure static HTML/CSS/JS site, GSAP 3.12 via CDN, Formspree for form backend
+- **Design**: dark background (`#0a0a0a`), red accent (`#ff0000`), Neue Haas Grotesk typography, full-bleed hero
+- **Build**: `index.html`, `events.html`, `gallery.html`, `about.html`, `contact.html`, `404.html`
+- **Quality gate + dual review**: passed
+
+---
+
+## C2 — Component & Page Features
+
+- **Asset scripts**: `_favicon_code.py`, `_og_image_code.py`, `_touch_icon_code.py`, `generate-assets.py`
+- **SEO / crawl**: `robots.txt`, `sitemap.xml` (5 pages, weekly changefreq)
+- **Structured data**: JSON-LD `NightClub` schema on `index.html`
+- **Dev config**: `launch.json` for VS Code Live Server
+- **Gallery**: Flickr embed + edition archive cards in `gallery.html`
 
 ---
 
@@ -75,7 +95,7 @@ Promotional website for **Club KUDT** — Alkmaar's first and only queer night, 
 ## C5 — Cleanup Applied
 
 - `sitemap.xml` lastmod dates updated to 2026-05-17
-- `RESUME.md` (this file) created as handoff doc
+- `RESUME.md` (this file) created as handoff doc with full C1–C5 change log
 - `.htaccess` caching headers added (1-year for images/icons, 1-month for CSS/JS)
 - Directory listing disabled (`Options -Indexes`)
 

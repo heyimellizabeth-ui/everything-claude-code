@@ -566,6 +566,53 @@ async function runTests() {
   else failed++;
 
   if (
+    await asyncTest('injects command registry into session context', async () => {
+      const isoHome = path.join(os.tmpdir(), `ecc-cmdreg-start-${Date.now()}`);
+      fs.mkdirSync(getCanonicalSessionsDir(isoHome), { recursive: true });
+      fs.mkdirSync(path.join(isoHome, '.claude', 'skills', 'learned'), { recursive: true });
+
+      try {
+        const result = await runScript(path.join(scriptsDir, 'session-start.js'), '', {
+          HOME: isoHome,
+          USERPROFILE: isoHome
+        });
+        assert.strictEqual(result.code, 0);
+        const additionalContext = getSessionStartAdditionalContext(result.stdout);
+        assert.ok(additionalContext.includes('Available Commands'), 'Should inject the Available Commands heading');
+        assert.ok(result.stderr.includes('Injected') && result.stderr.includes('commands from registry'), 'Should log registry injection count');
+      } finally {
+        fs.rmSync(isoHome, { recursive: true, force: true });
+      }
+    })
+  )
+    passed++;
+  else failed++;
+
+  if (
+    await asyncTest('skips command registry injection when ECC_SESSION_COMMANDS=off', async () => {
+      const isoHome = path.join(os.tmpdir(), `ecc-cmdreg-off-${Date.now()}`);
+      fs.mkdirSync(getCanonicalSessionsDir(isoHome), { recursive: true });
+      fs.mkdirSync(path.join(isoHome, '.claude', 'skills', 'learned'), { recursive: true });
+
+      try {
+        const result = await runScript(path.join(scriptsDir, 'session-start.js'), '', {
+          HOME: isoHome,
+          USERPROFILE: isoHome,
+          ECC_SESSION_COMMANDS: 'off'
+        });
+        assert.strictEqual(result.code, 0);
+        const additionalContext = getSessionStartAdditionalContext(result.stdout);
+        assert.ok(!additionalContext.includes('Available Commands'), 'Should not inject command registry when disabled');
+        assert.ok(result.stderr.includes('Command registry injection disabled'), 'Should log that injection is disabled');
+      } finally {
+        fs.rmSync(isoHome, { recursive: true, force: true });
+      }
+    })
+  )
+    passed++;
+  else failed++;
+
+  if (
     await asyncTest('prefers canonical session-data content over legacy duplicates', async () => {
       const isoHome = path.join(os.tmpdir(), `ecc-canonical-start-${Date.now()}`);
       const canonicalDir = getCanonicalSessionsDir(isoHome);
