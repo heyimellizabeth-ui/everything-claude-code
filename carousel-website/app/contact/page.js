@@ -166,6 +166,7 @@ export default function Contact() {
                   type="text"
                   placeholder="e.g. August 2026, flexible"
                   className="form-input"
+                  maxLength={100}
                   {...field("date")}
                 />
               </div>
