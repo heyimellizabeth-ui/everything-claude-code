@@ -783,7 +783,7 @@ function renderCard(el) {
         </div>
         <div class="card-desc">${el.description}</div>
         <div class="card-footer">
-          <div class="card-source">${el.source.toUpperCase()}</div>
+          <div class="card-source">${el.source.toUpperCase()}${el.status === 'inferred' ? ' <span style="color:var(--gold);font-size:8px" title="Based on site type — upload files to verify">⚠ INFERRED</span>' : ''}</div>
           <div class="card-actions">
             <button class="card-btn" onclick="toggleCode(event, '${el.id}')">CODE</button>
             <button class="card-btn select-btn ${isSelected ? 'active' : ''}" onclick="toggleSelect(event, '${el.id}')">

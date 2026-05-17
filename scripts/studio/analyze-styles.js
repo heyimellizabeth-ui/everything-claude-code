@@ -569,6 +569,170 @@ document.getElementById('f').addEventListener('submit',function(e){
   }
 ];
 
+// ─── Inferred: Ashley Creative Portfolio ─────────────────────────────────────
+
+const ASHLEY_ELEMENTS = [
+  {
+    id: 'ashley-palette',
+    category: 'colors',
+    name: 'Neutral Editorial Palette',
+    description: 'Off-white background, deep charcoal text, single warm accent. Clean, gallery-like aesthetic.',
+    source: 'ashley-creative-portfolio',
+    status: 'inferred',
+    tags: ['palette', 'neutral', 'editorial', 'portfolio', 'minimal'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:180px;font-family:Georgia,serif;gap:16px;padding:20px}.swatches{display:flex;gap:8px}.swatch{width:44px;height:44px;border-radius:2px;position:relative}.label{font-size:8px;letter-spacing:1px;color:#888;margin-top:20px}.preview{background:#F8F6F2;padding:16px;border-bottom:2px solid #222;width:100%;max-width:280px;text-align:center}.preview h3{font-size:20px;color:#222;letter-spacing:4px;margin-bottom:4px}.preview p{font-size:11px;color:#888;letter-spacing:1px}.preview span{color:#C0392B;font-style:italic}</style></head><body><div class="swatches"><div class="swatch" style="background:#F8F6F2;border:1px solid #ddd"></div><div class="swatch" style="background:#E8E4DC"></div><div class="swatch" style="background:#888"></div><div class="swatch" style="background:#222"></div><div class="swatch" style="background:#C0392B"></div></div><div class="preview"><h3>ASHLEY</h3><p>Creative Director — <span>Branding & Web</span></p></div></body></html>',
+    snippet: ':root {\n  --bg: #F8F6F2;       /* warm off-white */\n  --surface: #E8E4DC;  /* card/section bg */\n  --muted: #888888;    /* secondary text */\n  --text: #222222;     /* primary text */\n  --accent: #C0392B;   /* single warm accent */\n}'
+  },
+  {
+    id: 'ashley-typography',
+    category: 'typography',
+    name: 'Serif Display + Sans Body',
+    description: 'Playfair Display (or similar) for large headlines paired with a clean sans-serif body. Editorial contrast.',
+    source: 'ashley-creative-portfolio',
+    status: 'inferred',
+    tags: ['typography', 'serif', 'editorial', 'display', 'contrast'],
+    previewHtml: '<!DOCTYPE html><html><head><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;padding:24px;min-height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px}.serif{font-family:"Playfair Display",Georgia,serif;font-size:36px;font-weight:700;color:#222;line-height:1.1}.serif-i{font-family:"Playfair Display",Georgia,serif;font-size:20px;font-style:italic;color:#888}.sans{font-family:"Inter",system-ui,sans-serif;font-size:13px;color:#555;letter-spacing:.5px;line-height:1.7;margin-top:4px}.label{font-family:"Inter",sans-serif;font-size:9px;letter-spacing:3px;color:#C0392B;text-transform:uppercase;margin-top:12px}</style></head><body><div class="label">Creative Director</div><div class="serif">Ashley <span class="serif-i">Design</span></div><div class="sans">Branding, web design and visual identity for bold brands that want to stand out.</div></body></html>',
+    snippet: '/* Serif display + sans body */\n@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400&display=swap");\n\n.heading { font-family: "Playfair Display", Georgia, serif; font-weight: 700; }\n.heading-italic { font-style: italic; font-weight: 400; }\n.body { font-family: "Inter", system-ui, sans-serif; font-weight: 300; line-height: 1.8; }\n.label { font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }'
+  },
+  {
+    id: 'ashley-split-hero',
+    category: 'hero',
+    name: 'Split Hero',
+    description: 'Full-height hero split 50/50: name + title left, portrait/image placeholder right. Clean editorial entry.',
+    source: 'ashley-creative-portfolio',
+    status: 'inferred',
+    tags: ['hero', 'split', 'portfolio', 'layout', 'fullscreen'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;min-height:180px;font-family:Georgia,serif;display:flex}.left{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px;border-right:1px solid #E0DDD8}.label{font-size:9px;letter-spacing:3px;color:#C0392B;text-transform:uppercase;margin-bottom:8px;font-family:system-ui,sans-serif}.name{font-size:28px;font-weight:700;color:#222;line-height:1.1;margin-bottom:4px}.role{font-size:13px;color:#888;font-style:italic;margin-bottom:16px}.cta{font-size:9px;letter-spacing:2px;color:#222;border-bottom:1px solid #222;padding-bottom:2px;display:inline-block;font-family:system-ui,sans-serif;text-transform:uppercase}.right{flex:1;background:#E8E4DC;display:flex;align-items:center;justify-content:center}.img-slot{width:80px;height:80px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:1px;color:#888;font-family:system-ui,sans-serif}</style></head><body><div class="left"><div class="label">Available for work</div><div class="name">Ashley<br>Johnson</div><div class="role">Creative Director</div><div class="cta">View Work ↓</div></div><div class="right"><div class="img-slot">PHOTO</div></div></body></html>',
+    snippet: '.hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }\n.hero-left { display: flex; flex-direction: column; justify-content: center; padding: clamp(40px, 8vw, 100px); }\n.hero-right { background: var(--surface); /* swap for portrait img */ }\n\n@media (max-width: 768px) {\n  .hero { grid-template-columns: 1fr; }\n  .hero-right { height: 40vh; }\n}'
+  },
+  {
+    id: 'ashley-portfolio-grid',
+    category: 'layout',
+    name: 'Portfolio Case Study Grid',
+    description: 'Image grid where hovering darkens the photo and slides in the project title + category from below.',
+    source: 'ashley-creative-portfolio',
+    status: 'inferred',
+    tags: ['portfolio', 'grid', 'hover', 'reveal', 'case-study'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;padding:16px;min-height:180px;font-family:system-ui,sans-serif}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.item{position:relative;overflow:hidden;aspect-ratio:4/3;background:#E0DDD8;cursor:pointer}.overlay{position:absolute;inset:0;background:rgba(34,34,34,0);display:flex;flex-direction:column;justify-content:flex-end;padding:12px;transition:background .3s}.item:hover .overlay{background:rgba(34,34,34,0.75)}.info{transform:translateY(20px);opacity:0;transition:transform .3s,opacity .3s}.item:hover .info{transform:translateY(0);opacity:1}.proj-title{font-size:11px;font-weight:600;color:#F8F6F2;letter-spacing:1px}.proj-cat{font-size:9px;letter-spacing:2px;color:#C0392B;text-transform:uppercase;margin-top:2px}.num{position:absolute;top:8px;right:8px;font-size:9px;letter-spacing:2px;color:#888}</style></head><body><div class="grid"><div class="item"><div class="num">01</div><div class="overlay"><div class="info"><div class="proj-title">Brand Identity</div><div class="proj-cat">Branding</div></div></div></div><div class="item"><div class="num">02</div><div class="overlay"><div class="info"><div class="proj-title">Web Design</div><div class="proj-cat">Digital</div></div></div></div><div class="item"><div class="num">03</div><div class="overlay"><div class="info"><div class="proj-title">Print Work</div><div class="proj-cat">Editorial</div></div></div></div></div></body></html>',
+    snippet: '.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }\n.portfolio-item { position: relative; overflow: hidden; aspect-ratio: 4/3; }\n.portfolio-overlay { position: absolute; inset: 0; background: transparent; transition: background .3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; }\n.portfolio-item:hover .portfolio-overlay { background: rgba(0,0,0,0.7); }\n.portfolio-info { transform: translateY(20px); opacity: 0; transition: transform .3s, opacity .3s; }\n.portfolio-item:hover .portfolio-info { transform: translateY(0); opacity: 1; }'
+  },
+  {
+    id: 'ashley-project-overlay',
+    category: 'interactive',
+    name: 'Project Lightbox Overlay',
+    description: 'Full-screen modal overlay with project details, image, and close button. Triggered on portfolio card click.',
+    source: 'ashley-creative-portfolio',
+    status: 'inferred',
+    tags: ['lightbox', 'modal', 'overlay', 'portfolio', 'fullscreen'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;min-height:180px;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center}.trigger{padding:10px 20px;border:1px solid #222;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;background:transparent;font-family:inherit;transition:background .2s}.trigger:hover{background:#222;color:#F8F6F2}.overlay{position:fixed;inset:0;background:rgba(248,246,242,0.97);display:none;align-items:center;justify-content:center;z-index:100}.overlay.open{display:flex}.modal{max-width:500px;width:90%;padding:32px;position:relative}.close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:18px;cursor:pointer;color:#888}.img-slot{width:100%;height:120px;background:#E0DDD8;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:2px;color:#888}.proj-label{font-size:9px;letter-spacing:3px;color:#C0392B;text-transform:uppercase;margin-bottom:6px}.proj-title{font-family:Georgia,serif;font-size:22px;color:#222;margin-bottom:8px}.proj-desc{font-size:12px;color:#666;line-height:1.7}</style></head><body><button class="trigger" onclick="document.getElementById(\'ov\').classList.add(\'open\')">VIEW PROJECT</button><div class="overlay" id="ov"><div class="modal"><button class="close" onclick="document.getElementById(\'ov\').classList.remove(\'open\')">✕</button><div class="img-slot">PROJECT IMAGE</div><div class="proj-label">Branding</div><div class="proj-title">Brand Identity</div><div class="proj-desc">Full brand identity system including logo, color palette, and typography guidelines.</div></div></div></body></html>',
+    snippet: '// Lightbox JS\nconst overlay = document.getElementById("overlay");\ndocument.querySelectorAll(".portfolio-item").forEach(item => {\n  item.addEventListener("click", () => {\n    overlay.classList.add("open");\n    document.body.style.overflow = "hidden";\n  });\n});\ndocument.getElementById("overlay-close").addEventListener("click", () => {\n  overlay.classList.remove("open");\n  document.body.style.overflow = "";\n});\n\n.overlay { position: fixed; inset: 0; background: rgba(248,246,242,0.97); opacity: 0; pointer-events: none; transition: opacity .3s; }\n.overlay.open { opacity: 1; pointer-events: all; }'
+  },
+  {
+    id: 'ashley-page-transition',
+    category: 'animations',
+    name: 'Curtain Page Transition',
+    description: 'Dark curtain sweeps across the screen on navigation, then retracts to reveal the new page.',
+    source: 'ashley-creative-portfolio',
+    status: 'inferred',
+    tags: ['transition', 'page', 'animation', 'curtain', 'navigation'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;overflow:hidden;min-height:180px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif}.page{text-align:center}.page-title{font-size:24px;color:#222;margin-bottom:16px}.trigger{padding:8px 20px;border:1px solid #222;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;background:transparent;font-family:system-ui,sans-serif}.curtain{position:fixed;inset:0;background:#222;transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.77,0,.175,1);z-index:100}.curtain.enter{transform:scaleX(1);transform-origin:left}.curtain.exit{transform:scaleX(0);transform-origin:right}</style></head><body><div class="curtain" id="curtain"></div><div class="page"><div class="page-title">Page Title</div><button class="trigger" onclick="runTransition()">NAVIGATE →</button></div><script>function runTransition(){const c=document.getElementById("curtain");c.classList.add("enter");setTimeout(()=>{c.classList.remove("enter");c.classList.add("exit");setTimeout(()=>c.classList.remove("exit"),400);},400);}</script></body></html>',
+    snippet: '// Curtain transition\nconst curtain = document.getElementById("curtain");\nfunction navigateTo(url) {\n  curtain.classList.add("enter"); // sweep in\n  setTimeout(() => {\n    window.location.href = url;\n  }, 400);\n}\n// On new page load:\nwindow.addEventListener("load", () => {\n  curtain.classList.add("exit"); // sweep out\n});\n\n.curtain { position: fixed; inset: 0; background: var(--text); transform: scaleX(1); transform-origin: right; transition: transform .4s cubic-bezier(.77,0,.175,1); }\n.curtain.exit { transform: scaleX(0); }'
+  },
+  {
+    id: 'ashley-underline-nav',
+    category: 'interactive',
+    name: 'Expanding Underline Nav',
+    description: 'Nav links with an underline that expands from center on hover. Clean, minimal interaction.',
+    source: 'ashley-creative-portfolio',
+    status: 'inferred',
+    tags: ['nav', 'underline', 'hover', 'animation', 'minimal'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;display:flex;align-items:center;justify-content:center;min-height:180px;font-family:system-ui,sans-serif}nav{display:flex;gap:32px;align-items:center}.nav-logo{font-family:Georgia,serif;font-size:16px;font-weight:700;color:#222;margin-right:16px}.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#555;text-decoration:none;position:relative;padding-bottom:4px}.nav-link::after{content:"";position:absolute;bottom:0;left:50%;right:50%;height:1px;background:#C0392B;transition:left .2s ease,right .2s ease}.nav-link:hover::after{left:0;right:0}.nav-link:hover{color:#222}</style></head><body><nav><div class="nav-logo">A.</div><a class="nav-link">Work</a><a class="nav-link">About</a><a class="nav-link">Services</a><a class="nav-link">Contact</a></nav></body></html>',
+    snippet: '.nav-link { position: relative; padding-bottom: 4px; text-decoration: none; }\n.nav-link::after {\n  content: "";\n  position: absolute;\n  bottom: 0;\n  left: 50%;\n  right: 50%;\n  height: 1px;\n  background: var(--accent);\n  transition: left .2s ease, right .2s ease;\n}\n.nav-link:hover::after { left: 0; right: 0; }'
+  }
+];
+
+// ─── Inferred: FoodKing Fast Food Restaurant ──────────────────────────────────
+
+const FOODKING_ELEMENTS = [
+  {
+    id: 'foodking-palette',
+    category: 'colors',
+    name: 'Bold Energy Palette',
+    description: 'Deep red, gold/amber, near-black. High-contrast, appetite-stimulating fast-food aesthetic.',
+    source: 'foodking-fast-food-restaurant',
+    status: 'inferred',
+    tags: ['palette', 'red', 'gold', 'bold', 'restaurant', 'energy'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0F0F0F;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:180px;font-family:Impact,"Arial Narrow",sans-serif;gap:16px;padding:20px}.swatches{display:flex;gap:8px}.swatch{width:44px;height:44px;border-radius:2px}.preview{background:#1A0A0A;border-left:4px solid #C0001A;padding:14px 16px;width:100%;max-width:280px}.preview h3{font-size:22px;color:#F5A623;letter-spacing:3px;text-transform:uppercase}.preview p{font-size:11px;color:#888;letter-spacing:1px;margin-top:4px}.preview .price{font-size:18px;color:#C0001A;margin-top:6px;font-weight:900}</style></head><body><div class="swatches"><div class="swatch" style="background:#0F0F0F;border:1px solid #333"></div><div class="swatch" style="background:#1A0A0A"></div><div class="swatch" style="background:#C0001A"></div><div class="swatch" style="background:#F5A623"></div><div class="swatch" style="background:#F5F0E8"></div></div><div class="preview"><h3>FOODKING</h3><p>Burgers · Fries · Shakes</p><div class="price">FROM €5.99</div></div></body></html>',
+    snippet: ':root {\n  --void: #0F0F0F;      /* deep black bg */\n  --surface: #1A0A0A;   /* dark red-tinted cards */\n  --red: #C0001A;       /* primary red */\n  --gold: #F5A623;      /* gold/amber accent */\n  --cream: #F5F0E8;     /* light text */\n}'
+  },
+  {
+    id: 'foodking-typography',
+    category: 'typography',
+    name: 'Condensed Heavy Display',
+    description: 'Impact or Barlow Condensed at large sizes, all-caps, tight tracking. Maximum visual weight for menus and CTAs.',
+    source: 'foodking-fast-food-restaurant',
+    status: 'inferred',
+    tags: ['typography', 'condensed', 'impact', 'bold', 'restaurant', 'display'],
+    previewHtml: '<!DOCTYPE html><html><head><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0F0F0F;padding:20px;min-height:180px;display:flex;flex-direction:column;justify-content:center;gap:6px}.t1{font-family:"Barlow Condensed",Impact,sans-serif;font-size:52px;font-weight:900;color:#F5A623;letter-spacing:2px;text-transform:uppercase;line-height:1}.t2{font-family:"Barlow Condensed",Impact,sans-serif;font-size:16px;font-weight:700;color:#C0001A;letter-spacing:4px;text-transform:uppercase}.t3{font-family:system-ui,sans-serif;font-size:12px;color:#888;letter-spacing:1px;line-height:1.6;margin-top:4px}.label{font-size:9px;letter-spacing:3px;color:#555;font-family:system-ui,sans-serif;margin-top:8px}</style></head><body><div class="t2">NEW ARRIVAL</div><div class="t1">KING<br>BURGER</div><div class="t3">Double smashed patty · Cheddar · Special sauce</div><div class="label">Barlow Condensed 900 · All-caps · 2px tracking</div></body></html>',
+    snippet: '/* Condensed heavy type system */\n@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&display=swap");\n\n.heading-xl { font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 900; font-size: clamp(48px, 10vw, 120px); text-transform: uppercase; letter-spacing: 2px; color: var(--gold); }\n.heading-label { font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; color: var(--red); }\n.price { font-family: "Barlow Condensed", sans-serif; font-weight: 900; color: var(--red); }'
+  },
+  {
+    id: 'foodking-hero-food',
+    category: 'hero',
+    name: 'Full-Bleed Food Hero',
+    description: 'Full-viewport hero with darkened food photography background, bold headline, and pulsing ORDER NOW CTA.',
+    source: 'foodking-fast-food-restaurant',
+    status: 'inferred',
+    tags: ['hero', 'food', 'fullbleed', 'restaurant', 'CTA'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{margin:0}hero{display:flex;align-items:center;justify-content:center;min-height:180px;background:linear-gradient(135deg,#1A0A0A 0%,#2A0808 50%,#0F0F0F 100%);position:relative;overflow:hidden}.bg-text{position:absolute;font-family:Impact,sans-serif;font-size:120px;color:rgba(192,0,26,0.06);white-space:nowrap;letter-spacing:8px;user-select:none;top:50%;transform:translateY(-50%)}.content{position:relative;text-align:center;z-index:1}.eyebrow{font-family:system-ui,sans-serif;font-size:9px;letter-spacing:4px;color:#F5A623;text-transform:uppercase;margin-bottom:8px}.title{font-family:Impact,"Arial Narrow",sans-serif;font-size:48px;color:#F5F0E8;letter-spacing:4px;text-transform:uppercase;line-height:1;margin-bottom:12px}.title span{color:#C0001A}.cta{background:#C0001A;border:none;color:#F5F0E8;font-family:Impact,sans-serif;font-size:13px;letter-spacing:3px;padding:12px 28px;cursor:pointer;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,0,26,0.4)}50%{box-shadow:0 0 0 10px rgba(192,0,26,0)}}</style></head><body><hero><div class="bg-text">FOODKING FOODKING</div><div class="content"><div class="eyebrow">Freshly Made Daily</div><div class="title">FEED THE<br><span>KING</span></div><button class="cta">ORDER NOW</button></div></hero></body></html>',
+    snippet: '.hero { position: relative; min-height: 100vh; background: url("hero-food.jpg") center/cover; display: flex; align-items: center; justify-content: center; }\n.hero::after { content: ""; position: absolute; inset: 0; background: rgba(15,15,15,0.65); }\n.hero-content { position: relative; z-index: 1; text-align: center; }\n\n/* Pulsing CTA */\n@keyframes cta-pulse {\n  0%, 100% { box-shadow: 0 0 0 0 rgba(192,0,26,.5); }\n  50% { box-shadow: 0 0 0 12px rgba(192,0,26,0); }\n}\n.cta-order { animation: cta-pulse 2s ease-in-out infinite; }'
+  },
+  {
+    id: 'foodking-menu-grid',
+    category: 'layout',
+    name: 'Menu Card Grid',
+    description: 'Grid of food cards: image placeholder, item name, description, price tag, and "Add" CTA. Hover lifts card.',
+    source: 'foodking-fast-food-restaurant',
+    status: 'inferred',
+    tags: ['menu', 'grid', 'cards', 'restaurant', 'layout', 'food'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0F0F0F;padding:14px;min-height:180px;font-family:system-ui,sans-serif}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.card{background:#1A0A0A;border:1px solid #2A1A1A;overflow:hidden;transition:transform .2s,border-color .2s;cursor:pointer}.card:hover{transform:translateY(-4px);border-color:#C0001A}.img{height:60px;background:linear-gradient(135deg,#2A0808,#1A1A0A);display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:2px;color:#555}.body{padding:8px}.name{font-size:11px;font-weight:700;color:#F5F0E8;letter-spacing:1px;margin-bottom:2px;font-family:Impact,sans-serif;text-transform:uppercase}.desc{font-size:8px;color:#888;line-height:1.4;margin-bottom:6px}.footer{display:flex;align-items:center;justify-content:space-between}.price{font-size:13px;font-weight:900;color:#F5A623;font-family:Impact,sans-serif}.add{background:#C0001A;border:none;color:#fff;font-size:8px;letter-spacing:1px;padding:4px 8px;cursor:pointer;font-family:inherit}</style></head><body><div class="grid"><div class="card"><div class="img">📷 PHOTO</div><div class="body"><div class="name">King Burger</div><div class="desc">Double patty, cheddar, sauce</div><div class="footer"><div class="price">€8.99</div><button class="add">ADD</button></div></div></div><div class="card"><div class="img">📷 PHOTO</div><div class="body"><div class="name">Crispy Fries</div><div class="desc">Seasoned, large portion</div><div class="footer"><div class="price">€3.49</div><button class="add">ADD</button></div></div></div><div class="card"><div class="img">📷 PHOTO</div><div class="body"><div class="name">Shake</div><div class="desc">Vanilla, choc or strawberry</div><div class="footer"><div class="price">€4.29</div><button class="add">ADD</button></div></div></div></div></body></html>',
+    snippet: '.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }\n.menu-card { background: var(--surface); border: 1px solid transparent; transition: transform .2s, border-color .2s; overflow: hidden; }\n.menu-card:hover { transform: translateY(-4px); border-color: var(--red); }\n.menu-card-img { aspect-ratio: 4/3; object-fit: cover; width: 100%; background: var(--surface); }\n.menu-card-footer { display: flex; align-items: center; justify-content: space-between; padding: 12px; }\n.menu-price { font-family: var(--font-display); color: var(--gold); font-size: 1.4rem; }'
+  },
+  {
+    id: 'foodking-sticky-order',
+    category: 'interactive',
+    name: 'Mobile Sticky Order Bar',
+    description: 'Fixed bottom bar with "ORDER NOW" button always visible on mobile. Disappears on desktop where inline CTAs suffice.',
+    source: 'foodking-fast-food-restaurant',
+    status: 'inferred',
+    tags: ['mobile', 'sticky', 'CTA', 'order', 'restaurant', 'fixed'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0F0F0F;min-height:180px;font-family:system-ui,sans-serif}.content{padding:20px;color:#888;font-size:10px;letter-spacing:2px;line-height:2;padding-bottom:70px}.sticky-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,15,15,0.97);border-top:1px solid #C0001A;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}.bar-info{font-size:10px;letter-spacing:2px;color:#888}.bar-info span{color:#F5A623;font-weight:700}.order-btn{background:#C0001A;border:none;color:#fff;font-family:Impact,sans-serif;font-size:13px;letter-spacing:3px;padding:10px 24px;cursor:pointer;text-transform:uppercase}</style></head><body><div class="content"><p>MENU CONTENT ABOVE ↑</p><p>.</p><p>.</p></div><div class="sticky-bar"><div class="bar-info">🛒 <span>3 items</span> — €21.47</div><button class="order-btn">ORDER NOW</button></div></body></html>',
+    snippet: '.sticky-order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,15,15,.97); border-top: 2px solid var(--red); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100; }\n\n@media (min-width: 1024px) {\n  .sticky-order-bar { display: none; } /* hide on desktop */\n}'
+  },
+  {
+    id: 'foodking-promo-banner',
+    category: 'animations',
+    name: 'Flashing Promo Ribbon',
+    description: 'Red ribbon with animated flashing discount text. Bold attention-grabber for deals and limited offers.',
+    source: 'foodking-fast-food-restaurant',
+    status: 'inferred',
+    tags: ['promo', 'banner', 'animation', 'flash', 'discount', 'restaurant'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0F0F0F;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:180px;font-family:Impact,"Arial Narrow",sans-serif;gap:12px}.ribbon{width:100%;background:#C0001A;padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:16px;position:relative;overflow:hidden}.ribbon::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 10px,transparent 10px,transparent 20px)}.flash{font-size:22px;letter-spacing:4px;color:#F5A623;animation:flash 1.2s ease-in-out infinite;text-transform:uppercase}@keyframes flash{0%,100%{opacity:1}50%{opacity:.4}}.pill{background:#F5A623;color:#0F0F0F;font-size:11px;letter-spacing:2px;padding:4px 12px;font-weight:900}.sub{font-size:10px;letter-spacing:3px;color:rgba(245,160,35,0.6)}</style></head><body><div class="ribbon"><span class="sub">LIMITED TIME</span><span class="flash">50% OFF</span><span class="pill">TODAY ONLY</span></div></body></html>',
+    snippet: '.promo-ribbon { background: var(--red); padding: 12px 20px; display: flex; align-items: center; justify-content: center; gap: 16px; }\n.promo-text { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 4px; color: var(--gold); animation: promo-flash 1.2s ease-in-out infinite; }\n@keyframes promo-flash {\n  0%, 100% { opacity: 1; }\n  50% { opacity: .4; }\n}'
+  },
+  {
+    id: 'foodking-hours-table',
+    category: 'layout',
+    name: 'Opening Hours Table',
+    description: "Clean hours table with today's row highlighted in red/gold. Shows open/closed status dynamically.",
+    source: 'foodking-fast-food-restaurant',
+    status: 'inferred',
+    tags: ['hours', 'table', 'restaurant', 'layout', 'schedule'],
+    previewHtml: '<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0F0F0F;padding:16px;min-height:180px;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center}.hours{width:100%;max-width:280px}.h-title{font-family:Impact,sans-serif;font-size:16px;letter-spacing:4px;color:#F5A623;text-transform:uppercase;margin-bottom:12px}.row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1A1A1A;font-size:11px}.row.today{background:rgba(192,0,26,0.1);margin:0 -8px;padding:7px 8px;border-color:#C0001A}.day{color:#888;letter-spacing:1px}.time{color:#F5F0E8;letter-spacing:1px}.row.today .day{color:#F5A623;font-weight:700}.row.today .time{color:#C0001A}.badge{font-size:8px;letter-spacing:2px;background:#C0001A;color:#fff;padding:2px 6px;margin-left:6px}</style></head><body><div class="hours"><div class="h-title">Hours</div><div class="row"><span class="day">Mon – Thu</span><span class="time">11:00 – 22:00</span></div><div class="row today"><span class="day">Friday <span class="badge">TODAY</span></span><span class="time">11:00 – 23:00</span></div><div class="row"><span class="day">Saturday</span><span class="time">10:00 – 23:00</span></div><div class="row"><span class="day">Sunday</span><span class="time">12:00 – 21:00</span></div></div></body></html>',
+    snippet: "// Highlight today's row\nconst days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];\nconst today = days[new Date().getDay()];\ndocument.querySelector(`[data-day='${today}']`)?.classList.add('today');\n\n.hours-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--surface); }\n.hours-row.today { background: rgba(192,0,26,0.1); color: var(--gold); font-weight: 700; }"
+  }
+];
+
 // ─── Generic site analyzer ────────────────────────────────────────────────────
 
 function readFilesRecursive(dir, exts = ['.html', '.css', '.js']) {
@@ -679,8 +843,41 @@ function main() {
     }
   }
 
+  // Add inferred sites (files not yet uploaded)
+  const inferredSites = [
+    {
+      id: 'ashley-creative-portfolio',
+      name: 'Ashley Creative Portfolio',
+      path: null,
+      status: 'inferred',
+      stats: { files: 0, pages: 0 },
+      colors: ['#F8F6F2', '#E8E4DC', '#888888', '#222222', '#C0392B'],
+      fonts: ['Playfair Display', 'Inter'],
+      detectedComponents: ASHLEY_ELEMENTS.map(e => e.name)
+    },
+    {
+      id: 'foodking-fast-food-restaurant',
+      name: 'FoodKing Restaurant',
+      path: null,
+      status: 'inferred',
+      stats: { files: 0, pages: 0 },
+      colors: ['#0F0F0F', '#1A0A0A', '#C0001A', '#F5A623', '#F5F0E8'],
+      fonts: ['Barlow Condensed', 'Impact'],
+      detectedComponents: FOODKING_ELEMENTS.map(e => e.name)
+    }
+  ];
+
+  // Only add inferred sites if real files haven't been uploaded yet
+  for (const inferred of inferredSites) {
+    const uploaded = sites.find(s => s.id === inferred.id);
+    if (!uploaded) {
+      sites.push(inferred);
+      process.stderr.write(`[studio] Added inferred entries for ${inferred.name} (upload files to override)\n`);
+    }
+  }
+
   // Build element catalog — start with Club KUDT hardcoded elements
-  const elements = [...CLUB_KUDT_ELEMENTS];
+  const elements = [...CLUB_KUDT_ELEMENTS, ...ASHLEY_ELEMENTS, ...FOODKING_ELEMENTS];
 
   // For uploaded sites, generate generic color/typography entries
   for (const site of sites.slice(1)) {
