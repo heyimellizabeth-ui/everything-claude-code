@@ -8,12 +8,12 @@ export default function MusicPlayer() {
 
   return (
     <div
-      className="fixed bottom-0 inset-x-0 z-40 bg-[#1E1B18] border-t border-[#9B8040]/30"
+      className="fixed bottom-0 inset-x-0 z-40 bg-[#0D0B09]/97 border-t border-[#9B8040]/20 backdrop-blur-sm"
       style={{ fontFamily: "var(--font-cormorant)" }}
     >
       {/* Progress bar */}
       <div
-        className="h-0.5 bg-[#9B8040]/20 cursor-pointer"
+        className="h-px bg-[#9B8040]/15 cursor-pointer"
         onClick={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
           seek((e.clientX - rect.left) / rect.width);
@@ -25,12 +25,19 @@ export default function MusicPlayer() {
         />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center gap-6">
-        {/* Album initial */}
-        <div className="w-9 h-9 bg-[#6B1A1A] flex items-center justify-center flex-shrink-0">
-          <span className="text-[#EDE8DC] text-sm italic font-light">
-            {currentTrack.album[0]}
-          </span>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 sm:gap-6">
+        {/* Album art placeholder */}
+        <div
+          className="w-9 h-9 flex-shrink-0 overflow-hidden"
+          style={{
+            background: "radial-gradient(ellipse at 40% 35%, #3D1515 0%, #1A0808 60%, #0D0809 100%)",
+          }}
+        >
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="text-[#9B8040]/60 text-xs italic font-light">
+              {currentTrack.album[0]}
+            </span>
+          </div>
         </div>
 
         {/* Track info */}
@@ -38,14 +45,14 @@ export default function MusicPlayer() {
           <p className="text-[#EDE8DC] text-sm font-semibold italic truncate leading-tight">
             {currentTrack.title}
           </p>
-          <p className="text-[#7A7268] text-xs truncate">{currentTrack.album}</p>
+          <p className="text-[#7A7268] text-xs truncate leading-tight">{currentTrack.album}</p>
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-5 flex-shrink-0">
+        <div className="flex items-center gap-4 flex-shrink-0">
           <button
             onClick={() => skip(-1)}
-            className="text-[#7A7268] hover:text-[#EDE8DC] transition-colors text-lg leading-none"
+            className="text-[#7A7268] hover:text-[#EDE8DC] transition-colors leading-none text-base"
             aria-label="Previous"
           >
             ◂◂
@@ -53,7 +60,7 @@ export default function MusicPlayer() {
 
           <button
             onClick={togglePlay}
-            className="w-9 h-9 border border-[#9B8040]/60 flex items-center justify-center text-[#9B8040] hover:bg-[#9B8040]/10 transition-colors text-sm"
+            className="w-9 h-9 border border-[#9B8040]/40 flex items-center justify-center text-[#9B8040] hover:bg-[#9B8040]/10 hover:border-[#9B8040] transition-colors text-sm"
             aria-label={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? "⏸" : "▶"}
@@ -61,7 +68,7 @@ export default function MusicPlayer() {
 
           <button
             onClick={() => skip(1)}
-            className="text-[#7A7268] hover:text-[#EDE8DC] transition-colors text-lg leading-none"
+            className="text-[#7A7268] hover:text-[#EDE8DC] transition-colors leading-none text-base"
             aria-label="Next"
           >
             ▸▸
@@ -69,7 +76,7 @@ export default function MusicPlayer() {
         </div>
 
         {/* Duration */}
-        <span className="text-[#7A7268] text-xs flex-shrink-0 hidden sm:block">
+        <span className="text-[#7A7268] text-xs flex-shrink-0 hidden sm:block tabular-nums">
           {currentTrack.duration}
         </span>
       </div>

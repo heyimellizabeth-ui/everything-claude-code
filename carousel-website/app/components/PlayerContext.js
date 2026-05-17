@@ -9,14 +9,14 @@ import {
 } from "react";
 
 export const TRACKS = [
-  { id: 1, title: "Golden Hours",        album: "Golden Hours", year: "2026", duration: "4:12", src: "" },
+  { id: 1, title: "Golden Hours",         album: "Golden Hours", year: "2026", duration: "4:12", src: "" },
   { id: 2, title: "The Weight of Silver", album: "Golden Hours", year: "2026", duration: "3:55", src: "" },
-  { id: 3, title: "Last Train South",    album: "Golden Hours", year: "2026", duration: "5:02", src: "" },
-  { id: 4, title: "Dust & Wire",         album: "Dust & Wire",  year: "2023", duration: "3:47", src: "" },
-  { id: 5, title: "Kindling",            album: "Dust & Wire",  year: "2023", duration: "4:18", src: "" },
-  { id: 6, title: "Reckless Weather",    album: "Dust & Wire",  year: "2023", duration: "3:29", src: "" },
-  { id: 7, title: "First Light",         album: "First Light",  year: "2021", duration: "3:22", src: "" },
-  { id: 8, title: "Still Water",         album: "First Light",  year: "2021", duration: "4:44", src: "" },
+  { id: 3, title: "Last Train South",     album: "Golden Hours", year: "2026", duration: "5:02", src: "" },
+  { id: 4, title: "Dust & Wire",          album: "Dust & Wire",  year: "2023", duration: "3:47", src: "" },
+  { id: 5, title: "Kindling",             album: "Dust & Wire",  year: "2023", duration: "4:18", src: "" },
+  { id: 6, title: "Reckless Weather",     album: "Dust & Wire",  year: "2023", duration: "3:29", src: "" },
+  { id: 7, title: "First Light",          album: "First Light",  year: "2021", duration: "3:22", src: "" },
+  { id: 8, title: "Still Water",          album: "First Light",  year: "2021", duration: "4:44", src: "" },
 ];
 
 const PlayerContext = createContext(null);

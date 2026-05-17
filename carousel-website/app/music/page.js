@@ -1,5 +1,6 @@
 "use client";
 import { usePlayer, TRACKS } from "../components/PlayerContext";
+import ScrollReveal from "../components/ScrollReveal";
 
 const ALBUMS = [
   {
@@ -22,30 +23,26 @@ const ALBUMS = [
   },
 ];
 
-function TrackRow({ track }) {
+function TrackRow({ track, index }) {
   const { currentTrack, isPlaying, play, togglePlay } = usePlayer();
   const isActive = currentTrack?.id === track.id;
 
   return (
     <div
-      className={`flex items-center gap-4 py-3 px-4 group cursor-pointer transition-colors ${
-        isActive ? "bg-[#9B8040]/10" : "hover:bg-[#9B8040]/5"
+      className={`flex items-center gap-4 py-3.5 px-5 group cursor-pointer transition-colors border-b border-[#9B8040]/10 last:border-0 ${
+        isActive ? "bg-[#9B8040]/10" : "hover:bg-[#EDE8DC]/3"
       }`}
       onClick={() => (isActive ? togglePlay() : play(track))}
     >
-      <div className="w-5 text-center flex-shrink-0">
+      <div className="w-6 text-center flex-shrink-0 text-xs">
         {isActive ? (
-          <span className="text-[#9B8040] text-sm">{isPlaying ? "⏸" : "▶"}</span>
+          <span className="text-[#9B8040]">{isPlaying ? "⏸" : "▶"}</span>
         ) : (
-          <span className="text-[#7A7268] text-xs group-hover:text-[#9B8040] transition-colors">▶</span>
+          <span className="text-[#7A7268] group-hover:text-[#9B8040] transition-colors">{index + 1}</span>
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p
-          className={`italic truncate ${
-            isActive ? "text-[#9B8040]" : "text-[#1E1B18]"
-          }`}
-        >
+        <p className={`italic truncate text-lg ${isActive ? "text-[#9B8040]" : "text-[#EDE8DC]"}`}>
           {track.title}
         </p>
       </div>
@@ -57,14 +54,13 @@ function TrackRow({ track }) {
 export default function Music() {
   return (
     <div style={{ fontFamily: "var(--font-cormorant)" }}>
-      {/* Page header */}
-      <div className="bg-[#1E1B18] py-28 px-6 text-center relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#9B8040]/40 to-transparent" />
-        <p className="text-[#9B8040] text-xs tracking-[0.5em] uppercase mb-4">
-          Discography
-        </p>
-        <h1 className="text-7xl font-light italic text-[#EDE8DC]">Music</h1>
-        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#9B8040]/40 to-transparent" />
+
+      {/* ── Header ── */}
+      <div className="spotlight pt-32 pb-20 px-6 text-center">
+        <p className="text-[#9B8040] text-xs tracking-[0.5em] uppercase mb-4">Discography</p>
+        <h1 className="text-[clamp(4rem,12vw,9rem)] font-light italic text-[#EDE8DC] leading-none">
+          Music
+        </h1>
       </div>
 
       <div className="max-w-5xl mx-auto px-6 py-24 space-y-28">
@@ -72,62 +68,61 @@ export default function Music() {
           const albumTracks = TRACKS.filter((t) => t.album === album.title);
 
           return (
-            <article
-              key={album.title}
-              className={`flex flex-col md:flex-row gap-12 items-start ${
-                i % 2 === 1 ? "md:flex-row-reverse" : ""
-              }`}
-            >
-              {/* Art + tracks */}
-              <div className="md:w-72 flex-shrink-0 w-full">
-                <div className="aspect-square bg-[#1E1B18] flex items-center justify-center relative overflow-hidden mb-0">
-                  <div className="absolute inset-0 border border-[#9B8040]/20" />
-                  <div className="text-center">
-                    <p className="text-[#9B8040] text-xs tracking-[0.4em] uppercase mb-2">
-                      {album.year}
-                    </p>
-                    <p className="text-[#EDE8DC]/20 text-5xl font-light italic">
-                      {album.title
-                        .split(" ")
-                        .map((w) => w[0])
-                        .join("")}
-                    </p>
+            <ScrollReveal key={album.title}>
+              <article
+                className={`flex flex-col md:flex-row gap-10 items-start ${
+                  i % 2 === 1 ? "md:flex-row-reverse" : ""
+                }`}
+              >
+                {/* Album art + tracks */}
+                <div className="md:w-72 flex-shrink-0 w-full">
+                  {/* Album art placeholder */}
+                  <div
+                    className="photo-slot w-full"
+                    style={{ aspectRatio: "1/1" }}
+                  >
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10 gap-2">
+                      <p className="text-[#9B8040]/50 text-xs tracking-[0.5em] uppercase">{album.year}</p>
+                      <p className="text-[#EDE8DC]/15 text-4xl font-light italic">
+                        {album.title.split(" ").map((w) => w[0]).join("")}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Track list */}
+                  <div className="border border-t-0 border-[#9B8040]/15 bg-[#0D0B09]">
+                    {albumTracks.map((track, ti) => (
+                      <TrackRow key={track.id} track={track} index={ti} />
+                    ))}
                   </div>
                 </div>
 
-                {/* Track list */}
-                <div className="border border-t-0 border-[#9B8040]/20 bg-[#F4F0E8]">
-                  {albumTracks.map((track) => (
-                    <TrackRow key={track.id} track={track} />
-                  ))}
+                {/* Album info */}
+                <div className="flex-1">
+                  <p className="text-[#9B8040] text-xs tracking-[0.4em] uppercase mb-3">
+                    {album.year} &nbsp;·&nbsp; {albumTracks.length} Tracks
+                  </p>
+                  <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-semibold italic text-[#EDE8DC] mb-4 leading-tight">
+                    {album.title}
+                  </h2>
+                  <div className="h-px w-10 bg-[#9B8040] mb-6" />
+                  <p className="text-[#7A7268] italic text-lg leading-relaxed mb-8">
+                    {album.description}
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    {["Spotify", "Apple Music", "Bandcamp"].map((service) => (
+                      <a
+                        key={service}
+                        href="#"
+                        className="border border-[#9B8040]/30 text-[#9B8040] px-6 py-2.5 text-xs tracking-[0.25em] uppercase hover:bg-[#9B8040]/10 hover:border-[#9B8040]/60 transition-colors"
+                      >
+                        {service}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              {/* Info */}
-              <div className="flex-1">
-                <p className="text-[#9B8040] text-xs tracking-[0.4em] uppercase mb-3">
-                  {album.year} &nbsp;·&nbsp; {albumTracks.length} Tracks
-                </p>
-                <h2 className="text-5xl font-semibold italic text-[#1E1B18] mb-4 leading-tight">
-                  {album.title}
-                </h2>
-                <div className="h-px w-10 bg-[#9B8040] mb-6" />
-                <p className="text-[#7A7268] italic text-lg leading-relaxed mb-8">
-                  {album.description}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  {["Spotify", "Apple Music", "Bandcamp"].map((service) => (
-                    <a
-                      key={service}
-                      href="#"
-                      className="border border-[#1E1B18]/40 text-[#1E1B18] px-6 py-2.5 text-xs tracking-[0.25em] uppercase hover:bg-[#1E1B18] hover:text-[#EDE8DC] transition-colors"
-                    >
-                      {service}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </article>
+              </article>
+            </ScrollReveal>
           );
         })}
       </div>
