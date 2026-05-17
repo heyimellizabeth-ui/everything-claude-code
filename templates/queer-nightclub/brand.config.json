@@ -1,0 +1,37 @@
+{
+  "site": {
+    "name": "Club KUDT",
+    "short": "KUDT",
+    "domain": "clubkudt.nl",
+    "tagline": "Party in a Queer Space",
+    "description": "Queer feesten in Alkmaar. Drag, disco, pop & meer. Tickets via Podium Victorie.",
+    "lang": "nl",
+    "locale": "nl_NL",
+    "estYear": "2022",
+    "bpm": "140 BPM"
+  },
+  "colors": {
+    "void": "#0D0D0D",
+    "cream": "#F5F0E8",
+    "accent": "#E8415A",
+    "surface": "#1A1A1A",
+    "muted": "#888070"
+  },
+  "venue": {
+    "name": "Podium Victorie",
+    "city": "Alkmaar",
+    "region": "Noord-Holland",
+    "country": "NL"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/clubkudt/",
+    "ra": "https://ra.co/clubs/clubkudt"
+  },
+  "forms": {
+    "backend": "formspree",
+    "newsletterKey": "xkokywzz",
+    "contactKey": "xrerjzlo",
+    "recipientEmail": "hello@clubkudt.nl"
+  },
+  "ticketUrl": "https://www.podiumvictorie.nl/programma/club-kudt-pride-after/"
+}
