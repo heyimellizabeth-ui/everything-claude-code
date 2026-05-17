@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Carousel — Official Band Website
 
-## Getting Started
+Promo site for **Carousel** (@carouseldeband). Built with Next.js 16 App Router, Tailwind CSS v4, and Cormorant Garamond.
 
-First, run the development server:
+## Running locally
 
 ```bash
+cd carousel-website
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | Description |
+|-------|-------------|
+| `/` | Home — hero, latest release, member grid, next-show callout |
+| `/music` | Discography with track player |
+| `/shows` | Upcoming dates with ticket links |
+| `/video` | YouTube embed grid with category filter |
+| `/about` | Band story and member cards |
+| `/contact` | Booking and press enquiry form |
 
-## Learn More
+## Swapping in real content
 
-To learn more about Next.js, take a look at the following resources:
+All placeholders are clearly marked — no layout changes needed when real assets arrive.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Photos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Every `<ImageSlot src={null} ... />` is a spotlight-gradient placeholder. Replace `null` with a path:
 
-## Deploy on Vercel
+```jsx
+// Before
+<ImageSlot src={null} alt="Marta" ratio="4/3" label="M" />
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+// After — drop the file in public/photos/
+<ImageSlot src="/photos/marta.jpg" alt="Marta" ratio="4/3" label="M" />
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Key locations:
+- `app/page.js` — band strip (21:9) and member grid (3:4)
+- `app/about/page.js` — member portrait cards (4:3)
+- `app/music/page.js` — album art (1:1)
+
+### Audio
+
+Track `src` fields are empty strings in `app/components/PlayerContext.js`. Add the file path or URL for each track:
+
+```js
+{ id: 1, title: "Velvet Hours", album: "Golden Hours", duration: "4:12", src: "/audio/velvet-hours.mp3" },
+```
+
+### Ticket and streaming links
+
+All `href="#"` links are labelled in the code and ready to swap:
+
+- `app/shows/page.js` — ticket links per show (search `href="#"`)
+- `app/music/page.js` — Spotify / Apple Music / Bandcamp per album (search `href="#"`)
+
+### Videos
+
+Update the `videos` array in `app/video/page.js`. Each entry needs a real YouTube `id` (the 11-character code after `?v=`):
+
+```js
+{ id: "dQw4w9WgXcQ", title: "...", category: "live", ... }
+```
+
+### Newsletter
+
+`app/components/NewsletterSignup.js` currently marks the form as done without sending anything. Replace the `// TODO` block with a real API call (Mailchimp, Resend, ConvertKit, etc.).
+
+## Tech stack
+
+- **Framework**: Next.js 16 App Router
+- **Styles**: Tailwind CSS v4 + custom CSS variables in `app/globals.css`
+- **Font**: Cormorant Garamond via `next/font/google`
+- **Player**: React Context (`app/components/PlayerContext.js`)
+- **Animations**: CSS `IntersectionObserver` scroll reveals, CSS `@keyframes`, parallax via `ParallaxBg`
+
+## Build
+
+```bash
+npm run build   # production build — must exit 0
+npm run lint    # ESLint check
+```
