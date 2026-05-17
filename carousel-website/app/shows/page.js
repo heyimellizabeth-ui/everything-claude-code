@@ -6,12 +6,12 @@ export const metadata = {
 };
 
 const shows = [
-  { date: "27 Apr", year: "2026", venue: "HAL 25", city: "Amsterdam, NL", note: "Koningsdag", status: "on-sale" },
-  { date: "14 Jun", year: "2026", venue: "Paradiso Kleine Zaal", city: "Amsterdam, NL", note: "", status: "on-sale" },
-  { date: "21 Jun", year: "2026", venue: "Ekko", city: "Utrecht, NL", note: "", status: "on-sale" },
-  { date: "5 Jul",  year: "2026", venue: "Volt", city: "Maastricht, NL", note: "", status: "on-sale" },
-  { date: "18 Jul", year: "2026", venue: "De Kreun", city: "Kortrijk, BE", note: "", status: "coming-soon" },
-  { date: "2 Aug",  year: "2026", venue: "TBA", city: "Gent, BE", note: "", status: "coming-soon" },
+  { date: "27 Apr", year: "2026", venue: "HAL 25", city: "Amsterdam, NL", note: "Koningsdag", status: "on-sale", ticketUrl: null },
+  { date: "14 Jun", year: "2026", venue: "Paradiso Kleine Zaal", city: "Amsterdam, NL", note: "", status: "on-sale", ticketUrl: null },
+  { date: "21 Jun", year: "2026", venue: "Ekko", city: "Utrecht, NL", note: "", status: "on-sale", ticketUrl: null },
+  { date: "5 Jul",  year: "2026", venue: "Volt", city: "Maastricht, NL", note: "", status: "on-sale", ticketUrl: null },
+  { date: "18 Jul", year: "2026", venue: "De Kreun", city: "Kortrijk, BE", note: "", status: "coming-soon", ticketUrl: null },
+  { date: "2 Aug",  year: "2026", venue: "TBA", city: "Gent, BE", note: "", status: "coming-soon", ticketUrl: null },
 ];
 
 const statusConfig = {
@@ -51,7 +51,8 @@ export default function Shows() {
               </p>
             </div>
             <a
-              href="#"
+              href={nextShow.ticketUrl ?? "/contact/"}
+              {...(!nextShow.ticketUrl ? {} : { target: "_blank", rel: "noopener noreferrer" })}
               className="bg-[#6B1A1A] text-[#EDE8DC] px-8 py-3 text-xs tracking-[0.4em] uppercase hover:bg-[#7D2020] transition-colors flex-shrink-0"
             >
               Get Tickets
@@ -94,7 +95,8 @@ export default function Shows() {
                     </span>
                     {show.status === "on-sale" && (
                       <a
-                        href="#"
+                        href={show.ticketUrl ?? "/contact/"}
+                        {...(!show.ticketUrl ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                         className="border border-[#6B1A1A]/50 text-[#6B1A1A] px-5 py-2.5 text-xs tracking-[0.25em] uppercase hover:bg-[#6B1A1A] hover:text-[#EDE8DC] transition-colors"
                       >
                         Tickets
