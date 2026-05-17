@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { SparkleOrnament } from "./components/EasterEggs";
 
 export default function Home() {
   return (
     <div>
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#1E1B18] overflow-hidden">
-        {/* Ornamental rings */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[700px] h-[700px] rounded-full border border-[#9B8040]/10" />
           <div className="absolute w-[500px] h-[500px] rounded-full border border-[#9B8040]/15" />
@@ -26,11 +26,8 @@ export default function Home() {
             Carousel
           </h1>
 
-          <div className="flex items-center justify-center gap-4 my-8">
-            <div className="h-px w-16 bg-[#9B8040]/50" />
-            <span className="text-[#9B8040] text-lg">✦</span>
-            <div className="h-px w-16 bg-[#9B8040]/50" />
-          </div>
+          {/* Easter egg ✦ — click 7 times */}
+          <SparkleOrnament />
 
           <p className="text-[#7A7268] text-xl italic font-light leading-relaxed max-w-md mx-auto mb-14">
             Songs that feel like something you almost remember
