@@ -59,17 +59,22 @@ body::after {
   transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-reveal].is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 [data-reveal][data-delay="1"] { transition-delay: 0.1s; }
 [data-reveal][data-delay="2"] { transition-delay: 0.2s; }
 [data-reveal][data-delay="3"] { transition-delay: 0.3s; }
 [data-reveal][data-delay="4"] { transition-delay: 0.4s; }
 [data-reveal][data-delay="5"] { transition-delay: 0.5s; }
 [data-reveal][data-delay="6"] { transition-delay: 0.6s; }
+[data-reveal][data-delay="7"] { transition-delay: 0.7s; }
+[data-reveal][data-delay="8"] { transition-delay: 0.8s; }
+
+/* Direction variants — override initial transform */
+[data-reveal][data-from="left"]  { transform: translateX(-36px); }
+[data-reveal][data-from="right"] { transform: translateX(36px); }
+[data-reveal][data-from="scale"] { transform: scale(0.94); }
+
+/* Revealed state resets all transforms */
+[data-reveal].is-revealed { opacity: 1; transform: translate(0, 0) scale(1); }
 
 /* Hero entrance animations */
 @keyframes fadeUp {
@@ -147,4 +152,58 @@ body::after {
 select.form-input option {
   background: #1A0E0E;
   color: #EDE8DC;
+}
+
+/* Nav link — gold underline slides in from left on hover */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #9B8040;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link:hover::after { width: 100%; }
+.nav-link.is-active::after { width: 100%; }
+
+/* Card lift — member + album cards */
+.card-lift {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s ease;
+}
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(155, 128, 64, 0.18);
+}
+
+/* Show row — left gold accent bar on hover */
+.show-row {
+  position: relative;
+}
+.show-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 0;
+  background: #9B8040;
+  transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.show-row:hover::before { height: 55%; }
+
+/* Music player track switch */
+@keyframes trackIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.track-enter {
+  animation: trackIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

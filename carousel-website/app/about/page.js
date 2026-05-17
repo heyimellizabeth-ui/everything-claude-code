@@ -108,7 +108,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {members.map((member, i) => (
             <ScrollReveal key={member.name} delay={((i % 2) + 1)}>
-              <div className="group border border-[#9B8040]/15 hover:border-[#9B8040]/35 transition-all duration-500 overflow-hidden">
+              <div className="card-lift group border border-[#9B8040]/15 hover:border-[#9B8040]/35 overflow-hidden">
                 <ImageSlot src={null} alt={member.name} ratio="4/3" label={member.name} />
 
                 {/* Info */}

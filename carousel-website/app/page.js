@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SparkleOrnament } from "./components/EasterEggs";
 import ScrollReveal from "./components/ScrollReveal";
 import ImageSlot from "./components/ImageSlot";
+import ParallaxBg from "./components/ParallaxBg";
 
 export const metadata = {
   title: "Carousel — Theatrical Folk-Rock",
@@ -12,16 +13,16 @@ export default function Home() {
     <div>
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-        {/* Spotlight background */}
-        <div
-          className="absolute inset-0"
+        {/* Parallax background layers */}
+        <ParallaxBg
+          className="absolute -top-20 -bottom-20 inset-x-0"
           style={{
             background:
               "radial-gradient(ellipse 60% 75% at 50% 45%, #2D1010 0%, #150808 40%, #0D0B09 75%, #000 100%)",
           }}
         />
 
-        {/* Concentric rings — decorative like the carousel figurine */}
+        {/* Concentric rings */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           {[800, 600, 420, 260].map((size) => (
             <div
@@ -32,7 +33,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Photo slot — full bleed hero image placeholder */}
+        {/* Warm photo overlay */}
         <div
           className="absolute inset-0 opacity-25"
           style={{

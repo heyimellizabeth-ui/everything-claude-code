@@ -66,8 +66,8 @@ export default function Shows() {
           {shows.map((show, i) => {
             const { label, classes } = statusConfig[show.status];
             return (
-              <ScrollReveal key={`${show.date}-${show.venue}`} delay={(i % 3) + 1}>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 py-9 border-b border-[#9B8040]/15 group">
+              <ScrollReveal key={`${show.date}-${show.venue}`} delay={(i % 3) + 1} direction="left">
+                <div className="show-row flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 py-9 border-b border-[#9B8040]/15 group pl-5 sm:pl-6">
                   {/* Date */}
                   <div className="sm:w-28 flex-shrink-0">
                     <p className="text-[#9B8040] font-semibold text-xl">{show.date}</p>

@@ -52,9 +52,9 @@ export default function Nav() {
             <li key={href}>
               <Link
                 href={href}
-                className={`text-xs tracking-[0.3em] uppercase transition-colors pb-0.5 ${
+                className={`nav-link text-xs tracking-[0.3em] uppercase transition-colors duration-200 ${
                   pathname === href
-                    ? "text-[#9B8040] border-b border-[#9B8040]"
+                    ? "text-[#9B8040] is-active"
                     : "text-[#7A7268] hover:text-[#EDE8DC]"
                 }`}
               >

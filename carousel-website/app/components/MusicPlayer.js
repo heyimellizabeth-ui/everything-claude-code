@@ -28,7 +28,8 @@ export default function MusicPlayer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 sm:gap-6">
         {/* Album art placeholder */}
         <div
-          className="w-9 h-9 flex-shrink-0 overflow-hidden"
+          key={`art-${currentTrack.id}`}
+          className="w-9 h-9 flex-shrink-0 overflow-hidden track-enter"
           style={{
             background: "radial-gradient(ellipse at 40% 35%, #3D1515 0%, #1A0808 60%, #0D0809 100%)",
           }}
@@ -41,7 +42,7 @@ export default function MusicPlayer() {
         </div>
 
         {/* Track info */}
-        <div className="flex-1 min-w-0">
+        <div key={`info-${currentTrack.id}`} className="flex-1 min-w-0 track-enter">
           <p className="text-[#EDE8DC] text-sm font-semibold italic truncate leading-tight">
             {currentTrack.title}
           </p>

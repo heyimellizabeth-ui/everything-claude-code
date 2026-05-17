@@ -69,7 +69,7 @@ export default function Music() {
           const albumTracks = TRACKS.filter((t) => t.album === album.title);
 
           return (
-            <ScrollReveal key={album.title}>
+            <ScrollReveal key={album.title} direction={i % 2 === 0 ? "left" : "right"}>
               <article
                 className={`flex flex-col md:flex-row gap-10 items-start ${
                   i % 2 === 1 ? "md:flex-row-reverse" : ""
