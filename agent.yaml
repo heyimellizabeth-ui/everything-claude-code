@@ -156,6 +156,12 @@ commands:
   - aside
   - auto-update
   - build-fix
+  - c1
+  - c2
+  - c3
+  - c4
+  - c5
+  - chelp
   - checkpoint
   - code-review
   - cost-report
