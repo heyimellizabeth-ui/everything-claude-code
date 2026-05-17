@@ -1,0 +1,60 @@
+# Club KUDT — Security Headers (C4)
+# Applied via Apache .htaccess for Hostinger / shared hosting
+
+<IfModule mod_headers.c>
+  # Prevent MIME-type sniffing
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Deny framing by other origins (clickjacking protection)
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Enable XSS filter in legacy browsers
+  Header always set X-XSS-Protection "1; mode=block"
+
+  # Force HTTPS for 1 year, include subdomains
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Control referrer information sent to third parties
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Permissions Policy — disable unused browser APIs
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+  # Content Security Policy
+  # Allows: self, GSAP CDN (cdnjs), Formspree (form POST), Instagram/RA embeds blocked by default
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://clubkudt.nl; font-src 'self'; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# Deny access to hidden files (e.g. .htaccess itself)
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Deny access to Python utility scripts (not public assets)
+<FilesMatch "\.(py)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+
+# Cache static assets aggressively; bust cache via filename versioning when assets change
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# Custom 404
+ErrorDocument 404 /404.html
