@@ -4,6 +4,8 @@ import Nav from "./components/Nav";
 import { PlayerProvider } from "./components/PlayerContext";
 import MusicPlayer from "./components/MusicPlayer";
 import { KonamiListener } from "./components/EasterEggs";
+import SocialLinks from "./components/SocialLinks";
+import NewsletterSignup from "./components/NewsletterSignup";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -38,37 +40,43 @@ export default function RootLayout({ children }) {
           <main className="flex-1 pb-20">{children}</main>
 
           <footer
-            className="border-t border-[#9B8040]/15 py-14 text-center pb-24"
+            className="border-t border-[#9B8040]/15 pb-24"
             style={{ fontFamily: "var(--font-cormorant)" }}
           >
-            <p className="text-3xl font-light italic text-[#EDE8DC]/80 mb-6">Carousel</p>
-            <div className="flex items-center justify-center gap-8 mb-8">
-              <a
-                href="https://www.instagram.com/carouseldeband"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#7A7268] text-xs tracking-[0.35em] uppercase hover:text-[#9B8040] transition-colors"
-              >
-                Instagram
-              </a>
-              <span className="text-[#9B8040]/30">✦</span>
-              <a
-                href="/contact"
-                className="text-[#7A7268] text-xs tracking-[0.35em] uppercase hover:text-[#9B8040] transition-colors"
-              >
-                Bookings
-              </a>
-              <span className="text-[#9B8040]/30">✦</span>
-              <a
-                href="/music"
-                className="text-[#7A7268] text-xs tracking-[0.35em] uppercase hover:text-[#9B8040] transition-colors"
-              >
-                Music
-              </a>
+            {/* Newsletter strip */}
+            <div className="border-b border-[#9B8040]/10 py-12 px-6 text-center">
+              <p className="text-[#9B8040] text-xs tracking-[0.5em] uppercase mb-3">Stay Close</p>
+              <p className="text-[#7A7268] italic text-lg mb-6">
+                New shows, new music, no noise.
+              </p>
+              <NewsletterSignup />
             </div>
-            <p className="text-[#7A7268]/50 text-xs tracking-widest uppercase">
-              © 2026 Carousel
-            </p>
+
+            {/* Links */}
+            <div className="py-10 px-6 text-center">
+              <p className="text-2xl font-light italic text-[#EDE8DC]/70 mb-7">Carousel</p>
+              <SocialLinks className="justify-center mb-8" />
+              <div className="flex items-center justify-center gap-6 mb-8">
+                {[
+                  { href: "/music",   label: "Music" },
+                  { href: "/shows",   label: "Shows" },
+                  { href: "/video",   label: "Video" },
+                  { href: "/about",   label: "About" },
+                  { href: "/contact", label: "Contact" },
+                ].map(({ href, label }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className="text-[#7A7268]/60 text-xs tracking-[0.3em] uppercase hover:text-[#9B8040] transition-colors"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+              <p className="text-[#7A7268]/30 text-xs tracking-widest uppercase">
+                © 2026 Carousel
+              </p>
+            </div>
           </footer>
 
           <MusicPlayer />

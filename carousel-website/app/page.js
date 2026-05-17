@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SparkleOrnament } from "./components/EasterEggs";
 import ScrollReveal from "./components/ScrollReveal";
+import ImageSlot from "./components/ImageSlot";
 
 export const metadata = {
   title: "Carousel — Theatrical Folk-Rock",
@@ -84,16 +85,7 @@ export default function Home() {
 
       {/* ── Band photo strip — full bleed ── */}
       <section className="relative overflow-hidden">
-        <div className="photo-slot w-full" style={{ aspectRatio: "21/9", minHeight: 280 }}>
-          <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
-            <p
-              className="text-[#EDE8DC]/10 text-xs tracking-[0.5em] uppercase"
-              style={{ fontFamily: "var(--font-cormorant)" }}
-            >
-              Band photo
-            </p>
-          </div>
-        </div>
+        <ImageSlot src={null} alt="Carousel — band photo" ratio="21/9" label="Band photo" className="min-h-[280px]" />
       </section>
 
       {/* ── New release ── */}
@@ -169,17 +161,7 @@ export default function Home() {
             ].map((m, i) => (
               <ScrollReveal key={m.name} delay={i + 1}>
                 <div className="group cursor-pointer">
-                  {/* Portrait placeholder */}
-                  <div
-                    className="photo-slot w-full mb-4 group-hover:opacity-90 transition-opacity"
-                    style={{ aspectRatio: "3/4" }}
-                  >
-                    <div className="absolute inset-0 flex items-end p-4 z-10">
-                      <span className="text-[#EDE8DC]/20 text-xs tracking-widest uppercase" style={{ fontFamily: "var(--font-cormorant)" }}>
-                        {m.name[0]}
-                      </span>
-                    </div>
-                  </div>
+                  <ImageSlot src={null} alt={m.name} ratio="3/4" label={m.name[0]} className="mb-4 group-hover:opacity-90 transition-opacity" />
                   <p className="text-lg font-semibold italic text-[#EDE8DC]">{m.name}</p>
                   <p className="text-xs tracking-[0.25em] uppercase text-[#7A7268] mt-0.5">{m.role}</p>
                 </div>

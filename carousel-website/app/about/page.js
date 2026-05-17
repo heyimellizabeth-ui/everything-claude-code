@@ -1,4 +1,6 @@
 import ScrollReveal from "../components/ScrollReveal";
+import ImageSlot from "../components/ImageSlot";
+import SocialLinks from "../components/SocialLinks";
 import Link from "next/link";
 
 export const metadata = {
@@ -107,17 +109,7 @@ export default function About() {
           {members.map((member, i) => (
             <ScrollReveal key={member.name} delay={((i % 2) + 1)}>
               <div className="group border border-[#9B8040]/15 hover:border-[#9B8040]/35 transition-all duration-500 overflow-hidden">
-                {/* Portrait photo slot */}
-                <div
-                  className="photo-slot w-full"
-                  style={{ aspectRatio: "4/3" }}
-                >
-                  <div className="absolute inset-0 flex items-end p-6 z-10">
-                    <p className="text-[#EDE8DC]/10 text-xs tracking-widest uppercase">
-                      {member.name}
-                    </p>
-                  </div>
-                </div>
+                <ImageSlot src={null} alt={member.name} ratio="4/3" label={member.name} />
 
                 {/* Info */}
                 <div className="p-8">
@@ -141,18 +133,11 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Instagram CTA ── */}
+      {/* ── Social CTA ── */}
       <section className="spotlight py-20 px-6 text-center">
         <ScrollReveal>
-          <p className="text-[#7A7268] text-sm italic mb-4">Follow the journey</p>
-          <a
-            href="https://www.instagram.com/carouseldeband"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[clamp(1.5rem,4vw,2.5rem)] font-light italic text-[#EDE8DC] hover:text-[#9B8040] transition-colors"
-          >
-            @carouseldeband
-          </a>
+          <p className="text-[#7A7268] text-sm italic mb-6">Follow the journey</p>
+          <SocialLinks className="justify-center" />
         </ScrollReveal>
       </section>
 

@@ -1,6 +1,7 @@
 "use client";
 import { usePlayer, TRACKS } from "../components/PlayerContext";
 import ScrollReveal from "../components/ScrollReveal";
+import ImageSlot from "../components/ImageSlot";
 
 const ALBUMS = [
   {
@@ -76,18 +77,12 @@ export default function Music() {
               >
                 {/* Album art + tracks */}
                 <div className="md:w-72 flex-shrink-0 w-full">
-                  {/* Album art placeholder */}
-                  <div
-                    className="photo-slot w-full"
-                    style={{ aspectRatio: "1/1" }}
-                  >
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10 gap-2">
-                      <p className="text-[#9B8040]/50 text-xs tracking-[0.5em] uppercase">{album.year}</p>
-                      <p className="text-[#EDE8DC]/15 text-4xl font-light italic">
-                        {album.title.split(" ").map((w) => w[0]).join("")}
-                      </p>
-                    </div>
-                  </div>
+                  <ImageSlot
+                    src={null}
+                    alt={`${album.title} album art`}
+                    ratio="1/1"
+                    label={album.title.split(" ").map((w) => w[0]).join("")}
+                  />
 
                   {/* Track list */}
                   <div className="border border-t-0 border-[#9B8040]/15 bg-[#0D0B09]">
