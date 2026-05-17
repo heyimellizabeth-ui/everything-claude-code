@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Studio — Element Catalog</title>
+<style>
+/* ─── Reset & variables ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --void:    #0A0A0A;
+  --surface: #141414;
+  --card:    #1A1A1A;
+  --border:  #252525;
+  --muted:   #888070;
+  --cream:   #F0EBE0;
+  --accent:  #E8415A;
+  --gold:    #C8A96E;
+  --font:    'Courier New', Courier, monospace;
+  --sidebar: 220px;
+  --radius:  2px;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--cream);
+  font-family: var(--font);
+  font-size: 13px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* ─── Header ─── */
+.studio-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.studio-logo {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: var(--cream);
+  text-transform: uppercase;
+}
+.studio-logo span { color: var(--accent); }
+.header-meta {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+.header-search {
+  flex: 1;
+  max-width: 280px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color .2s;
+}
+.header-search:focus { border-color: var(--accent); }
+.header-search::placeholder { color: var(--muted); }
+
+/* ─── Layout ─── */
+.studio-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar) 1fr;
+  min-height: calc(100vh - 57px);
+}
+
+/* ─── Sidebar ─── */
+.sidebar {
+  position: sticky;
+  top: 57px;
+  height: calc(100vh - 57px);
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+}
+.sidebar-section {
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+.sidebar-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.filter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 7px 8px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: color .15s, background .15s;
+  text-align: left;
+}
+.filter-btn:hover { color: var(--cream); background: var(--surface); }
+.filter-btn.active { color: var(--accent); background: rgba(232,65,90,0.08); }
+.filter-count {
+  font-size: 9px;
+  color: var(--muted);
+  background: var(--surface);
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+.filter-btn.active .filter-count { background: rgba(232,65,90,0.15); color: var(--accent); }
+.site-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all .15s;
+  width: 100%;
+}
+.site-chip:hover { border-color: var(--accent); color: var(--cream); }
+.site-chip.active { border-color: var(--accent); color: var(--accent); background: rgba(232,65,90,0.06); }
+.site-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* ─── Main grid ─── */
+.main {
+  padding: 24px;
+}
+.main-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+.result-count {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+.view-toggle {
+  display: flex;
+  gap: 4px;
+}
+.view-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all .15s;
+}
+.view-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(232,65,90,0.06); }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.cards-grid.list-view {
+  grid-template-columns: 1fr;
+}
+
+/* ─── Component card ─── */
+.comp-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .2s, transform .15s;
+  cursor: pointer;
+  position: relative;
+}
+.comp-card:hover { border-color: #3A3A3A; transform: translateY(-2px); }
+.comp-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(232,65,90,0.2); }
+.comp-card.selected::after {
+  content: '✦ SELECTED';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  background: rgba(232,65,90,0.12);
+  padding: 3px 7px;
+  border: 1px solid rgba(232,65,90,0.3);
+  pointer-events: none;
+}
+
+/* Preview iframe */
+.card-preview {
+  width: 100%;
+  height: 200px;
+  border: none;
+  background: var(--void);
+  display: block;
+  pointer-events: none;
+}
+.comp-card:hover .card-preview { pointer-events: auto; }
+.list-view .card-preview { height: 120px; }
+
+/* Card meta */
+.card-meta {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+}
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.card-name {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--cream);
+  font-weight: 700;
+}
+.card-category {
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 10px;
+  white-space: nowrap;
+}
+.card-desc {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.card-source {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+.card-actions {
+  display: flex;
+  gap: 6px;
+}
+.card-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 9px;
+  letter-spacing: 2px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all .15s;
+  border-radius: var(--radius);
+}
+.card-btn:hover { border-color: var(--accent); color: var(--accent); }
+.card-btn.select-btn.active { background: rgba(232,65,90,0.1); border-color: var(--accent); color: var(--accent); }
+
+/* ─── Code drawer ─── */
+.code-drawer {
+  display: none;
+  background: #0D0D0D;
+  border-top: 1px solid var(--border);
+  padding: 14px 16px;
+}
+.code-drawer.open { display: block; }
+.code-drawer pre {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.code-drawer pre .keyword { color: #E8415A; }
+.code-drawer pre .string { color: var(--gold); }
+
+/* ─── Empty state ─── */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+.empty-state h3 { font-size: 14px; letter-spacing: 4px; margin-bottom: 12px; color: var(--cream); }
+.empty-state p { font-size: 11px; letter-spacing: 2px; line-height: 1.8; }
+
+/* ─── Category color dots ─── */
+.cat-interactive { --cat-color: #E8415A; }
+.cat-animations  { --cat-color: #C8A96E; }
+.cat-hero        { --cat-color: #7B9CEA; }
+.cat-typography  { --cat-color: #9BD49B; }
+.cat-layout      { --cat-color: #C8A96E; }
+.cat-colors      { --cat-color: #D4A0D4; }
+.comp-card .card-category { border-color: var(--cat-color, var(--border)); color: var(--cat-color, var(--muted)); }
+
+/* ─── Selection bar (sticky bottom) ─── */
+.selection-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10,10,10,0.96);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 300;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.77,0,.175,1);
+}
+.selection-bar.visible { transform: translateY(0); }
+.sel-count {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--cream);
+}
+.sel-count span { color: var(--accent); font-weight: 700; }
+.sel-tags {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 36px;
+  overflow: hidden;
+}
+.sel-tag {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  background: rgba(232,65,90,0.1);
+  border: 1px solid rgba(232,65,90,0.3);
+  padding: 3px 8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sel-tag-remove {
+  cursor: pointer;
+  opacity: .6;
+  font-size: 10px;
+  line-height: 1;
+}
+.sel-tag-remove:hover { opacity: 1; }
+.sel-actions { display: flex; gap: 8px; }
+.sel-clear {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.sel-clear:hover { border-color: var(--accent); color: var(--accent); }
+.sel-generate {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #0A0A0A;
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.sel-generate:hover { background: #FF5570; transform: translateY(-1px); }
+.sel-generate:active { transform: translateY(0); }
+
+/* ─── Modal (export) ─── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 32px;
+  max-width: 560px;
+  width: 90%;
+  position: relative;
+}
+.modal-title {
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: var(--cream);
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.modal-subtitle {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.8;
+}
+.modal-section-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-list {
+  list-style: none;
+  margin-bottom: 20px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+.modal-list li {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--cream);
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-list li::before { content: '✦'; color: var(--accent); font-size: 8px; }
+.modal-prompt {
+  background: #0D0D0D;
+  border: 1px solid var(--border);
+  padding: 14px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--gold);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  position: relative;
+}
+.modal-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 8px;
+  letter-spacing: 2px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.modal-copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.modal-close {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── Loading state ─── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+  color: var(--muted);
+}
+.loading-dot {
+  width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.loading-dot:nth-child(2) { animation-delay: .2s; }
+.loading-dot:nth-child(3) { animation-delay: .4s; }
+.loading-dots { display: flex; gap: 6px; }
+@keyframes pulse { 0%,100%{opacity:.2;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .studio-layout { grid-template-columns: 1fr; }
+  .sidebar { position: relative; top: auto; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .cards-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="studio-header">
+  <div class="studio-logo">DESIGN<span>✦</span>STUDIO</div>
+  <input type="text" class="header-search" id="search" placeholder="SEARCH ELEMENTS...">
+  <div class="header-meta" id="header-meta">LOADING CATALOG...</div>
+</header>
+
+<!-- Layout -->
+<div class="studio-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Categories</div>
+      <button class="filter-btn active" data-filter="all" onclick="setCategory('all')">
+        ALL ELEMENTS <span class="filter-count" id="count-all">—</span>
+      </button>
+      <button class="filter-btn cat-interactive" data-filter="interactive" onclick="setCategory('interactive')">
+        INTERACTIVE <span class="filter-count" id="count-interactive">—</span>
+      </button>
+      <button class="filter-btn cat-animations" data-filter="animations" onclick="setCategory('animations')">
+        ANIMATIONS <span class="filter-count" id="count-animations">—</span>
+      </button>
+      <button class="filter-btn cat-hero" data-filter="hero" onclick="setCategory('hero')">
+        HERO / BG <span class="filter-count" id="count-hero">—</span>
+      </button>
+      <button class="filter-btn cat-typography" data-filter="typography" onclick="setCategory('typography')">
+        TYPOGRAPHY <span class="filter-count" id="count-typography">—</span>
+      </button>
+      <button class="filter-btn cat-layout" data-filter="layout" onclick="setCategory('layout')">
+        LAYOUT <span class="filter-count" id="count-layout">—</span>
+      </button>
+      <button class="filter-btn cat-colors" data-filter="colors" onclick="setCategory('colors')">
+        COLORS <span class="filter-count" id="count-colors">—</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section" id="sources-section">
+      <div class="sidebar-label">Sources</div>
+      <div id="source-chips"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Selection</div>
+      <div id="sidebar-sel-count" style="font-size:10px;letter-spacing:2px;color:var(--muted);padding:4px 0">0 SELECTED</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="main-toolbar">
+      <div class="result-count" id="result-count">— ELEMENTS</div>
+      <div class="view-toggle">
+        <button class="view-btn active" onclick="setView('grid')">GRID</button>
+        <button class="view-btn" onclick="setView('list')">LIST</button>
+      </div>
+    </div>
+    <div class="cards-grid" id="cards-grid">
+      <div class="loading">
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
+        <div style="font-size:10px;letter-spacing:3px">LOADING CATALOG</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Selection bar -->
+<div class="selection-bar" id="selection-bar">
+  <div class="sel-count"><span id="sel-num">0</span> SELECTED</div>
+  <div class="sel-tags" id="sel-tags"></div>
+  <div class="sel-actions">
+    <button class="sel-clear" onclick="clearSelection()">CLEAR</button>
+    <button class="sel-generate" onclick="openExport()">GENERATE SITE →</button>
+  </div>
+</div>
+
+<!-- Export modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeExport(event)">
+  <div class="modal">
+    <div class="modal-title">YOUR SELECTION</div>
+    <div class="modal-subtitle">Copy the prompt below and paste it when starting a new /c1 or /c2 session.</div>
+    <div class="modal-section-label">Selected elements</div>
+    <ul class="modal-list" id="modal-list"></ul>
+    <div class="modal-section-label">Claude prompt</div>
+    <div class="modal-prompt" id="modal-prompt">
+      <button class="modal-copy-btn" onclick="copyPrompt()">COPY</button>
+      <span id="prompt-text"></span>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-close" onclick="closeExport()">CLOSE</button>
+    </div>
+  </div>
+</div>
+
+<!-- Catalog data (generated by analyze-styles.js) -->
+<script src="catalog.js" onerror="handleNoCatalog()"></script>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────────────
+let catalog = null;
+let selected = new Set(JSON.parse(localStorage.getItem('studio-selection') || '[]'));
+let activeCategory = 'all';
+let activeSource = 'all';
+let searchQuery = '';
+let currentView = 'grid';
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  if (window.CATALOG) {
+    catalog = window.CATALOG;
+    init();
+  }
+  // If catalog.js didn't load yet, handleNoCatalog() was called
+});
+
+function handleNoCatalog() {
+  // catalog.js not found — offer to generate it
+  document.getElementById('cards-grid').innerHTML = `
+    <div class="empty-state">
+      <h3>CATALOG NOT FOUND</h3>
+      <p>Run the analyzer first:<br><br>
+      <span style="color:var(--gold)">node scripts/studio/analyze-styles.js</span><br><br>
+      Then refresh this page.</p>
+    </div>`;
+  document.getElementById('header-meta').textContent = 'NO CATALOG';
+}
+
+function init() {
+  updateCounts();
+  renderSourceChips();
+  renderCards();
+  updateSelectionBar();
+  document.getElementById('header-meta').textContent =
+    `${catalog.elements.length} ELEMENTS · ${catalog.sites.length} SITE${catalog.sites.length > 1 ? 'S' : ''}`;
+  document.getElementById('search').addEventListener('input', e => {
+    searchQuery = e.target.value.toLowerCase();
+    renderCards();
+  });
+}
+
+// ─── Filtering ───────────────────────────────────────────────────────────────
+function getFiltered() {
+  return catalog.elements.filter(el => {
+    if (activeCategory !== 'all' && el.category !== activeCategory) return false;
+    if (activeSource !== 'all' && el.source !== activeSource) return false;
+    if (searchQuery) {
+      const hay = `${el.name} ${el.description} ${el.tags?.join(' ')}`.toLowerCase();
+      if (!hay.includes(searchQuery)) return false;
+    }
+    return true;
+  });
+}
+
+function setCategory(cat) {
+  activeCategory = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === cat));
+  renderCards();
+}
+
+function setSource(src) {
+  activeSource = activeSource === src ? 'all' : src;
+  document.querySelectorAll('.site-chip').forEach(c => c.classList.toggle('active', c.dataset.source === activeSource));
+  renderCards();
+}
+
+function setView(v) {
+  currentView = v;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === v));
+  const grid = document.getElementById('cards-grid');
+  grid.classList.toggle('list-view', v === 'list');
+}
+
+function updateCounts() {
+  const cats = ['all', 'interactive', 'animations', 'hero', 'typography', 'layout', 'colors'];
+  cats.forEach(cat => {
+    const count = cat === 'all' ? catalog.elements.length :
+      catalog.elements.filter(e => e.category === cat).length;
+    const el = document.getElementById(`count-${cat}`);
+    if (el) el.textContent = count;
+  });
+}
+
+function renderSourceChips() {
+  const container = document.getElementById('source-chips');
+  container.innerHTML = catalog.sites.map(s => `
+    <div class="site-chip" data-source="${s.id}" onclick="setSource('${s.id}')">
+      <div class="site-dot" style="background:${siteColor(s.id)}"></div>
+      ${s.name.toUpperCase()}
+    </div>`).join('');
+}
+
+function siteColor(id) {
+  const colors = ['#E8415A', '#C8A96E', '#7B9CEA', '#9BD49B', '#D4A0D4'];
+  const idx = [...id].reduce((a, c) => a + c.charCodeAt(0), 0) % colors.length;
+  return colors[idx];
+}
+
+// ─── Card rendering ──────────────────────────────────────────────────────────
+function renderCards() {
+  const items = getFiltered();
+  const grid = document.getElementById('cards-grid');
+  document.getElementById('result-count').textContent = `${items.length} ELEMENT${items.length !== 1 ? 'S' : ''}`;
+
+  if (items.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><h3>NO RESULTS</h3><p>Try a different category or search term.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map(el => renderCard(el)).join('');
+  if (currentView === 'list') grid.classList.add('list-view');
+}
+
+function renderCard(el) {
+  const isSelected = selected.has(el.id);
+  const catClass = `cat-${el.category}`;
+  return `
+    <div class="comp-card ${catClass} ${isSelected ? 'selected' : ''}" id="card-${el.id}" onclick="handleCardClick(event, '${el.id}')">
+      <iframe class="card-preview" srcdoc="${escapeAttr(el.previewHtml || defaultPreview(el))}" sandbox="allow-scripts"></iframe>
+      <div class="card-meta">
+        <div class="card-top">
+          <div class="card-name">${el.name}</div>
+          <div class="card-category">${el.category}</div>
+        </div>
+        <div class="card-desc">${el.description}</div>
+        <div class="card-footer">
+          <div class="card-source">${el.source.toUpperCase()}</div>
+          <div class="card-actions">
+            <button class="card-btn" onclick="toggleCode(event, '${el.id}')">CODE</button>
+            <button class="card-btn select-btn ${isSelected ? 'active' : ''}" onclick="toggleSelect(event, '${el.id}')">
+              ${isSelected ? 'DESELECT' : 'SELECT'}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="code-drawer" id="code-${el.id}">
+        <pre>${escapeHtml(el.snippet || '')}</pre>
+      </div>
+    </div>`;
+}
+
+function defaultPreview(el) {
+  return `<!DOCTYPE html><html><head><style>*{margin:0;padding:0}body{background:#0D0D0D;display:flex;align-items:center;justify-content:center;height:180px;font-family:'Courier New',monospace;color:#888070;font-size:10px;letter-spacing:3px}</style></head><body>${el.name.toUpperCase()}</body></html>`;
+}
+
+function escapeAttr(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function escapeHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── Interactions ────────────────────────────────────────────────────────────
+function handleCardClick(e, id) {
+  // Don't trigger on button clicks
+  if (e.target.closest('.card-btn') || e.target.closest('.code-drawer')) return;
+}
+
+function toggleCode(e, id) {
+  e.stopPropagation();
+  const drawer = document.getElementById(`code-${id}`);
+  drawer.classList.toggle('open');
+  e.target.textContent = drawer.classList.contains('open') ? 'HIDE' : 'CODE';
+}
+
+function toggleSelect(e, id) {
+  e.stopPropagation();
+  if (selected.has(id)) {
+    selected.delete(id);
+  } else {
+    selected.add(id);
+  }
+  persist();
+  // Update this card only (no full re-render)
+  const card = document.getElementById(`card-${id}`);
+  const btn = card?.querySelector('.select-btn');
+  if (card) card.classList.toggle('selected', selected.has(id));
+  if (btn) {
+    btn.classList.toggle('active', selected.has(id));
+    btn.textContent = selected.has(id) ? 'DESELECT' : 'SELECT';
+  }
+  updateSelectionBar();
+}
+
+// ─── Selection bar ───────────────────────────────────────────────────────────
+function updateSelectionBar() {
+  const bar = document.getElementById('selection-bar');
+  const num = document.getElementById('sel-num');
+  const tags = document.getElementById('sel-tags');
+  const sideCount = document.getElementById('sidebar-sel-count');
+
+  num.textContent = selected.size;
+  sideCount.textContent = `${selected.size} SELECTED`;
+  bar.classList.toggle('visible', selected.size > 0);
+
+  tags.innerHTML = [...selected].slice(0, 8).map(id => {
+    const el = catalog?.elements.find(e => e.id === id);
+    const name = el ? el.name : id;
+    return `<div class="sel-tag">${name}<span class="sel-tag-remove" onclick="toggleSelect(event,'${id}')">×</span></div>`;
+  }).join('');
+}
+
+function clearSelection() {
+  selected.clear();
+  persist();
+  document.querySelectorAll('.comp-card.selected').forEach(c => {
+    c.classList.remove('selected');
+    const btn = c.querySelector('.select-btn');
+    if (btn) { btn.classList.remove('active'); btn.textContent = 'SELECT'; }
+  });
+  updateSelectionBar();
+}
+
+function persist() {
+  localStorage.setItem('studio-selection', JSON.stringify([...selected]));
+}
+
+// ─── Export modal ────────────────────────────────────────────────────────────
+function openExport() {
+  if (selected.size === 0) return;
+  const items = [...selected].map(id => catalog?.elements.find(e => e.id === id)).filter(Boolean);
+
+  document.getElementById('modal-list').innerHTML = items
+    .map(el => `<li>${el.name} <span style="color:var(--muted);font-size:8px">(${el.category})</span></li>`)
+    .join('');
+
+  const names = items.map(el => el.name);
+  const prompt = `Build a new site using these design elements from my studio catalog:\n\n${names.map(n => `• ${n}`).join('\n')}\n\nReference: projects/design-studio/catalog.json — element IDs: ${[...selected].join(', ')}`;
+  document.getElementById('prompt-text').textContent = prompt;
+
+  // Write selection.json via download (can't write to disk from browser)
+  const sel = { generated: new Date().toISOString(), selected: [...selected], elements: items.map(e => ({ id: e.id, name: e.name, category: e.category })) };
+  window._lastSelection = sel;
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeExport(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function copyPrompt() {
+  const text = document.getElementById('prompt-text').textContent;
+  navigator.clipboard?.writeText(text).then(() => {
+    document.querySelector('.modal-copy-btn').textContent = 'COPIED ✦';
+    setTimeout(() => document.querySelector('.modal-copy-btn').textContent = 'COPY', 2000);
+  });
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('modal-overlay').classList.remove('open');
+});
+</script>
+</body>
+</html>
