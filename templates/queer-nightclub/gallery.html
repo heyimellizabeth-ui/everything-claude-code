@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="{{SITE_LANG}}">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foto's {{SITE_NAME}} — 780+ Queer Event Foto's Alkmaar</title>
+<meta name="description" content="780+ foto's van {{SITE_NAME}} events in {{VENUE_CITY}}. Queer nightlife fotografie van {{VENUE_NAME}} — drag, dancefloor, community.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://{{SITE_DOMAIN}}/gallery.html">
+<meta property="og:title" content="Foto's {{SITE_NAME}} — 780+ Queer Event Foto's {{VENUE_CITY}}">
+<meta property="og:description" content="780+ foto's van {{SITE_NAME}} events in {{VENUE_CITY}}.">
+<meta property="og:image" content="https://{{SITE_DOMAIN}}/og-image.png">
+<meta property="og:url" content="https://{{SITE_DOMAIN}}/gallery.html">
+<meta property="og:locale" content="{{SITE_LOCALE}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{SITE_NAME}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Foto's {{SITE_NAME}} — 780+ Queer Event Foto's {{VENUE_CITY}}">
+<meta name="twitter:description" content="780+ foto's van {{SITE_NAME}} events in {{VENUE_CITY}}.">
+<meta name="twitter:image" content="https://{{SITE_DOMAIN}}/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "{{SITE_NAME}} — Event Photo Albums",
+  "description": "780+ foto's van {{SITE_NAME}} events in {{VENUE_CITY}} bij {{VENUE_NAME}}.",
+  "url": "https://{{SITE_DOMAIN}}/gallery.html",
+  "numberOfItems": 8,
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Kudt Vol. 01 — Dec 2022", "url": "https://www.flickr.com/photos/197933149@N02/albums/72177720306889370" },
+    { "@type": "ListItem", "position": 2, "name": "Kudt Vol. 02 — Mei 2023", "url": "https://www.flickr.com/photos/197933149@N02/albums/72177720308932002" },
+    { "@type": "ListItem", "position": 3, "name": "Kudt Vol. 03 — Sep 2024", "url": "https://www.flickr.com/photos/197933149@N02/albums/72177720311362491" },
+    { "@type": "ListItem", "position": 4, "name": "Kudt Vol. 04 — Nov 2024", "url": "https://www.flickr.com/photos/197933149@N02/albums/72177720313459001" },
+    { "@type": "ListItem", "position": 5, "name": "Museumnacht {{VENUE_CITY}} 2024", "url": "https://www.flickr.com/photos/197933149@N02/albums/72177720321214209" },
+    { "@type": "ListItem", "position": 6, "name": "Kudt Vol. 05 — Mrt 2025", "url": "https://www.flickr.com/photos/197933149@N02/albums/72177720315942759" },
+    { "@type": "ListItem", "position": 7, "name": "Kudt Vol. 06 — Mei 2025", "url": "https://www.flickr.com/photos/197933149@N02/albums/72177720317757494" },
+    { "@type": "ListItem", "position": 8, "name": "The Nightmare Before KUDTMASSSS — Nov 2025", "url": "https://www.flickr.com/photos/197933149@N02/" }
+  ]
+}
+</script>
+<noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; }
+  html { scroll-behavior: smooth; }
+  html { overflow-x: hidden; }
+  body { background: var(--void); color: var(--cream); font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+  .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .cursor.expanded { width: 56px; height: 56px; background: var(--red); }
+  .cursor-label { font-family: var(--font-mono); font-size: 9px; color: var(--cream); opacity: 0; letter-spacing: 0.5px; white-space: nowrap; transition: opacity 0.2s; }
+  .cursor.expanded .cursor-label { opacity: 1; }
+  .progress-bar { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--red); z-index: 9998; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: rgba(13,13,13,0.85); backdrop-filter: blur(8px); }
+  .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--cream); }
+
+  .page-header { padding: 10rem 3rem 4rem; border-bottom: 1px solid rgba(245,240,232,0.08); }
+  .page-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem; }
+  .page-title { font-family: var(--font-mono); font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; letter-spacing: 2px; line-height: 0.9; }
+  .page-title span { color: var(--red); }
+  .page-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; text-align: right; line-height: 2; }
+
+  .stats-row { padding: 3rem; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; border-bottom: 1px solid rgba(245,240,232,0.08); }
+  .stat { text-align: center; }
+  .stat-num { font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--cream); letter-spacing: 2px; }
+  .stat-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 0.5rem; }
+
+  /* FLICKR BANNER */
+  .flickr-banner { max-width: 1200px; margin: 4rem auto 0; padding: 0 3rem; }
+  .flickr-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 2rem 2.5rem; border: 1px solid rgba(232,65,90,0.3); background: rgba(232,65,90,0.04); flex-wrap: wrap; }
+  .flickr-banner-text { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; line-height: 2; }
+  .flickr-banner-text strong { color: var(--cream); display: block; font-size: 1rem; letter-spacing: 3px; margin-bottom: 0.25rem; }
+  .flickr-btn { display: inline-block; padding: 0.75rem 2rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; text-decoration: none; text-transform: uppercase; white-space: nowrap; transition: opacity 0.2s; }
+  .flickr-btn:hover { opacity: 0.85; }
+
+  /* EDITIONS GRID */
+  .editions-section { padding: 4rem 3rem 6rem; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 2rem; }
+
+  .editions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(245,240,232,0.06); }
+  .edition-card { background: var(--void); padding: 2.5rem 2rem; position: relative; overflow: hidden; transition: background 0.3s; text-decoration: none; color: inherit; display: block; }
+  .edition-card::before { content: ''; position: absolute; inset: 0; background: var(--red); opacity: 0; transition: opacity 0.3s; }
+  .edition-card:hover::before { opacity: 0.06; }
+  .edition-card:hover .edition-arrow { color: var(--red); transform: translateX(4px); }
+  .edition-num { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .edition-name { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 2px; color: var(--cream); text-transform: uppercase; line-height: 1.3; margin-bottom: 0.75rem; }
+  .edition-date { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .edition-photos { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+  .edition-arrow { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 2rem; display: block; transition: color 0.2s, transform 0.2s; }
+  .edition-tag { display: inline-block; font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 2px; color: var(--red); text-transform: uppercase; border: 1px solid rgba(232,65,90,0.4); padding: 0.2rem 0.5rem; margin-bottom: 1rem; }
+
+  /* ARCHIVE CTA */
+  .archive-cta { margin-top: 4rem; padding: 4rem 2.5rem; border: 1px solid rgba(245,240,232,0.08); text-align: center; }
+  .archive-cta-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 1rem; }
+  .archive-cta-title { font-family: var(--font-mono); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: 2px; color: var(--cream); margin-bottom: 0.75rem; }
+  .archive-cta-sub { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 2rem; line-height: 2; }
+  .archive-cta-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .archive-cta-links a { display: inline-block; padding: 0.75rem 2rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; text-decoration: none; text-transform: uppercase; transition: opacity 0.2s; }
+  .archive-cta-links a.primary { background: var(--red); color: var(--cream); }
+  .archive-cta-links a.secondary { border: 1px solid rgba(245,240,232,0.2); color: var(--muted); }
+  .archive-cta-links a:hover { opacity: 0.8; }
+
+  footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(245,240,232,0.08); flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }
+  .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
+  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; }
+  .mil-up { opacity: 0; transform: translateY(30px); }
+
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); transition: transform 0.3s, opacity 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 4px; color: var(--cream); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-drawer a:hover { color: var(--red); }
+
+  @media (max-width: 900px) { .editions-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) {
+    body { cursor: auto; } .cursor { display: none; }
+    nav { padding: 1.2rem 1.5rem; } .nav-links { display: none; } .nav-hamburger { display: flex; }
+    .page-header, .editions-section, .flickr-banner { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .flickr-banner { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .stats-row { grid-template-columns: 1fr 1fr; padding: 2rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 480px) { .editions-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"><span class="cursor-label" id="cursor-label"></span></div>
+<div class="progress-bar" id="progress-bar"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">{{SITE_SHORT}}.</a>
+  <ul class="nav-links">
+    <li><a href="events.html">Events</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="{{SOCIAL_INSTAGRAM}}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <div class="page-num mil-up">03 — Gallery</div>
+      <h1 class="page-title mil-up">780+<br><span>Moments</span></h1>
+    </div>
+    <div class="page-meta mil-up">
+      Est. {{SITE_EST}} · {{VENUE_CITY}}<br>
+      Every edition documented
+    </div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat mil-up"><div class="stat-num">780+</div><div class="stat-label">Event Photos</div></div>
+  <div class="stat mil-up"><div class="stat-num">6+</div><div class="stat-label">Editions</div></div>
+  <div class="stat mil-up"><div class="stat-num">2022</div><div class="stat-label">First Edition</div></div>
+  <div class="stat mil-up"><div class="stat-num">100%</div><div class="stat-label">Queer-Run</div></div>
+</div>
+
+<div class="flickr-banner mil-up">
+  <div class="flickr-banner-inner">
+    <div class="flickr-banner-text">
+      <strong>Full archive on Flickr</strong>
+      780+ photos · every edition · free to browse
+    </div>
+    <a href="https://flic.kr/ps/41UAi3" target="_blank" rel="noopener noreferrer" class="flickr-btn">Browse all photos →</a>
+  </div>
+</div>
+
+<div class="editions-section">
+  <div class="section-label mil-up">✦ Editions</div>
+
+  <div class="editions-grid">
+
+    <a href="https://www.flickr.com/photos/197933149@N02/" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <span class="edition-tag">✦ Upcoming</span>
+      <div class="edition-num">001</div>
+      <div class="edition-name">Pride After Party</div>
+      <div class="edition-date">30 Mei 2026</div>
+      <div class="edition-photos">Grolsch Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">Photos coming soon →</span>
+    </a>
+
+    <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <span class="edition-tag">✦ Special edition</span>
+      <div class="edition-num">Vol. 07</div>
+      <div class="edition-name">The Nightmare before KUDTMASSSS</div>
+      <div class="edition-date">28 Nov · 2025</div>
+      <div class="edition-photos">Kleine Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">{{VENUE_NAME}} →</span>
+    </a>
+
+    <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720317757494" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <div class="edition-num">Vol. 06</div>
+      <div class="edition-name">Kudt Vol. 06</div>
+      <div class="edition-date">25 Mei · 2025</div>
+      <div class="edition-photos">Kleine Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">Photos on Flickr →</span>
+    </a>
+
+    <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720315942759" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <div class="edition-num">Vol. 05</div>
+      <div class="edition-name">Kudt Vol. 05</div>
+      <div class="edition-date">22 Mrt · 2025</div>
+      <div class="edition-photos">Kleine Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">Photos on Flickr →</span>
+    </a>
+
+    <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720313459001" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <div class="edition-num">Vol. 04</div>
+      <div class="edition-name">Kudt Vol. 04</div>
+      <div class="edition-date">18 Nov · 2024</div>
+      <div class="edition-photos">Kleine Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">Photos on Flickr →</span>
+    </a>
+
+    <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720311362491" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <div class="edition-num">Vol. 03</div>
+      <div class="edition-name">Kudt Vol. 03</div>
+      <div class="edition-date">16 Sep · 2024</div>
+      <div class="edition-photos">Kleine Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">Photos on Flickr →</span>
+    </a>
+
+    <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720308932002" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <div class="edition-num">Vol. 02</div>
+      <div class="edition-name">Kudt Vol. 02</div>
+      <div class="edition-date">27 Mei · 2023</div>
+      <div class="edition-photos">Kleine Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">Photos on Flickr →</span>
+    </a>
+
+    <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720306889370" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <div class="edition-num">Vol. 01</div>
+      <div class="edition-name">Kudt Vol. 01</div>
+      <div class="edition-date">10 Dec · 2022</div>
+      <div class="edition-photos">Kleine Zaal · {{VENUE_NAME}}</div>
+      <span class="edition-arrow">Photos on Flickr →</span>
+    </a>
+
+    <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720321214209" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
+      <span class="edition-tag">Collab</span>
+      <div class="edition-num">Collab</div>
+      <div class="edition-name">Museumnacht Alkmaar</div>
+      <div class="edition-date">2024 · September</div>
+      <div class="edition-photos">Kleine Zaal · Victorie</div>
+      <span class="edition-arrow">Photos on Flickr →</span>
+    </a>
+
+  </div>
+
+  <div class="archive-cta mil-up">
+    <div class="archive-cta-label">✦ Full archive</div>
+    <div class="archive-cta-title">780+ photos</div>
+    <div class="archive-cta-sub">
+      Every edition documented.<br>
+      Browse the complete archive on Flickr.
+    </div>
+    <div class="archive-cta-links">
+      <a href="https://flic.kr/ps/41UAi3" target="_blank" rel="noopener noreferrer" class="primary">Browse albums →</a>
+      <a href="https://www.flickr.com/photos/197933149@N02/" target="_blank" rel="noopener noreferrer" class="secondary">All photos →</a>
+    </div>
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
+  <ul class="footer-links">
+    <li><a href="events.html">Our Parties</a></li>
+    <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="{{SOCIAL_INSTAGRAM}}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a href="{{SOCIAL_RA}}" target="_blank" rel="noopener noreferrer">RA Profile</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-bpm">{{SITE_BPM}}</div>
+</footer>
+
+<div class="nav-drawer" id="nav-drawer">
+  <a href="events.html">Events</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="{{SOCIAL_INSTAGRAM}}" target="_blank" rel="noopener noreferrer">Instagram</a>
+</div>
+
+<script>
+(function() {
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer = document.getElementById('nav-drawer');
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    drawer.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursor-label');
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (!isMobile) {
+    document.addEventListener('mousemove', e => { gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.35, ease: 'power2.out' }); });
+    document.querySelectorAll('a, .edition-card').forEach(el => {
+      const label = el.dataset.cursorLabel || '';
+      el.addEventListener('mouseenter', () => { cursor.classList.add('expanded'); cursorLabel.textContent = label; });
+      el.addEventListener('mouseleave', () => { cursor.classList.remove('expanded'); cursorLabel.textContent = ''; });
+    });
+  }
+  window.addEventListener('scroll', () => {
+    document.getElementById('progress-bar').style.width = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%';
+  });
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray('.mil-up').forEach(el => {
+    gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
+  });
+})();
+</script>
+</body>
+</html>

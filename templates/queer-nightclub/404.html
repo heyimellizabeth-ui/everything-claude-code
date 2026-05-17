@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="{{SITE_LANG}}">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Lost on the Dancefloor · {{SITE_NAME}}</title>
+<meta name="robots" content="noindex, nofollow">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; }
+  html, body { height: 100%; }
+  html { overflow-x: hidden; }
+  body { background: var(--void); color: var(--cream); font-family: system-ui, -apple-system, sans-serif; overflow: hidden; cursor: none; display: flex; flex-direction: column; }
+  .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s; }
+  .cursor.expanded { width: 56px; height: 56px; background: var(--red); }
+
+  nav { padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cream); }
+
+  .error-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem; position: relative; }
+
+  .error-num { font-family: var(--font-mono); font-size: clamp(8rem, 25vw, 22rem); font-weight: 700; letter-spacing: 0.05em; line-height: 0.85; color: rgba(245,240,232,0.04); position: absolute; user-select: none; }
+  .error-content { position: relative; z-index: 2; }
+  .error-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .error-title { font-family: var(--font-mono); font-size: clamp(1.5rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: 2px; line-height: 1.1; margin-bottom: 1.5rem; }
+  .error-title span { color: var(--red); }
+  .error-sub { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 3rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; }
+  .btn-secondary { display: inline-block; padding: 1rem 2.5rem; background: transparent; border: 1px solid rgba(245,240,232,0.2); color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--cream); color: var(--cream); }
+
+  footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(245,240,232,0.06); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--muted); }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; }
+
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); transition: transform 0.3s, opacity 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 4px; color: var(--cream); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-drawer a:hover { color: var(--red); }
+
+  @media (max-width: 768px) {
+    body { cursor: auto; overflow: auto; } .cursor { display: none; }
+    nav { padding: 1.2rem 1.5rem; } .nav-links { display: none; } .nav-hamburger { display: flex; }
+    footer { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">{{SITE_SHORT}}.</a>
+  <ul class="nav-links">
+    <li><a href="events.html">Events</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main class="error-main">
+  <div class="error-num">404</div>
+  <div class="error-content">
+    <div class="error-tag">✦ Error 404</div>
+    <h1 class="error-title">Lost on<br>the <span>Dancefloor</span></h1>
+    <p class="error-sub">This page doesn't exist — but the party does. Find your way back.</p>
+    <div class="error-actions">
+      <a href="index.html" class="btn-primary">Back to home →</a>
+      <a href="events.html" class="btn-secondary">See events</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
+  <div class="footer-bpm">{{SITE_BPM}}</div>
+</footer>
+
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html">Home</a>
+  <a href="events.html">Events</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<script>
+(function() {
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer = document.getElementById('nav-drawer');
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    drawer.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  const cursor = document.getElementById('cursor');
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (!isMobile) {
+    document.addEventListener('mousemove', e => { gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.35, ease: 'power2.out' }); });
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+    });
+  }
+  gsap.from('.error-tag', { opacity: 0, y: 20, duration: 0.6, delay: 0.2 });
+  gsap.from('.error-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.4 });
+  gsap.from('.error-sub', { opacity: 0, y: 20, duration: 0.6, delay: 0.6 });
+  gsap.from('.error-actions', { opacity: 0, y: 20, duration: 0.6, delay: 0.8 });
+  gsap.from('.error-num', { opacity: 0, duration: 1, delay: 0.1 });
+})();
+</script>
+</body>
+</html>

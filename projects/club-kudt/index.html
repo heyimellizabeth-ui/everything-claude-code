@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLUB KUDT — Party in a Queer Space · Alkmaar</title>
+<meta name="description" content="Club KUDT — Queer feesten in Alkmaar. Drag, disco, pop & meer in Podium Victorie. Tickets vanaf €15. Noord-Holland's thuis voor queer nightlife.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://clubkudt.nl/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Club KUDT — Party in a Queer Space · Alkmaar">
+<meta property="og:description" content="Queer feesten in Alkmaar. Drag, disco, pop & meer. Tickets via Podium Victorie.">
+<meta property="og:image" content="https://clubkudt.nl/og-image.png">
+<meta property="og:url" content="https://clubkudt.nl/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="Club KUDT">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Club KUDT — Party in a Queer Space · Alkmaar">
+<meta name="twitter:description" content="Queer feesten in Alkmaar. Drag, disco, pop & meer.">
+<meta name="twitter:image" content="https://clubkudt.nl/og-image.png">
+
+<!-- JSON-LD: Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Club KUDT",
+  "url": "https://clubkudt.nl",
+  "logo": "https://clubkudt.nl/og-image.png",
+  "sameAs": [
+    "https://www.instagram.com/clubkudt/",
+    "https://ra.co/clubs/clubkudt"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Alkmaar",
+    "addressCountry": "NL"
+  }
+}
+</script>
+
+<!-- JSON-LD: Featured Event -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DanceEvent",
+  "name": "Club KUDT: Pride After Party",
+  "startDate": "2026-05-30T21:00",
+  "endDate": "2026-05-31T02:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Grolsch Zaal, Podium Victorie",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Alkmaar",
+      "addressCountry": "NL"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "Club KUDT",
+    "url": "https://clubkudt.nl"
+  },
+  "offers": [
+    { "@type": "Offer", "name": "Early Queers", "price": "15.00", "priceCurrency": "EUR", "url": "https://www.podiumvictorie.nl/programma/club-kudt-pride-after/", "availability": "https://schema.org/InStock" },
+    { "@type": "Offer", "name": "Right on Time Royalty", "price": "17.50", "priceCurrency": "EUR", "url": "https://www.podiumvictorie.nl/programma/club-kudt-pride-after/", "availability": "https://schema.org/InStock" }
+  ],
+  "typicalAgeRange": "16-"
+}
+</script>
+<noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --void: #0D0D0D;
+    --cream: #F5F0E8;
+    --red: #E8415A;
+    --surface: #1A1A1A;
+    --muted: #888070;
+    --font-mono: 'Courier New', Courier, monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  html { overflow-x: hidden; }
+  body {
+    background: var(--void);
+    color: var(--cream);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor {
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    background: var(--cream);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .cursor.expanded {
+    width: 56px;
+    height: 56px;
+    background: var(--red);
+  }
+  .cursor-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--cream);
+    opacity: 0;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .cursor.expanded .cursor-label { opacity: 1; }
+
+  /* SCROLL PROGRESS */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--red);
+    z-index: 9998;
+    transition: none;
+  }
+
+  /* PRELOADER */
+  .preloader {
+    position: fixed;
+    inset: 0;
+    background: var(--void);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .preloader-words {
+    position: absolute;
+    text-align: center;
+  }
+  .preloader-word {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--cream);
+    opacity: 0;
+    display: block;
+    transform: translateY(30px);
+  }
+  .preloader-word.red { color: var(--red); }
+  .preloader-reveal {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    font-weight: 700;
+    letter-spacing: 8px;
+    color: var(--cream);
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .preloader-bar {
+    position: absolute;
+    top: 0; left: 0;
+    width: 0%;
+    height: 100%;
+    background: var(--red);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    mix-blend-mode: normal;
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--cream);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #particle-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+  .hero-wordmark {
+    font-family: var(--font-mono);
+    font-size: clamp(5rem, 18vw, 18rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 0.9;
+    color: var(--cream);
+    display: block;
+    cursor: none;
+    user-select: none;
+    filter: url(#glitch-idle);
+    transition: filter 0.1s;
+  }
+  .hero-wordmark:hover { filter: url(#glitch-active); }
+  .hero-sub {
+    font-family: var(--font-mono);
+    font-size: clamp(0.6rem, 1.2vw, 0.9rem);
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+  }
+  .hero-venue-note {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: rgba(245,240,232,0.3);
+    text-transform: uppercase;
+    margin-top: 0.75rem;
+  }
+  .cta-btn {
+    display: inline-block;
+    margin-top: 2.5rem;
+    padding: 1rem 2.5rem;
+    background: var(--red);
+    color: var(--cream);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    cursor: none;
+    position: relative;
+    will-change: transform;
+  }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--red);
+    margin: 0.5rem auto 0;
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.6); }
+  }
+
+  /* TICKER */
+  .ticker {
+    background: var(--red);
+    padding: 0.75rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-track {
+    display: inline-flex;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-item {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--cream);
+    padding: 0 2rem;
+    text-transform: uppercase;
+  }
+  .ticker-dot {
+    color: rgba(245,240,232,0.4);
+    margin: 0 0.5rem;
+  }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* SECTIONS SHARED */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-wrap { position: relative; }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .section-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(245,240,232,0.08);
+    margin-bottom: 4rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-counter {
+    font-family: var(--font-mono);
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1;
+    opacity: 0.3;
+  }
+  .about-title {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .about-body {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+  }
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(245,240,232,0.15);
+    color: var(--muted);
+  }
+
+  /* EVENTS */
+  .events-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  .events-title {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  .events-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .event-card {
+    border: 1px solid rgba(245,240,232,0.12);
+    padding: 2rem;
+    position: relative;
+    cursor: none;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: border-color 0.3s;
+  }
+  .event-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232,65,90,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .event-card:hover { border-color: rgba(232,65,90,0.4); }
+  .event-card:hover::before { opacity: 1; }
+  .event-card.featured {
+    border-color: var(--red);
+    grid-column: span 2;
+  }
+  .event-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+  .event-name {
+    font-family: var(--font-mono);
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .event-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .event-meta span {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .event-cta {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--red);
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 2px;
+  }
+  .event-number {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(245,240,232,0.15);
+    letter-spacing: 2px;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-section { background: transparent; }
+  .testimonials-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .testimonial {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(245,240,232,0.06);
+  }
+  .testimonial:last-child { border-bottom: none; }
+  .testimonial-mark {
+    font-family: var(--font-mono);
+    font-size: 4rem;
+    color: var(--red);
+    line-height: 0.8;
+    font-weight: 700;
+    opacity: 0.6;
+    user-select: none;
+  }
+  .testimonial-body {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: var(--cream);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .testimonial-author {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* NEWSLETTER */
+  .newsletter-section {
+    border-top: 1px solid rgba(245,240,232,0.08);
+    border-bottom: 1px solid rgba(245,240,232,0.08);
+    padding: 5rem 3rem;
+    max-width: 100%;
+  }
+  .newsletter-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+  .newsletter-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.75rem;
+  }
+  .newsletter-title {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
+  .newsletter-form {
+    display: flex;
+    gap: 0;
+    flex: 0 0 auto;
+  }
+  .newsletter-input {
+    background: transparent;
+    border: 1px solid rgba(245,240,232,0.2);
+    border-right: none;
+    color: var(--cream);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0.9rem 1.5rem;
+    width: 280px;
+    outline: none;
+    letter-spacing: 1px;
+  }
+  .newsletter-input::placeholder { color: var(--muted); }
+  .newsletter-input:focus { border-color: rgba(245,240,232,0.4); }
+  .newsletter-submit {
+    background: var(--red);
+    border: none;
+    color: var(--cream);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.9rem 1.5rem;
+    cursor: none;
+    white-space: nowrap;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-brand {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+  }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .footer-links a {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-links { flex-wrap: wrap; gap: 1.2rem 2rem; }
+  .footer-bpm {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* UTIL */
+  .mil-up {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  /* SR-ONLY */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* HAMBURGER */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101;
+    position: relative;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--cream);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--void);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer a {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+    color: var(--cream);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-drawer a:hover { color: var(--red); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor { display: none; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .events-grid { grid-template-columns: 1fr; }
+    .event-card.featured { grid-column: span 1; }
+    .newsletter-inner { flex-direction: column; align-items: flex-start; padding: 0 1.5rem; }
+    .newsletter-form { flex-direction: column; width: 100%; max-width: 400px; }
+    .newsletter-input { width: 100%; }
+    .newsletter-submit { width: 100%; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+  }
+
+  /* SVG GLITCH FILTER HIDDEN */
+  .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  /* C3: DIRECTIONAL REVEALS */
+  .mil-left { opacity: 0; transform: translateX(-40px); }
+  .mil-right { opacity: 0; transform: translateX(40px); }
+  .mil-scale { opacity: 0; transform: scale(0.92); }
+
+  /* C3: NAV SLIDE */
+  nav { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+  nav.nav-hidden { transform: translateY(-100%); }
+
+  /* C3: SECTION LINE ANIMATION */
+  .section-line { transform-origin: left center; transform: scaleX(0); transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .section-line.revealed { transform: scaleX(1); }
+
+  /* C3: TAG HOVER */
+  .tag { transition: border-color 0.2s, color 0.2s, background 0.2s; }
+  .tag:hover { border-color: var(--red); color: var(--cream); background: rgba(232,65,90,0.08); }
+
+  /* C3: SECTION NUM HOVER */
+  .section-num { transition: color 0.2s; cursor: default; }
+  .section-num:hover { color: var(--red); }
+
+  /* C3: HERO PARALLAX LAYER */
+  .hero-content { will-change: transform; }
+
+  /* C3: TESTIMONIAL LEFT-ACCENT */
+  .testimonial { border-left: 2px solid transparent; transition: border-color 0.3s, background 0.3s; padding-left: 1.5rem; }
+  .testimonial:hover { border-left-color: var(--red); background: rgba(232,65,90,0.04); }
+
+  /* C3: FOOTER LINK UNDERLINE SLIDE */
+  .footer-links a { position: relative; overflow: hidden; }
+  .footer-links a::after { content: ''; position: absolute; bottom: 0; left: -100%; width: 100%; height: 1px; background: var(--red); transition: left 0.25s ease; }
+  .footer-links a:hover::after { left: 0; }
+</style>
+</head>
+<body>
+
+<!-- SVG Glitch Filters -->
+<svg class="svg-filters" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glitch-idle">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0001" numOctaves="1" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="glitch-active">
+      <feTurbulence type="turbulence" baseFrequency="0.03 0.06" numOctaves="2" result="noise" seed="2">
+        <animate attributeName="baseFrequency" dur="0.3s" values="0.03 0.06;0.06 0.03;0.03 0.06" repeatCount="indefinite"/>
+        <animate attributeName="seed" dur="0.15s" values="1;5;2;8;3" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor">
+  <span class="cursor-label" id="cursor-label"></span>
+</div>
+
+<!-- Scroll Progress -->
+<div class="progress-bar" id="progress-bar"></div>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-words" id="preloader-words">
+    <span class="preloader-word" id="pw1">Queer.</span>
+    <span class="preloader-word" id="pw2">Alkmaar.</span>
+    <span class="preloader-word red" id="pw3">KUDT.</span>
+  </div>
+  <div class="preloader-reveal" id="preloader-reveal">
+    <div class="preloader-bar" id="preloader-bar"></div>
+    CLUB KUDT
+  </div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="index.html" class="nav-logo">KUDT.</a>
+  <ul class="nav-links">
+    <li><a href="events.html">Events</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="https://www.instagram.com/clubkudt/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main>
+<!-- Hero -->
+<div class="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="hero-content">
+    <h1 class="sr-only">Club KUDT — Queer Feesten in Alkmaar bij Podium Victorie</h1>
+    <span class="hero-wordmark mil-up" id="hero-wordmark">KUDT</span>
+    <p class="hero-sub mil-up">Party in a Queer Space · Alkmaar · Est. 2022</p>
+    <a href="https://www.podiumvictorie.nl/programma/club-kudt-pride-after/" target="_blank" rel="noopener noreferrer" class="cta-btn mil-up" id="cta-btn" data-magnetic>Get tickets →</a>
+    <p class="hero-venue-note mil-up">via Podium Victorie · official venue partner</p>
+  </div>
+  <div class="hero-scroll-hint mil-up">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- Ticker -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">780+ Event Photos<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Est. 2022<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Tickets vanaf €15<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">100% Queer-Run<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Podium Victorie<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Pride Afterparty 30 Mei 2026<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">No Boxes. No Bullshit.<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">780+ Event Photos<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Est. 2022<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Tickets vanaf €15<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">100% Queer-Run<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Podium Victorie<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">Pride Afterparty 30 Mei 2026<span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">No Boxes. No Bullshit.<span class="ticker-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- About -->
+<div class="section-wrap" id="about">
+  <section>
+    <div class="section-num mil-up">01 — About</div>
+    <div class="section-line"></div>
+    <div class="about-grid">
+      <div class="about-counter mil-left">01.</div>
+      <div>
+        <h2 class="about-title mil-up">Alkmaar's first queer night.<br>No trip to Amsterdam required.</h2>
+        <p class="about-body mil-up">Pop, classics, disco & special acts. Drag queens, doorbitches, pole dancers. 70s to 00s bangers and the people you've been looking for. Every edition at Podium Victorie — the heart of Noord-Holland's queer scene.</p>
+        <div class="about-tags mil-up">
+          <span class="tag">Drag</span>
+          <span class="tag">Disco</span>
+          <span class="tag">Pop</span>
+          <span class="tag">70s–00s</span>
+          <span class="tag">18+</span>
+          <span class="tag">Podium Victorie</span>
+          <span class="tag">Alkmaar</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Events -->
+<div class="section-wrap" id="events">
+  <section>
+    <div class="section-num mil-up">02 — Events</div>
+    <div class="section-line"></div>
+    <div class="events-header">
+      <h2 class="events-title mil-up">Upcoming</h2>
+    </div>
+    <div class="events-grid">
+
+      <div class="event-card featured mil-up" data-tilt data-cursor-label="TICKETS">
+        <div class="event-badge">✦ Next edition · Pride Special</div>
+        <div class="event-name">PRIDE AFTER PARTY</div>
+        <div class="event-meta">
+          <span>30 Mei 2026</span>
+          <span>21:00 – 02:00</span>
+          <span>Grolsch Zaal, Podium Victorie</span>
+          <span>16+ · Alkmaar</span>
+        </div>
+        <a href="https://www.podiumvictorie.nl/programma/club-kudt-pride-after/" target="_blank" rel="noopener noreferrer" class="event-cta">Get tickets →</a>
+        <div class="event-number">001</div>
+      </div>
+
+      <div class="event-card mil-up" data-tilt data-cursor-label="FOLLOW">
+        <div class="event-badge">✦ Recurring</div>
+        <div class="event-name">CLUB KUDT</div>
+        <div class="event-meta">
+          <span>Next date TBA · 2026</span>
+          <span>Kleine Zaal</span>
+          <span>Podium Victorie, Alkmaar</span>
+          <span>18+</span>
+        </div>
+        <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">Check tickets at Podium Victorie →</a>
+        <div class="event-number">002</div>
+      </div>
+
+      <div class="event-card mil-up" data-tilt data-cursor-label="TICKETS">
+        <div class="event-badge">✦ Collaboration</div>
+        <div class="event-name">MUSEUMNACHT ALKMAAR</div>
+        <div class="event-meta">
+          <span>Annual · September</span>
+          <span>Kleine Zaal, Victorie</span>
+          <span>Rainbow Paradise edition</span>
+        </div>
+        <a href="https://museumnacht-alkmaar.nl/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">More info →</a>
+        <div class="event-number">003</div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- Testimonials -->
+<div class="section-wrap">
+  <section>
+    <div class="section-num mil-up">03 — Community</div>
+    <div class="section-line"></div>
+    <div class="testimonials-grid">
+      <div class="testimonial mil-up">
+        <div class="testimonial-mark">"</div>
+        <div>
+          <p class="testimonial-body">First time I walked in and didn't have to explain myself to anyone. The door team, the crowd, the whole energy — I felt seen before I even hit the dancefloor.</p>
+          <p class="testimonial-author">Alex T. · Regular since Dec 2022 · First edition attendee</p>
+        </div>
+      </div>
+      <div class="testimonial mil-up">
+        <div class="testimonial-mark">"</div>
+        <div>
+          <p class="testimonial-body">Finally a queer night in Alkmaar where I don't have to travel to Amsterdam. The drag acts, the music, the vibe — this is exactly what Noord-Holland needed.</p>
+          <p class="testimonial-author">Riv K. · Attends every edition · Podium Victorie regular</p>
+        </div>
+      </div>
+      <div class="testimonial mil-up">
+        <div class="testimonial-mark">"</div>
+        <div>
+          <p class="testimonial-body">Club KUDT is proof that queer nightlife doesn't have to mean a trip to the Reguliersdwarsstraat. It's right here in Alkmaar and it's better than I expected.</p>
+          <p class="testimonial-author">Luna S. · Noord-Holland queer community · 2023–present</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Newsletter -->
+<div class="newsletter-section" id="newsletter">
+  <div class="newsletter-inner">
+    <div class="mil-up">
+      <h2 class="newsletter-title">First to know<br>when tickets drop.</h2>
+      <p class="newsletter-sub">Early access to every edition. No spam, just dates.</p>
+    </div>
+    <form class="newsletter-form mil-up" id="newsletter-form" action="https://formspree.io/f/xkokywzz" method="POST">
+      <!-- C4: Honeypot — bots fill this, humans don't -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required maxlength="254" autocomplete="email">
+      <button type="submit" class="newsletter-submit">Get early access →</button>
+    </form>
+  </div>
+</div>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-brand">KUDT · ALKMAAR · EST. 2022 · © 2026 CLUB KUDT</div>
+  <ul class="footer-links">
+    <li><a href="#events">Our Parties</a></li>
+    <li><a href="https://www.podiumvictorie.nl/programma/club-kudt-pride-after/" target="_blank" rel="noopener noreferrer">Tickets</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="https://www.instagram.com/clubkudt/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a href="https://ra.co/clubs/club-kudt" target="_blank" rel="noopener noreferrer">RA Profile</a></li>
+    <li><a href="#newsletter">Newsletter</a></li>
+  </ul>
+  <div class="footer-bpm">140 BPM</div>
+</footer>
+
+<!-- Mobile Nav Drawer -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="events.html">Events</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="https://www.instagram.com/clubkudt/" target="_blank" rel="noopener noreferrer">Instagram</a>
+</div>
+
+<script>
+(function() {
+  // HAMBURGER
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer = document.getElementById('nav-drawer');
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    drawer.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursor-label');
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  if (!isMobile) {
+    let cursorX = 0, cursorY = 0;
+    document.addEventListener('mousemove', e => {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      gsap.to(cursor, { x: cursorX, y: cursorY, duration: 0.35, ease: 'power2.out' });
+    });
+
+    document.querySelectorAll('a, button, .event-card, .cta-btn, .newsletter-submit').forEach(el => {
+      const label = el.dataset.cursorLabel || '';
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('expanded');
+        cursorLabel.textContent = label;
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('expanded');
+        cursorLabel.textContent = '';
+      });
+    });
+  }
+
+  // SCROLL PROGRESS
+  const progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    progressBar.style.width = pct + '%';
+  });
+
+  // PARTICLES
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.3,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.5 + 0.1
+    });
+  }
+
+  let rafId;
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(245,240,232,${p.alpha})`;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+    });
+    rafId = requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else drawParticles();
+  });
+
+  // MAGNETIC CTA
+  if (!isMobile) {
+    const ctaBtn = document.getElementById('cta-btn');
+    const magneticRadius = 80;
+    document.addEventListener('mousemove', e => {
+      const rect = ctaBtn.getBoundingClientRect();
+      const btnCX = rect.left + rect.width / 2;
+      const btnCY = rect.top + rect.height / 2;
+      const dx = e.clientX - btnCX;
+      const dy = e.clientY - btnCY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < magneticRadius) {
+        const pull = (1 - dist / magneticRadius) * 0.4;
+        gsap.to(ctaBtn, { x: dx * pull, y: dy * pull, duration: 0.3, ease: 'power2.out' });
+      } else {
+        gsap.to(ctaBtn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+      }
+    });
+  }
+
+  // 3D CARD TILT
+  if (!isMobile) {
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const rx = ((e.clientY - cy) / (rect.height / 2)) * -8;
+        const ry = ((e.clientX - cx) / (rect.width / 2)) * 8;
+        gsap.to(card, {
+          rotateX: rx, rotateY: ry,
+          transformPerspective: 1000,
+          duration: 0.4, ease: 'power2.out'
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+      });
+    });
+  }
+
+  // PRELOADER
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      document.getElementById('preloader').style.display = 'none';
+      initScrollAnimations();
+    }
+  });
+
+  tl.to('#pw1', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+    .to('#pw1', { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in' }, '+=0.3')
+    .to('#pw2', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+    .to('#pw2', { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in' }, '+=0.3')
+    .to('#pw3', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+    .to('#pw3', { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in' }, '+=0.3')
+    .set('#preloader-words', { display: 'none' })
+    .to('#preloader-reveal', { opacity: 1, duration: 0.1 })
+    .to('#preloader-bar', { width: '100%', duration: 0.5, ease: 'power2.inOut' })
+    .to('#preloader-bar', { right: 0, left: 'auto', width: '0%', duration: 0.4, ease: 'power2.inOut' })
+    .to('#preloader', { opacity: 0, duration: 0.6, ease: 'power2.inOut' }, '-=0.1');
+
+  // C3: NAV HIDE ON SCROLL
+  (function() {
+    const nav = document.querySelector('nav');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y > lastY && y > 120) nav.classList.add('nav-hidden');
+      else nav.classList.remove('nav-hidden');
+      lastY = y;
+    }, { passive: true });
+  })();
+
+  function initScrollAnimations() {
+    // Hero mil-up with stagger
+    gsap.to('.hero .mil-up', {
+      opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', delay: 0.1
+    });
+
+    // C3: Hero parallax on scroll
+    gsap.to('.hero-content', {
+      y: '-18%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    // C3: Section line reveal
+    document.querySelectorAll('.section-line').forEach(line => {
+      ScrollTrigger.create({
+        trigger: line,
+        start: 'top 90%',
+        onEnter: () => line.classList.add('revealed')
+      });
+    });
+
+    // All other mil-up on scroll
+    document.querySelectorAll('.mil-up:not(.hero .mil-up)').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // C3: Directional left reveals
+    document.querySelectorAll('.mil-left').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, x: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      });
+    });
+
+    // C3: Directional right reveals
+    document.querySelectorAll('.mil-right').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, x: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      });
+    });
+
+    // C3: Scale reveals
+    document.querySelectorAll('.mil-scale').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.4)',
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      });
+    });
+
+    // C3: Stagger tags
+    const tagGroups = document.querySelectorAll('.about-tags');
+    tagGroups.forEach(group => {
+      const tags = group.querySelectorAll('.tag');
+      gsap.fromTo(tags, { opacity: 0, y: 12 }, {
+        opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out',
+        scrollTrigger: { trigger: group, start: 'top 90%', toggleActions: 'play none none none' }
+      });
+    });
+
+    // C3: Stagger testimonials
+    gsap.fromTo('.testimonial', { opacity: 0, y: 30 }, {
+      opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out',
+      scrollTrigger: { trigger: '.testimonials-grid', start: 'top 85%', toggleActions: 'play none none none' }
+    });
+
+    // Scroll-based bg tint
+    gsap.to('body', {
+      backgroundColor: '#120407',
+      scrollTrigger: {
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1
+      }
+    });
+  }
+
+  // NEWSLETTER — C4 hardened
+  const newsletterForm = document.getElementById('newsletter-form');
+  if (newsletterForm) {
+    let lastSubmit = 0;
+    newsletterForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      // C4: Client-side rate limit — 30 s between submissions
+      if (Date.now() - lastSubmit < 30000) return;
+      // C4: Honeypot check — abort silently if bot filled the hidden field
+      const honeypot = this.querySelector('input[name="_gotcha"]');
+      if (honeypot && honeypot.value) return;
+      lastSubmit = Date.now();
+      const btn = this.querySelector('button');
+      const data = new FormData(this);
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      try {
+        const res = await fetch(this.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          btn.textContent = 'Joined ✦';
+          btn.style.background = '#1a1a1a';
+          btn.style.border = '1px solid var(--red)';
+          btn.style.color = 'var(--red)';
+          this.reset();
+        } else {
+          btn.textContent = 'Try again →';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Try again →';
+        btn.disabled = false;
+      }
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
