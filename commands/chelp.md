@@ -48,9 +48,12 @@ for animations, responsive work, and visual refinement.
 
 ## /c4 — Production-Ready Shipping
 
-**Chain:** `/multi-plan` → `/multi-frontend` → `/multi-execute` → `/security-scan` → `/test-coverage` → `/santa-loop` → `/prp-pr`
+**Standard chain:** `/multi-plan` → `/multi-execute` → `/security-scan` → `/test-coverage` → `/santa-loop` → `/prp-pr`
 
-Full hardening before merge. Runs multi-model execution, security audit, coverage checks, dual-reviewer
+**Gemini-augmented chain:** `/multi-frontend` → `/security-scan` → `/test-coverage` → `/santa-loop` → `/prp-pr`
+
+Full hardening before merge. Use the standard chain (Claude-only) or replace the plan/execute steps
+with `/multi-frontend` when Gemini CLI is available. Runs security audit, coverage checks, dual-reviewer
 approval, and automated PR creation.
 
 ---
