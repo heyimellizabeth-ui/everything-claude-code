@@ -558,6 +558,7 @@ body {
 <header class="studio-header">
   <div class="studio-logo">DESIGN<span>✦</span>STUDIO</div>
   <input type="text" class="header-search" id="search" placeholder="SEARCH ELEMENTS...">
+  <a href="REFERENCES.md" style="font-size:10px;letter-spacing:2px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:6px 10px;margin-right:10px;transition:color .2s,border-color .2s" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'" title="Curated 2026 React UI/UX repos for inspiration">REFS ↗</a>
   <div class="header-meta" id="header-meta">LOADING CATALOG...</div>
 </header>
 
@@ -594,6 +595,11 @@ body {
     <div class="sidebar-section" id="sources-section">
       <div class="sidebar-label">Sources</div>
       <div id="source-chips"></div>
+    </div>
+
+    <div class="sidebar-section" id="frameworks-section">
+      <div class="sidebar-label">Frameworks</div>
+      <div id="framework-chips"></div>
     </div>
 
     <div class="sidebar-section">
@@ -637,17 +643,38 @@ body {
 <!-- Export modal -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeExport(event)">
   <div class="modal">
-    <div class="modal-title">YOUR SELECTION</div>
-    <div class="modal-subtitle">Copy the prompt below and paste it when starting a new /c1 or /c2 session.</div>
-    <div class="modal-section-label">Selected elements</div>
+    <div class="modal-title">GENERATE YOUR SITE</div>
+    <div class="modal-subtitle">Fill in the brand details, then download both files and run <span style="color:var(--gold)">/studio-build</span> (or <span style="color:var(--gold)">node scripts/studio/build.js</span>).</div>
+
+    <div class="modal-section-label">Selected elements (<span id="modal-sel-count">0</span>)</div>
     <ul class="modal-list" id="modal-list"></ul>
-    <div class="modal-section-label">Claude prompt</div>
+
+    <div class="modal-section-label">Brand details</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <label style="font-size:9px;letter-spacing:2px;color:var(--muted)">SITE NAME
+        <input id="bf-name" placeholder="My Studio" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface);border:1px solid var(--border);color:var(--cream);font-family:inherit;font-size:11px"></label>
+      <label style="font-size:9px;letter-spacing:2px;color:var(--muted)">SHORT NAME
+        <input id="bf-short" placeholder="STUDIO" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface);border:1px solid var(--border);color:var(--cream);font-family:inherit;font-size:11px"></label>
+      <label style="font-size:9px;letter-spacing:2px;color:var(--muted)">DOMAIN
+        <input id="bf-domain" placeholder="mystudio.com" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface);border:1px solid var(--border);color:var(--cream);font-family:inherit;font-size:11px"></label>
+      <label style="font-size:9px;letter-spacing:2px;color:var(--muted)">CITY
+        <input id="bf-city" placeholder="Alkmaar" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface);border:1px solid var(--border);color:var(--cream);font-family:inherit;font-size:11px"></label>
+      <label style="font-size:9px;letter-spacing:2px;color:var(--muted);grid-column:span 2">TAGLINE
+        <input id="bf-tagline" placeholder="A short one-liner" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface);border:1px solid var(--border);color:var(--cream);font-family:inherit;font-size:11px"></label>
+    </div>
+
+    <div class="modal-section-label">Resolved palette (from selection)</div>
+    <div id="bf-palette" style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap"></div>
+
+    <div class="modal-section-label">Claude prompt (fallback — paste into /c1 if not using /studio-build)</div>
     <div class="modal-prompt" id="modal-prompt">
       <button class="modal-copy-btn" onclick="copyPrompt()">COPY</button>
       <span id="prompt-text"></span>
     </div>
+
     <div class="modal-actions">
       <button class="modal-close" onclick="closeExport()">CLOSE</button>
+      <button class="sel-generate" onclick="downloadFiles()" style="padding:10px 18px">DOWNLOAD FILES ↓</button>
     </div>
   </div>
 </div>
@@ -661,6 +688,7 @@ let catalog = null;
 let selected = new Set(JSON.parse(localStorage.getItem('studio-selection') || '[]'));
 let activeCategory = 'all';
 let activeSource = 'all';
+let activeFramework = 'all';
 let searchQuery = '';
 let currentView = 'grid';
 
@@ -688,6 +716,7 @@ function handleNoCatalog() {
 function init() {
   updateCounts();
   renderSourceChips();
+  renderFrameworkChips();
   renderCards();
   updateSelectionBar();
   document.getElementById('header-meta').textContent =
@@ -702,13 +731,42 @@ function init() {
 function getFiltered() {
   return catalog.elements.filter(el => {
     if (activeCategory !== 'all' && el.category !== activeCategory) return false;
-    if (activeSource !== 'all' && el.source !== activeSource) return false;
+    if (activeSource !== 'all') {
+      // Match if it's the primary source OR listed in sharedWith
+      const inShared = Array.isArray(el.sharedWith) && el.sharedWith.includes(activeSource);
+      if (el.source !== activeSource && !inShared) return false;
+    }
+    if (activeFramework !== 'all' && el.framework !== activeFramework) return false;
     if (searchQuery) {
       const hay = `${el.name} ${el.description} ${el.tags?.join(' ')}`.toLowerCase();
       if (!hay.includes(searchQuery)) return false;
     }
     return true;
   });
+}
+
+function setFramework(fw) {
+  activeFramework = activeFramework === fw ? 'all' : fw;
+  document.querySelectorAll('.framework-chip').forEach(c => c.classList.toggle('active', c.dataset.framework === activeFramework));
+  renderCards();
+}
+
+function renderFrameworkChips() {
+  const container = document.getElementById('framework-chips');
+  if (!container) return;
+  const frameworks = catalog.frameworks || [];
+  if (frameworks.length === 0) { container.parentElement.style.display = 'none'; return; }
+  container.innerHTML = frameworks.map(fw => {
+    const count = catalog.elements.filter(e => e.framework === fw).length;
+    return `<div class="site-chip framework-chip" data-framework="${fw}" onclick="setFramework('${fw}')">
+      <div class="site-dot" style="background:${frameworkColor(fw)}"></div>
+      ${fw.toUpperCase()} <span style="color:var(--muted);font-size:8px;margin-left:auto">${count}</span>
+    </div>`;
+  }).join('');
+}
+
+function frameworkColor(fw) {
+  return { mil: '#E8415A', bootstrap: '#7B9CEA', custom: '#9BD49B' }[fw] || '#888';
 }
 
 function setCategory(cat) {
@@ -783,7 +841,11 @@ function renderCard(el) {
         </div>
         <div class="card-desc">${el.description}</div>
         <div class="card-footer">
-          <div class="card-source">${el.source.toUpperCase()}${el.status === 'inferred' ? ' <span style="color:var(--gold);font-size:8px" title="Based on site type — upload files to verify">⚠ INFERRED</span>' : ''}</div>
+          <div class="card-source">
+            ${el.source.toUpperCase()}${el.status === 'inferred' ? ' <span style="color:var(--gold);font-size:8px" title="Based on site type — upload files to verify">⚠ INFERRED</span>' : ''}
+            ${el.framework ? `<span style="color:${frameworkColor(el.framework)};font-size:8px;margin-left:6px" title="Framework: ${el.framework}">· ${el.framework.toUpperCase()}</span>` : ''}
+            ${Array.isArray(el.sharedWith) && el.sharedWith.length > 1 ? `<span style="color:var(--cream);background:rgba(232,65,90,0.18);font-size:8px;padding:2px 6px;margin-left:6px;border-radius:2px" title="Also ships in: ${el.sharedWith.filter(s => s !== el.source).join(', ')} — selecting once is enough">🔗 SHARED</span>` : ''}
+          </div>
           <div class="card-actions">
             <button class="card-btn" onclick="toggleCode(event, '${el.id}')">CODE</button>
             <button class="card-btn select-btn ${isSelected ? 'active' : ''}" onclick="toggleSelect(event, '${el.id}')">
@@ -879,19 +941,119 @@ function openExport() {
   if (selected.size === 0) return;
   const items = [...selected].map(id => catalog?.elements.find(e => e.id === id)).filter(Boolean);
 
+  document.getElementById('modal-sel-count').textContent = items.length;
   document.getElementById('modal-list').innerHTML = items
-    .map(el => `<li>${el.name} <span style="color:var(--muted);font-size:8px">(${el.category})</span></li>`)
+    .map(el => `<li>${el.name} <span style="color:var(--muted);font-size:8px">(${el.category}${el.framework ? ' · ' + el.framework : ''})</span></li>`)
     .join('');
 
+  // Resolve a palette + fonts from selected color/typography elements (best-effort)
+  const palette = resolvePalette(items);
+  document.getElementById('bf-palette').innerHTML = Object.entries(palette)
+    .map(([k, v]) => `<div title="${k}: ${v}" style="display:flex;flex-direction:column;align-items:center;gap:3px">
+      <div style="width:32px;height:32px;background:${v};border:1px solid var(--border);border-radius:2px"></div>
+      <span style="font-size:8px;color:var(--muted);letter-spacing:1px">${k.toUpperCase()}</span></div>`).join('');
+
+  // Pick base template by majority source
+  const baseTemplate = pickBaseTemplate(items);
+
   const names = items.map(el => el.name);
-  const prompt = `Build a new site using these design elements from my studio catalog:\n\n${names.map(n => `• ${n}`).join('\n')}\n\nReference: projects/design-studio/catalog.json — element IDs: ${[...selected].join(', ')}`;
+  const prompt = `Build a new site using these design elements from my studio catalog:\n\nBase template: ${baseTemplate}\nFrameworks: ${[...new Set(items.map(i => i.framework).filter(Boolean))].join(', ') || 'custom'}\n\n${names.map(n => `• ${n}`).join('\n')}\n\nReference: projects/design-studio/catalog.json — element IDs: ${[...selected].join(', ')}`;
   document.getElementById('prompt-text').textContent = prompt;
 
-  // Write selection.json via download (can't write to disk from browser)
-  const sel = { generated: new Date().toISOString(), selected: [...selected], elements: items.map(e => ({ id: e.id, name: e.name, category: e.category })) };
-  window._lastSelection = sel;
-
   document.getElementById('modal-overlay').classList.add('open');
+}
+
+function resolvePalette(items) {
+  // Default to Club KUDT void palette; override from any selected `colors` element
+  const out = { void: '#0D0D0D', cream: '#F5F0E8', accent: '#E8415A', surface: '#1A1A1A', muted: '#888070' };
+  for (const el of items) {
+    if (el.category !== 'colors' || !el.snippet) continue;
+    // Try to extract from CSS custom properties in the snippet
+    const accent = el.snippet.match(/--(?:accent|theme|theme2|red)\s*:\s*(#[0-9a-fA-F]{3,8})/);
+    const bg = el.snippet.match(/--(?:void|bg|body|background)\s*:\s*(#[0-9a-fA-F]{3,8}|#fff|rgb[a]?\([^)]+\))/);
+    const text = el.snippet.match(/--(?:cream|text|black|header)\s*:\s*(#[0-9a-fA-F]{3,8}|rgb[a]?\([^)]+\))/);
+    const surface = el.snippet.match(/--(?:surface|bg2|theme3)\s*:\s*(#[0-9a-fA-F]{3,8}|rgb[a]?\([^)]+\))/);
+    if (accent) out.accent = accent[1];
+    if (bg) out.void = bg[1];
+    if (text) out.cream = text[1];
+    if (surface) out.surface = surface[1];
+  }
+  return out;
+}
+
+function pickBaseTemplate(items) {
+  // Count by source — pick the most-represented site's template
+  const counts = {};
+  for (const el of items) counts[el.source] = (counts[el.source] || 0) + 1;
+  const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
+  // Only queer-nightclub exists as a real template today — anything else falls back to it
+  return top === 'club-kudt' ? 'queer-nightclub' : 'queer-nightclub';
+}
+
+function buildBrandConfig(items) {
+  const palette = resolvePalette(items);
+  const name = document.getElementById('bf-name').value.trim() || 'My Studio Site';
+  const short = (document.getElementById('bf-short').value.trim() || name.split(/\s+/)[0]).toUpperCase();
+  const domain = document.getElementById('bf-domain').value.trim() || 'example.com';
+  const city = document.getElementById('bf-city').value.trim() || 'Alkmaar';
+  const tagline = document.getElementById('bf-tagline').value.trim() || 'A new site, built from selected elements.';
+  return {
+    site: {
+      name, short, domain, tagline,
+      description: tagline,
+      lang: 'en', locale: 'en_US',
+      estYear: String(new Date().getFullYear()),
+      bpm: '120 BPM'
+    },
+    colors: palette,
+    venue: { name: name, city, region: '', country: 'NL' },
+    social: { instagram: '', ra: '' },
+    forms: { backend: 'formspree', newsletterKey: '', contactKey: '', recipientEmail: '' },
+    ticketUrl: ''
+  };
+}
+
+function buildSelectionJson(items) {
+  const brand = buildBrandConfig(items);
+  return {
+    generated: new Date().toISOString(),
+    brand,
+    baseTemplate: pickBaseTemplate(items),
+    frameworks: [...new Set(items.map(i => i.framework).filter(Boolean))],
+    components: items.map(el => ({
+      id: el.id,
+      name: el.name,
+      category: el.category,
+      source: el.source,
+      framework: el.framework || null,
+      sharedWith: el.sharedWith || null,
+      snippet: el.snippet || '',
+      previewHtml: el.previewHtml || ''
+    }))
+  };
+}
+
+function downloadJson(filename, obj) {
+  const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+}
+
+function downloadFiles() {
+  const items = [...selected].map(id => catalog?.elements.find(e => e.id === id)).filter(Boolean);
+  if (items.length === 0) return;
+  const sel = buildSelectionJson(items);
+  downloadJson('selection.json', sel);
+  setTimeout(() => downloadJson('brand.config.json', sel.brand), 250);
+  const btn = document.querySelector('.modal-actions .sel-generate');
+  if (btn) {
+    const orig = btn.textContent;
+    btn.textContent = 'DOWNLOADED ✦';
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  }
 }
 
 function closeExport(e) {

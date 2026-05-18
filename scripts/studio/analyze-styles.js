@@ -20,6 +20,18 @@ const OUTPUT_DIR = path.join(ROOT, 'projects', 'design-studio');
 
 // ─── Hardcoded Club KUDT element catalog ─────────────────────────────────────
 // Each element has: id, category, name, description, source, tags, previewHtml, snippet
+// Optional: framework ('mil' | 'bootstrap' | 'custom' | null), sharedWith (string[])
+
+// Component IDs that ship as part of the shared mil- framework code
+// (cursor, preloader, scroll reveals, etc. from the Ashley/Club KUDT template family)
+const MIL_SHARED_COMPONENT_IDS = new Set([
+  'cursor-custom',
+  'preloader',
+  'scroll-reveals',
+  'section-line',
+  'scroll-progress',
+  'nav-autohide'
+]);
 
 const CLUB_KUDT_ELEMENTS = [
   {
@@ -771,6 +783,16 @@ function extractFonts(files) {
   return [...fonts].filter(f => f.length < 60);
 }
 
+function detectFramework(files) {
+  const all = files.map(f => f.content).join('\n');
+  // Mil- framework family (Ashley template lineage — used by both Ashley and Club KUDT)
+  // Match real Ashley/KUDT class patterns: .mil-ball, .mil-preloader, .mil-up, .mil-reveal-frame
+  if (/\.mil-(ball|preloader|up|left|right|scale|reveal-frame|wrapper|h\d)/i.test(all)) return 'mil';
+  // Bootstrap
+  if (/bootstrap(\.min)?\.css/i.test(all) || /\bcontainer-fluid\b|\brow\s+col-/i.test(all)) return 'bootstrap';
+  return 'custom';
+}
+
 function detectComponents(files) {
   const detected = [];
   const all = files.map(f => f.content).join('\n');
@@ -798,6 +820,7 @@ function analyzeUploadedSite(siteDir, siteName) {
   const colors = extractColors(files);
   const fonts = extractFonts(files);
   const components = detectComponents(files);
+  const framework = detectFramework(files);
   const pageCount = files.filter(f => f.path.endsWith('.html')).length;
 
   return {
@@ -807,6 +830,7 @@ function analyzeUploadedSite(siteDir, siteName) {
     stats: { files: files.length, pages: pageCount },
     colors,
     fonts,
+    framework,
     detectedComponents: components
   };
 }
@@ -816,7 +840,7 @@ function analyzeUploadedSite(siteDir, siteName) {
 function main() {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
-  // Always include Club KUDT
+  // Always include Club KUDT (built on mil- framework)
   const sites = [
     {
       id: 'club-kudt',
@@ -825,6 +849,7 @@ function main() {
       stats: { files: 6, pages: 6 },
       colors: ['#0D0D0D', '#1A1A1A', '#888070', '#F5F0E8', '#E8415A'],
       fonts: ['Courier New'],
+      framework: 'mil',
       detectedComponents: CLUB_KUDT_ELEMENTS.map(e => e.name)
     }
   ];
@@ -887,6 +912,27 @@ function main() {
     ...(foodkingUploaded ? promoteDetected(FOODKING_ELEMENTS) : FOODKING_ELEMENTS)
   ];
 
+  // ── Framework tagging + shared-component detection ─────────────────────────
+  // Build a map: framework → list of site IDs that use it
+  const sitesByFramework = {};
+  for (const s of sites) {
+    if (!s.framework) continue;
+    (sitesByFramework[s.framework] ||= []).push(s.id);
+  }
+  for (const el of elements) {
+    // Assign framework from the source site if not already set
+    if (!el.framework) {
+      const srcSite = sites.find(s => s.id === el.source);
+      el.framework = srcSite?.framework || null;
+    }
+    // Components in MIL_SHARED_COMPONENT_IDS are part of the shared mil- code
+    // mark them with sharedWith = every mil- site (so user sees they're reusable)
+    if (MIL_SHARED_COMPONENT_IDS.has(el.id) && sitesByFramework.mil?.length > 1) {
+      el.sharedWith = [...sitesByFramework.mil];
+      el.framework = 'mil';
+    }
+  }
+
   // For uploaded sites, generate generic color/typography entries
   for (const site of sites.slice(1)) {
     if (site.colors.length > 3) {
@@ -919,7 +965,8 @@ function main() {
     generated: new Date().toISOString().slice(0, 10),
     sites,
     elements,
-    categories: ['colors', 'typography', 'animations', 'interactive', 'hero', 'layout']
+    categories: ['colors', 'typography', 'animations', 'interactive', 'hero', 'layout'],
+    frameworks: [...new Set(elements.map(e => e.framework).filter(Boolean))].sort()
   };
 
   // Write catalog.json
