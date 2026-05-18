@@ -42,6 +42,52 @@ window.CATALOG = {
       ]
     },
     {
+      "id": "ashley-creative-portfolio",
+      "name": "ashley-creative-portfolio",
+      "path": "/home/user/everything-claude-code/projects/source-sites/ashley-creative-portfolio",
+      "stats": {
+        "files": 35,
+        "pages": 20
+      },
+      "colors": [
+        "#0d6efd",
+        "#6610f2",
+        "#6f42c1",
+        "#d63384",
+        "#dc3545",
+        "#fd7e14",
+        "#ffc107",
+        "#198754",
+        "#20c997",
+        "#0dcaf0",
+        "#000",
+        "#fff",
+        "#6c757d",
+        "#343a40",
+        "#f8f9fa",
+        "#e9ecef",
+        "#dee2e6",
+        "#ced4da",
+        "#adb5bd",
+        "#495057"
+      ],
+      "fonts": [
+        "var(--bs-font-sans-serif)",
+        "Font Awesome 5 Brands",
+        "Font Awesome 5 Free",
+        "swiper-icons",
+        "Outfit",
+        "sans-serif"
+      ],
+      "detectedComponents": [
+        "3D Tilt Card",
+        "Preloader",
+        "Scroll Progress Bar",
+        "GSAP / ScrollTrigger",
+        "Parallax"
+      ]
+    },
+    {
       "id": "foodking-fast-food-restaurant",
       "name": "foodking-fast-food-restaurant",
       "path": "/home/user/everything-claude-code/projects/source-sites/foodking-fast-food-restaurant",
@@ -101,36 +147,6 @@ window.CATALOG = {
         "GSAP / ScrollTrigger",
         "IntersectionObserver Reveals",
         "Parallax"
-      ]
-    },
-    {
-      "id": "ashley-creative-portfolio",
-      "name": "Ashley Creative Portfolio",
-      "path": null,
-      "status": "inferred",
-      "stats": {
-        "files": 0,
-        "pages": 0
-      },
-      "colors": [
-        "#F8F6F2",
-        "#E8E4DC",
-        "#888888",
-        "#222222",
-        "#C0392B"
-      ],
-      "fonts": [
-        "Playfair Display",
-        "Inter"
-      ],
-      "detectedComponents": [
-        "Neutral Editorial Palette",
-        "Serif Display + Sans Body",
-        "Split Hero",
-        "Portfolio Case Study Grid",
-        "Project Lightbox Overlay",
-        "Curtain Page Transition",
-        "Expanding Underline Nav"
       ]
     }
   ],
@@ -425,35 +441,37 @@ window.CATALOG = {
       "id": "ashley-palette",
       "category": "colors",
       "name": "Neutral Editorial Palette",
-      "description": "Off-white background, deep charcoal text, single warm accent. Clean, gallery-like aesthetic.",
+      "description": "White/black base with orange #FF9800 accent. Real colors from style.css — clean minimal portfolio aesthetic.",
       "source": "ashley-creative-portfolio",
-      "status": "inferred",
+      "status": "detected",
       "tags": [
         "palette",
         "neutral",
         "editorial",
         "portfolio",
-        "minimal"
+        "minimal",
+        "orange"
       ],
-      "previewHtml": "<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:180px;font-family:Georgia,serif;gap:16px;padding:20px}.swatches{display:flex;gap:8px}.swatch{width:44px;height:44px;border-radius:2px;position:relative}.label{font-size:8px;letter-spacing:1px;color:#888;margin-top:20px}.preview{background:#F8F6F2;padding:16px;border-bottom:2px solid #222;width:100%;max-width:280px;text-align:center}.preview h3{font-size:20px;color:#222;letter-spacing:4px;margin-bottom:4px}.preview p{font-size:11px;color:#888;letter-spacing:1px}.preview span{color:#C0392B;font-style:italic}</style></head><body><div class=\"swatches\"><div class=\"swatch\" style=\"background:#F8F6F2;border:1px solid #ddd\"></div><div class=\"swatch\" style=\"background:#E8E4DC\"></div><div class=\"swatch\" style=\"background:#888\"></div><div class=\"swatch\" style=\"background:#222\"></div><div class=\"swatch\" style=\"background:#C0392B\"></div></div><div class=\"preview\"><h3>ASHLEY</h3><p>Creative Director — <span>Branding & Web</span></p></div></body></html>",
-      "snippet": ":root {\n  --bg: #F8F6F2;       /* warm off-white */\n  --surface: #E8E4DC;  /* card/section bg */\n  --muted: #888888;    /* secondary text */\n  --text: #222222;     /* primary text */\n  --accent: #C0392B;   /* single warm accent */\n}"
+      "previewHtml": "<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:180px;font-family:system-ui,sans-serif;gap:16px;padding:20px}.swatches{display:flex;gap:8px}.swatch{width:44px;height:44px;border-radius:2px;border:1px solid rgba(0,0,0,.1)}.preview{background:#fff;padding:16px;border-bottom:2px solid #000;width:100%;max-width:280px;text-align:center}.preview h3{font-size:20px;color:#000;letter-spacing:4px;margin-bottom:4px}.preview p{font-size:11px;color:rgba(0,0,0,0.5);letter-spacing:1px}.preview span{color:#FF9800}</style></head><body><div class=\"swatches\"><div class=\"swatch\" style=\"background:#fff\"></div><div class=\"swatch\" style=\"background:rgba(0,0,0,0.05)\"></div><div class=\"swatch\" style=\"background:rgba(0,0,0,0.5)\"></div><div class=\"swatch\" style=\"background:#000\"></div><div class=\"swatch\" style=\"background:#FF9800\"></div></div><div class=\"preview\"><h3>ASHLEY</h3><p>Creative Director — <span>Branding & Web</span></p></div></body></html>",
+      "snippet": ":root {\n  --body: #fff;                      /* white bg */\n  --black: #000;                     /* primary text */\n  --text: rgba(0,0,0,0.5);           /* muted text */\n  --surface: rgba(0,0,0,0.05);       /* subtle surface */\n  --accent: #FF9800;                 /* orange accent (real from CSS) */\n  --button: #1C2539;                 /* dark button */\n}"
     },
     {
       "id": "ashley-typography",
       "category": "typography",
-      "name": "Serif Display + Sans Body",
-      "description": "Playfair Display (or similar) for large headlines paired with a clean sans-serif body. Editorial contrast.",
+      "name": "Outfit — Clean Geometric Sans",
+      "description": "Outfit font (real from style.css) — modern geometric sans used at all weights. No serif. Letter-spacing for labels.",
       "source": "ashley-creative-portfolio",
-      "status": "inferred",
+      "status": "detected",
       "tags": [
         "typography",
-        "serif",
-        "editorial",
-        "display",
-        "contrast"
+        "sans",
+        "geometric",
+        "outfit",
+        "portfolio",
+        "clean"
       ],
-      "previewHtml": "<!DOCTYPE html><html><head><link href=\"https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400&display=swap\" rel=\"stylesheet\"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F6F2;padding:24px;min-height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px}.serif{font-family:\"Playfair Display\",Georgia,serif;font-size:36px;font-weight:700;color:#222;line-height:1.1}.serif-i{font-family:\"Playfair Display\",Georgia,serif;font-size:20px;font-style:italic;color:#888}.sans{font-family:\"Inter\",system-ui,sans-serif;font-size:13px;color:#555;letter-spacing:.5px;line-height:1.7;margin-top:4px}.label{font-family:\"Inter\",sans-serif;font-size:9px;letter-spacing:3px;color:#C0392B;text-transform:uppercase;margin-top:12px}</style></head><body><div class=\"label\">Creative Director</div><div class=\"serif\">Ashley <span class=\"serif-i\">Design</span></div><div class=\"sans\">Branding, web design and visual identity for bold brands that want to stand out.</div></body></html>",
-      "snippet": "/* Serif display + sans body */\n@import url(\"https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400&display=swap\");\n\n.heading { font-family: \"Playfair Display\", Georgia, serif; font-weight: 700; }\n.heading-italic { font-style: italic; font-weight: 400; }\n.body { font-family: \"Inter\", system-ui, sans-serif; font-weight: 300; line-height: 1.8; }\n.label { font-family: \"Inter\", sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }"
+      "previewHtml": "<!DOCTYPE html><html><head><link href=\"https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#fff;padding:24px;min-height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px}.t1{font-family:\"Outfit\",sans-serif;font-size:42px;font-weight:700;color:#000;line-height:1.05;letter-spacing:-1px}.t2{font-family:\"Outfit\",sans-serif;font-size:14px;font-weight:500;color:rgba(0,0,0,0.5);letter-spacing:2px;text-transform:uppercase}.t3{font-family:\"Outfit\",sans-serif;font-size:13px;font-weight:300;color:rgba(0,0,0,0.5);line-height:1.7;margin-top:4px}.accent{color:#FF9800}</style></head><body><div class=\"t2\">Creative Director</div><div class=\"t1\">Ashley <span class=\"accent\">Design</span></div><div class=\"t3\">Branding, web design and visual identity for brands that stand out.</div></body></html>",
+      "snippet": "/* Real font from Ashley style.css */\n@import url(\"https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap\");\n\nbody { font-family: \"Outfit\", sans-serif; color: rgba(0,0,0,0.5); }\n.heading { font-family: \"Outfit\", sans-serif; font-weight: 700; color: #000; letter-spacing: -1px; }\n.label { font-family: \"Outfit\", sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }"
     },
     {
       "id": "ashley-split-hero",
@@ -461,7 +479,7 @@ window.CATALOG = {
       "name": "Split Hero",
       "description": "Full-height hero split 50/50: name + title left, portrait/image placeholder right. Clean editorial entry.",
       "source": "ashley-creative-portfolio",
-      "status": "inferred",
+      "status": "detected",
       "tags": [
         "hero",
         "split",
@@ -478,7 +496,7 @@ window.CATALOG = {
       "name": "Portfolio Case Study Grid",
       "description": "Image grid where hovering darkens the photo and slides in the project title + category from below.",
       "source": "ashley-creative-portfolio",
-      "status": "inferred",
+      "status": "detected",
       "tags": [
         "portfolio",
         "grid",
@@ -495,7 +513,7 @@ window.CATALOG = {
       "name": "Project Lightbox Overlay",
       "description": "Full-screen modal overlay with project details, image, and close button. Triggered on portfolio card click.",
       "source": "ashley-creative-portfolio",
-      "status": "inferred",
+      "status": "detected",
       "tags": [
         "lightbox",
         "modal",
@@ -512,7 +530,7 @@ window.CATALOG = {
       "name": "Curtain Page Transition",
       "description": "Dark curtain sweeps across the screen on navigation, then retracts to reveal the new page.",
       "source": "ashley-creative-portfolio",
-      "status": "inferred",
+      "status": "detected",
       "tags": [
         "transition",
         "page",
@@ -529,7 +547,7 @@ window.CATALOG = {
       "name": "Expanding Underline Nav",
       "description": "Nav links with an underline that expands from center on hover. Clean, minimal interaction.",
       "source": "ashley-creative-portfolio",
-      "status": "inferred",
+      "status": "detected",
       "tags": [
         "nav",
         "underline",
@@ -666,6 +684,32 @@ window.CATALOG = {
       "snippet": "// Highlight today's row\nconst days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];\nconst today = days[new Date().getDay()];\ndocument.querySelector(`[data-day='${today}']`)?.classList.add('today');\n\n.hours-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--surface); }\n.hours-row.today { background: rgba(192,0,26,0.1); color: var(--gold); font-weight: 700; }"
     },
     {
+      "id": "ashley-creative-portfolio-palette",
+      "category": "colors",
+      "name": "ashley-creative-portfolio — Color Palette",
+      "description": "Colors extracted from ashley-creative-portfolio: #0d6efd, #6610f2, #6f42c1, #d63384, #dc3545",
+      "source": "ashley-creative-portfolio",
+      "tags": [
+        "palette",
+        "colors"
+      ],
+      "previewHtml": "<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#111;padding:20px;font-family:'Courier New',monospace;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}</style></head><body><div style=\"display:flex;gap:8px;flex-wrap:wrap;justify-content:center\"><div style=\"width:40px;height:40px;background:#0d6efd;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#6610f2;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#6f42c1;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#d63384;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#dc3545;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#fd7e14;flex-shrink:0;border-radius:2px\"></div></div><div style=\"font-size:10px;letter-spacing:2px;color:#666\">#0d6efd  #6610f2  #6f42c1  #d63384  #dc3545  #fd7e14</div></body></html>",
+      "snippet": ":root {\n  --color-1: #0d6efd;\n  --color-2: #6610f2;\n  --color-3: #6f42c1;\n  --color-4: #d63384;\n  --color-5: #dc3545;\n  --color-6: #fd7e14;\n}"
+    },
+    {
+      "id": "ashley-creative-portfolio-typography",
+      "category": "typography",
+      "name": "ashley-creative-portfolio — Typography",
+      "description": "Fonts used: var(--bs-font-sans-serif), Font Awesome 5 Brands, Font Awesome 5 Free",
+      "source": "ashley-creative-portfolio",
+      "tags": [
+        "typography",
+        "font"
+      ],
+      "previewHtml": "<!DOCTYPE html><html><head><style>*{margin:0;padding:0}body{background:#0D0D0D;padding:24px;min-height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px}</style></head><body><div style=\"font-family:'var(--bs-font-sans-serif)',sans-serif;font-size:36px;font-weight:900;color:#F5F0E8;letter-spacing:4px\">HEADLINE</div><div style=\"font-family:'var(--bs-font-sans-serif)',sans-serif;font-size:14px;color:#888070;letter-spacing:2px\">Body copy — ashley-creative-portfolio</div><div style=\"font-family:'var(--bs-font-sans-serif)',sans-serif;font-size:10px;color:#666;letter-spacing:3px;margin-top:8px\">VAR(--BS-FONT-SANS-SERIF)</div></body></html>",
+      "snippet": "font-family: 'var(--bs-font-sans-serif)', sans-serif;"
+    },
+    {
       "id": "foodking-fast-food-restaurant-palette",
       "category": "colors",
       "name": "foodking-fast-food-restaurant — Color Palette",
@@ -690,32 +734,6 @@ window.CATALOG = {
       ],
       "previewHtml": "<!DOCTYPE html><html><head><style>*{margin:0;padding:0}body{background:#0D0D0D;padding:24px;min-height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px}</style></head><body><div style=\"font-family:'sans-serif',sans-serif;font-size:36px;font-weight:900;color:#F5F0E8;letter-spacing:4px\">HEADLINE</div><div style=\"font-family:'sans-serif',sans-serif;font-size:14px;color:#888070;letter-spacing:2px\">Body copy — foodking-fast-food-restaurant</div><div style=\"font-family:'sans-serif',sans-serif;font-size:10px;color:#666;letter-spacing:3px;margin-top:8px\">SANS-SERIF</div></body></html>",
       "snippet": "font-family: 'sans-serif', sans-serif;"
-    },
-    {
-      "id": "ashley-creative-portfolio-palette",
-      "category": "colors",
-      "name": "Ashley Creative Portfolio — Color Palette",
-      "description": "Colors extracted from Ashley Creative Portfolio: #F8F6F2, #E8E4DC, #888888, #222222, #C0392B",
-      "source": "ashley-creative-portfolio",
-      "tags": [
-        "palette",
-        "colors"
-      ],
-      "previewHtml": "<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#111;padding:20px;font-family:'Courier New',monospace;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}</style></head><body><div style=\"display:flex;gap:8px;flex-wrap:wrap;justify-content:center\"><div style=\"width:40px;height:40px;background:#F8F6F2;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#E8E4DC;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#888888;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#222222;flex-shrink:0;border-radius:2px\"></div><div style=\"width:40px;height:40px;background:#C0392B;flex-shrink:0;border-radius:2px\"></div></div><div style=\"font-size:10px;letter-spacing:2px;color:#666\">#F8F6F2  #E8E4DC  #888888  #222222  #C0392B</div></body></html>",
-      "snippet": ":root {\n  --color-1: #F8F6F2;\n  --color-2: #E8E4DC;\n  --color-3: #888888;\n  --color-4: #222222;\n  --color-5: #C0392B;\n}"
-    },
-    {
-      "id": "ashley-creative-portfolio-typography",
-      "category": "typography",
-      "name": "Ashley Creative Portfolio — Typography",
-      "description": "Fonts used: Playfair Display, Inter",
-      "source": "ashley-creative-portfolio",
-      "tags": [
-        "typography",
-        "font"
-      ],
-      "previewHtml": "<!DOCTYPE html><html><head><style>*{margin:0;padding:0}body{background:#0D0D0D;padding:24px;min-height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px}</style></head><body><div style=\"font-family:'Playfair Display',sans-serif;font-size:36px;font-weight:900;color:#F5F0E8;letter-spacing:4px\">HEADLINE</div><div style=\"font-family:'Playfair Display',sans-serif;font-size:14px;color:#888070;letter-spacing:2px\">Body copy — Ashley Creative Portfolio</div><div style=\"font-family:'Playfair Display',sans-serif;font-size:10px;color:#666;letter-spacing:3px;margin-top:8px\">PLAYFAIR DISPLAY</div></body></html>",
-      "snippet": "font-family: 'Playfair Display', sans-serif;"
     }
   ],
   "categories": [
