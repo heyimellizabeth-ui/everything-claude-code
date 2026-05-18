@@ -1,0 +1,114 @@
+
+.marquee-wrapper {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 30px;
+    margin-bottom: -3px;
+
+    &.style-3 {
+        margin-top: 50px;
+
+        @include breakpoint (max-sm){
+            margin-top: 40px;
+        }
+
+        .marquee-inner {
+            .marqee-list {
+                .marquee-item {
+                    .text-slider {
+                        text-transform: capitalize;
+                        font-family: $heading-font;
+                        line-height: 88px;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+
+    &.style-responsive {
+        @include breakpoint (max-sm){
+            margin-top: -29px !important;
+        }
+    }
+
+    &.style-responsive-2 {
+        @include breakpoint (max-sm){
+            margin-top: -29px !important;
+        }
+    }
+}
+
+.text-slider {
+    font-size: 130px;
+    height: 100px;
+    line-height: 85px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    
+
+    &.text-color {
+        color: #A4A4A4;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: #A4A4A4;
+        -webkit-text-fill-color: transparent;
+        font-style: italic;
+    }
+
+    &.text-color-2 {
+        color: $theme-color-2;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: $theme-color-2;
+        -webkit-text-fill-color: transparent;
+        font-style: italic;
+    }
+
+    @include breakpoint(max-sm){
+        font-size: 50px;
+        height: 70px;
+    }
+}
+
+.marquee-inner {
+    position: absolute;
+    display: inline-flex;
+    width: 200%;
+}
+
+.marquee-list {
+    float: left;
+    width: 50%;
+}
+
+.marquee-item {
+    float: left;
+    transition: animation 0.2s ease-out;
+}
+
+.marquee-inner.to-left {
+    animation: marqueeLeft 25s linear infinite;
+}
+
+@keyframes marqueeLeft {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: -100%;
+    }
+}
+
+.marquee-inner.to-right {
+    animation: marqueeRight 25s linear infinite;
+}
+
+@keyframes marqueeRight {
+    0% {
+       right : 0;
+    }
+    100% {
+        right: -100%;
+    }
+}

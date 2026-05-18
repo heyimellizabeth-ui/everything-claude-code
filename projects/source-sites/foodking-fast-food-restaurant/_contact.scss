@@ -1,0 +1,432 @@
+.booking-section {
+    margin-top: -240px;
+    position: relative;
+}
+
+.booking-content {
+    @include breakpoint (max-lg){
+        text-align: center;
+    }
+
+    .icon-items {
+        gap: 20px;
+        padding-top: 15px;
+
+        @include breakpoint (max-lg){
+            justify-content: center;
+        }
+
+        .icon {
+            font-size: 66px;
+            color: $theme-color;
+
+            @include breakpoint (max-sm){
+                font-size: 56px;
+            }
+        }
+
+        .content {
+            h5 {
+                color: $white;
+                margin-bottom: 5px;
+            }
+            
+            h3 {
+                a {
+                    color: $theme-color;
+                }
+            }
+        }
+    }
+
+    &.style-2 {
+        .section-title {
+            span {
+                color: $theme-color;
+            }
+        }
+
+        .icon-items {
+            .content {
+                h5 {
+                    color: $header-color;
+                }
+            }
+        }
+    }
+}
+
+.booking-contact {
+    padding: 55px;
+    background-color: $theme-color;
+    border-radius: 20px 20px 0 0;
+    margin-bottom: -120px;
+
+    &.style-2 {
+        border-radius: 20px;
+    }
+
+    @include breakpoint (max-xl){
+        margin-bottom: -100px;
+    }
+
+    @include breakpoint (max-lg){
+        margin-bottom: -80px;
+    }
+
+    @include breakpoint (max-sm){
+        padding: 50px 40px;
+    }
+
+    h4 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 30px;
+    }
+
+    .booking-items {
+        .form-clt {
+            position: relative;
+
+            &:not(:last-child){
+                margin-bottom: 30px;
+            }
+
+            input {
+                width: 100%;
+                outline: none;
+                border: none;
+                padding: 18px 25px;
+                color: $white;
+                background-color: transparent;
+                font-size: 18px;
+                text-transform: capitalize;
+                font-weight: 500;
+                border: 1px solid $border-color-2;
+                border-radius: 9px;
+                color-scheme: dark;
+
+                @include breakpoint (max-sm){
+                    padding: 12px 20px;
+                    font-size: 14px;
+                }
+                
+                &::placeholder {
+                    color: $white;
+                }
+            }
+
+            .icon {
+                position: absolute;
+                top: 18px;
+                right: 25px;
+
+                i {
+                    color: $white;
+
+                    @include breakpoint (max-sm){
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            .theme-btn {
+                width: 100%;
+                @include breakpoint (max-sm){
+                    padding: 18px 32px;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+.contact-info-items {
+    background-color: $white;
+    border-radius: 8px;
+    box-shadow: 0px 15px 10px 0px rgba(242, 242, 242, 0.18);
+    padding: 60px 30px;
+    @include transition;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background: url('../../assets/img/shape/catagory-card-shape.jpg');
+        opacity: 0;
+        @include transition;
+        z-index: -1;
+        visibility: hidden;
+    }
+
+    .icon {
+        @include transition;
+    }
+
+    .content {
+        margin-top: 20px;
+
+        h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+    }
+
+    &:hover, &.active {
+        background-color: $theme-color;
+
+        &::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .icon {
+            filter: grayscale(100%) brightness(300%);
+        }
+
+        .content {
+            h3, p {
+                color: $white;
+            }
+        }
+    }
+}
+
+.contact-area {
+    .map-content-area {
+        h3 {
+            margin-bottom: 15px;
+            margin-top: -10px;
+        }
+
+        .google-map {
+            margin-top: 50px;
+
+            iframe {
+                width: 100%;
+                height: 350px;
+            }
+        }
+    }
+
+    .contact-form-items {
+        .contact-title {
+            margin-bottom: 30px;
+
+            h3 {
+                margin-top: -10px;
+            }
+        }
+
+        .form-clt {
+            position: relative;
+            .icon {
+                position: absolute;
+                top: 18px;
+                left: 0;
+
+                @include breakpoint(max-sm){
+                  display: none;
+                }
+
+                i {
+                    color: $header-color;
+                }
+            }
+
+            input{
+                width: 100%;
+                outline: none;
+                border: none;
+                padding: 20px 30px;
+                color: $text-color;
+                background-color: transparent;
+                text-transform: capitalize;
+                font-weight: 500;
+                border-bottom: 1px solid $text-color;
+
+                @include breakpoint(max-sm){
+                    padding: 15px 20px;
+                }
+            }
+        }
+
+        .form-clt-big {
+    
+            textarea {
+                padding: 20px 30px 110px;
+                width: 100%;
+                outline: none;
+                border: none;
+                color: $text-color;
+                background-color: transparent;
+                text-transform: capitalize;
+                font-weight: 500;
+                border-bottom: 1px solid $text-color;
+            }
+        }
+    }
+}
+
+.booking-wrapper {
+    &.style-responsive {
+        @include breakpoint (max-xl){
+            margin-top: 40px;
+        }
+
+        @include breakpoint (max-lg){
+            margin-top: 80px;
+        }
+    }
+}
+
+//>> Update Page 4 Start <<//
+
+.footer-contact-us-wrapper {
+    background-color: #212121;
+    position: relative;
+
+    .bg-shape {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        img {
+            @include imgw;
+        }
+    }
+
+    .footer-contact-items {
+        width: 100%;
+        max-width: 580px;
+        float: right;
+        position: relative;
+        z-index: 9;
+
+        @include breakpoint (max-xl){
+            padding: 50px 40px;
+        }
+
+        @include breakpoint (max-sm){
+            padding: 40px 30px;
+        }
+
+        span {
+            display: inline-block;
+            padding: 4px 14px;
+            background-color: $theme-color;
+            color: $white;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            a {
+                color: $white;
+            }
+        }
+
+        .contact-info-items-2 {
+           display: flex;
+            gap: 30px;
+            margin-top: 40px;
+
+            .icon {
+               color: $theme-color;
+               font-size: 32px;
+            }
+
+            .content {
+                h4 {
+                    color: $white;
+                    margin-bottom: 5px;
+                }
+
+                p {
+                    color: $white;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .social-icon {
+            margin-top: 40px;
+            gap: 15px;
+            position: relative;
+            z-index: 9;
+
+            @include breakpoint (max-sm){
+                margin-top: 20px;
+            }
+
+            a {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                font-size: 16px;
+                display: block;
+                background: $white;
+                color: $header-color;
+                border-radius: 50%;
+                -webkit-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+                text-align: center;
+
+                &:hover {
+                    background-color: $theme-color;
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    .contact-image {
+        position: relative;
+        z-index: 9;
+
+        img {
+            @include imgw;
+        }
+    }
+
+    .google-map-wrap {
+        position: relative;
+        z-index: 9;
+
+        iframe {
+            width: 100%;
+            height: 700px;
+
+            @include breakpoint (max-md){
+                height: 500px;
+            }
+    
+            @include breakpoint (max-sm){
+                height: 400px;
+            }
+        }
+    }
+}
+
+//>> Update Page 4 Start <<//
+
+.google-map-wrap {
+
+    iframe {
+        width: 100%;
+        height: 650px;
+
+        @include breakpoint (max-md){
+            height: 500px;
+        }
+
+        @include breakpoint (max-sm){
+            height: 400px;
+        }
+    }
+}

@@ -1,0 +1,382 @@
+
+//page scroll bar add
+::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px $theme-color; 
+	border-radius: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: $theme-color;
+	border-radius: 10px;
+}
+//page scroll bar add
+
+//Basic Code Start
+.fix {
+  overflow: hidden;
+}
+
+.ralt{
+ position: relative;
+}
+
+.ml-100{
+  margin-left: 100px;
+}
+//Basic Code End
+
+//Video Css Start
+.video-pulse::after,
+.video-pulse::before {
+  position: absolute;
+  content: "";
+  width: 100px;
+  height: 100px;
+  border: 1px solid $white;
+  opacity: 0.7;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  -webkit-animation-duration: 2.5s;
+  animation-duration: 2.5s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-name: video-animation;
+  animation-name: video-animation;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+
+  @include breakpoint (max-sm){
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+ }
+}
+
+.video-pulse::before {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+//Video Css End
+
+//pagination default
+.swiper-dot {
+  .swiper-pagination-bullet {
+      width: 10px;
+      height: 10px;
+      transition: 0.6s;
+      background-color: $white;
+      opacity: 1;
+      border-radius: 10px;
+      &:not(:last-child){
+        margin-right: 10px;
+      }
+  }
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+      background-color: $white;
+      transition: 0.6s;
+      position: relative;
+
+      &::before{
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        top: -6px;
+        left: -6px;
+        border-radius: 50%;
+        background-color: transparent;
+        border: 2px solid $white;
+        content: "";
+      }
+   }
+
+   &.style-2 {
+      border: 1px dotted rgba(92, 92, 91, .9);
+      width: 146px;
+      height: 41px;
+      line-height: 35px;
+      border-radius: 30px;
+      text-align: center;
+      margin: 50px auto;
+      .swiper-pagination-bullet {
+          background-color: $text-color;
+      }
+      .swiper-pagination-bullet.swiper-pagination-bullet-active {
+        background-color: $theme-color;
+        &::before{
+          border: 2px solid $theme-color;
+        }
+     }
+   }
+}
+
+.swiper-dot-2 {
+  .swiper-pagination-bullet {
+    width: 7px;
+    height: 7px;
+    border-radius: 0;
+    background-color: $theme-color-2;
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    width: 20px;
+    background-color: $theme-color-3;
+ }
+}
+
+.array-button {
+  position: relative;
+  z-index: 99;
+
+  .array-prev {
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      border-radius: 50%;
+      background-color: transparent;
+      margin-right: 20px;
+      border: 1px solid $white;
+      color: $theme-color-2;
+      @include transition;
+
+      @include breakpoint (max-md){
+          margin-right: 0;
+          margin-bottom: 10px;
+      }
+
+      @include breakpoint (max-sm){
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+      }
+
+      &:hover {
+        background-color: $white;
+      }
+  }
+  .array-next {
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      border-radius: 100%;
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.06);
+      background-color: $theme-color-2;
+      color: $white;
+      @include transition;
+
+      @include breakpoint (max-sm){
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+      }
+
+      &:hover {
+        background-color: $white;
+        color: $theme-color-2;
+      }
+  }
+}
+
+//pagination default
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+// br {
+//   @include breakpoint(max-sm){
+//     display: none;
+//   }
+// }
+
+
+/* background */
+.bg-cover {
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+//>>>>> Nice Select Css Start <<<<<//
+.nice-select {
+    background-color: transparent;
+    width: unset;
+    outline: none;
+    padding: 18px 25px;
+    border: 1px solid $border-color-2;
+    border-radius: 9px;
+
+    @include breakpoint (max-sm){
+      padding: 12px 20px;
+    }
+
+    &:hover {
+      border: 1px solid $border-color-2;
+    }
+
+    span {
+      font-size: 18px;
+      font-weight: 500;
+      color: $white;
+      text-transform: capitalize;
+
+      @include breakpoint (max-sm){
+        font-size: 15px;
+      }
+    }
+}
+
+.nice-select .current {
+  margin-right: 12px;
+}
+
+.nice-select:after {
+  right: 23px;
+  border-bottom: 1px solid $white;
+  border-right: 1px solid $white;
+  width: 10px;
+  height: 10px;
+}
+
+.nice-select.open .list {
+  background: $bg-color;
+  margin-top: 14px;
+  width: 100%;
+  text-transform: uppercase;
+  color: $theme-color;
+}
+
+.nice-select .option.selected.focus {
+    background: $bg-color;
+    outline: none;
+    color: $theme-color;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 18px;
+    border: none;
+}
+
+.nice-select .option {
+  border: none;
+}
+
+.nice-select .option:hover {
+  background: transparent;
+}
+//>>>>> Nice Select Css End <<<<<//
+
+
+.scroll-up {
+  cursor: pointer;
+  display: block;
+  border-radius: 50px;
+  box-shadow: inset 0 0 0 2px var(--border);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  position: fixed;
+  right: 25px;
+  bottom: 35px;
+  height: 50px;
+  width: 50px;
+  @include transition;
+}
+
+.scroll-up::after {
+  position: absolute;
+  font-family: $fa;
+  content: "\f176";
+  text-align: center;
+  line-height: 50px;
+  font-weight: 700;
+  font-size: 18px;
+  color: $theme-color-2;
+  left: 0;
+  top: 0;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  display: block;
+  z-index: 1;
+  @include transition;
+}
+
+.scroll-up svg path {
+  fill: none;
+}
+
+.scroll-up svg.scroll-circle path {
+  stroke: $theme-color-2;
+  stroke-width: 4px;
+  box-sizing: border-box;
+  @include transition;
+}
+
+.scroll-up.active-scroll {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-bg {
+  background-color: $theme-color !important;
+}
+
+.white-bg {
+  background-color: $white !important;
+  width: initial;
+  height: initial;
+
+  @include breakpoint (xxl){
+    padding-left: 25px;
+  }
+
+  @include breakpoint (max-xl){
+   background-color: transparent !important;
+  }
+}
+
+.theme-color-2 {
+  color: $theme-color-2 !important;
+}
+
+.color-bg {
+  color: $text-color !important;
+  opacity: .3;
+}
+
+.text-color {
+  color: $header-color !important;
+}
+
+.theme-color-3 {
+  color: $theme-color-3 !important;
+}
+
+.border-radius-none {
+    border-radius: 0 !important;
+}
+
+.border-right {
+  border-right: 1px solid $border-color-2;
+
+  @include breakpoint (max-xl){
+   border: none;
+  }
+}
+
+.shadow-style {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 14px;
+}

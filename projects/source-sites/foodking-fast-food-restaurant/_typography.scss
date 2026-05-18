@@ -1,0 +1,143 @@
+/* --------------------------------------------
+    Template Default Fonts & Fonts Styles
+ ---------------------------------------------- */
+
+ @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$heading-font: 'Barlow Condensed', sans-serif;
+$body-font: 'Barlow Condensed', sans-serif;
+
+//font-family: "Font Awesome 5 Pro";
+$fa: "Font Awesome 5 Pro";
+
+body {
+    font-family: $body-font;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: $text-color;
+    background-color: $white;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+	padding: 0;
+}
+
+input:focus{
+	color: var(--white);
+	outline: none;
+}
+
+input{
+	color: $white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $heading-font;
+    margin: 0px;
+	padding: 0;
+    color: $header-color;
+	text-transform: uppercase;
+	@include transition;
+}
+
+h1 {
+	font-size: 145px;
+	font-weight: 600;
+	line-height: 100%;
+	
+	@include breakpoint(max-xxl){
+		font-size: 130px;
+	}
+	@include breakpoint(max-xl){
+		font-size: 110px;
+	}
+	@include breakpoint(max-lg){
+		font-size: 72px;
+	}
+	@include breakpoint(max-sm){
+		font-size: 52px;
+	}
+}
+
+h2 {
+	font-size: 70px;
+	line-height: 110%;
+	font-weight: 700;
+
+	@include breakpoint(max-xxl){
+		font-size: 58px;
+	}
+
+	@include breakpoint(max-xl){
+		font-size: 54px;
+	}
+
+	@include breakpoint(max-lg){
+		font-size: 42px;
+	}
+	@include breakpoint(max-sm){
+		font-size: 32px;
+	}
+}
+
+h3 {
+	font-size: 44px;
+	font-weight: 700;
+
+	@include breakpoint(max-xxl){
+		font-size: 28px;
+	}
+
+	@include breakpoint(max-lg){
+		font-size: 24px;
+	}
+}
+
+h4 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+h5 {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+h6 {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 145%;
+}
+
+a {
+    text-decoration: none;
+    outline: none !important;
+    cursor: pointer;
+    color: $header-color ;
+	@include transition;
+}
+
+p {
+    margin: 0px;
+	@include transition;
+}
+
+
+

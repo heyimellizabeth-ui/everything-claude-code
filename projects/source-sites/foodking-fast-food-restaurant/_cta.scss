@@ -1,0 +1,1940 @@
+.food-banner-section {
+    position: relative;
+
+    .chili-shape {
+        position: absolute;
+        bottom: 15%;
+        left: 0;
+    }
+
+    .fry-shape {
+        position: absolute;
+        right: 2%;
+    }
+
+    .burger-shape-2 {
+        position: absolute;
+        right: 3%;
+        bottom: 0;
+    }
+}
+
+.single-offer-items {
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+
+    .offer-image {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        z-index: 9;
+        -webkit-animation: scale-up-two 6s infinite linear;
+        animation: scale-up-two 6s infinite linear;
+
+        @include breakpoint (max-xl){
+            bottom: 0px;
+            left: 190px;
+        }
+
+        @include breakpoint (max-md){
+            display: none;
+        }
+    }
+
+    .burger-text {
+        position: absolute;
+        right: 20%;
+        top: 0;
+        animation: rounded 4s linear infinite;
+        z-index: 9;
+
+        @include breakpoint (max-sm){
+          right: 0;
+        }
+    }
+
+    .main-food {
+        position: absolute;
+        right: -20px;
+        bottom: -5px;
+        @include transition;
+
+        @include breakpoint (max-sm){
+           width: 250px;
+
+           img {
+             width: 100%;
+           }
+        }
+    }
+
+    .offer-content {
+        padding: 50px;
+        position: relative;
+        z-index: 99;
+
+        @include breakpoint (max-xl){
+           padding: 100px 50px;
+        }
+
+        @include breakpoint (max-md){
+            padding: 90px 30px;
+         }
+
+        h5 {
+            font-weight: 700;
+            color: $theme-color-2;
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 55px;
+            color: $white;
+
+            @include breakpoint (max-sm){
+                font-size: 42px;
+            }
+        }
+    }
+
+    &.style-2 {
+        .offer-content {
+            padding: 60px 45px;
+
+            h3 {
+                font-size: 55px;
+                margin-bottom: 5px;
+
+                @include breakpoint (max-sm){
+                    font-size: 36px;
+                }
+            }
+
+            p {
+                font-size: 16px;
+                font-weight: 500;
+                color: $white;
+            }
+        }
+
+        .offer-img {
+            position: absolute;
+            top: 30%;
+            left: 43%;
+            -webkit-animation: scale-up-two 6s infinite linear;
+            animation: scale-up-two 6s infinite linear;
+
+            @include breakpoint (max-xxl){
+                top: 15%;
+                left: 58%;
+            }
+
+            @include breakpoint (max-xl){
+                top: 30%;
+                left: 43%;
+            }
+
+            @include breakpoint (max-md){
+                top: 15%;
+                left: 60%;
+            }
+        }
+        
+        .roller-box {
+            position: absolute;
+            right: -20px;
+            bottom: -10px;
+            @include transition;
+
+            @include breakpoint (max-xxl){
+                width: 300px;
+
+                img {
+                    @include imgw;
+                }
+            }
+
+            @include breakpoint (max-xl){
+                width: initial;
+            }
+
+            @include breakpoint (max-sm){
+                width: 250px;
+                right: 0;
+                bottom: 0;
+
+                img {
+                    @include imgw;
+                }
+            }
+        }
+
+        &:hover {
+            .roller-box {
+               right: -50px;
+            }
+        }
+    }
+
+    &.style-3 {
+        border-radius: 9px;
+
+        .offer-content {
+            margin-bottom: 20px;
+            padding: 50px 35px;
+            position: relative;
+            z-index: 9;
+
+            h3 {
+                margin-bottom: 20px;
+                font-size: 38px;
+                font-weight: 700;
+            }
+        }
+
+        .offer-image-2 {
+            position: absolute;
+            top: 0;
+            right: 5%;
+            animation: 4s linear 0s infinite normal none running rounded;
+        }
+
+        .small-pizza {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            @include transition;
+        }
+
+        .french-content {
+            padding: 50px 35px;
+            position: relative;
+            z-index: 9;
+
+            span {
+                font-size: 14px;
+                color: $theme-color-2;
+                font-weight: 500;
+            }
+
+            h4 {
+                font-size: 26px;
+                font-style: italic;
+                color: $white;
+                text-transform: capitalize;
+                font-weight: 500;
+                color: $theme-color-3;
+                margin-bottom: 10px;
+
+                span {
+                    font-size: 14px;
+                    font-family: $heading-font;
+                    margin-right: 5px;
+                    color: $white;
+                }
+            }
+
+            h3 {
+                font-size: 40px;
+                color: $white;
+                margin-bottom: 10px;
+            }
+
+            h5 {
+                color: $white;
+                text-transform: capitalize;
+                margin-bottom: 40px;
+                font-weight: 500;
+            }
+
+           .theme-btn {
+                background-color: $theme-color-3 !important;
+                padding: 16px 40px;
+
+                .button-content-wrapper {
+                    .button-icon {
+                        i {
+                            margin-left: 10px;
+                        }
+                    }
+
+                    .button-text {
+                        font-weight: 600;
+                        color: $header-color !important;
+                        font-size: 18px;
+                        text-transform: capitalize;
+                    }
+                }
+
+              &:hover {
+                color: $header-color;
+    
+                &::before {
+                    background-color: $white;
+                }
+            }
+           }
+        }
+
+        .french-image {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            @include transition;
+        }
+
+        .noodles-image {
+            position: absolute;
+            right: 0;
+            bottom: 40px;
+            width: 205px;
+            @include transition;
+
+            img {
+                @include imgw;
+            }
+        }
+
+        .chicken-image {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            @include transition;
+        }
+
+        .offer-shape-3 {
+            position: absolute;
+            right: 30%;
+            top: 20%;
+            animation: 4s linear 0s infinite normal none running rounded;
+        }
+
+        .main-food-3 {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            @include transition;
+        }
+
+        &:hover {
+            .small-pizza,.chicken-image {
+                transform: scale(1.1);
+            }
+
+            .french-image {
+                right: -30px;
+            }
+
+            .main-food-3 {
+                transform: scale(1.1);
+            }
+
+            .noodles-image {
+                right: -30px;
+            }
+        }
+    }
+
+    &.style-4 {
+        border-radius: 0;
+        padding: 60px 45px;
+        overflow: hidden;
+
+        .burger-comboo-content {
+            position: relative;
+            z-index: 9;
+
+            h4 {
+                font-size: 26px;
+                font-weight: 500;
+                text-transform: capitalize;
+                color: $theme-color-3;
+
+                @include breakpoint (max-sm){
+                    font-size: 22px;
+                }
+            }
+
+            h3 {
+                font-size: 40px;
+                color: $white;
+                margin-bottom: 15px;
+
+                @include breakpoint (max-sm){
+                   margin-bottom: 10px;
+                }
+            }
+
+            h2 {
+                font-size: 44px;
+                color: $white;
+                margin-top: 20px;
+
+                @include breakpoint (max-sm){
+                    font-size: 36px;
+                   margin-top: 15px;
+                }
+
+                span {
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .chicken-content {
+            position: relative;
+            z-index: 9;
+
+            h5 {
+                color: $theme-color-2;
+                margin-bottom: 5px;
+            }
+
+            h3 {
+                font-size: 53px;
+                color: $white;
+
+                @include breakpoint (max-sm){
+                    font-size: 40px;
+                }
+            }
+
+            h6 {
+                text-transform: initial;
+                color: $white;
+                margin-top: 10px;
+            }
+        }
+
+        .french-image {
+            position: absolute;
+            bottom: 15%;
+            right: 0;
+            @include transition;
+
+            @include breakpoint (max-sm){
+               width: 250px;
+
+               img {
+                    width: 100%;
+               }
+            }
+        }
+
+        .chicken-text {
+            position: relative;
+            z-index: 9;
+        }
+
+        .chicken-french-image {
+            position: absolute;
+            bottom: 10%;
+            right: 5%;
+            @include transition;
+
+            @include breakpoint (max-sm){
+                //display: none;
+            }
+        }
+
+        &:hover {
+            .french-image {
+                right: -30px;
+            }
+
+            .chicken-french-image {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    &:hover {
+        .main-food {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.pizza-banner-items {
+    padding: 60px 50px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+
+    @include breakpoint (max-xxl){
+       padding: 60px 30px;
+    }
+
+    @include breakpoint (max-xl){
+       padding: 60px 50px;
+    }
+
+    @include breakpoint (max-md){
+        padding: 60px 30px;
+        background-size: 300%;
+    }
+
+    .pizza-image {
+        position: absolute;
+        right: 0;
+        bottom: -40px;
+        @include transition;
+        z-index: 99;
+
+        @include breakpoint (max-xxl){
+            max-width: 300px;
+            bottom: 0;
+
+            img {
+                @include imgw;
+            }
+        }
+
+        @include breakpoint (max-xl){
+            max-width: initial;
+            bottom: -40px;
+        }
+
+        @include breakpoint (max-md){
+            width: 270px;
+            bottom: -10px;
+
+            img {
+                @include imgw;
+            }
+        }
+    }
+
+    .pizza-text {
+        position: relative;
+        z-index: 9;
+    }
+
+    .pizza-text-2 {
+        position: absolute;
+        right: 15%;
+        top: 5px;
+
+        @include breakpoint (max-md){
+            top: 30px;
+        }
+    }
+
+    &:hover {
+        .pizza-image{
+            transform: scale(1.1);
+        }
+    }
+}
+
+.burger-banner-items {
+    border-radius: 20px;
+    position: relative;
+
+    .burger-content {
+        padding: 100px 40px;
+        max-width: 300px;
+        position: relative;
+        z-index: 9;
+
+        @include breakpoint (max-md){
+            width: 280px;
+            padding: 100px 30px;
+        }
+
+        @include breakpoint (max-sm){
+            width: 250px;
+            padding: 70px 20px;
+        }
+
+        h2,h3 {
+            color: $white;
+        }
+
+        h4 {
+            font-size: 40px;
+            color: $white;
+            margin-top: 10px;
+
+            @include breakpoint (max-sm){
+                font-size: 36px;
+            }
+
+            span {
+                color: $theme-color-3;
+            }
+        }
+    }
+
+    .burger-image {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        @include transition;
+
+        @include breakpoint (max-xxl){
+            width: 350px;
+            bottom: -12px;
+            right: 0;
+
+            img {
+                @include imgw;
+            }
+        }
+
+        @include breakpoint (max-xl){
+            width: 300px;
+            right: 50px;
+        }
+
+        @include breakpoint (max-md){
+            width: 250px;
+            bottom: 0;
+            right: 0;
+        }
+
+        @media screen and (max-width: 500px) {
+            width: 180px;
+        }
+    }
+
+    &:hover {
+        .burger-image {
+            transform: scale(1.1);
+        }
+    }
+
+    .text-shape {
+        position: absolute;
+        top: 40px;
+        right: 65px;
+
+        @include breakpoint (max-xl){
+           top: 25px;
+        }
+
+        @include breakpoint (max-sm){
+            display: none;
+        }
+    }
+
+    .burger-text {
+        position: absolute;
+        top: 20%;
+        left: 38%;
+        animation: 5s linear 0s infinite normal none running rounded;
+
+        @include breakpoint (max-xl){
+           left: 30%;
+        }
+
+        @include breakpoint (max-md){
+           left: 35%;
+        }
+
+        @include breakpoint (max-sm){
+            display: none;
+        }
+    }
+}
+
+.grilled-banner {
+    position: relative;
+    .patato-shape {
+        position: absolute;
+        bottom: -80px;
+        left: -40px;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+
+    .offer-shape {
+        position: absolute;
+        bottom: 33%;
+        left: 2%;
+
+        @include breakpoint (max-xxl){
+            bottom: 30%;
+            left: 35%;
+        }
+
+        @include breakpoint (max-xl){
+            display: none;
+        }
+    }
+
+    .text-shape {
+        position: absolute;
+        bottom: 20%;
+        left: 52%;
+        transform: rotate(30.01deg);
+        animation: rounded 5s linear infinite;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .spicy-shape {
+        position: absolute;
+        right: 7%;
+        top: 15%;
+        -webkit-animation: rotate 15s linear infinite;
+        animation: rotate 15s linear infinite;
+
+        @include breakpoint (max-xxl){
+            top: 5%;
+            right: 2%;
+        }
+
+        @include breakpoint (max-xl){
+            top: 65%;
+            right: 5%;
+
+            img {
+                width: 60%;
+            }
+        }
+    }
+
+    .tomato-shape {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.grilled-wrapper {
+    .grilled-content {
+        position: relative;
+        z-index: 99;
+
+        @include breakpoint (max-lg){
+            text-align: center;
+        }
+
+        h4 {
+            color: $white;
+            font-size: 28px;
+            margin-bottom: 5px;
+
+            @include breakpoint (max-sm){
+                font-size: 22px;
+            }
+        }
+
+        h2 {
+            color: $white;
+
+            span {
+                color: $theme-color-3;
+            }
+
+            @include breakpoint (max-xl){
+                font-size: 66px;
+            }
+
+            @include breakpoint (max-lg){
+                font-size: 56px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 46px;
+            }
+        }
+
+        h3 {
+            margin-top: 20px;
+
+            @include breakpoint (max-xl){
+                font-size: 40px;
+            }
+
+            @include breakpoint (max-lg){
+                font-size: 36px;
+            }
+
+            @include breakpoint (max-sm){
+             font-size: 28px;
+            }
+
+           a {
+                color: $white;
+                .text-1 {
+                    color: $theme-color-3;
+                }
+           }
+
+           .text-2 {
+            font-size: 28px;
+            color: $theme-color-3;
+          }
+
+           sup {
+                margin-top: 10px;
+           }
+        }
+
+        .grilled-button {
+            margin-top: 40px;
+        }
+    }
+
+    .grilled-image{
+        img {
+            @include imgw;
+        }
+    }
+}
+
+.food-comboo-section {
+    position: relative;
+
+    .drinks-shape {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+}
+
+.comboo-wrapper {
+    @include breakpoint (max-xl){
+        padding-bottom: 180px;
+    }
+    .food-comboo-content {
+
+        @include breakpoint (max-xl){
+            padding-bottom: 180px;
+        }
+        .nav {
+            border: unset;
+            margin-top: 40px;
+            display: inline-block;
+    
+            .nav-link {
+                padding: 0;
+                border: unset;
+                background: none;
+                max-width: 500px;
+                width: 100%;
+    
+                &:not(:last-child){
+                    margin-bottom: 25px;
+                }
+    
+                .food-comboo-list {
+                    @include flex;
+                    gap: 30px;
+                    padding: 15px 30px;
+                    background-color: $bg-color;
+                    border-radius: 5px;
+
+                    @media screen and (max-width: 470px) {
+                        padding: 15px 15px;
+                        gap: 15px;
+                    }
+
+                    .comboo-title {
+                        font-size: 18px;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        color: $header-color;
+                    }
+                }
+    
+                &.active {
+    
+                    .food-comboo-list {
+                        background-color: $theme-color-3;
+                    }
+                }
+            }
+        }
+    }
+
+    .comboo-image {
+        width: 898px;
+        height: 780px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        @include breakpoint (max-xxl){
+            width: 630px;
+            height: 780px;
+        }
+
+        @include breakpoint (max-xl){
+            width: 1180px;
+            height: 410px;
+            left: 0;
+            bottom: 0;
+        }
+
+        @include breakpoint (max-lg){
+            width: 990px;
+        }
+
+        @include breakpoint (max-md){
+            width: 770px;
+            height: 400px;
+        }
+
+        @include breakpoint (max-sm){
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        .pizza-text {
+            position: absolute;
+            top: 15%;
+            left: 10px;
+            z-index: 9;
+            -webkit-animation: tpswing 4s forwards infinite alternate;
+            animation: tpswing 4s forwards infinite alternate;
+
+            @include breakpoint (max-xxl){
+                top: 20%;
+                left: 10px;
+            }
+
+            @include breakpoint (max-xl){
+                top: 15%;
+                left: 10px;
+            }
+
+            @include breakpoint (max-md){
+                top: 3%;
+            }
+
+             @include breakpoint (max-sm){
+                display: none;
+            }
+        }
+
+        .offer-shape {
+            position: absolute;
+            top: 10%;
+            left: 40%;
+            -webkit-animation: scale-up-two 6s infinite linear;
+            animation: scale-up-two 6s infinite linear;
+
+            @include breakpoint (max-xxl){
+                top: 0%;
+                left: 30%;
+            }
+
+            @include breakpoint (max-lg){
+                top: 10%;
+                left: 40%;
+            }
+
+            @include breakpoint (max-md){
+                left: 50%;
+                top: 0;
+             }
+
+            @include breakpoint (max-sm){
+                left: 8%;
+            }
+        }
+
+        .vegetable-shape {
+            position: absolute;
+            top: 5%;
+            right: 10%;
+            -webkit-animation: tpswing 3s forwards infinite alternate;
+            animation: tpswing 3s forwards infinite alternate;
+
+            @include breakpoint (max-lg){
+                //display: none;
+            }
+        }
+
+        .pizza-image {
+            position: absolute;
+            top: 25%;
+            left: -12%;
+            max-width: 1100px;
+
+            img {
+                width: 100%;
+            }
+
+            @include breakpoint (max-xxl){
+                top: 45%;
+                left: -10%;
+            }
+
+            @include breakpoint (max-xl){
+                top: 25%;
+                left: 20%;
+                max-width: 625px;
+            }
+
+            @include breakpoint (max-lg){
+                max-width: 500px;
+                left: 120px;
+                top: 40%;
+            }
+
+            @include breakpoint (max-md){
+                left: 50px;
+                top: 35%;
+             }
+
+            @include breakpoint (max-sm){
+               top: 37%;
+               left: -6%;
+            }
+        }
+    }
+
+
+}
+
+.kfc-wrapper {
+
+    .kfc-image-items{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1017px;
+        height: 730px;
+
+        @include breakpoint (max-xxl){
+            width: 700px;
+            height: 700px;
+        }
+
+        @include breakpoint (max-xl){
+            width: 600px;
+            height: 730px;
+        }
+
+        @include breakpoint (max-lg){
+            width: 1000px;
+            height: 500px;
+        }
+
+        @include breakpoint (max-sm){
+            width: 800px;
+            height: 400px;
+            bottom: 0;
+        }
+
+        .kfc-image {
+            position: absolute;
+            left: 0;
+            bottom: -30px;
+            width: 960px;
+            @include transition;
+
+            img {
+                width: 100%;
+            }
+
+            @include breakpoint (max-xxl){
+                bottom: 0px;
+                width: 600px;
+            }
+
+            @include breakpoint (max-xl){
+                width: 500px;
+                bottom: 10%;
+            }
+
+            @include breakpoint (max-lg){
+                left: 50px;
+                bottom: 0;
+            }
+
+            @include breakpoint (max-sm){
+                width: 400px;
+                bottom: 0;
+            }
+
+            @media screen and (max-width: 400px) {
+                bottom: 10px;
+                width: 340px;
+            }
+        }
+
+        &:hover {
+            .kfc-image {
+                left: -30px;
+            }
+        }
+
+        .offer-shape {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            animation: 4s linear 0s infinite normal none running rounded;
+
+            @include breakpoint (max-md){
+                top: 12%;
+                left: 25%;
+            }
+
+            @include breakpoint (max-sm){
+                top: 10%;
+                left: 20%;
+            }
+
+            @media screen and (max-width: 400px) {
+               left: 10%;
+            }
+        }
+    }
+
+    .kfc-content {
+        margin-left: 80px;
+
+        @include breakpoint (max-lg){
+            margin-top: 460px;
+            margin-left: 0;
+        }
+
+        @include breakpoint (max-sm) {
+           margin-top: 365px;
+        }
+
+        .countdown-items {
+            @include flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+
+            li {
+               span {
+                font-size: 44px;
+                font-weight: 600;
+                color: $theme-color-2;
+               }
+
+               p {
+                    font-size: 19px;
+                    font-weight: 500;
+                    color: $header-color;
+               }
+            }
+        }
+    }
+}
+
+.main-cta-banner {
+    position: relative;
+
+    &::before {
+        position: absolute;
+        top: -12px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background-color: $bg-color;
+    }
+}
+
+.main-cta-banner-wrapper {
+    padding: 120px 100px;
+    border-radius: 20px;
+    position: relative;
+    z-index: 9;
+
+    @include breakpoint (max-xl){
+        padding: 120px 60px;
+    }
+
+    @include breakpoint (max-md){
+        padding: 70px 50px;
+        text-align: center;
+    }
+
+    @include breakpoint (max-sm){
+        padding: 60px 40px;
+    }
+    
+    
+    .arrow-shape {
+        position: absolute;
+        top: 18%;
+        left: 50%;
+
+        @include breakpoint (max-md){
+            display: none;
+        }
+    }
+
+    .frame-shape {
+        position: absolute;
+        top: 20%;
+        left: 42%;
+        
+        @include breakpoint (max-md){
+            display: none;
+        }
+    }
+
+    .delivery-man {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        top: -10%;
+
+        @include breakpoint (max-xl){
+            right: -35px;
+        }
+
+        @include breakpoint (max-lg){
+            width: 320px;
+            top: 30%;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        @include breakpoint (max-md){
+            display: none;
+        }
+    }
+}
+
+
+.main-cta-banner-2 {
+    position: relative;
+
+    .tomato-shape-left {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+
+    .chili-shape-right {
+        position: absolute;
+        top: 30%;
+        right: 0;
+    }
+}
+
+.main-cta-banner-wrapper-2 {
+    position: relative;
+
+    @include breakpoint (max-md){
+       flex-wrap: wrap;
+       gap: 30px;
+       justify-content: center !important;
+       text-align: center;
+    }
+
+    .delivery-man {
+        position: absolute;
+        right: 15%;
+        bottom: -30%;    
+
+        @include breakpoint (max-xxl){
+           right: 22%;
+           bottom: -55%;
+           width: 400px;
+
+            img {
+                @include imgw
+            }
+        }
+
+        @include breakpoint (max-xl){
+            width: 350px;
+        }
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+}
+
+.main-cta-banner-wrapper-3 {
+    position: relative;
+    padding: 100px;
+    background-attachment: fixed;
+
+    @include breakpoint (max-lg){
+        padding: 80px 50px;
+    }
+
+    @include breakpoint (max-xl){
+        padding: 90px 70px;
+    }
+
+    @include breakpoint (max-sm){
+        padding: 60px 40px;
+    }
+
+    .fry-shape {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        z-index: 9;
+        animation: 4s linear 0s infinite normal none running rounded;
+    }
+
+    .frame-shape {
+        position: absolute;
+        top: 55px;
+        left: 60%;
+        z-index: 9;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .frame-shape-2 {
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        z-index: 9;
+        animation: 3s linear 0s infinite normal none running rounded;
+    }
+
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background: linear-gradient(180deg, #F4F1EA 67.2%, rgba(244, 241, 234, 0.00) 100%);
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 9;
+
+        h3 {
+            font-size: 48px;
+            text-transform: capitalize;
+            color: $header-color;
+            font-weight: 700;
+            margin-bottom: 15px;
+
+            @include breakpoint (max-xl){
+                font-size: 42px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 34px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .newsletter-items {
+        position: relative;
+        z-index: 9;
+
+        input {
+            width: 100%;
+            background-color: $white;
+            border: none;
+            outline: none;
+            text-transform: capitalize;
+            font-size: 16px;
+            color: $text-color;
+            padding: 20px 50px;
+            position: relative;
+        }
+
+        .icon {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 16px;
+            color: $text-color;
+        }
+
+        .input-save {
+            margin-top: 20px;
+
+            input {
+                width: 15px;
+                height: 15px;
+                border: 1px solid rgba(12, 15, 38, 0.20);
+                background-color: $theme-color-2;
+                outline: none;
+                color: $theme-color-2;
+                padding: 5px;
+                border-radius: 0;
+            }
+
+            label {
+                margin-left: 10px;
+                color: $text-color;
+                text-transform: capitalize;
+                font-size: 16px;
+
+                a {
+                    font-weight: 500;
+                    color: $header-color;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.instagram-banner-items {
+    .banner-image {
+        position: relative;
+
+        @include breakpoint (max-md){
+            height: 450px;
+
+            img {
+                object-fit: cover
+            }
+        }
+
+        @include breakpoint (max-sm){
+            height: 380px;
+        }
+
+        img {
+            @include imgw;
+        }
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            content: "";
+            background-color: rgba(33, 33, 33, .9);
+            transform: scale(1, 0);
+            transition: transform 500ms ease;
+            transform-origin: bottom center;
+            z-index: 1;
+        }
+
+        .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 99;
+            color: $white;
+            opacity: 0;
+            @include transition;
+            font-size: 24px;
+        }
+    }
+
+    &:hover {
+        .banner-image {
+            &::before {
+                transform: scale(1, 1);
+                transform-origin: top center;
+            }
+            .icon {
+                opacity: 1;
+            }
+        }
+    }
+
+    &.style-2 {
+        .banner-image {
+            &::before {
+                background-color: rgba(0, 129, 61, .9);
+            }
+        }
+    }
+}
+
+.pasta-banner-items {
+    padding: 50px 35px;
+    border-radius: 9px;
+    position: relative;
+
+    .pasta-content {
+        position: relative;
+        z-index: 9;
+    }
+
+    .pasta-food {
+        position: absolute;
+        bottom: 50px;
+        right: 0;
+        @include transition;
+    }
+
+    .pasta-content {
+        span {
+            font-size: 14px;
+            font-weight: 500;
+            color: $theme-color-2;
+        }
+        h3 {
+            font-size: 36px;
+            color: $white;
+        }
+    }
+
+    &:hover {
+        .pasta-food {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.food-banner-section-2 {
+    position: relative;
+
+    &::before {
+        position: absolute;
+        top: 40%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: $bg-color;
+        z-index: -1;
+    }
+}
+
+.main-food-wrapper {
+    .pizza-banner-items-2 {
+        padding: 100px 50px;
+        position: relative;
+
+        .tomato-left-shape {
+            position: absolute;
+            left: 0;
+            top: 40%;
+            transform: translateY(-50%);
+        }
+
+        @include breakpoint (max-md){
+            padding: 70px 50px;
+        }
+
+        @include breakpoint (max-sm){
+            padding: 60px 40px;
+        }
+
+        .pizza-content {
+            h3 {
+                color: $white;
+            }
+
+            h2 {
+                color: $white;
+            }
+
+            h4 {
+                font-size: 40px;
+                color: $white;
+                margin-top: 10px;
+                font-weight: 600;
+
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .pizza-image {
+            max-width: 800px;
+            margin-top: 90px;
+            @include transition;
+
+            img {
+                @include imgw;
+            }
+        }
+
+        .offer-shape {
+            position: absolute;
+            top: 30%;
+            right: 10%;
+            animation: 4s linear 0s infinite normal none running rounded;
+        }
+
+        &:hover {
+            .pizza-image {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+.food-banner-items-2 {
+    padding: 75px 70px;
+    overflow: hidden;
+    @include transition;
+
+    @include breakpoint (max-xxl){
+        padding: 75px 60px;
+    }
+
+    @include breakpoint (max-xl){
+        padding: 70px 50px;
+    }
+
+    @include breakpoint (max-sm){
+        padding: 50px 40px;
+    }
+
+    .price {
+        width: 112px;
+        height: 107px;
+        line-height: 107px;
+        text-align: center;
+        position: absolute;
+        top: 50px;
+        right: 50px;
+
+        @include breakpoint (max-xxl){
+          top: 40px;
+          right: 40px;
+          width: 90px;
+          line-height: 90px;
+        }
+
+        @include breakpoint (max-xl){
+            top: 40px;
+            right: 40px;
+            width: 112px;
+            height: 107px;
+            line-height: 107px;
+        }
+
+        @include breakpoint (max-sm){
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            top: 30px;
+            right: 30px;
+          }
+
+        span {
+            color: $header-color;
+            font-size: 55px;
+            font-weight: 600;
+
+            @include breakpoint (max-sm){
+                font-size: 32px;
+            }
+        }
+
+        &.style-2 {
+            span {
+                color: $white;
+            }
+        }
+    }
+
+    .food-content {
+        h4 {
+            color: $theme-color-3;
+            margin-bottom: 5px;
+        }
+    }
+
+    &.bg-effect {
+        position: relative;
+        z-index: 9;
+
+        &::before {
+            @include before;
+            background: linear-gradient(141.83deg, #0C0F26 12.17%, rgba(12, 15, 38, 0) 90.66%);
+            z-index: -1;
+        }
+    }
+    
+}
+
+.today-best-sale-wrapper {
+    .today-best-sale-image-slider {
+        position: relative;
+
+        .array-button {
+            display: grid;
+            position: absolute;
+            top: 50%;
+            right: -5%;
+            transform: translate(-50%,-50%);
+
+            @include breakpoint (max-xxl){
+                display: none;
+            }
+
+            .array-prev,.array-next {
+                width: 65px;
+                height: 65px;
+                line-height: 65px;
+                text-align: center;
+                background-color: $theme-color-3;
+                border-radius: 0;
+                border: none;
+                color: $header-color;
+            }
+
+            .array-prev {
+                background-color: $white;
+            }
+        }
+    }
+
+    .today-best-sale-image {
+        height: 800px;
+
+        @include breakpoint (max-md){
+            height: 500px;
+        }
+
+        @include breakpoint (max-sm){
+            height: 380px;
+        }
+    }
+
+    .best-sale-content {
+        background-color: $theme-color-2;
+        padding: 120px 100px;
+        height: 100%;
+        position: relative;
+        z-index: 99;
+
+        @include breakpoint (max-xxl){
+           padding: 80px 60px;
+        }
+
+        @include breakpoint (max-sm){
+            padding: 70px 50px;
+        }
+
+        .burger-shape {
+            position: absolute;
+            top: 65px;
+            right: 10%;
+            animation: rounded 5s linear infinite;
+
+            @include breakpoint (max-lg){
+                display: none;
+            }
+        }
+
+        .fry-shape {
+            position: absolute;
+            bottom: 65px;
+            right: 10%;
+            animation: rounded 3s linear infinite;
+
+            @include breakpoint (max-lg){
+                display: none;
+            }
+           
+        }
+
+        h4 {
+            font-size: 24px;
+            color: $white;
+            text-transform: capitalize;
+
+            @include breakpoint (max-md){
+                margin-bottom: 10px;
+                font-size: 20px;
+            }
+        }
+
+        h2 {
+            color: $white;
+            margin-bottom: 50px;
+
+            @include breakpoint (max-sm){
+               margin-bottom: 20px;
+            }
+
+            @include breakpoint (max-md){
+                margin-bottom: 30px;
+            }
+        }
+
+        h3 {
+            font-size: 55px;
+            color: $white;
+            text-transform: capitalize;
+            position: relative;
+            padding-left: 80px;
+
+            @include breakpoint (max-sm){
+                font-size: 42px;
+            }
+
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                content: "";
+                background-repeat: no-repeat;
+                background-image: url(../../assets/img/arrow.png);
+                animation: 4s linear 0s infinite normal none running rounded-2;
+            }
+
+            span {
+                font-size: 24px;
+                font-weight: 500;
+
+                @include breakpoint (max-sm){
+                    font-size: 22px;
+                }
+            }
+        }
+        
+        p {
+            font-size: 20px;
+            color: $white;
+            margin-top: 50px;
+
+            @include breakpoint (max-md){
+                margin-top: 30px;
+            }
+
+            @include breakpoint (max-sm){
+              margin-top: 20px;
+            }
+        }
+
+        .button-area {
+            margin-top: 50px;
+
+            @include breakpoint (max-sm){
+                margin-top: 35px;
+            }
+        }
+
+        &.style-2 {
+            background-color: $theme-color;
+        }
+    }
+}
+
+.food-banner-section-3 {
+    position: relative;
+    z-index: 9;
+    margin-bottom: -50px;
+
+    @include breakpoint (max-xl){
+        margin-bottom: 0;
+        padding-bottom: 100px;
+    }
+
+    @include breakpoint (max-lg){
+        padding-bottom: 80px;
+    }
+}
+
+//>> Update Page 4 Start <<//
+
+.cta-video-section {
+    position: relative; 
+    background-attachment: fixed;
+
+    &::before {
+        @include before;
+        opacity: .2;
+        background-color: $black;
+    }
+}
+
+.cta-video-items {
+    padding: 150px 0;
+    position: relative;
+    z-index: 9;
+    margin: 0 auto;
+
+    @include breakpoint (max-lg){
+        padding: 130px 0;
+    }
+
+    @include breakpoint (max-md){
+        padding: 100px 0;
+    }
+
+    @include breakpoint (max-sm){
+        padding: 80px 0;
+    }
+
+    .video-popup {
+        font-size: 22px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: $white;
+        color: $header-color;
+        display: block;
+        margin: 0 auto;
+        font-weight: 500;
+        
+    }
+}
+
+//>> Update Page 6 Start <<//
+
+.cta-delivery-wrapper {
+
+    .delivery-content {
+        text-align: center;
+        position: relative;
+        z-index: 9;
+    }
+}
+
+.cta-delivery-section {
+    position: relative;
+
+    .delivery-man {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+
+    .comboo-image {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        max-width: 550px;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+
+        img {
+            @include imgw;
+        }
+    }
+}

@@ -1,0 +1,353 @@
+.food-icon-wrapper {
+    background-color: $header-color;
+    border-radius: 14px;
+    padding: 70px 75px;
+
+    .single-food-icon {
+        @include breakpoint (max-lg){
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 55px;
+            color: $theme-color-3;
+        }
+
+        .content {
+            margin-top: 20px;
+
+            h4 {
+                color: $white;
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: $white;
+            }
+        }
+    }
+}
+
+.choose-us-2 {
+    background-color: $theme-color-2;
+
+    .food-icon-wrapper-2 {
+        @include breakpoint (max-sm){
+            text-align: center;
+        }
+        
+        .single-food-icon {
+            .icon {
+                font-size: 65px;
+                color: $theme-color-3;
+            }
+
+            .content {
+                margin-top: 20px;
+                @include breakpoint (max-sm){
+                    margin-top: 10px;
+                }
+                
+                h3 {
+                    font-size: 27px;
+                    text-transform: capitalize;
+                    color: $white;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    color: $white;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+.video-icon {
+    padding-top: 120px;
+    
+    .video-popup {
+        width: 150px;
+        height: 150px;
+        line-height: 150px;
+        background: transparent;
+        border: 2px dotted $white;
+        border-radius: 50%;
+        display: inline-block;
+        font-size: 30px;
+        color: $theme-color-2;
+
+        @include breakpoint (max-lg){
+            width: 90px;
+            height: 90px;
+            line-height: 90px;
+            font-size: 22px;
+        }
+    }
+}
+
+.video-section-2 {
+    position: relative;
+
+    &::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background-color: $theme-color-2;
+        z-index: -1;
+    }
+
+    &.style-2 {
+      &::before {
+        background-color: $theme-color;
+      }
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        content: "";
+        background-color: $bg-color;
+        z-index: -1;
+      }
+    }
+}
+
+.video-wrapper {
+    padding: 315px 0;
+
+    @include breakpoint (max-xl){
+        padding: 250px 0;
+    }
+
+    @include breakpoint (max-lg){
+        padding: 200px 0;
+    }
+
+    @include breakpoint (max-sm){
+        padding: 120px 0;
+    }
+
+    .video-btn {
+        position: relative;
+        display: inline-block;
+        z-index: 2;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%);
+
+        a {
+            position: relative;
+            color: $theme-color-2;
+            font-size: 16px;
+            z-index: 1;
+            background-color: $white;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            display: block;
+            transition: 0.4s;
+
+            @include breakpoint (max-sm){
+               width: 70px;
+               height: 70px;
+               line-height: 70px;
+            }
+
+            i {
+                color: $theme-color-2
+            }
+        }
+    }
+}
+
+.food-processing-wrapper {
+    position: relative;
+
+    &::before {
+        position: absolute;
+        top: 50%;
+        left: 100px;
+        width: 80%;
+        height: 1px;
+        content: "";
+        background-image: url(../../assets/img/border.png);
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+
+    .food-processing-items {
+        margin-top: 30px;
+        @include transition;
+        border: 1px dotted transparent;
+        padding: 50px 50px;
+        border-radius: 17px;
+        position: relative;
+    
+        @include breakpoint (max-md){
+            padding: 30px 30px;
+            background-color: $white;
+            border: 1px dotted $text-color;
+      
+            .food-processing-image {
+              .number {
+                  opacity: 1;
+              }
+            }
+        }
+        
+        .food-processing-image {
+           position: relative;
+
+           .number {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                background-color: var(--theme);
+                border-radius: 50%;
+                position: absolute;
+                top: 25px;
+                right: 53%;
+                opacity: 0;
+                @include transition;
+    
+                span {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: $white;
+                }
+           }
+        }
+    
+        .food-processing-content {
+            margin-top: 15px;
+
+            @include breakpoint (max-sm){
+                margin-top: 0;
+            }
+
+            h3 {
+                font-size: 28px;
+                margin-bottom: 10px;
+    
+                @include breakpoint (max-sm){
+                   font-size: 22px;
+                }
+            }
+        }
+    
+        &:hover {
+          background-color: $white;
+          border: 1px dotted $text-color;
+    
+          .food-processing-image {
+            .number {
+                opacity: 1;
+            }
+          }
+        }
+    
+        &.active {
+            background-color: $white;
+            border-radius: 17px;
+            border: 1px dotted $text-color;
+      
+            .food-processing-image {
+              .number {
+                  opacity: 1;
+              }
+            }
+        }
+
+        &.style-2 {
+            border: none;
+
+            @include breakpoint (max-md){
+                background-color:  $theme-color-3;
+                .food-processing-image {
+                    .number {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            &:hover {
+                background-color: $theme-color-3;
+            }
+
+            &.active {
+                background-color: $theme-color-3;
+            }
+        }
+    }
+}
+
+//>> Update Page 4 Start <<//
+
+.count-wrapper {
+    @include flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    margin-bottom: 50px;
+
+    @include breakpoint (max-xxs){
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: center;
+    }
+
+    .count-items {
+        position: relative;
+
+        p {
+            text-transform: uppercase;
+            font-size: 24px;
+            color: $header-color;
+            font-weight: 600;
+            position: relative;
+            z-index: 9;
+        }
+
+        .count-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+
+            h2 {
+               font-size: 150px;
+               opacity: .1;
+
+               @include breakpoint (max-xl){
+                font-size: 140px;
+               }
+
+               @include breakpoint (max-lg){
+                font-size: 130px;
+               }
+
+               @include breakpoint (max-md){
+                font-size: 110px;
+               }
+
+               @include breakpoint (max-sm){
+                font-size: 100px;
+               }
+            }
+        }
+    }
+}

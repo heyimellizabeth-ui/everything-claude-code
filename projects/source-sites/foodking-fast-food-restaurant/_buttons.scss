@@ -1,0 +1,327 @@
+//>>>>> Component Button Here <<<<<//
+.theme-btn {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 600;
+    padding: 20px 50px;
+    color: $white;
+    text-align: center;
+    border-radius: 9px;
+    letter-spacing: 0.8px;
+    z-index: 1;
+    transition: all 500ms ease;
+    background-color: $theme-color;
+    text-transform: uppercase;
+
+    @media (max-width: 991px) {
+        padding: 16px 36px;
+        font-size: 16px;
+
+        i {
+            font-size: 22px;
+        }
+    }
+
+    i {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        transform: scale(0,0);
+        z-index: -1;
+        transition: all 500ms ease;
+    }
+
+    &:hover {
+       &::before {
+         background-color: $theme-color-2;
+         transform: scale(1,1);
+       }
+    }
+
+    &.bg-white {
+        background-color: $white;
+        color: $header-color;
+
+        i {
+            color: $theme-color;
+            @include transition;
+        }
+
+        &:hover {
+           &::before {
+            background-color: $theme-color-3;
+           }
+
+           color: $white;
+
+           i {
+              color: $white;
+           }
+        }
+    }
+
+    &.bg-yellow {
+        background-color: $theme-color-3;
+        color: $header-color;
+        font-weight: 700;
+
+        i {
+            margin-left: 10px;
+            color: $header-color;
+        }
+
+        &:hover {
+            color: $header-color;
+
+            &::before {
+                background-color: $white;
+            }
+        }
+    }
+
+    &.bg-red {
+        background-color: $theme-color-2;
+        color: $white;
+        border-radius: 0;
+
+        &:hover {
+            color: $header-color;
+
+            &::before {
+                background-color: $white;
+            }
+        }
+    }
+
+    &.bg-red-2 {
+        background-color: $theme-color-2;
+        color: $white;
+        border-radius: 7px;
+
+        &:hover {
+            color: $white;
+
+            &::before {
+                background-color: $theme-color;
+            }
+        }
+    }
+
+    &.style-box-shadow {
+        border-radius: 8px;
+        background: $theme-color-2;
+        box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.07);
+        color: $white;
+        font-weight: 700;
+
+        &:hover {
+            color: $white;
+            
+            &::before {
+              background-color: $theme-color;
+            }
+         }
+    }
+
+    &.bg-transparent {
+        background: transparent;
+        border: 1px solid $white;
+        color: $white;
+        border-radius: 0;
+
+        &:hover {
+            color: $header-color;
+
+            &::before {
+                background-color: $white;
+            }
+        }
+    }
+
+    &.cart-btn {
+        background-color: $theme-color-2;
+        color: $white;
+        border-radius: 0;
+        font-weight: 600;
+        padding: 16px 25px;
+
+        i {
+            font-size: 16px;
+            color: $white !important;
+        }
+
+        &:hover {
+            color: $white;
+
+            &::before {
+                background-color: $theme-color-3;
+            }
+        }
+
+        @include breakpoint (max-xxl){
+            padding: 15px 20px;
+        }
+
+        @include breakpoint (max-xl){
+            padding: 16px 25px;
+        }
+    }
+
+    &.style-line-height {
+        line-height: 1.5;
+    }
+    
+
+    @include breakpoint (max-md){
+        padding: 14px 32px;
+        font-size: 14px;
+
+        i {
+            font-size: 20px;
+        }
+    }
+}
+
+.theme-btn-2 {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 600;
+    padding: 10px 50px;
+    color: $white;
+    text-align: center;
+    z-index: 1;
+    transition: all 500ms ease;
+    background-color: $header-color;
+    text-transform: capitalize;
+    border-radius: 19px;
+    width: 100%;
+
+    i {
+        font-size: 17px;
+        margin-right: 10px;
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        transform: scale(0,0);
+        z-index: -1;
+        transition: all 500ms ease;
+    }
+
+    &:hover {
+       &::before {
+         background-color: $theme-color;
+         transform: scale(1,1);
+       }
+    }
+}
+
+.link-btn {
+    text-transform: capitalize;
+    font-size: 18px;
+    color: $white;
+    font-weight: 500;
+    display: inline-block;
+    background-image: linear-gradient($theme-color-2,$theme-color-2);
+    background-position: 0 95%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+
+    i {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+
+    &.style-2 {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 16px;
+        color: $text-color;
+        overflow: hidden;
+        background-image: linear-gradient($theme-color-2,$theme-color-2);
+        background-position: 0 95%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+
+        i {
+            color: $text-color;
+            font-size: 16px;
+        }
+
+        &:hover {
+            background-size: 100% 1px;
+            color: $theme-color-2;
+
+            i {
+                color: $theme-color-2;
+            }
+        }
+    }
+
+    &.color-red {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 16px;
+        color: $header-color;
+        overflow: hidden;
+        background-image: linear-gradient($theme-color-2,$theme-color-2);
+        background-position: 0 95%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+
+        i {
+            color: $header-color;
+            font-size: 16px;
+        }
+
+        &:hover {
+            background-size: 100% 1px;
+            color: $theme-color-2;
+
+            i {
+                color: $theme-color-2;
+            }
+        }
+    }
+
+    &:hover {
+        background-size: 100% 1px;
+        color: $theme-color-2;
+
+        i {
+            color: $theme-color-2;
+        }
+    }
+
+    &.hover-style {
+       &:hover {
+            color: $theme-color-3;
+
+            i {
+                color: $theme-color-3;
+            }
+       }
+    }
+}
+//>>>>> Component Button End <<<<<//

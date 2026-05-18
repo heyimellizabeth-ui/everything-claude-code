@@ -1,0 +1,76 @@
+/*
+Theme Name: Foodking
+Author: Modina Theme
+Author URI: https://themeforest.net/user/modinatheme/
+Description: Fast Food Restaurant Html
+Version: 2.0.0
+*/
+
+/*CSS Table Of Content Ends Here*/
+
+//>> Basic Start <<//
+
+//>> Mixins <<//
+@import "_mixins";
+//>> Variables <<//	
+@import "_variables";
+//>> Buttons <<//
+@import "_buttons";
+//>> Typography <<//
+@import "_typography";
+//>> Basic End <<//	
+
+
+//>> Template Section Style Start <<//
+
+//>> Preloader <<//
+@import "_preloader";
+//>> Section <<//
+@import "_section";
+//>> Animation <<//
+@import "_animation";
+//>> Header <<//
+@import "_header";
+//>> MeanMenu <<//
+@import "_meanmenu";
+//>> Hero <<//
+@import "_hero";
+//>> Feature <<//
+@import "_catagory";
+//>> About <<//
+@import "_about";
+//>> Service <<//
+@import "_food-menu";
+//>> Helping <<//
+@import "_helping";
+//>> Team <<//
+@import "_team";
+//>> Choose <<//
+@import "_choose";
+//>> Product <<//
+@import "_product";
+//>> Faq <<//
+@import "_faq";
+//>> Main-Sidebar <<//
+@import "_main-sidebar";
+//>> Cta <<//
+@import "_cta";
+//>> Marquee <<//
+@import "_marquee";
+//>> Testimonial <<//
+@import "_testimonial";
+//>> Brand <<//
+@import "_brand";
+//>> News Addons <<//
+@import "_news-addons";
+//>> Blog index defult style <<//
+@import "_blog";
+//>> Portfolio <<//
+@import "_gallery";
+//>> Contact <<//
+@import "_contact";
+//>> Footer <<//
+@import "_footer";
+
+//>> Template Section Style End <<//
+

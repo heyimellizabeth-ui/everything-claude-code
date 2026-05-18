@@ -1,0 +1,496 @@
+.footer-section {
+    position: relative;
+
+    .burger-shape {
+        position: absolute;
+        bottom: 25%;
+        left: 2%;
+        opacity: 0.3;
+
+        @include breakpoint (max-xl){
+            display: none;
+        }
+    }
+
+    .fry-shape {
+        position: absolute;
+        top: 25%;
+        right: 5%;
+        opacity: 0.3;
+
+        @include breakpoint (max-xl){
+            display: none;
+        }
+    }
+
+    .footer-shape {
+        position: absolute;
+        left: 0;
+        top: 30%;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+
+    .footer-shape-2 {
+        position: absolute;
+        right: 0;
+        top: 30%;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+
+    .footer-logo-6 {
+        text-align: center;
+        padding: 80px 0;
+        border-bottom: 1px solid $border-color-2;
+    }
+}
+
+.footer-widgets-wrapper {
+    padding: 90px 0 120px;
+    position: relative;
+    z-index: 9;
+
+    @include breakpoint(max-xl){
+        padding: 60px 0 90px;
+    }
+
+    @include breakpoint(max-lg){
+        padding: 50px 0 70px;
+    }
+
+    .single-footer-widget {
+        margin-top: 30px;
+
+        .widget-head {
+            margin-bottom: 30px;
+
+            @include breakpoint (max-sm){
+               margin-bottom: 20px;
+            }
+
+            h4 {
+                text-transform: capitalize;
+                margin-top: 10px;
+            }
+        }
+
+        .footer-content {
+            span {
+                font-weight: 500;
+                margin-top: 15px;
+                display: inline-block;
+
+                @include breakpoint (max-sm){
+                    margin-top: 10px;
+                }
+            }
+    
+            .link {
+                font-size: 20px;
+                font-weight: 700;
+                color: $theme-color;
+                margin-top: 15px;
+                display: inline-block;
+
+                @include breakpoint (max-sm){
+                    margin-top: 10px;
+                }
+            }
+    
+            .social-icon {
+                margin-top: 40px;
+                gap: 15px;
+                position: relative;
+                z-index: 9;
+
+                @include breakpoint (max-sm){
+                    margin-top: 20px;
+                }
+    
+                a {
+                    width: 40px;
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    font-size: 16px;
+                    display: block;
+                    background: rgba(92, 92, 91, .1);
+                    color: $header-color;
+                    border-radius: 50%;
+                    -webkit-transition: all .4s ease-in-out;
+                    transition: all .4s ease-in-out;
+                    text-align: center;
+    
+                    &:hover {
+                        background-color: $theme-color;
+                        color: $white;
+                    }
+                }
+            }
+        }
+
+        .list-items {
+            li {
+                text-transform: capitalize;
+                &:not(:last-child){
+                    margin-bottom: 15px;
+                }
+
+                a {
+                    .text-effect {
+                        text-transform: capitalize;
+                        position: relative;
+                        @include transition;
+                        color: $text-color;
+                        position: relative;
+                        overflow: hidden;
+                        display: block;
+                        height: 25px;
+                        line-height: normal;
+
+                        .effect-1 {
+                            display: block;
+                            height: 100%;
+                            position: relative;
+                            top: 0%;
+                            transition: 0.3s;
+                        }
+                    }
+
+                    &:hover {
+                        .text-effect {
+                            color: $theme-color;
+
+                            .effect-1 {
+                                top: -100%;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        .footer-address-text {
+            h6 {
+                font-weight: 400;
+                color: $text-color;
+                line-height: 150%;
+                font-size: 20px;
+                text-transform: capitalize;
+
+                span {
+                    color: $theme-color-2;
+                }
+            }
+
+            h5 {
+                padding: 20px 0;
+                text-transform: capitalize;
+            }
+        }
+
+        .footer-apps-items {
+            h5 {
+                font-weight: 400;
+                color: $text-color;
+            }
+
+            .apps-image {
+                margin-top: 30px;
+                gap: 10px;
+
+                @include breakpoint (max-sm){
+                    margin-top: 20px;
+                }
+            }
+
+            .support-text {
+                margin-top: 40px;
+
+                @include breakpoint (max-sm){
+                    margin-top: 20px;
+                }
+
+                h5 {
+                    font-weight: 400;
+                    margin-bottom: 10px;
+                }
+
+                h3 {
+                    font-size: 28px;
+                    a {
+                        color: $theme-color;
+                    }
+                }
+            }
+        }
+    }
+
+    &.style-2 {
+        .single-footer-widget {
+            .widget-head {
+                h4 {
+                    font-size: 24px;
+                    color: $white;
+                    font-weight: 500;
+                }
+            }
+
+            .footer-content {
+                p {
+                    color: $white;
+                }
+
+                .social-icon {
+                    a {
+                       background-color: transparent;
+                       border: 1px solid $border-color-2;
+                       color: $white;
+        
+                        &:hover {
+                            background-color: $theme-color-2;
+                            border: 1px solid $theme-color-2;
+                        }
+                    }
+                }
+
+                .footer-input {
+                    position: relative;
+                    margin-top: 20px;
+    
+                    input {
+                        background: $white;
+                        border: none;
+                        outline: none;
+                        padding: 18px 20px;
+                        width: 100%;
+                        border-radius: 5px;
+                        color: $text-color;
+    
+                        &::placeholder {
+                            color: $text-color;
+                        }
+                    }
+    
+                    .newsletter-btn {
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        // width: 60px;
+                        // height: 55px;
+                        // line-height: 55px;
+                        border-radius: 5px;
+                        text-align: center;
+                        background-color: $theme-color-2;
+                        color: $white;
+                        padding: 10px 20px;
+                        font-size: 18px;
+                        font-weight: 500;
+                        @include transition;
+
+                        &:hover {
+                            background-color: $header-color;
+                        }
+                    }
+                }
+            }
+
+            .list-area {
+                gap: 100px;
+                ul {
+                    li {
+                        text-transform: capitalize;
+                        &:not(:last-child){
+                            margin-bottom: 15px;
+                        }
+        
+                        a {
+                            .text-effect {
+                                text-transform: capitalize;
+                                position: relative;
+                                @include transition;
+                                color: $white;
+                                position: relative;
+                                overflow: hidden;
+                                display: block;
+                                height: 25px;
+                                line-height: normal;
+        
+                                .effect-1 {
+                                    display: block;
+                                    height: 100%;
+                                    position: relative;
+                                    top: 0%;
+                                    transition: 0.3s;
+                                }
+                            }
+        
+                            &:hover {
+                                .text-effect {
+                                    color: $theme-color-2;
+        
+                                    .effect-1 {
+                                        top: -100%;
+                                    }
+                                }
+                            }
+        
+                        }
+                    }
+                }
+            }
+
+            .footer-content {
+                .link {
+                    font-weight: 700;
+                    color: $white;
+                    text-decoration: underline;
+                    font-size: 18px;
+                }
+
+                .number {
+                    color: $theme-color-3;
+                    font-size: 18px;
+                    font-weight: 700;
+                    display: inline-block;
+                    margin-top: 20px;
+                }
+
+                .info-date {
+                    li {
+                        font-size: 16px;
+                        text-transform: capitalize;
+                        color: $white;
+
+                        span {
+                            color: $theme-color-3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.footer-bottom {
+    padding: 35px 0;
+    background-color: $theme-color;
+
+    .footer-bottom-wrapper {
+        @include breakpoint (max-md){
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center !important;
+        }
+
+        p {
+            text-transform: capitalize;
+            color: $white;
+            font-size: 20px;
+            a {
+                color: $white;
+
+               &:hover {
+                color: $theme-color-3;
+               }
+            }
+        }
+    
+    }
+    
+    &.style-2 {
+        background-color: transparent;
+        border-top: 1px solid $border-color-2;
+        position: relative;
+
+        .scroll-icon {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
+            line-height: 80px;
+            text-align: center;
+            cursor: pointer;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            z-index: 9;
+            transform: translate(-50%,-50%);
+
+            @include breakpoint (max-sm){
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                font-size: 18px;
+            }
+
+            i {
+                color: $white;
+            }
+        }
+
+        .footer-bottom-wrapper {
+            @include breakpoint (max-lg){
+                margin-top: 20px;
+            }
+
+            p {
+                @include breakpoint (max-sm){
+                    text-align: center;
+                }
+            }
+
+            ul {
+                @include flex;
+                gap: 20px;
+
+                li {
+                    font-size: 16px;
+                    text-transform: capitalize;
+    
+                    a {
+                        .text-effect {
+                            text-transform: capitalize;
+                            position: relative;
+                            @include transition;
+                            color: $white;
+                            position: relative;
+                            overflow: hidden;
+                            display: block;
+                            height: 25px;
+                            line-height: normal;
+    
+                            .effect-1 {
+                                display: block;
+                                height: 100%;
+                                position: relative;
+                                top: 0%;
+                                transition: 0.3s;
+                            }
+                        }
+    
+                        &:hover {
+                            .text-effect {
+                                color: $theme-color-2;
+    
+                                .effect-1 {
+                                    top: -100%;
+                                }
+                            }
+                        }
+    
+                    }
+                }
+            }
+        }
+    }
+}
+
+  
+  

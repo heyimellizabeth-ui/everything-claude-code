@@ -1,0 +1,391 @@
+.about-wrapper {
+
+    .about-image {
+        position: relative;
+
+        img {
+            @include imgw;
+
+            @media (max-width: 991px) {
+                width: 70%;
+            }
+        }
+
+        .burger-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: 4s ease 0s infinite alternate forwards running tpswing;
+        }
+
+        .price {
+            position: absolute;
+            left: 10%;
+            bottom: 20px;
+
+            h2 {
+                font-size: 80px;
+
+                @include breakpoint (max-sm){
+                    font-size: 50px;
+                }
+            }
+        }
+
+        .since-text {
+            padding: 25px 30px;
+            background-color: var(--theme3);
+            position: absolute;
+            right: 20px;
+            bottom: 45px;
+            border-radius: 14px;
+            transform: rotate(-25.477deg);
+            width: initial;
+            height: initial;
+
+            h3 {
+                color: $white;
+            }
+        }
+    }
+
+    .about-content {
+        margin-left: 20px;
+
+        @include breakpoint(max-xxl){
+            margin-left: 0;
+        }
+
+        p {
+            @include breakpoint(max-md){
+               margin-top: 10px;
+            }
+        }
+
+        .icon-area {
+            @include flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 10px;
+
+            @include breakpoint (max-xl){
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            @include breakpoint (max-sm){
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 30px;
+            }
+
+            .icon-items {
+                gap: 20px;
+    
+                .icon {
+                    font-size: 55px;
+                    color: $theme-color-2;
+                }
+    
+                .content {
+                    h4 {
+                        margin-bottom: 5px;
+                    }
+
+                    p {
+                        color: $header-color;
+                    }
+                }
+            }
+        }
+
+        .info-area {
+            margin-top: 40px;
+            gap: 22px;
+            flex-wrap: wrap;
+
+            .info-content {
+                span {
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: $theme-color-2;
+                }
+            }
+        }
+    }
+
+    &.style-2 {
+        .about-content {
+            margin-left: 0;
+        }
+
+        .about-image-2 {
+            margin-right: -65%;
+            position: relative;
+
+            @include breakpoint (max-lg){
+                margin-right: 0;
+            }
+
+            img {
+                @include imgw;
+            }
+
+            .since-text {
+                padding: 25px 30px;
+                background-color: $theme-color;
+                position: absolute;
+                right: 20px;
+                bottom: 45px;
+                border-radius: 14px;
+                transform: rotate(-25.477deg);
+                width: initial;
+                height: initial;
+                position: absolute;
+                bottom: 20%;
+                right: 20%;
+    
+                h3 {
+                    color: $white;
+                }
+
+                @include breakpoint (max-xxl){
+                    right: 35%;
+                    bottom: 70px;
+                }
+
+                @include breakpoint (max-lg){
+                    right: 20px;
+                    bottom: 45px;
+                }
+            }
+        }
+    }
+}
+
+.about-section {
+    position: relative;
+
+    .leaves-shape {
+        position: absolute;
+        top: -90px;
+        left: 0;
+    }
+
+    .pizza-shape {
+        position: absolute;
+        bottom: 30%;
+        right: 3%;
+
+        @include breakpoint (max-xl){
+            display: none;
+        }
+    }
+}
+
+.about-wrapper-2 {
+    .pizza-image {
+        margin-left: -62%;
+        position: relative;
+        max-width: 981px;
+
+        @include breakpoint (max-lg){
+            margin-left: 0;
+        }
+
+        img {
+            @include imgw;
+        }
+
+        .quate-content {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 45px;
+            background-color: $theme-color-3;
+
+            @include breakpoint (max-sm){
+               padding: 25px;
+            }
+
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                content: "";
+                width: 100%;
+                height: 100%;
+                background-position: center;
+                background-image: url(../../assets/img/about/food-shape.png);
+            }
+
+            h3 {
+                font-size: 28px;
+                position: relative;
+                z-index: 9;
+
+                @include breakpoint (max-sm){
+                   font-size: 20px;
+                }
+
+                span {
+                    color: $theme-color-2;
+                }
+            }
+        }
+    }
+
+    .about-content {
+        margin-left: 50px;
+
+        @include breakpoint (max-xxl){
+            margin-left: 30px;
+        }
+
+        @include breakpoint (max-lg){
+            margin-left: 0;
+        }
+
+        p {
+            margin-bottom: 40px;
+        }
+
+        .about-counter-area {
+            border-top: 1px solid $border-color;
+
+            @include breakpoint (max-sm){
+                flex-wrap: wrap;
+            }
+
+            .counter-items {
+                padding-top: 40px;
+                padding-left: 0px;
+                border-right: 1px solid var(--border);
+                padding-right: 80px;
+                position: relative;
+
+                @include breakpoint (max-xl){
+                  padding-right: 40px;
+                }
+
+                @include breakpoint (max-lg){
+                    padding-right: 80px;
+                  }
+
+                @include breakpoint (max-md){
+                    padding-right: 50px;
+                  }
+
+                @include breakpoint (max-sm){
+                    padding-top: 30px;
+                    padding-right: 40px;
+                 }
+
+                h3 {
+                    font-size: 90px;
+                    text-transform: capitalize;
+                    font-family: "DM Sans";
+                    opacity: 0.09;
+                    position: absolute;
+                    left: -10px;
+                    top: 10px;
+                }
+
+                &:nth-last-of-type(1){
+                    border-right: none;
+                    padding-right: 0;
+                }
+
+               &:nth-of-type(1){
+                padding-left: 30px;
+
+                @include breakpoint (max-sm){
+                   padding-left: 0;
+                }
+
+               }
+
+                h5 {
+                    font-weight: 500;
+                    text-transform: capitalize;
+                }
+
+                h2 {
+                    font-size: 50px;
+                    color: $theme-color-2;
+                    margin-top: 5px;
+                }
+            }
+        }
+
+        .about-info {
+            margin-top: 50px;
+            @include flex;
+            gap: 40px;
+
+            @include breakpoint (max-xl){
+                gap: 20px;
+            }
+
+             @include breakpoint (max-sm){
+               justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 30px;
+            }
+
+            .profile {
+                gap: 20px;
+
+                .profile-img {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                }
+            }
+
+            .theme-btn-2 {
+                padding: 16px 50px;
+                border-radius: 21px;
+
+                span {
+                    color: $theme-color-2;
+                }
+            }
+        }
+    }
+}
+
+//>> Update Page 4 Start <<//
+.about-wrapper-3 {
+    .about-content {
+        margin-right: 40px;
+
+        @include breakpoint (max-xl){
+            margin-right: 0;
+        }
+
+        .list {
+            margin-top: 30px;
+            margin-bottom: 40px;
+
+            li {
+                i {
+                    color: $theme-color-2;
+                    margin-right: 5px;
+                }
+
+                &:not(:last-child){
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+
+    .about-image {
+        img {
+            @include imgw;
+        }
+    }
+}

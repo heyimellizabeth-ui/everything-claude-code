@@ -1,0 +1,59 @@
+.brand-wrapper {
+    .brand-title {
+        font-weight: 600;
+        margin-bottom: 50px;
+        position: relative;
+        margin-top: -5px;
+
+        @include breakpoint (max-md){
+            text-align: center;
+        }
+
+        &::before {
+            position: absolute;
+            top: 12px;
+            right: 0;
+            content: "";
+            background-color: $border-color;
+            width: 991px;
+            height: 1px;
+
+            @include breakpoint (max-xxl){
+                display: none;
+            }
+        }
+
+        span {
+            color: $theme-color-3;
+        }
+    }
+
+    .brand-image {
+        
+        @include breakpoint (max-sm){
+            text-align: center;
+        }
+
+        img {
+            cursor: pointer;
+            @include transition;
+
+            &:hover {
+                filter: brightness(50%) grayscale(100%) contrast(150%);
+            }
+        }
+    }
+
+    .swiper-wrapper {
+        align-items: center;
+    }
+
+    .swiper-slide.swiper-slide-active{
+        .brand-image {
+            img {
+                filter: brightness(50%) grayscale(100%) contrast(150%);
+            }
+        }
+    }
+}
+
