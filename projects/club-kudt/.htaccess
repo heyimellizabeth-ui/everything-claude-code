@@ -22,7 +22,7 @@
 
   # Content Security Policy
   # Allows: self, GSAP CDN (cdnjs), Formspree (form POST), Instagram/RA embeds blocked by default
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://clubkudt.nl; font-src 'self'; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://clubkudt.nl https://*.staticflickr.com https://live.staticflickr.com; font-src 'self'; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;"
 </IfModule>
 
 # Disable directory listing
