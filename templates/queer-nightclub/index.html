@@ -76,6 +76,7 @@
   "typicalAgeRange": "16-"
 }
 </script>
+{{FONT_GOOGLE_LINK}}
 <noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -89,7 +90,7 @@
     --red: {{COLOR_ACCENT}};
     --surface: {{COLOR_SURFACE}};
     --muted: {{COLOR_MUTED}};
-    --font-mono: 'Courier New', Courier, monospace;
+    --font-mono: '{{FONT_HEADING}}', Courier, monospace;
   }
 
   html { scroll-behavior: smooth; }
@@ -98,7 +99,7 @@
   body {
     background: var(--void);
     color: var(--cream);
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: '{{FONT_BODY}}', system-ui, sans-serif;
     font-size: 16px;
     line-height: 1.6;
     overflow-x: hidden;
@@ -964,6 +965,7 @@
   </section>
 </div>
 
+<!-- IF_SECTION:newsletter -->
 <!-- Newsletter -->
 <div class="newsletter-section" id="newsletter">
   <div class="newsletter-inner">
@@ -984,6 +986,7 @@
     </form>
   </div>
 </div>
+<!-- /IF_SECTION -->
 
 </main>
 
@@ -999,7 +1002,7 @@
     <li><a href="{{SOCIAL_RA}}" target="_blank" rel="noopener noreferrer">RA Profile</a></li>
     <li><a href="#newsletter">Newsletter</a></li>
   </ul>
-  <div class="footer-bpm">{{SITE_BPM}}</div>
+  <!-- IF_SECTION:footer-bpm --><div class="footer-bpm">{{SITE_BPM}}</div><!-- /IF_SECTION -->
 </footer>
 
 <!-- Mobile Nav Drawer -->

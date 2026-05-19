@@ -50,22 +50,15 @@ node scripts/site-template/scaffold.js \
   --out projects/<projectName>
 ```
 
-### 5 — Apply font tokens (Design Studio extension)
+### 5 — Font tokens (handled automatically by scaffold)
 
-The Design Studio config includes a `fonts` object (`{ heading, body }`) not present in
-the base template. After scaffolding, inject font tokens into all HTML files:
+The Design Studio config includes a `fonts` object (`{ heading, body }`).
+`scaffold.js` maps these to `{{FONT_HEADING}}`, `{{FONT_BODY}}`, and
+`{{FONT_GOOGLE_LINK}}` — the Google Fonts `<link>` tag is injected into every
+page automatically. No extra step needed.
 
-```bash
-node scripts/site-template/apply-fonts.js \
-  --config projects/<projectName>/brand.config.json \
-  --dir projects/<projectName>
-```
-
-If `apply-fonts.js` does not exist yet, perform the substitution inline:
-for each `.html` file in the output dir, replace:
-- `{{FONT_HEADING}}` → `config.fonts.heading`
-- `{{FONT_BODY}}`    → `config.fonts.body`
-and prepend the appropriate Google Fonts `<link>` tag to the `<head>`.
+If `cfg.fonts` is absent (legacy configs), the tokens fall back to
+`system-ui, sans-serif` and the Google Fonts link is omitted.
 
 ### 6 — Apply section flags
 

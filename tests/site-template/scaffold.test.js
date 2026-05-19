@@ -3,7 +3,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { scaffold, buildTokenMap, applyTokens } = require('../../scripts/site-template/scaffold');
+const { scaffold, buildTokenMap, applyTokens, applySections, buildGoogleFontLink } = require('../../scripts/site-template/scaffold');
 const { validate } = require('../../scripts/site-template/validate');
 
 const TEMPLATE_DIR = path.resolve(__dirname, '../../templates/queer-nightclub');
@@ -57,8 +57,32 @@ test('all tokens map to non-empty strings', () => {
   const map = buildTokenMap(cfg);
   for (const [token, value] of Object.entries(map)) {
     assert(typeof value === 'string', `${token} is not a string`);
-    assert(value.length > 0, `${token} maps to empty string`);
+    // FONT_GOOGLE_LINK is intentionally empty when cfg.fonts is absent
+    if (token !== '{{FONT_GOOGLE_LINK}}') {
+      assert(value.length > 0, `${token} maps to empty string`);
+    }
   }
+});
+
+test('includes font tokens when fonts provided', () => {
+  const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+  cfg.fonts = { heading: 'Syne', body: 'Inter' };
+  const map = buildTokenMap(cfg);
+  assert(map['{{FONT_HEADING}}'] === 'Syne', `FONT_HEADING: got ${map['{{FONT_HEADING}}']}`);
+  assert(map['{{FONT_BODY}}'] === 'Inter', `FONT_BODY: got ${map['{{FONT_BODY}}']}`);
+  assert(map['{{FONT_GOOGLE_LINK}}'].includes('googleapis.com'), 'FONT_GOOGLE_LINK missing googleapis');
+  assert(map['{{FONT_GOOGLE_LINK}}'].includes('Syne'), 'FONT_GOOGLE_LINK missing Syne');
+});
+
+test('font tokens fall back safely when fonts absent', () => {
+  const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+  delete cfg.fonts;
+  const map = buildTokenMap(cfg);
+  assert(typeof map['{{FONT_HEADING}}'] === 'string' && map['{{FONT_HEADING}}'].length > 0,
+    'FONT_HEADING fallback must be non-empty');
+  assert(typeof map['{{FONT_BODY}}'] === 'string' && map['{{FONT_BODY}}'].length > 0,
+    'FONT_BODY fallback must be non-empty');
+  assert(map['{{FONT_GOOGLE_LINK}}'] === '', 'FONT_GOOGLE_LINK should be empty when fonts absent');
 });
 
 // ── applyTokens ─────────────────────────────────────────────────────────────
@@ -88,6 +112,52 @@ test('returns content unchanged when no tokens present', () => {
 test('handles empty token map', () => {
   const result = applyTokens('{{SITE_NAME}}', {});
   assert(result === '{{SITE_NAME}}', `got: ${result}`);
+});
+
+// ── applySections ───────────────────────────────────────────────────────────
+
+console.log('\n=== applySections ===\n');
+
+test('keeps block when section is true', () => {
+  const result = applySections('A<!-- IF_SECTION:foo -->B<!-- /IF_SECTION -->C', { foo: true });
+  assert(result === 'ABC', `got: ${result}`);
+});
+
+test('removes block when section is false', () => {
+  const result = applySections('A<!-- IF_SECTION:foo -->B<!-- /IF_SECTION -->C', { foo: false });
+  assert(result === 'AC', `got: ${result}`);
+});
+
+test('keeps block when section key is absent (default open)', () => {
+  const result = applySections('A<!-- IF_SECTION:foo -->B<!-- /IF_SECTION -->C', {});
+  assert(result === 'ABC', `got: ${result}`);
+});
+
+test('is a no-op when sections is undefined', () => {
+  const content = 'A<!-- IF_SECTION:foo -->B<!-- /IF_SECTION -->C';
+  const result = applySections(content, undefined);
+  assert(result === content, `should be unchanged: got ${result}`);
+});
+
+// ── buildGoogleFontLink ──────────────────────────────────────────────────────
+
+console.log('\n=== buildGoogleFontLink ===\n');
+
+test('builds link with both fonts', () => {
+  const link = buildGoogleFontLink({ heading: 'Syne', body: 'Inter' });
+  assert(link.includes('googleapis.com'), 'missing googleapis');
+  assert(link.includes('Syne'), 'missing Syne');
+  assert(link.includes('Inter'), 'missing Inter');
+});
+
+test('deduplicates when heading and body are the same font', () => {
+  const link = buildGoogleFontLink({ heading: 'Syne', body: 'Syne' });
+  assert((link.match(/Syne/g) || []).length === 1, 'Syne should appear once');
+});
+
+test('returns empty string when fonts is null', () => {
+  assert(buildGoogleFontLink(null) === '', 'should return empty string');
+  assert(buildGoogleFontLink(undefined) === '', 'should return empty string');
 });
 
 // ── scaffold ────────────────────────────────────────────────────────────────

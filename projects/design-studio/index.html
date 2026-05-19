@@ -804,7 +804,7 @@ function downloadConfig() {
   a.download = 'brand-config.json';
   a.click();
   URL.revokeObjectURL(url);
-  showToast('Downloaded brand-config.json — now run /studio-build in Claude Code');
+  showToast(`Downloaded brand-config.json → /studio-build  →  projects/${slug}/`);
 }
 
 // ── Reset ──────────────────────────────────────────────────────────────────

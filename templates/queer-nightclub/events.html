@@ -42,6 +42,7 @@
   "typicalAgeRange": "16-"
 }
 </script>
+{{FONT_GOOGLE_LINK}}
 <noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -50,11 +51,11 @@
   :root {
     --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}};
     --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}};
-    --font-mono: 'Courier New', Courier, monospace;
+    --font-mono: '{{FONT_HEADING}}', Courier, monospace;
   }
   html { scroll-behavior: smooth; }
   html { overflow-x: hidden; }
-  body { background: var(--void); color: var(--cream); font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+  body { background: var(--void); color: var(--cream); font-family: '{{FONT_BODY}}', system-ui, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
 
   /* CURSOR */
   .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
