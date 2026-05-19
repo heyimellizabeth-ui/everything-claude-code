@@ -163,6 +163,19 @@
       },
       "description": "Confluence Cloud integration — search pages, retrieve content, explore spaces"
     },
+    "hostinger-sftp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "sftp-ssh-mcp",
+        "--",
+        "--host=YOUR_HOSTINGER_FTP_IP",
+        "--port=22",
+        "--user=YOUR_FTP_USERNAME",
+        "--password=YOUR_FTP_PASSWORD"
+      ],
+      "description": "SFTP access to Hostinger hosting — list, upload, download, delete files. Replace placeholders with credentials from hPanel → Files → FTP Accounts. Use --key=~/.ssh/id_ed25519 instead of --password for key-based auth. See skills/hostinger-sftp/SKILL.md."
+    },
     "evalview": {
       "command": "python3",
       "args": ["-m", "evalview", "mcp", "serve"],
