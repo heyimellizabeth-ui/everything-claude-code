@@ -61,10 +61,19 @@ export default function MusicPlayer() {
 
           <button
             onClick={togglePlay}
-            className="w-9 h-9 border border-[#9B8040]/40 flex items-center justify-center text-[#9B8040] hover:bg-[#9B8040]/10 hover:border-[#9B8040] transition-colors text-sm"
+            className="w-9 h-9 border border-[#9B8040]/40 flex items-center justify-center text-[#9B8040] hover:bg-[#9B8040]/10 hover:border-[#9B8040] transition-colors"
             aria-label={isPlaying ? "Pause" : "Play"}
           >
-            {isPlaying ? "⏸" : "▶"}
+            {isPlaying ? (
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+                <line x1="4.5" y1="2" x2="4.5" y2="12" />
+                <line x1="9.5" y1="2" x2="9.5" y2="12" />
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" aria-hidden="true">
+                <polygon points="3.5,1.5 12.5,7 3.5,12.5" />
+              </svg>
+            )}
           </button>
 
           <button
