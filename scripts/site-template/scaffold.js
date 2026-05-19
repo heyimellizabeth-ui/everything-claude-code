@@ -19,6 +19,16 @@ function parseArgs(argv) {
   return args;
 }
 
+function buildGoogleFontLink(fonts) {
+  if (!fonts || (!fonts.heading && !fonts.body)) return '';
+  const families = [...new Set([fonts.heading, fonts.body].filter(Boolean))]
+    .map(f => encodeURIComponent(f) + ':wght@400;700;900')
+    .join('&family=');
+  return '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+         `<link href="https://fonts.googleapis.com/css2?family=${families}&display=swap" rel="stylesheet">`;
+}
+
 function buildTokenMap(cfg) {
   return {
     '{{SITE_NAME}}': cfg.site.name,
@@ -46,7 +56,18 @@ function buildTokenMap(cfg) {
     '{{FORMSPREE_CONTACT}}': cfg.forms.contactKey || '',
     '{{FORMS_RECIPIENT_EMAIL}}': cfg.forms.recipientEmail || '',
     '{{TICKET_URL}}': cfg.ticketUrl,
+    '{{FONT_HEADING}}':     (cfg.fonts && cfg.fonts.heading) || 'system-ui, sans-serif',
+    '{{FONT_BODY}}':        (cfg.fonts && cfg.fonts.body)    || 'system-ui, sans-serif',
+    '{{FONT_GOOGLE_LINK}}': buildGoogleFontLink(cfg.fonts),
   };
+}
+
+function applySections(content, sections) {
+  if (!sections) return content;
+  return content.replace(
+    /<!-- IF_SECTION:([\w-]+) -->([\s\S]*?)<!-- \/IF_SECTION -->/g,
+    (_, key, body) => (sections[key] !== false) ? body : ''
+  );
 }
 
 function applyTokens(content, tokenMap) {
@@ -108,7 +129,9 @@ function scaffold(configPath, outDir) {
       fs.copyFileSync(src, dest);
     } else {
       const raw = fs.readFileSync(src, 'utf8');
-      fs.writeFileSync(dest, applyTokens(raw, tokenMap), 'utf8');
+      let text = applyTokens(raw, tokenMap);
+      if (cfg.sections) text = applySections(text, cfg.sections);
+      fs.writeFileSync(dest, text, 'utf8');
     }
     count++;
   }
@@ -125,4 +148,4 @@ if (require.main === module) {
   scaffold(path.resolve(args.config), path.resolve(args.out));
 }
 
-module.exports = { scaffold, buildTokenMap, applyTokens };
+module.exports = { scaffold, buildTokenMap, applyTokens, applySections, buildGoogleFontLink };
