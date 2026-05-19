@@ -104,6 +104,24 @@ Tell the user:
   - Formspree keys if placeholders remain
 - Next step: open `projects/<projectName>/index.html` in a browser to review
 
+### 10 — Offer session handoff
+
+After the report, ask the user:
+
+> "Want me to save session state so you can pick this up in a new session?
+> Just say yes and I'll run `/save-session` with everything pre-filled."
+
+If the user agrees, invoke `/save-session` with context pre-populated:
+
+- **What's being built**: `projects/<projectName>/` — static site scaffolded from Design Studio config
+- **Current state**: Scaffold complete. Pages: [list generated pages]. Brand assets: generated or pending.
+- **What not to retry**: Do not re-run scaffold without editing `brand-config.json` first — it overwrites output.
+- **What still needs manual content**: [same list from Step 9 — events, bios, gallery URL, map embed, form keys]
+- **Exact next step**: Open `projects/<projectName>/index.html` and fill in [first empty slot].
+- **Environment notes**: Config lives at `projects/<projectName>/brand.config.json`. Re-run `/studio-build projects/<projectName>/brand.config.json` to rebuild after any config edits.
+
+In a future session, `/resume-session` will load this state and Claude will brief the project before the user types anything.
+
 ## Usage Examples
 
 ```
