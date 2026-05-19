@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Studio — Brand Config Builder</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void: #0D0D0D;
+    --surface: #161616;
+    --card: #1E1E1E;
+    --border: #2A2A2A;
+    --cream: #F0EDE6;
+    --muted: #888;
+    --accent: #E8415A;
+    --accent2: #7B2FBE;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  html { background: var(--void); color: var(--cream); font-family: var(--font); font-size: 15px; }
+
+  body { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+
+  header { text-align: center; margin-bottom: 3rem; }
+  header h1 { font-size: 2rem; letter-spacing: .12em; text-transform: uppercase; }
+  header p { color: var(--muted); margin-top: .5rem; font-size: .9rem; }
+
+  .steps { display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: .6rem 1.1rem; font-size: .8rem; color: var(--muted); display: flex; align-items: center; gap: .5rem; }
+  .step strong { color: var(--cream); }
+  .step-num { background: var(--accent); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; flex-shrink: 0; }
+
+  section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; margin-bottom: 1.5rem; }
+  section h2 { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; display: flex; align-items: center; gap: .5rem; }
+  section h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+  .grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .grid.full { grid-template-columns: 1fr; }
+  @media (max-width: 540px) { .grid, .grid.triple { grid-template-columns: 1fr; } }
+
+  .field { display: flex; flex-direction: column; gap: .35rem; }
+  label { font-size: .75rem; color: var(--muted); letter-spacing: .04em; }
+  label span { color: var(--accent); }
+
+  input[type="text"],
+  input[type="url"],
+  input[type="email"],
+  select {
+    background: var(--void);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--cream);
+    font-family: var(--mono);
+    font-size: .85rem;
+    padding: .55rem .75rem;
+    width: 100%;
+    transition: border-color .15s;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--accent); }
+
+  .color-row { display: flex; align-items: center; gap: .5rem; }
+  .color-row input[type="color"] { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 6px; background: none; padding: 2px; cursor: pointer; flex-shrink: 0; }
+  .color-row input[type="text"] { flex: 1; }
+
+  select option { background: var(--surface); }
+
+  .radio-group { display: flex; gap: .75rem; }
+  .radio-group label { display: flex; align-items: center; gap: .4rem; font-size: .85rem; color: var(--cream); cursor: pointer; }
+  .radio-group input[type="radio"] { accent-color: var(--accent); }
+
+  .conditional { display: none; }
+  .conditional.visible { display: grid; }
+
+  .hint { font-size: .72rem; color: var(--muted); margin-top: .2rem; }
+
+  .preview-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .preview-swatch { width: 28px; height: 28px; border-radius: 4px; border: 1px solid var(--border); transition: background .2s; }
+  .preview-label { font-size: .75rem; color: var(--muted); display: flex; flex-direction: column; gap: .15rem; }
+  .preview-name { font-size: 1.1rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+
+  .download-wrap { text-align: center; margin-top: 2rem; }
+  button#dl {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .9rem 2.5rem;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+  }
+  button#dl:hover { background: #cf3349; transform: translateY(-1px); }
+  button#dl:active { transform: translateY(0); }
+
+  .notice { font-size: .78rem; color: var(--muted); margin-top: .75rem; }
+  .notice code { font-family: var(--mono); color: var(--cream); background: var(--surface); padding: .1rem .35rem; border-radius: 3px; }
+
+  .tag { font-size: .65rem; background: var(--accent2); color: #fff; padding: .1rem .45rem; border-radius: 3px; vertical-align: middle; margin-left: .3rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Design Studio</h1>
+  <p>Fill out your brand config, download the JSON, then run <code style="font-family:monospace;color:#E8415A">/studio-build</code> in Claude Code.</p>
+</header>
+
+<div class="steps">
+  <div class="step"><span class="step-num">1</span> Fill the form below</div>
+  <div class="step"><span class="step-num">2</span> Click <strong>Download brand-config.json</strong></div>
+  <div class="step"><span class="step-num">3</span> Open Claude Code → type <strong>/studio-build</strong></div>
+  <div class="step"><span class="step-num">4</span> Paste the path when prompted</div>
+</div>
+
+<!-- Live preview bar -->
+<div class="preview-bar" id="previewBar">
+  <div>
+    <div class="preview-name" id="previewName">YOUR BRAND</div>
+    <div class="preview-label" id="previewTagline" style="color:#888">Tagline · City</div>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:.6rem;align-items:center;">
+    <div class="preview-swatch" id="sw-void" title="void"></div>
+    <div class="preview-swatch" id="sw-accent" title="accent"></div>
+    <div class="preview-swatch" id="sw-surface" title="surface"></div>
+    <div class="preview-swatch" id="sw-cream" title="cream"></div>
+    <div class="preview-swatch" id="sw-muted" title="muted"></div>
+  </div>
+</div>
+
+<form id="brandForm" novalidate>
+
+<!-- SITE -->
+<section>
+  <h2>Site Identity</h2>
+  <div class="grid">
+    <div class="field">
+      <label for="siteName">Site name <span>*</span></label>
+      <input id="siteName" type="text" placeholder="Club Nacht" required>
+    </div>
+    <div class="field">
+      <label for="siteShort">Short / wordmark <span>*</span></label>
+      <input id="siteShort" type="text" placeholder="NACHT" required>
+      <div class="hint">Used as logo text. All caps recommended.</div>
+    </div>
+    <div class="field">
+      <label for="siteDomain">Domain</label>
+      <input id="siteDomain" type="text" placeholder="clubnacht.nl">
+    </div>
+    <div class="field">
+      <label for="siteTagline">Tagline</label>
+      <input id="siteTagline" type="text" placeholder="Underground · Electronic · Queer">
+    </div>
+    <div class="field" style="grid-column:1/-1">
+      <label for="siteDescription">Meta description</label>
+      <input id="siteDescription" type="text" placeholder="One-liner for SEO and social previews">
+    </div>
+    <div class="field">
+      <label for="siteLang">Language code</label>
+      <input id="siteLang" type="text" placeholder="en" maxlength="5">
+    </div>
+    <div class="field">
+      <label for="siteLocale">Locale</label>
+      <input id="siteLocale" type="text" placeholder="en_GB">
+    </div>
+    <div class="field">
+      <label for="siteEst">Est. year</label>
+      <input id="siteEst" type="text" placeholder="2024" maxlength="4">
+    </div>
+    <div class="field">
+      <label for="siteBpm">BPM flavor text</label>
+      <input id="siteBpm" type="text" placeholder="128 BPM">
+    </div>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section>
+  <h2>Brand Colors</h2>
+  <div class="grid triple">
+    <div class="field">
+      <label>Background (void)</label>
+      <div class="color-row">
+        <input type="color" id="colorVoidPicker" value="#0D0D0D">
+        <input type="text" id="colorVoid" value="#0D0D0D" placeholder="#0D0D0D" maxlength="7">
+      </div>
+    </div>
+    <div class="field">
+      <label>Text / cream</label>
+      <div class="color-row">
+        <input type="color" id="colorCreamPicker" value="#F5F0E8">
+        <input type="text" id="colorCream" value="#F5F0E8" placeholder="#F5F0E8" maxlength="7">
+      </div>
+    </div>
+    <div class="field">
+      <label>Accent</label>
+      <div class="color-row">
+        <input type="color" id="colorAccentPicker" value="#E8415A">
+        <input type="text" id="colorAccent" value="#E8415A" placeholder="#E8415A" maxlength="7">
+      </div>
+    </div>
+    <div class="field">
+      <label>Surface</label>
+      <div class="color-row">
+        <input type="color" id="colorSurfacePicker" value="#1A1A1A">
+        <input type="text" id="colorSurface" value="#1A1A1A" placeholder="#1A1A1A" maxlength="7">
+      </div>
+    </div>
+    <div class="field">
+      <label>Muted</label>
+      <div class="color-row">
+        <input type="color" id="colorMutedPicker" value="#888070">
+        <input type="text" id="colorMuted" value="#888070" placeholder="#888070" maxlength="7">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENUE -->
+<section>
+  <h2>Venue</h2>
+  <div class="grid">
+    <div class="field">
+      <label for="venueName">Venue name</label>
+      <input id="venueName" type="text" placeholder="Shelter Amsterdam">
+    </div>
+    <div class="field">
+      <label for="venueCity">City</label>
+      <input id="venueCity" type="text" placeholder="Amsterdam">
+    </div>
+    <div class="field">
+      <label for="venueRegion">Region / State</label>
+      <input id="venueRegion" type="text" placeholder="Noord-Holland">
+    </div>
+    <div class="field">
+      <label for="venueCountry">Country code</label>
+      <input id="venueCountry" type="text" placeholder="NL" maxlength="3">
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section>
+  <h2>Social &amp; Tickets</h2>
+  <div class="grid full">
+    <div class="field">
+      <label for="socialInstagram">Instagram URL</label>
+      <input id="socialInstagram" type="url" placeholder="https://www.instagram.com/yourclub/">
+    </div>
+    <div class="field">
+      <label for="socialRa">Resident Advisor URL <span class="tag">optional</span></label>
+      <input id="socialRa" type="url" placeholder="https://ra.co/clubs/yourclub">
+    </div>
+    <div class="field">
+      <label for="ticketUrl">Ticket URL</label>
+      <input id="ticketUrl" type="url" placeholder="https://…">
+    </div>
+  </div>
+</section>
+
+<!-- FORMS -->
+<section>
+  <h2>Contact &amp; Newsletter Forms</h2>
+  <div class="field" style="margin-bottom:1rem;">
+    <label>Backend</label>
+    <div class="radio-group">
+      <label><input type="radio" name="backend" value="formspree" checked> Formspree <em style="color:#888;font-size:.8rem">(easiest, no server needed)</em></label>
+      <label><input type="radio" name="backend" value="php"> PHP <em style="color:#888;font-size:.8rem">(self-hosted)</em></label>
+    </div>
+  </div>
+
+  <div class="grid conditional visible" id="formspreeFields">
+    <div class="field">
+      <label for="newsletterKey">Formspree newsletter key</label>
+      <input id="newsletterKey" type="text" placeholder="xkokywzz">
+      <div class="hint">Sign up at formspree.io → create a form → copy the 8-char key.</div>
+    </div>
+    <div class="field">
+      <label for="contactKey">Formspree contact key</label>
+      <input id="contactKey" type="text" placeholder="xrerjzlo">
+    </div>
+  </div>
+
+  <div class="grid conditional" id="phpFields">
+    <div class="field">
+      <label for="recipientEmail">Recipient email</label>
+      <input id="recipientEmail" type="email" placeholder="hello@yourclub.com">
+      <div class="hint">PHP mail() will send form submissions here.</div>
+    </div>
+  </div>
+</section>
+
+<div class="download-wrap">
+  <button type="button" id="dl">Download brand-config.json</button>
+  <p class="notice">
+    Then open Claude Code in any directory and run
+    <code>/studio-build</code> — paste the downloaded file path when prompted.
+  </p>
+</div>
+
+</form>
+
+<script>
+(function () {
+  'use strict';
+
+  // Color picker ↔ text sync
+  const colorPairs = [
+    ['colorVoidPicker',    'colorVoid'],
+    ['colorCreamPicker',   'colorCream'],
+    ['colorAccentPicker',  'colorAccent'],
+    ['colorSurfacePicker', 'colorSurface'],
+    ['colorMutedPicker',   'colorMuted'],
+  ];
+
+  colorPairs.forEach(([pickId, textId]) => {
+    const picker = document.getElementById(pickId);
+    const text   = document.getElementById(textId);
+
+    picker.addEventListener('input', () => {
+      text.value = picker.value;
+      updatePreview();
+    });
+
+    text.addEventListener('input', () => {
+      const v = text.value.trim();
+      if (/^#[0-9A-Fa-f]{6}$/.test(v)) {
+        picker.value = v;
+        updatePreview();
+      }
+    });
+  });
+
+  // Backend toggle
+  document.querySelectorAll('input[name="backend"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const fs = document.getElementById('formspreeFields');
+      const ph = document.getElementById('phpFields');
+      if (r.value === 'formspree' && r.checked) {
+        fs.classList.add('visible'); ph.classList.remove('visible');
+      } else if (r.value === 'php' && r.checked) {
+        ph.classList.add('visible'); fs.classList.remove('visible');
+      }
+    });
+  });
+
+  // Live preview
+  function updatePreview() {
+    const name    = document.getElementById('siteName').value.trim() || 'YOUR BRAND';
+    const tagline = document.getElementById('siteTagline').value.trim();
+    const city    = document.getElementById('venueCity').value.trim();
+
+    document.getElementById('previewName').textContent = name.toUpperCase();
+    document.getElementById('previewTagline').textContent = [tagline, city].filter(Boolean).join(' · ') || 'Tagline · City';
+
+    document.getElementById('sw-void').style.background    = document.getElementById('colorVoid').value;
+    document.getElementById('sw-accent').style.background  = document.getElementById('colorAccent').value;
+    document.getElementById('sw-surface').style.background = document.getElementById('colorSurface').value;
+    document.getElementById('sw-cream').style.background   = document.getElementById('colorCream').value;
+    document.getElementById('sw-muted').style.background   = document.getElementById('colorMuted').value;
+  }
+
+  ['siteName','siteTagline','venueCity'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updatePreview);
+  });
+
+  updatePreview();
+
+  // Build JSON + download
+  document.getElementById('dl').addEventListener('click', () => {
+    const v = id => document.getElementById(id).value.trim();
+    const backend = document.querySelector('input[name="backend"]:checked').value;
+
+    const siteName = v('siteName') || 'My Brand';
+
+    const cfg = {
+      site: {
+        name:        siteName,
+        short:       v('siteShort')      || siteName.toUpperCase(),
+        domain:      v('siteDomain')     || 'example.com',
+        tagline:     v('siteTagline')    || '',
+        description: v('siteDescription') || '',
+        lang:        v('siteLang')       || 'en',
+        locale:      v('siteLocale')     || 'en_US',
+        estYear:     v('siteEst')        || String(new Date().getFullYear()),
+        bpm:         v('siteBpm')        || '128 BPM',
+      },
+      colors: {
+        void:    v('colorVoid')    || '#0D0D0D',
+        cream:   v('colorCream')   || '#F5F0E8',
+        accent:  v('colorAccent')  || '#E8415A',
+        surface: v('colorSurface') || '#1A1A1A',
+        muted:   v('colorMuted')   || '#888070',
+      },
+      venue: {
+        name:    v('venueName')    || '',
+        city:    v('venueCity')    || '',
+        region:  v('venueRegion')  || '',
+        country: v('venueCountry') || '',
+      },
+      social: {
+        instagram: v('socialInstagram') || '',
+        ra:        v('socialRa')        || '',
+      },
+      forms: {
+        backend,
+        newsletterKey:  backend === 'formspree' ? v('newsletterKey')  : '',
+        contactKey:     backend === 'formspree' ? v('contactKey')     : '',
+        recipientEmail: backend === 'php'        ? v('recipientEmail') : '',
+      },
+      ticketUrl: v('ticketUrl') || '',
+    };
+
+    const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'brand-config.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+}());
+</script>
+</body>
+</html>
