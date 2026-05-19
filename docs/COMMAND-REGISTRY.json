@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 75,
+  "totalCommands": 81,
   "commands": [
     {
       "command": "aside",
@@ -30,6 +30,53 @@
       "path": "commands/build-fix.md"
     },
     {
+      "command": "c1",
+      "description": "Web chain 1 — full web project from scratch (spec → design → build → ship)",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/c1.md"
+    },
+    {
+      "command": "c2",
+      "description": "Web chain 2 — add a component or page feature to an existing project",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/c2.md"
+    },
+    {
+      "command": "c3",
+      "description": "Web chain 3 — design iteration sprint for polishing UI, animations, or responsive layout",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/c3.md"
+    },
+    {
+      "command": "c4",
+      "description": "Web chain 4 — production-ready shipping with multi-model execution, security audit, and PR",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "security-scan"
+      ],
+      "path": "commands/c4.md"
+    },
+    {
+      "command": "c5",
+      "description": "Web chain 5 — post-launch cleanup, dead code removal, and documentation sync",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/c5.md"
+    },
+    {
       "command": "checkpoint",
       "description": "Create, verify, or list workflow checkpoints after running verification checks.",
       "type": "testing",
@@ -37,6 +84,17 @@
       "allAgents": [],
       "skills": [],
       "path": "commands/checkpoint.md"
+    },
+    {
+      "command": "chelp",
+      "description": "List all web design command chains (c1–c5) with descriptions and when to use each",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "security-scan"
+      ],
+      "path": "commands/chelp.md"
     },
     {
       "command": "code-review",
@@ -807,8 +865,8 @@
       "orchestration": 6,
       "planning": 2,
       "refactoring": 1,
-      "review": 9,
-      "testing": 47
+      "review": 11,
+      "testing": 51
     },
     "topAgents": [
       {
@@ -858,6 +916,10 @@
         "count": 6
       },
       {
+        "skill": "security-scan",
+        "count": 4
+      },
+      {
         "skill": "flutter-dart-code-review",
         "count": 3
       },
@@ -887,10 +949,6 @@
       },
       {
         "skill": "golang-testing",
-        "count": 2
-      },
-      {
-        "skill": "kotlin-patterns",
         "count": 2
       }
     ]

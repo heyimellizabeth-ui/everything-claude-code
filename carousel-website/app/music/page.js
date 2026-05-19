@@ -37,7 +37,18 @@ function TrackRow({ track, index }) {
     >
       <div className="w-6 text-center flex-shrink-0 text-xs">
         {isActive ? (
-          <span className="text-[#9B8040]">{isPlaying ? "⏸" : "▶"}</span>
+          <span className="text-[#9B8040] flex items-center justify-center">
+              {isPlaying ? (
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+                  <line x1="4.5" y1="2" x2="4.5" y2="12" />
+                  <line x1="9.5" y1="2" x2="9.5" y2="12" />
+                </svg>
+              ) : (
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" aria-hidden="true">
+                  <polygon points="3.5,1.5 12.5,7 3.5,12.5" />
+                </svg>
+              )}
+            </span>
         ) : (
           <span className="text-[#7A7268] group-hover:text-[#9B8040] transition-colors">{index + 1}</span>
         )}
