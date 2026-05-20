@@ -74,11 +74,14 @@
     top: 0;
     background: var(--studio-surface);
     z-index: 10;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
+  .tabs::-webkit-scrollbar { display: none; }
   .tab {
-    flex: 1;
-    padding: 14px 0;
-    font-size: 12px;
+    flex-shrink: 0;
+    padding: 12px 14px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: .05em;
     text-transform: uppercase;
@@ -89,6 +92,7 @@
     transition: color .15s, border-color .15s;
     background: none;
     border-radius: 0;
+    white-space: nowrap;
   }
   .tab.active { color: var(--studio-accent); border-bottom-color: var(--studio-accent); }
 
@@ -213,6 +217,29 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+  /* SEO char counter colors */
+  .char-ok  { color: #2DC653; }
+  .char-warn { color: #febc2e; }
+  .char-over { color: #ff5f57; }
+
+  /* Drop zone */
+  .drop-zone {
+    border: 2px dashed var(--studio-border);
+    border-radius: 8px;
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--studio-accent);
+    background: rgba(124,58,237,.06);
+  }
+  .drop-zone input[type="file"] { display: none; }
+  .drop-zone-icon { font-size: 28px; margin-bottom: 8px; }
+  .drop-zone-label { font-size: 13px; color: var(--studio-muted); }
+  .drop-zone-sub { font-size: 11px; color: #555; margin-top: 4px; }
 
   /* Toast */
   #toast {
@@ -612,7 +639,7 @@
     <div class="group-label">Google Reviews</div>
     <div class="field">
       <label>Paste Google reviews text</label>
-      <textarea id="reviewsRaw" placeholder="Paste raw Google Maps review text here&#10;(name, stars, review text — one review per block)&#10;or paste a JSON array of { author, text, rating } objects" style="min-height:100px" oninput="previewReviews()"></textarea>
+      <textarea id="reviewsRaw" placeholder="Paste raw Google Maps review text here&#10;(name, stars, review text — one review per block)&#10;or paste a JSON array of { author, text, rating } objects" style="min-height:100px"></textarea>
     </div>
     <button type="button" onclick="parseAndAddReviews()" style="background:var(--studio-accent);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;margin-bottom:12px">Parse reviews</button>
     <div id="reviewsList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
@@ -639,8 +666,15 @@
     <div class="group-label">Import from Screenshot</div>
     <div class="field">
       <label>Upload a website or brand screenshot</label>
-      <input type="file" id="importImage" accept="image/*" style="width:100%;padding:20px;text-align:center;cursor:pointer" onchange="handleImageUpload(event)">
-      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:4px">We'll extract brand colors automatically</div>
+      <div class="drop-zone" id="dropZone" onclick="document.getElementById('importImage').click()"
+        ondragover="event.preventDefault();this.classList.add('dragover')"
+        ondragleave="this.classList.remove('dragover')"
+        ondrop="this.classList.remove('dragover');handleImageUpload({target:{files:event.dataTransfer.files}})">
+        <input type="file" id="importImage" accept="image/*" onchange="handleImageUpload(event)">
+        <div class="drop-zone-icon">🖼</div>
+        <div class="drop-zone-label">Drop image here or click to browse</div>
+        <div class="drop-zone-sub">PNG, JPG, WebP — screenshot of any website or brand</div>
+      </div>
     </div>
     <div id="importPreview" style="display:none;margin:16px 0">
       <img id="importImg" style="width:100%;border-radius:6px;max-height:200px;object-fit:cover">
@@ -698,7 +732,7 @@
     <div class="preview-dot" style="background:#28c840"></div>
     <span style="margin-left:8px;flex:1;text-align:center;font-size:11px">Live Preview — your site will look like this</span>
   </div>
-  <iframe id="preview" title="Site Preview" srcdoc=""></iframe>
+  <iframe id="preview" title="Site Preview" srcdoc="" sandbox="allow-scripts"></iframe>
 </div>
 
 <div id="toast"></div>
@@ -719,7 +753,8 @@ const state = {
     checkout:   { enabled: false, url: '', provider: 'stripe-link' },
     planner:    { enabled: false },
   },
-  reviews: []
+  reviews: [],
+  seo: { title: '', description: '', ogTitle: '', keywords: '' }
 };
 
 // ── Tab switching ──────────────────────────────────────────────────────────
@@ -850,11 +885,11 @@ function collectConfig() {
       og:      getV('imageOg')      || '',
       gallery: getV('imageGallery').split('\n').map(l => l.trim()).filter(Boolean),
     },
-    seo: state.seo || {
-      title: getV('seoTitle') || '',
-      description: getV('seoDescription') || '',
-      ogTitle: getV('seoOgTitle') || '',
-      keywords: getV('seoKeywords') || ''
+    seo: {
+      title:       getV('seoTitle')       || state.seo.title       || '',
+      description: getV('seoDescription') || state.seo.description || '',
+      ogTitle:     getV('seoOgTitle')     || state.seo.ogTitle     || '',
+      keywords:    getV('seoKeywords')    || state.seo.keywords    || '',
     },
   };
 }
@@ -1035,19 +1070,15 @@ function renderExtractedColors(colors) {
 }
 
 function applyExtractedColors() {
-  document.getElementById('voidColor').value = state.colors.void;
-  document.getElementById('voidHex').value = state.colors.void;
-  document.getElementById('creamColor').value = state.colors.cream;
-  document.getElementById('creamHex').value = state.colors.cream;
-  document.getElementById('accentColor').value = state.colors.accent;
-  document.getElementById('accentHex').value = state.colors.accent;
-  document.getElementById('surfaceColor').value = state.colors.surface;
-  document.getElementById('surfaceHex').value = state.colors.surface;
-  document.getElementById('mutedColor').value = state.colors.muted;
-  document.getElementById('mutedHex').value = state.colors.muted;
+  if (!state.colors) return;
+  setColor('colorVoid',    'colorVoidHex',    state.colors.void);
+  setColor('colorCream',   'colorCreamHex',   state.colors.cream);
+  setColor('colorAccent',  'colorAccentHex',  state.colors.accent);
+  setColor('colorSurface', 'colorSurfaceHex', state.colors.surface);
+  setColor('colorMuted',   'colorMutedHex',   state.colors.muted);
   update();
   switchTab('colors');
-  showToast('Colors applied to Brand! Adjust in Colors tab if needed.');
+  showToast('Colors applied! Fine-tune in the Colors tab.');
 }
 
 // ── SEO Assistant (Phase 13.6) ──────────────────────────────────────────────
@@ -1098,14 +1129,19 @@ function updateSeoPreview() {
   document.getElementById('seoGoogleUrl').textContent = domain;
   document.getElementById('seoGoogleDesc').textContent = desc.slice(0, 155);
 
-  document.getElementById('seoTitleLength').textContent = `${title.length} chars (50-60 optimal)`;
-  document.getElementById('seoDescLength').textContent = `${desc.length} chars (155-160 optimal)`;
+  const tl = document.getElementById('seoTitleLength');
+  tl.textContent = `${title.length} chars (50–60 optimal)`;
+  tl.className = title.length >= 50 && title.length <= 60 ? 'char-ok' : title.length > 60 ? 'char-over' : 'char-warn';
+
+  const dl = document.getElementById('seoDescLength');
+  dl.textContent = `${desc.length} chars (155–160 optimal)`;
+  dl.className = desc.length >= 155 && desc.length <= 160 ? 'char-ok' : desc.length > 160 ? 'char-over' : 'char-warn';
 }
 
 // ── Download config ────────────────────────────────────────────────────────
 function downloadConfig() {
   const cfg = collectConfig();
-  const name = (cfg.site.name || 'my-site').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  const slug = (cfg.site.short || cfg.site.name || 'my-site').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const json = JSON.stringify(cfg, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -1114,7 +1150,7 @@ function downloadConfig() {
   a.download = 'brand-config.json';
   a.click();
   URL.revokeObjectURL(url);
-  showToast(`Downloaded brand-config.json → /studio-build  →  projects/${slug}/`);
+  showToast(`Downloaded brand-config.json → run /studio-build → projects/${slug}/`);
 }
 
 // ── Reviews parsing ───────────────────────────────────────────────────────
@@ -1158,8 +1194,6 @@ function renderReviewsList() {
       <button onclick="removeReview(${i})" style="margin-top:6px;background:none;border:none;color:#666;font-size:11px;cursor:pointer;padding:0">Remove</button>
     </div>`).join('');
 }
-
-function previewReviews() {} // hook for live textarea parsing
 
 function parseAndAddReviews() {
   const raw = document.getElementById('reviewsRaw')?.value || '';
