@@ -1,0 +1,110 @@
+{
+  "site": {
+    "name": "Harvest Kitchen",
+    "short": "HARVEST",
+    "domain": "harvest-kitchen.com",
+    "tagline": "Farm-to-Table Mediterranean",
+    "description": "Seasonal Mediterranean cuisine featuring local, organic ingredients. Book your table today.",
+    "lang": "en",
+    "locale": "en_US",
+    "estYear": "2020",
+    "bpm": "Serving since 2020"
+  },
+  "colors": {
+    "void": "#2C2416",
+    "cream": "#F9F7F4",
+    "accent": "#B8860B",
+    "surface": "#3D3531",
+    "muted": "#8B7D6B"
+  },
+  "fonts": {
+    "heading": "Playfair Display",
+    "body": "Inter"
+  },
+  "venue": {
+    "name": "Harvest Kitchen Restaurant",
+    "city": "Portland",
+    "region": "Oregon",
+    "country": "US"
+  },
+  "social": {
+    "instagram": "https://instagram.com/harvest_kitchen_pdx",
+    "ra": "",
+    "facebook": "https://facebook.com/harvestkitchen",
+    "tiktok": "https://tiktok.com/@harvest_kitchen",
+    "spotify": "",
+    "youtube": "https://youtube.com/@harvestkitchen"
+  },
+  "forms": {
+    "backend": "formspree",
+    "newsletterKey": "xkokywzz",
+    "contactKey": "xrerjzlo",
+    "recipientEmail": "reservations@harvest-kitchen.com"
+  },
+  "ticketUrl": "https://www.opentable.com/harvest-kitchen",
+  "sections": {
+    "index": true,
+    "events": true,
+    "about": true,
+    "gallery": true,
+    "contact": true,
+    "hero": true,
+    "next-event": true,
+    "newsletter": true,
+    "instagram": true,
+    "manifesto": false,
+    "footer-social": true,
+    "footer-nav": true,
+    "footer-bpm": false
+  },
+  "reviews": [
+    {
+      "author": "Sarah M.",
+      "text": "Absolutely incredible meal. The seasonal menu is thoughtfully curated. Chef knows their craft.",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "author": "Michael P.",
+      "text": "Beautiful ambiance, friendly staff, and the food is outstanding. Worth every penny.",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "author": "Jessica L.",
+      "text": "Wonderful experience. Seasonal tasting menu was a delight. Can't wait to return.",
+      "rating": 5,
+      "source": "google"
+    }
+  ],
+  "images": {
+    "hero": "https://images.unsplash.com/photo-1504674900152-b8b80e457676?w=1200&h=600&fit=crop",
+    "og": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&h=630&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1495495854141-0ac8ce129118?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop"
+    ]
+  },
+  "modules": {
+    "calendar": {
+      "enabled": false,
+      "type": "ra-embed"
+    },
+    "checkout": {
+      "enabled": false,
+      "url": "",
+      "provider": "stripe-link"
+    },
+    "planner": {
+      "enabled": true
+    },
+    "gallery": {
+      "enabled": true,
+      "type": "grid"
+    },
+    "newsletter": {
+      "enabled": true
+    }
+  }
+}

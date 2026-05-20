@@ -1,0 +1,110 @@
+{
+  "site": {
+    "name": "Neon",
+    "short": "NEON",
+    "domain": "neon-nightclub.com",
+    "tagline": "Electric Nights, Queer Vibes",
+    "description": "Underground electronic & queer nightlife in the city. DJ sets, drag shows, dancing. Tickets available.",
+    "lang": "en",
+    "locale": "en_US",
+    "estYear": "2023",
+    "bpm": "130 BPM"
+  },
+  "colors": {
+    "void": "#0A0A0A",
+    "cream": "#F5F5F5",
+    "accent": "#FF3366",
+    "surface": "#1A1A1A",
+    "muted": "#888888"
+  },
+  "fonts": {
+    "heading": "Unbounded",
+    "body": "Inter"
+  },
+  "venue": {
+    "name": "The Electric Hall",
+    "city": "Berlin",
+    "region": "Berlin",
+    "country": "DE"
+  },
+  "social": {
+    "instagram": "https://instagram.com/neonberlin",
+    "ra": "https://ra.co/clubs/neon",
+    "facebook": "https://facebook.com/neonberlin",
+    "tiktok": "https://tiktok.com/@neonberlin",
+    "spotify": "https://open.spotify.com/user/neonberlin",
+    "youtube": "https://youtube.com/@neonberlin"
+  },
+  "forms": {
+    "backend": "formspree",
+    "newsletterKey": "xkokywzz",
+    "contactKey": "xrerjzlo",
+    "recipientEmail": "hello@neon-nightclub.com"
+  },
+  "ticketUrl": "https://www.ticketmaster.com/neon-events",
+  "sections": {
+    "index": true,
+    "events": true,
+    "about": true,
+    "gallery": true,
+    "contact": true,
+    "hero": true,
+    "next-event": true,
+    "newsletter": true,
+    "instagram": true,
+    "manifesto": false,
+    "footer-social": true,
+    "footer-nav": true,
+    "footer-bpm": true
+  },
+  "reviews": [
+    {
+      "author": "Alex",
+      "text": "Best night out in Berlin! Amazing music and vibe. Will definitely be back.",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "author": "Jordan",
+      "text": "Great venue, friendly crowd, good drinks. Only minor: a bit crowded on weekends.",
+      "rating": 4,
+      "source": "google"
+    },
+    {
+      "author": "Morgan",
+      "text": "Electric energy all night! The DJ lineup was incredible.",
+      "rating": 5,
+      "source": "google"
+    }
+  ],
+  "images": {
+    "hero": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&h=600&fit=crop",
+    "og": "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1200&h=630&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=300&fit=crop"
+    ]
+  },
+  "modules": {
+    "calendar": {
+      "enabled": true,
+      "type": "ra-embed"
+    },
+    "checkout": {
+      "enabled": false,
+      "url": "",
+      "provider": "stripe-link"
+    },
+    "planner": {
+      "enabled": false
+    },
+    "gallery": {
+      "enabled": true,
+      "type": "flickr"
+    },
+    "newsletter": {
+      "enabled": true
+    }
+  }
+}

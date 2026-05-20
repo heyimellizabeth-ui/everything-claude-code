@@ -1,0 +1,109 @@
+{
+  "site": {
+    "name": "Flux Fitness",
+    "short": "FLUX",
+    "domain": "fluxfitness.studio",
+    "tagline": "High-Intensity Community Fitness",
+    "description": "Join our community for HIIT, strength training, and functional fitness. Group classes, personal training, membership plans.",
+    "lang": "en",
+    "locale": "en_US",
+    "estYear": "2019",
+    "bpm": "All Fitness Levels Welcome"
+  },
+  "colors": {
+    "void": "#0F0F0F",
+    "cream": "#FFFAF0",
+    "accent": "#FF6B35",
+    "surface": "#1A1A1A",
+    "muted": "#999999"
+  },
+  "fonts": {
+    "heading": "Space Grotesk",
+    "body": "DM Sans"
+  },
+  "venue": {
+    "name": "Flux Fitness Studio",
+    "city": "Austin",
+    "region": "Texas",
+    "country": "US"
+  },
+  "social": {
+    "instagram": "https://instagram.com/flux.fitness",
+    "ra": "",
+    "facebook": "https://facebook.com/fluxfitnessstudio",
+    "tiktok": "https://tiktok.com/@fluxfitness",
+    "spotify": "https://open.spotify.com/user/fluxfitness",
+    "youtube": "https://youtube.com/@fluxfitness"
+  },
+  "forms": {
+    "backend": "formspree",
+    "newsletterKey": "xkokywzz",
+    "contactKey": "xrerjzlo",
+    "recipientEmail": "hello@fluxfitness.studio"
+  },
+  "ticketUrl": "https://www.mindbody.io/flux-fitness",
+  "sections": {
+    "index": true,
+    "events": true,
+    "about": true,
+    "gallery": false,
+    "contact": true,
+    "hero": true,
+    "next-event": true,
+    "newsletter": true,
+    "instagram": true,
+    "manifesto": true,
+    "footer-social": true,
+    "footer-nav": true,
+    "footer-bpm": false
+  },
+  "reviews": [
+    {
+      "author": "David K.",
+      "text": "Best fitness community I've found. Supportive coaches, challenging classes, amazing results.",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "author": "Rachel T.",
+      "text": "Joined 6 months ago and already feel stronger. Love the group energy and personalized attention.",
+      "rating": 5,
+      "source": "google"
+    },
+    {
+      "author": "James W.",
+      "text": "Great value, excellent facilities, and the team genuinely cares about your progress.",
+      "rating": 5,
+      "source": "google"
+    }
+  ],
+  "images": {
+    "hero": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&h=600&fit=crop",
+    "og": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1200&h=630&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1552258987-868cb78c7bbb?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=300&fit=crop"
+    ]
+  },
+  "modules": {
+    "calendar": {
+      "enabled": true,
+      "type": "custom"
+    },
+    "checkout": {
+      "enabled": true,
+      "url": "https://www.mindbody.io/flux-fitness/memberships",
+      "provider": "stripe-link"
+    },
+    "planner": {
+      "enabled": true
+    },
+    "gallery": {
+      "enabled": false,
+      "type": "flickr"
+    },
+    "newsletter": {
+      "enabled": true
+    }
+  }
+}
