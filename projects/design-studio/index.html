@@ -256,6 +256,8 @@
     <button class="tab" onclick="switchTab('type')">Type</button>
     <button class="tab" onclick="switchTab('sections')">Sections</button>
     <button class="tab" onclick="switchTab('content')">Content</button>
+    <button class="tab" onclick="switchTab('import')">Import</button>
+    <button class="tab" onclick="switchTab('seo')">SEO</button>
   </div>
 
   <!-- Brand Tab -->
@@ -631,6 +633,61 @@
       <div style="font-size:.7rem;color:var(--studio-muted);margin-top:4px">Used when gallery module type = Image grid</div>
     </div>
   </div>
+
+  <!-- Import Tab (Phase 13.1) -->
+  <div class="tab-content" id="tab-import">
+    <div class="group-label">Import from Screenshot</div>
+    <div class="field">
+      <label>Upload a website or brand screenshot</label>
+      <input type="file" id="importImage" accept="image/*" style="width:100%;padding:20px;text-align:center;cursor:pointer" onchange="handleImageUpload(event)">
+      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:4px">We'll extract brand colors automatically</div>
+    </div>
+    <div id="importPreview" style="display:none;margin:16px 0">
+      <img id="importImg" style="width:100%;border-radius:6px;max-height:200px;object-fit:cover">
+    </div>
+    <button type="button" onclick="extractColors()" style="display:none;background:var(--studio-accent);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;margin-bottom:12px;width:100%" id="extractBtn">Extract Colors</button>
+    <div id="extractedColors" style="display:none">
+      <div style="font-size:11px;color:var(--studio-muted);text-transform:uppercase;margin-top:12px;margin-bottom:8px">Extracted Palette</div>
+      <div id="colorSwatch" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+      <button type="button" onclick="applyExtractedColors()" style="background:var(--studio-accent);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;margin-top:12px;width:100%">Apply to Brand</button>
+    </div>
+  </div>
+
+  <!-- SEO Tab (Phase 13.6) -->
+  <div class="tab-content" id="tab-seo">
+    <div class="group-label">SEO & Metadata</div>
+    <div style="font-size:12px;color:var(--studio-muted);margin-bottom:16px">These are auto-generated from your brand info. Edit to customize.</div>
+
+    <div class="field">
+      <label>Page Title (for &lt;title&gt; tag)</label>
+      <input type="text" id="seoTitle" placeholder="Site Name — Tagline · City" oninput="state.seo = state.seo || {}; state.seo.title = this.value; updateSeoPreview()">
+      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:4px" id="seoTitleLength">50-60 chars optimal</div>
+    </div>
+
+    <div class="field">
+      <label>Meta Description</label>
+      <textarea id="seoDescription" placeholder="Brief description for search results..." style="min-height:60px" oninput="state.seo = state.seo || {}; state.seo.description = this.value; updateSeoPreview()"></textarea>
+      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:4px" id="seoDescLength">155-160 chars optimal</div>
+    </div>
+
+    <div class="field">
+      <label>OG Title (for social sharing)</label>
+      <input type="text" id="seoOgTitle" placeholder="Your Site Name" oninput="state.seo = state.seo || {}; state.seo.ogTitle = this.value">
+    </div>
+
+    <div class="field">
+      <label>Keywords (comma-separated)</label>
+      <input type="text" id="seoKeywords" placeholder="nightclub, queer, Berlin, electronic" oninput="state.seo = state.seo || {}; state.seo.keywords = this.value">
+      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:4px">Used for search ranking hints</div>
+    </div>
+
+    <div style="background:#111;border:1px solid #2a2a2a;border-radius:6px;padding:12px;margin-top:16px">
+      <div style="font-size:11px;color:var(--studio-muted);text-transform:uppercase;margin-bottom:8px">Google Preview</div>
+      <div style="font-size:13px;color:#1a73e8;font-weight:500" id="seoGoogleTitle">Site Name — Tagline</div>
+      <div style="font-size:12px;color:#006621" id="seoGoogleUrl">yourdomain.com</div>
+      <div style="font-size:13px;color:#545454;margin-top:4px" id="seoGoogleDesc">Description preview here...</div>
+    </div>
+  </div>
 </aside>
 
 <!-- ── Preview ── -->
@@ -668,12 +725,13 @@ const state = {
 // ── Tab switching ──────────────────────────────────────────────────────────
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach((t, i) => {
-    const tabs = ['brand','colors','type','sections','content'];
+    const tabs = ['brand','colors','type','sections','content','import','seo'];
     t.classList.toggle('active', tabs[i] === name);
   });
   document.querySelectorAll('.tab-content').forEach(c => {
     c.classList.toggle('active', c.id === 'tab-' + name);
   });
+  if (name === 'seo') generateSeoDefaults();
 }
 
 function toggleModule(name, el) {
@@ -792,6 +850,12 @@ function collectConfig() {
       og:      getV('imageOg')      || '',
       gallery: getV('imageGallery').split('\n').map(l => l.trim()).filter(Boolean),
     },
+    seo: state.seo || {
+      title: getV('seoTitle') || '',
+      description: getV('seoDescription') || '',
+      ogTitle: getV('seoOgTitle') || '',
+      keywords: getV('seoKeywords') || ''
+    },
   };
 }
 
@@ -896,6 +960,146 @@ ${instagramSection}
 </html>`;
 
   document.getElementById('preview').srcdoc = preview;
+}
+
+// ── Import from Screenshot (Phase 13.1) ────────────────────────────────────
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById('importImg');
+    img.src = e.target.result;
+    document.getElementById('importPreview').style.display = 'block';
+    document.getElementById('extractBtn').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function extractColors() {
+  const img = new Image();
+  img.crossOrigin = 'Anonymous';
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    // Simple dominant color extraction (sample pixels)
+    const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    const colorCounts = {};
+    for (let i = 0; i < pixels.length; i += 40) {
+      const r = pixels[i], g = pixels[i+1], b = pixels[i+2], a = pixels[i+3];
+      if (a < 128) continue;
+      const hex = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('').toUpperCase();
+      colorCounts[hex] = (colorCounts[hex] || 0) + 1;
+    }
+
+    const colors = Object.entries(colorCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([hex]) => hex);
+
+    // Assign to roles
+    const sorted = colors.sort((a, b) => getLuminance(a) - getLuminance(b));
+    state.colors = {
+      void: sorted[0] || '#0a0a0a',
+      cream: sorted[sorted.length - 1] || '#ffffff',
+      accent: colors[2] || '#ff6b6b',
+      surface: sorted[1] || '#1a1a1a',
+      muted: sorted[2] || '#888888'
+    };
+
+    // Show preview
+    renderExtractedColors(colors);
+    document.getElementById('extractedColors').style.display = 'block';
+  };
+  img.src = document.getElementById('importImg').src;
+}
+
+function getLuminance(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return 0.299 * r + 0.587 * g + 0.114 * b;
+}
+
+function renderExtractedColors(colors) {
+  const swatchEl = document.getElementById('colorSwatch');
+  swatchEl.innerHTML = colors.map(hex => `
+    <div style="background:${hex};border-radius:6px;height:60px;border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,.5)">
+      ${hex}
+    </div>
+  `).join('');
+}
+
+function applyExtractedColors() {
+  document.getElementById('voidColor').value = state.colors.void;
+  document.getElementById('voidHex').value = state.colors.void;
+  document.getElementById('creamColor').value = state.colors.cream;
+  document.getElementById('creamHex').value = state.colors.cream;
+  document.getElementById('accentColor').value = state.colors.accent;
+  document.getElementById('accentHex').value = state.colors.accent;
+  document.getElementById('surfaceColor').value = state.colors.surface;
+  document.getElementById('surfaceHex').value = state.colors.surface;
+  document.getElementById('mutedColor').value = state.colors.muted;
+  document.getElementById('mutedHex').value = state.colors.muted;
+  update();
+  switchTab('colors');
+  showToast('Colors applied to Brand! Adjust in Colors tab if needed.');
+}
+
+// ── SEO Assistant (Phase 13.6) ──────────────────────────────────────────────
+function generateSeoDefaults() {
+  if (!state.seo) state.seo = {};
+  const cfg = { site: {}, ...state };
+
+  // Get current values from DOM or use defaults
+  const siteName = document.getElementById('siteName')?.value || cfg.site.name || 'Site';
+  const tagline = document.getElementById('siteTagline')?.value || cfg.site.tagline || '';
+  const city = document.getElementById('venue')?.querySelector('[placeholder*="City"]')?.value || cfg.venue?.city || '';
+  const description = document.getElementById('siteDescription')?.value || cfg.site.description || '';
+
+  // Generate title
+  const title = `${siteName}${tagline ? ' — ' + tagline : ''}${city ? ' · ' + city : ''}`;
+  state.seo.title = state.seo.title || title;
+  document.getElementById('seoTitle').value = state.seo.title;
+
+  // Generate description
+  if (!state.seo.description) {
+    state.seo.description = (description || tagline || `Visit ${siteName}`).slice(0, 155);
+  }
+  document.getElementById('seoDescription').value = state.seo.description;
+
+  // OG title
+  state.seo.ogTitle = state.seo.ogTitle || siteName;
+  document.getElementById('seoOgTitle').value = state.seo.ogTitle;
+
+  // Keywords
+  if (!state.seo.keywords) {
+    const types = Object.entries(state.sections)
+      .filter(([k, v]) => v && k !== 'index')
+      .map(([k]) => k)
+      .join(', ');
+    state.seo.keywords = [siteName, city, types].filter(Boolean).join(', ').slice(0, 100);
+  }
+  document.getElementById('seoKeywords').value = state.seo.keywords;
+
+  updateSeoPreview();
+}
+
+function updateSeoPreview() {
+  const title = document.getElementById('seoTitle').value || 'Site Name — Tagline';
+  const desc = document.getElementById('seoDescription').value || 'Description preview here...';
+  const domain = document.getElementById('siteDomain')?.value || 'yourdomain.com';
+
+  document.getElementById('seoGoogleTitle').textContent = title;
+  document.getElementById('seoGoogleUrl').textContent = domain;
+  document.getElementById('seoGoogleDesc').textContent = desc.slice(0, 155);
+
+  document.getElementById('seoTitleLength').textContent = `${title.length} chars (50-60 optimal)`;
+  document.getElementById('seoDescLength').textContent = `${desc.length} chars (155-160 optimal)`;
 }
 
 // ── Download config ────────────────────────────────────────────────────────

@@ -123,6 +123,12 @@ function buildTokenMap(cfg) {
     '{{MODULE_PLANNER}}': moduleFlag(cfg, 'planner'),
     '{{MODULE_GALLERY_TYPE}}': (modules.gallery && modules.gallery.type) || 'flickr',
     '{{MODULE_NEWSLETTER}}': moduleFlag(cfg, 'newsletter') || '', // newsletter defaults on
+
+    // SEO (Phase 13.6)
+    '{{SEO_TITLE}}': (cfg.seo && cfg.seo.title) || cfg.site.name,
+    '{{SEO_DESCRIPTION}}': (cfg.seo && cfg.seo.description) || cfg.site.description,
+    '{{SEO_OG_TITLE}}': (cfg.seo && cfg.seo.ogTitle) || cfg.site.name,
+    '{{SEO_KEYWORDS}}': (cfg.seo && cfg.seo.keywords) || '',
   };
 }
 
