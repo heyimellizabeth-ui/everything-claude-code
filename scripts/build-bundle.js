@@ -13,7 +13,6 @@ const FILES = [
   { name: 'session-aliases.test.js', group: 'Test Fixes', path: 'tests/lib/session-aliases.test.js' },
   { name: 'session-manager.test.js', group: 'Test Fixes', path: 'tests/lib/session-manager.test.js' },
   // Studio App
-  { name: 'design-studio/index.html', group: 'Studio App', path: 'projects/design-studio/index.html' },
   { name: 'design-studio/USAGE.md', group: 'Studio App', path: 'projects/design-studio/USAGE.md' },
   { name: 'scaffold.js', group: 'Studio App', path: 'scripts/site-template/scaffold.js' },
   { name: 'validate.js', group: 'Studio App', path: 'scripts/site-template/validate.js' },
