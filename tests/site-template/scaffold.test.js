@@ -348,6 +348,109 @@ test('scaffold output contains no unsubstituted LAYOUT tokens', () => {
   }
 });
 
+// ── error handling ──────────────────────────────────────────────────────────
+
+console.log('\n=== error handling ===\n');
+
+test('scaffold exits on missing config file', () => {
+  const out = tmpDir();
+  try {
+    let exited = false;
+    const origExit = process.exit;
+    process.exit = () => { exited = true; throw new Error('exit called'); };
+    try { scaffold('/nonexistent/brand-config.json', out); } catch (_) {}
+    process.exit = origExit;
+    assert(exited, 'process.exit not called for missing config');
+  } finally {
+    cleanTmp(out);
+  }
+});
+
+test('scaffold exits on invalid JSON in config', () => {
+  const out = tmpDir();
+  const cfgPath = path.join(out, 'bad.json');
+  try {
+    fs.mkdirSync(out, { recursive: true });
+    fs.writeFileSync(cfgPath, '{ not valid json }', 'utf8');
+    let exited = false;
+    const origExit = process.exit;
+    process.exit = () => { exited = true; throw new Error('exit called'); };
+    try { scaffold(cfgPath, out); } catch (_) {}
+    process.exit = origExit;
+    assert(exited, 'process.exit not called for invalid JSON');
+  } finally {
+    cleanTmp(out);
+  }
+});
+
+test('scaffold handles config with all optional keys absent', () => {
+  const out = tmpDir();
+  const cfgPath = path.join(out, 'minimal.json');
+  try {
+    fs.mkdirSync(out, { recursive: true });
+    const base = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+    delete base.fonts;
+    delete base.sections;
+    delete base.reviews;
+    delete base.images;
+    delete base.modules;
+    delete base.layout;
+    delete base.seo;
+    fs.writeFileSync(cfgPath, JSON.stringify(base), 'utf8');
+    scaffold(cfgPath, out);
+    assert(fs.existsSync(path.join(out, 'index.html')), 'index.html missing with minimal config');
+  } finally {
+    cleanTmp(out);
+  }
+});
+
+test('applyTokens handles token value containing $ (no regex substitution)', () => {
+  const result = applyTokens('{{A}}', { '{{A}}': '$100' });
+  assert(result === '$100', `got: ${result}`);
+});
+
+test('applyTokens with two-token map substitutes all tokens sequentially', () => {
+  // Each token in the map is applied once in sequence
+  // If {{A}} → {{B}} and {{B}} → 'replaced', {{A}} becomes 'replaced' because {{B}} is also in the map
+  const result = applyTokens('{{A}} {{B}}', { '{{A}}': '{{B}}', '{{B}}': 'replaced' });
+  assert(result === 'replaced replaced', `got: ${result}`);
+});
+
+test('buildTokenMap with unicode site name produces valid string tokens', () => {
+  const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+  cfg.site.name = '클럽 테스트 🎵';
+  const map = buildTokenMap(cfg);
+  assert(typeof map['{{SITE_NAME}}'] === 'string', 'SITE_NAME not a string');
+  assert(map['{{SITE_NAME}}'] === '클럽 테스트 🎵', 'SITE_NAME mismatch');
+});
+
+test('REVIEWS_JSON token escapes </script> tags to prevent injection', () => {
+  const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+  cfg.reviews = [{ author: 'Test', text: '</script><script>alert(1)</script>', rating: 5, source: 'google' }];
+  const map = buildTokenMap(cfg);
+  assert(!map['{{REVIEWS_JSON}}'].includes('</script>'), 'unescaped </script> found in REVIEWS_JSON');
+  assert(map['{{REVIEWS_JSON}}'].includes('<\\/script>'), 'escaped form not found in REVIEWS_JSON');
+});
+
+test('scaffold with all non-index pages disabled still creates index.html', () => {
+  const out = tmpDir();
+  const cfgPath = path.join(out, 'cfg.json');
+  try {
+    fs.mkdirSync(out, { recursive: true });
+    const base = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+    base.sections = { index: true, events: false, about: false, gallery: false, contact: false,
+      hero: true, 'next-event': true, newsletter: true, instagram: true, manifesto: false,
+      'footer-social': true, 'footer-nav': true, 'footer-bpm': true };
+    fs.writeFileSync(cfgPath, JSON.stringify(base), 'utf8');
+    scaffold(cfgPath, out);
+    assert(fs.existsSync(path.join(out, 'index.html')), 'index.html missing when other pages disabled');
+    assert(!fs.existsSync(path.join(out, 'events.html')), 'events.html should not exist');
+    assert(!fs.existsSync(path.join(out, 'gallery.html')), 'gallery.html should not exist');
+  } finally {
+    cleanTmp(out);
+  }
+});
+
 // ── Results ─────────────────────────────────────────────────────────────────
 
 console.log(`\n=== Test Results ===`);

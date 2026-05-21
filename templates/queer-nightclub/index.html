@@ -1167,11 +1167,18 @@
     });
   }
 
-  // PRELOADER
+  // PRELOADER — force-reveal after 5s if GSAP CDN fails to load
+  const _preloaderFallback = setTimeout(() => {
+    const pl = document.getElementById('preloader');
+    if (pl) { pl.style.opacity = '0'; pl.style.pointerEvents = 'none'; setTimeout(() => { pl.style.display = 'none'; }, 600); }
+    if (typeof initScrollAnimations === 'function') initScrollAnimations();
+  }, 5000);
+
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
   const tl = gsap.timeline({
     onComplete: () => {
+      clearTimeout(_preloaderFallback);
       document.getElementById('preloader').style.display = 'none';
       initScrollAnimations();
     }

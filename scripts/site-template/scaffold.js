@@ -107,8 +107,8 @@ function buildTokenMap(cfg) {
     '{{NAV_GALLERY}}': sectionFlag(cfg, 'gallery'),
     '{{NAV_CONTACT}}': sectionFlag(cfg, 'contact'),
 
-    // Reviews
-    '{{REVIEWS_JSON}}': JSON.stringify(reviews),
+    // Reviews (escape </script> to prevent template injection)
+    '{{REVIEWS_JSON}}': JSON.stringify(reviews).replace(/<\/script>/gi, '<\\/script>'),
 
     // Images
     '{{IMAGE_HERO}}': images.hero || '',
@@ -163,9 +163,21 @@ function isBinary(filePath) {
   return BINARY_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
+function validateConfig(cfg) {
+  const required = ['site.name', 'site.domain', 'colors.accent', 'venue.city', 'forms.backend'];
+  const missing = required.filter(p => {
+    const [a, b] = p.split('.');
+    return !cfg[a] || !cfg[a][b];
+  });
+  if (missing.length) {
+    console.error(`[scaffold] Config missing required fields: ${missing.join(', ')}`);
+    process.exit(1);
+  }
+}
+
 function scaffold(configPath, outDir) {
   if (!fs.existsSync(configPath)) {
-    console.error(`[scaffold] Config not found: ${configPath}`);
+    console.error('[scaffold] Config file not found');
     process.exit(1);
   }
 
@@ -177,6 +189,7 @@ function scaffold(configPath, outDir) {
     process.exit(1);
   }
 
+  validateConfig(cfg);
   const tokenMap = buildTokenMap(cfg);
 
   fs.mkdirSync(outDir, { recursive: true });

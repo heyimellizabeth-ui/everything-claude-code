@@ -264,6 +264,23 @@
     pointer-events: none;
   }
   #toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Tab transition animation */
+  .tab-content { transition: opacity .15s, transform .15s; }
+  .tab-content:not(.active) { opacity: 0; pointer-events: none; }
+  .tab-content.active { opacity: 1; }
+
+  /* Color swatch active + hover */
+  .preset-card { transition: transform .15s, box-shadow .15s, outline .1s; cursor: pointer; }
+  .preset-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.45); }
+  .preset-card.active { outline: 2px solid var(--studio-accent); outline-offset: 2px; }
+
+  /* Responsive: stack sidebar above preview on narrow screens */
+  @media (max-width: 900px) {
+    .studio { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    .sidebar { max-height: 45vh; overflow-y: auto; border-right: none; border-bottom: 1px solid var(--studio-border); }
+    .preview { min-height: 55vh; }
+  }
 </style>
 <!-- Google Fonts preconnect -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -859,6 +876,64 @@
 <div id="toast"></div>
 
 <script>
+// ── Security: HTML escaping for user-supplied values ──────────────────────
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ── Undo/Redo history stack ────────────────────────────────────────────────
+const history = { stack: [], cursor: -1, maxSize: 50 };
+function pushHistory() {
+  const snap = JSON.stringify(collectConfig());
+  if (history.stack[history.cursor] === snap) return;
+  history.stack = history.stack.slice(0, history.cursor + 1);
+  history.stack.push(snap);
+  if (history.stack.length > history.maxSize) history.stack.shift();
+  history.cursor = history.stack.length - 1;
+}
+function undo() {
+  if (history.cursor <= 0) return;
+  history.cursor--;
+  applySnapshot(JSON.parse(history.stack[history.cursor]));
+}
+function redo() {
+  if (history.cursor >= history.stack.length - 1) return;
+  history.cursor++;
+  applySnapshot(JSON.parse(history.stack[history.cursor]));
+}
+function applySnapshot(cfg) {
+  const s = cfg.site || {};
+  const setV = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  setV('siteName', s.name); setV('siteShort', s.short); setV('siteDomain', s.domain);
+  setV('siteTagline', s.tagline); setV('siteDescription', s.description);
+  setV('siteEstYear', s.estYear); setV('siteBpm', s.bpm);
+  setV('siteLang', s.lang || 'en');
+  setV('venueName', cfg.venue?.name); setV('venueCity', cfg.venue?.city);
+  setV('venueRegion', cfg.venue?.region); setV('venueCountry', cfg.venue?.country);
+  setV('socialInstagram', cfg.social?.instagram); setV('socialRa', cfg.social?.ra);
+  setV('socialFacebook', cfg.social?.facebook); setV('socialTiktok', cfg.social?.tiktok);
+  setV('socialSpotify', cfg.social?.spotify); setV('socialYoutube', cfg.social?.youtube);
+  setV('ticketUrl', cfg.ticketUrl);
+  setV('formsNewsletterKey', cfg.forms?.newsletterKey); setV('formsContactKey', cfg.forms?.contactKey);
+  setV('formsRecipientEmail', cfg.forms?.recipientEmail);
+  if (cfg.layout) state.layout = { ...state.layout, ...cfg.layout };
+  if (cfg.reviews) { state.reviews = cfg.reviews; renderReviewsList(); }
+  if (cfg.seo) {
+    state.seo = { ...state.seo, ...cfg.seo };
+    setV('seoTitle', cfg.seo.title); setV('seoDescription', cfg.seo.description);
+    setV('seoOgTitle', cfg.seo.ogTitle); setV('seoKeywords', cfg.seo.keywords);
+  }
+  document.querySelectorAll('.layout-btn').forEach(b => {
+    b.classList.toggle('active', state.layout[b.dataset.section] === b.dataset.variant);
+  });
+  update();
+}
+
 // ── State ──────────────────────────────────────────────────────────────────
 const state = {
   fonts: { heading: 'Syne', body: 'Inter' },
@@ -899,18 +974,21 @@ function toggleModule(name, el) {
   const checkoutRow = document.getElementById('mod-checkout-url-row');
   if (checkoutRow) checkoutRow.style.display = state.modules.checkout.enabled ? 'block' : 'none';
   update();
+  pushHistory();
 }
 
 // ── Color sync ────────────────────────────────────────────────────────────
 function syncColor(colorId, hexId) {
   document.getElementById(hexId).value = document.getElementById(colorId).value;
   update();
+  pushHistory();
 }
 function syncHex(hexId, colorId) {
   const v = document.getElementById(hexId).value;
   if (/^#[0-9a-fA-F]{6}$/.test(v)) {
     document.getElementById(colorId).value = v;
     update();
+    pushHistory();
   }
 }
 
@@ -941,7 +1019,10 @@ function applyColorPreset(name) {
   setColor('colorAccent', 'colorAccentHex', p.accent);
   setColor('colorSurface', 'colorSurfaceHex', p.surface);
   setColor('colorMuted', 'colorMutedHex', p.muted);
+  // Mark active swatch
+  document.querySelectorAll('.preset-card').forEach(c => c.classList.toggle('active', c.dataset.preset === name));
   update();
+  pushHistory();
 }
 function setColor(colorId, hexId, val) {
   document.getElementById(colorId).value = val;
@@ -955,6 +1036,7 @@ function selectFont(type, font, el) {
   el.classList.add('selected');
   state.fonts[type] = font;
   update();
+  pushHistory();
 }
 
 // ── Section toggles ───────────────────────────────────────────────────────
@@ -962,6 +1044,7 @@ function toggleSection(name, el) {
   state.sections[name] = !state.sections[name];
   el.classList.toggle('on', state.sections[name]);
   update();
+  pushHistory();
 }
 
 // ── Collect config ─────────────────────────────────────────────────────────
@@ -1036,14 +1119,14 @@ function buildHeroSection(cfg, variant) {
   if (!cfg.sections.hero) return '';
   const c = cfg.colors;
   const ticket = cfg.ticketUrl
-    ? `<a href="${cfg.ticketUrl}" style="display:inline-block;background:${c.accent};color:${c.cream};padding:14px 32px;border-radius:4px;font-weight:700;letter-spacing:.08em;text-decoration:none;font-size:13px;text-transform:uppercase">Get Tickets</a>`
+    ? `<a href="${escHtml(cfg.ticketUrl)}" style="display:inline-block;background:${c.accent};color:${c.cream};padding:14px 32px;border-radius:4px;font-weight:700;letter-spacing:.08em;text-decoration:none;font-size:13px;text-transform:uppercase">Get Tickets</a>`
     : '';
   if (variant === 'split') {
     return `<section style="min-height:100vh;display:flex;align-items:stretch;background:${c.void}">
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 40px;text-align:left">
-        <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${cfg.venue.city} · Est. ${cfg.site.estYear}</p>
-        <h1 style="font-size:clamp(3rem,8vw,7rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:24px">${cfg.site.short}</h1>
-        <p style="font-size:clamp(14px,1.5vw,18px);color:${c.muted};max-width:380px;line-height:1.5;margin-bottom:40px">${cfg.site.tagline}</p>
+        <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${escHtml(cfg.venue.city)} · Est. ${escHtml(cfg.site.estYear)}</p>
+        <h1 style="font-size:clamp(3rem,8vw,7rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;margin-bottom:24px">${escHtml(cfg.site.short)}</h1>
+        <p style="font-size:clamp(14px,1.5vw,18px);color:${c.muted};max-width:380px;line-height:1.5;margin-bottom:40px">${escHtml(cfg.site.tagline)}</p>
         ${ticket}
       </div>
       <div style="flex:1;background:${c.surface};min-height:400px;display:flex;align-items:center;justify-content:center">
@@ -1053,16 +1136,16 @@ function buildHeroSection(cfg, variant) {
   }
   if (variant === 'minimal') {
     return `<section style="padding:140px 20px 100px;text-align:center;background:${c.void}">
-      <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${cfg.venue.city} · Est. ${cfg.site.estYear}</p>
-      <h1 style="font-size:clamp(3rem,10vw,8rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:24px">${cfg.site.short}</h1>
-      <p style="font-size:clamp(14px,2vw,18px);color:${c.muted};max-width:480px;margin:0 auto 40px;line-height:1.5">${cfg.site.tagline}</p>
+      <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${escHtml(cfg.venue.city)} · Est. ${escHtml(cfg.site.estYear)}</p>
+      <h1 style="font-size:clamp(3rem,10vw,8rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;margin-bottom:24px">${escHtml(cfg.site.short)}</h1>
+      <p style="font-size:clamp(14px,2vw,18px);color:${c.muted};max-width:480px;margin:0 auto 40px;line-height:1.5">${escHtml(cfg.site.tagline)}</p>
       ${ticket}
     </section>`;
   }
   return `<section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 20px;background:${c.void}">
-    <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${cfg.venue.city} · Est. ${cfg.site.estYear}</p>
-    <h1 style="font-size:clamp(4rem,15vw,10rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:24px">${cfg.site.short}</h1>
-    <p style="font-size:clamp(14px,2vw,18px);color:${c.muted};max-width:480px;line-height:1.5;margin-bottom:40px">${cfg.site.tagline}</p>
+    <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${escHtml(cfg.venue.city)} · Est. ${escHtml(cfg.site.estYear)}</p>
+    <h1 style="font-size:clamp(4rem,15vw,10rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;margin-bottom:24px">${escHtml(cfg.site.short)}</h1>
+    <p style="font-size:clamp(14px,2vw,18px);color:${c.muted};max-width:480px;line-height:1.5;margin-bottom:40px">${escHtml(cfg.site.tagline)}</p>
     ${ticket}
   </section>`;
 }
@@ -1073,9 +1156,9 @@ function buildNextEventSection(cfg, variant) {
   if (variant === 'banner') {
     return `<section style="padding:40px 20px;background:${c.surface};display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center">
       <p style="font-size:11px;letter-spacing:.2em;color:${c.accent};text-transform:uppercase;flex-basis:100%;text-align:center">Next Event</p>
-      <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif">Event Name Here</h2>
-      <div style="color:${c.muted};font-size:14px">Saturday, 1 January 2025 · ${cfg.venue.name}</div>
-      <div style="color:${c.muted};font-size:13px">${cfg.site.bpm}</div>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:${c.cream};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif">Event Name Here</h2>
+      <div style="color:${c.muted};font-size:14px">Saturday, 1 January 2025 · ${escHtml(cfg.venue.name)}</div>
+      <div style="color:${c.muted};font-size:13px">${escHtml(cfg.site.bpm)}</div>
     </section>`;
   }
   if (variant === 'sidebar') {
@@ -1084,18 +1167,18 @@ function buildNextEventSection(cfg, variant) {
         <div style="width:4px;background:${c.accent};border-radius:2px;flex-shrink:0"></div>
         <div>
           <p style="font-size:11px;letter-spacing:.2em;color:${c.accent};text-transform:uppercase;margin-bottom:12px">Next Event</p>
-          <h2 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:12px">Event Name Here</h2>
+          <h2 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:${c.cream};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;margin-bottom:12px">Event Name Here</h2>
           <p style="color:${c.muted};margin-bottom:6px">Saturday, 1 January 2025</p>
-          <p style="color:${c.muted};font-size:13px">${cfg.venue.name} · ${cfg.site.bpm}</p>
+          <p style="color:${c.muted};font-size:13px">${escHtml(cfg.venue.name)} · ${escHtml(cfg.site.bpm)}</p>
         </div>
       </div>
     </section>`;
   }
   return `<section style="padding:80px 20px;background:${c.surface};text-align:center">
     <p style="font-size:11px;letter-spacing:.2em;color:${c.accent};text-transform:uppercase;margin-bottom:16px">Next Event</p>
-    <h2 style="font-size:clamp(2rem,6vw,4rem);font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:12px">Event Name Here</h2>
-    <p style="color:${c.muted};margin-bottom:8px">Saturday, 1 January 2025 · ${cfg.venue.name}</p>
-    <p style="color:${c.muted};font-size:13px">${cfg.site.bpm}</p>
+    <h2 style="font-size:clamp(2rem,6vw,4rem);font-weight:700;color:${c.cream};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;margin-bottom:12px">Event Name Here</h2>
+    <p style="color:${c.muted};margin-bottom:8px">Saturday, 1 January 2025 · ${escHtml(cfg.venue.name)}</p>
+    <p style="color:${c.muted};font-size:13px">${escHtml(cfg.site.bpm)}</p>
   </section>`;
 }
 
@@ -1103,7 +1186,7 @@ function buildFooterSection(cfg, variant) {
   const c = cfg.colors;
   if (variant === 'minimal') {
     return `<footer style="background:${c.surface};padding:20px;text-align:center;border-top:1px solid ${c.muted}30">
-      <p style="color:${c.muted};font-size:12px">&copy; ${cfg.site.name} · ${cfg.site.estYear}</p>
+      <p style="color:${c.muted};font-size:12px">&copy; ${escHtml(cfg.site.name)} · ${escHtml(cfg.site.estYear)}</p>
     </footer>`;
   }
   const footerLinks = cfg.sections['footer-nav'] ? `
@@ -1116,12 +1199,12 @@ function buildFooterSection(cfg, variant) {
     </nav>` : '';
   const footerSocial = cfg.sections['footer-social'] ? `
     <div style="display:flex;gap:16px;justify-content:center;margin-bottom:20px">
-      ${cfg.social.instagram ? `<a href="${cfg.social.instagram}" style="color:${c.muted};font-size:12px;text-decoration:none">Instagram</a>` : ''}
-      ${cfg.social.ra        ? `<a href="${cfg.social.ra}"        style="color:${c.muted};font-size:12px;text-decoration:none">Resident Advisor</a>` : ''}
+      ${cfg.social.instagram ? `<a href="${escHtml(cfg.social.instagram)}" style="color:${c.muted};font-size:12px;text-decoration:none">Instagram</a>` : ''}
+      ${cfg.social.ra        ? `<a href="${escHtml(cfg.social.ra)}"        style="color:${c.muted};font-size:12px;text-decoration:none">Resident Advisor</a>` : ''}
     </div>` : '';
   const footerBpm = cfg.sections['footer-bpm']
-    ? `<p style="color:${c.muted};font-size:11px;letter-spacing:.15em">${cfg.site.bpm} · ${cfg.site.name} · ${cfg.venue.city}</p>`
-    : `<p style="color:${c.muted};font-size:11px">&copy; ${cfg.site.name}</p>`;
+    ? `<p style="color:${c.muted};font-size:11px;letter-spacing:.15em">${escHtml(cfg.site.bpm)} · ${escHtml(cfg.site.name)} · ${escHtml(cfg.venue.city)}</p>`
+    : `<p style="color:${c.muted};font-size:11px">&copy; ${escHtml(cfg.site.name)}</p>`;
   return `<footer style="background:${c.surface};padding:48px 20px;text-align:center;border-top:1px solid ${c.muted}30">
     ${footerLinks}${footerSocial}${footerBpm}
   </footer>`;
@@ -1133,6 +1216,7 @@ function selectLayout(section, variant, el) {
   el.closest('.layout-picker').querySelectorAll('.layout-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   update();
+  pushHistory();
 }
 
 // ── Live preview ───────────────────────────────────────────────────────────
@@ -1148,7 +1232,7 @@ function update() {
 
   const newsletterSection = cfg.sections.newsletter ? `
     <section style="padding:80px 20px;background:${c.void};text-align:center">
-      <h2 style="font-size:2rem;font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:12px">Stay in the loop</h2>
+      <h2 style="font-size:2rem;font-weight:700;color:${c.cream};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;margin-bottom:12px">Stay in the loop</h2>
       <p style="color:${c.muted};margin-bottom:28px">Get lineup drops, ticket alerts, and party news.</p>
       <form style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <input type="email" placeholder="your@email.com" style="padding:12px 18px;border-radius:4px;border:1px solid ${c.muted};background:${c.surface};color:${c.cream};font-size:14px;min-width:240px">
@@ -1159,12 +1243,12 @@ function update() {
   const instagramSection = cfg.sections.instagram ? `
     <section style="padding:60px 20px;background:${c.surface};text-align:center">
       <p style="color:${c.muted};font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">Follow the vibe</p>
-      <a href="${cfg.social.instagram || '#'}" style="color:${c.accent};font-family:'${cfg.fonts.heading}',sans-serif;font-size:1.4rem;font-weight:700;text-decoration:none">@${cfg.site.short.toLowerCase()}</a>
+      <a href="${escHtml(cfg.social.instagram || '#')}" style="color:${c.accent};font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;font-size:1.4rem;font-weight:700;text-decoration:none">@${escHtml(cfg.site.short.toLowerCase())}</a>
     </section>` : '';
 
   const manifestoSection = cfg.sections.manifesto ? `
     <section style="padding:80px 20px;max-width:700px;margin:0 auto;text-align:center">
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:${c.cream};line-height:1.7;font-style:italic">"${cfg.site.tagline}. A space for everyone."</p>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:${c.cream};line-height:1.7;font-style:italic">"${escHtml(cfg.site.tagline)}. A space for everyone."</p>
     </section>` : '';
 
   const preview = `<!DOCTYPE html>
@@ -1172,7 +1256,7 @@ function update() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${cfg.site.name}</title>
+<title>${escHtml(cfg.site.name)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="${gfUrl}" rel="stylesheet">
@@ -1183,7 +1267,7 @@ body{background:${c.void};color:${c.cream};font-family:'${cfg.fonts.body}',sans-
 </head>
 <body>
 <nav style="position:sticky;top:0;z-index:99;background:${c.surface}cc;backdrop-filter:blur(12px);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid ${c.muted}30">
-  <span style="font-family:'${cfg.fonts.heading}',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em">${cfg.site.short}</span>
+  <span style="font-family:'${escHtml(cfg.fonts.heading)}',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em">${escHtml(cfg.site.short)}</span>
   <div style="display:flex;gap:20px">
     ${cfg.sections.events  ? `<a href="#" style="color:${c.muted};text-decoration:none;font-size:13px">Events</a>` : ''}
     ${cfg.sections.about   ? `<a href="#" style="color:${c.muted};text-decoration:none;font-size:13px">About</a>` : ''}
@@ -1218,7 +1302,8 @@ function handleImageUpload(event) {
 
 function extractColors() {
   const img = new Image();
-  img.crossOrigin = 'Anonymous';
+  img.crossOrigin = 'anonymous';
+  img.onerror = () => showToast('Image could not be loaded — try a local file instead');
   img.onload = () => {
     const canvas = document.createElement('canvas');
     canvas.width = img.width;
@@ -1289,13 +1374,13 @@ function applyExtractedColors() {
 // ── SEO Assistant (Phase 13.6) ──────────────────────────────────────────────
 function generateSeoDefaults() {
   if (!state.seo) state.seo = {};
-  const cfg = { site: {}, ...state };
+  const cfg = collectConfig();
 
-  // Get current values from DOM or use defaults
-  const siteName = document.getElementById('siteName')?.value || cfg.site.name || 'Site';
-  const tagline = document.getElementById('siteTagline')?.value || cfg.site.tagline || '';
-  const city = document.getElementById('venue')?.querySelector('[placeholder*="City"]')?.value || cfg.venue?.city || '';
-  const description = document.getElementById('siteDescription')?.value || cfg.site.description || '';
+  // Use collectConfig() so values are correct regardless of which tab was visited
+  const siteName = cfg.site.name || 'Site';
+  const tagline  = cfg.site.tagline || '';
+  const city     = cfg.venue?.city || '';
+  const description = cfg.site.description || '';
 
   // Generate title
   const title = `${siteName}${tagline ? ' — ' + tagline : ''}${city ? ' · ' + city : ''}`;
@@ -1459,8 +1544,24 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
+// ── Keyboard shortcuts ─────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  const mod = e.ctrlKey || e.metaKey;
+  if (mod && e.key === 's') { e.preventDefault(); downloadConfig(); return; }
+  if (mod && e.key === 'z') { e.preventDefault(); undo(); return; }
+  if (mod && (e.key === 'y' || (e.shiftKey && e.key === 'z'))) { e.preventDefault(); redo(); return; }
+  if (mod && !e.shiftKey) {
+    const n = parseInt(e.key);
+    if (n >= 1 && n <= 8) {
+      e.preventDefault();
+      switchTab(['brand','colors','type','sections','layout','content','import','seo'][n-1]);
+    }
+  }
+});
+
 // ── Init ───────────────────────────────────────────────────────────────────
 update();
+pushHistory(); // seed undo stack with initial state
 </script>
 </body>
 </html>
