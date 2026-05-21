@@ -72,7 +72,7 @@ function gitInit(dir) {
   );
   assert.strictEqual(remoteResult.status, 0, remoteResult.stderr);
 
-  const commitResult = spawnSync('git', ['commit', '--allow-empty', '-m', 'init'], {
+  const commitResult = spawnSync('git', ['-c', 'commit.gpgsign=false', 'commit', '--allow-empty', '-m', 'init'], {
     cwd: dir,
     encoding: 'utf8',
     env: {
