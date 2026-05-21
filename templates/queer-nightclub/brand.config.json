@@ -17,6 +17,10 @@
     "surface": "#1A1A1A",
     "muted": "#888070"
   },
+  "fonts": {
+    "heading": "Syne",
+    "body": "Inter"
+  },
   "venue": {
     "name": "Podium Victorie",
     "city": "Alkmaar",
@@ -25,7 +29,11 @@
   },
   "social": {
     "instagram": "https://www.instagram.com/clubkudt/",
-    "ra": "https://ra.co/clubs/clubkudt"
+    "ra": "https://ra.co/clubs/clubkudt",
+    "facebook": "",
+    "tiktok": "",
+    "spotify": "",
+    "youtube": ""
   },
   "forms": {
     "backend": "formspree",
@@ -33,5 +41,44 @@
     "contactKey": "xrerjzlo",
     "recipientEmail": "hello@clubkudt.nl"
   },
-  "ticketUrl": "https://www.podiumvictorie.nl/programma/club-kudt-pride-after/"
+  "ticketUrl": "https://www.podiumvictorie.nl/programma/club-kudt-pride-after/",
+  "sections": {
+    "index": true,
+    "events": true,
+    "about": true,
+    "gallery": true,
+    "contact": true,
+    "hero": true,
+    "next-event": true,
+    "newsletter": true,
+    "instagram": true,
+    "manifesto": false,
+    "footer-social": true,
+    "footer-nav": true,
+    "footer-bpm": true
+  },
+  "reviews": [],
+  "images": {
+    "hero": "",
+    "og": "",
+    "gallery": []
+  },
+  "modules": {
+    "calendar": { "enabled": false, "type": "ra-embed" },
+    "checkout":  { "enabled": false, "url": "", "provider": "stripe-link" },
+    "planner":   { "enabled": false },
+    "gallery":   { "enabled": true,  "type": "flickr" },
+    "newsletter": { "enabled": true }
+  },
+  "layout": {
+    "hero": "full-bleed",
+    "nextEvent": "card",
+    "footer": "standard"
+  },
+  "seo": {
+    "title": "Club KUDT — Party in a Queer Space · Alkmaar",
+    "description": "Queer feesten in Alkmaar. Drag, disco, pop & meer in Podium Victorie. Tickets via ticketmaster.",
+    "ogTitle": "Club KUDT",
+    "keywords": "nightclub, queer, LGBTQ+, Alkmaar, Amsterdam, disco, drag"
+  }
 }

@@ -40,6 +40,7 @@
   ]
 }
 </script>
+{{FONT_GOOGLE_LINK}}
 <noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -48,7 +49,7 @@
   :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; }
   html { scroll-behavior: smooth; }
   html { overflow-x: hidden; }
-  body { background: var(--void); color: var(--cream); font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+  body { background: var(--void); color: var(--cream); font-family: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
   .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .cursor.expanded { width: 56px; height: 56px; background: var(--red); }
   .cursor-label { font-family: var(--font-mono); font-size: 9px; color: var(--cream); opacity: 0; letter-spacing: 0.5px; white-space: nowrap; transition: opacity 0.2s; }
@@ -178,7 +179,8 @@
   <div class="stat mil-up"><div class="stat-num">100%</div><div class="stat-label">Queer-Run</div></div>
 </div>
 
-<div class="flickr-banner mil-up">
+<!-- Flickr gallery (default) -->
+<div class="flickr-banner mil-up" id="gallery-flickr">
   <div class="flickr-banner-inner">
     <div class="flickr-banner-text">
       <strong>Full archive on Flickr</strong>
@@ -284,6 +286,27 @@
   </div>
 
 </div>
+
+<!-- Image grid gallery (alternative) — shown when MODULE_GALLERY_TYPE = grid -->
+<div id="gallery-grid" style="display:none;padding:40px 5vw">
+  <script>
+  (function() {
+    var list = '{{IMAGE_GALLERY_LIST}}'.split(',').filter(Boolean);
+    if (list.length && '{{MODULE_GALLERY_TYPE}}' === 'grid') {
+      document.getElementById('gallery-flickr').style.display = 'none';
+      document.getElementById('gallery-grid').style.display = 'block';
+      var grid = document.getElementById('gallery-grid');
+      var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">';
+      list.forEach(function(url) {
+        html += '<img src="' + url.trim() + '" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover">';
+      });
+      html += '</div>';
+      grid.innerHTML = html;
+    }
+  })();
+  </script>
+</div>
+<script>window.__galleryType = '{{MODULE_GALLERY_TYPE}}';</script>
 
 </main>
 

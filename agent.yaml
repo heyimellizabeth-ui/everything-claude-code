@@ -229,8 +229,10 @@ commands:
   - security-scan
   - sessions
   - setup-pm
+  - site-init
   - skill-create
   - skill-health
+  - studio-build
   - test-coverage
   - update-codemaps
   - update-docs

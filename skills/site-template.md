@@ -22,6 +22,9 @@ or `scripts/site-template/`. Use when:
 ## How It Works
 
 ```
+projects/design-studio/index.html  ← paste reviews, images, social, pick modules
+      │ (Download brand-config.json)
+      ▼
 brand.config.json
       │
       ▼
@@ -35,6 +38,8 @@ projects/<name>/         ← fully substituted, production-ready
 ```
 
 ## Token Reference
+
+### Core site tokens
 
 | Token | Config path | Example |
 |-------|-------------|---------|
@@ -58,11 +63,70 @@ projects/<name>/         ← fully substituted, production-ready
 | `{{VENUE_COUNTRY}}` | `venue.country` | NL |
 | `{{SOCIAL_INSTAGRAM}}` | `social.instagram` | https://instagram.com/… |
 | `{{SOCIAL_RA}}` | `social.ra` | https://ra.co/clubs/… |
+| `{{SOCIAL_FACEBOOK}}` | `social.facebook` | https://facebook.com/… |
+| `{{SOCIAL_TIKTOK}}` | `social.tiktok` | https://tiktok.com/… |
+| `{{SOCIAL_SPOTIFY}}` | `social.spotify` | https://open.spotify.com/… |
+| `{{SOCIAL_YOUTUBE}}` | `social.youtube` | https://youtube.com/… |
 | `{{FORMS_BACKEND}}` | `forms.backend` | php \| formspree |
 | `{{FORMSPREE_NEWSLETTER}}` | `forms.newsletterKey` | xkokywzz |
 | `{{FORMSPREE_CONTACT}}` | `forms.contactKey` | xrerjzlo |
 | `{{FORMS_RECIPIENT_EMAIL}}` | `forms.recipientEmail` | hello@… |
 | `{{TICKET_URL}}` | `ticketUrl` | https://… |
+
+### Font tokens
+
+| Token | Config path | Fallback |
+|-------|-------------|---------|
+| `{{FONT_HEADING}}` | `fonts.heading` | `system-ui, sans-serif` |
+| `{{FONT_BODY}}` | `fonts.body` | `system-ui, sans-serif` |
+| `{{FONT_GOOGLE_LINK}}` | `fonts.heading` + `fonts.body` | `''` (omitted) |
+
+`{{FONT_GOOGLE_LINK}}` expands to a `<link rel="stylesheet">` tag for Google Fonts, or empty string when no fonts are configured.
+
+### Section display tokens
+
+Section tokens resolve to `''` (visible) or `'display:none'` (hidden) for use in `style="{{TOKEN}}"`.
+
+| Token | Controls |
+|-------|---------|
+| `{{SECTION_EVENTS}}` / `{{NAV_EVENTS}}` | Events page + nav link |
+| `{{SECTION_ABOUT}}` / `{{NAV_ABOUT}}` | About page + nav link |
+| `{{SECTION_GALLERY}}` / `{{NAV_GALLERY}}` | Gallery page + nav link |
+| `{{SECTION_CONTACT}}` / `{{NAV_CONTACT}}` | Contact page + nav link |
+| `{{SECTION_HERO}}` | Hero block on home page |
+| `{{SECTION_NEXT_EVENT}}` | Next-event block on home page |
+| `{{SECTION_NEWSLETTER}}` | Newsletter signup section |
+| `{{SECTION_INSTAGRAM}}` | Instagram CTA section |
+| `{{SECTION_MANIFESTO}}` | Manifesto section |
+| `{{FOOTER_SOCIAL}}` | Footer social links block |
+| `{{FOOTER_NAV}}` | Footer nav links block |
+| `{{FOOTER_BPM}}` | Footer BPM badge |
+
+Pages where `sections.<page> === false` are **not written** to the output directory at all.
+
+### Content tokens
+
+| Token | Config path | Notes |
+|-------|-------------|-------|
+| `{{REVIEWS_JSON}}` | `reviews[]` | JSON array — `[{author,text,rating,source}]` |
+| `{{IMAGE_HERO}}` | `images.hero` | URL for hero background-image |
+| `{{IMAGE_OG}}` | `images.og` | URL for OG share image |
+| `{{IMAGE_GALLERY_LIST}}` | `images.gallery[]` | Comma-separated URLs |
+
+### Module system
+
+Modules toggle features on/off. Each module token resolves to `''` (visible) or `'display:none'` (hidden).
+
+| Token | Config path | Notes |
+|-------|-------------|-------|
+| `{{MODULE_CALENDAR}}` | `modules.calendar.enabled` | RA embed block on events page |
+| `{{MODULE_CALENDAR_TYPE}}` | `modules.calendar.type` | `ra-embed` \| `custom` |
+| `{{MODULE_CHECKOUT}}` | `modules.checkout.enabled` | Buy-tickets button block |
+| `{{MODULE_CHECKOUT_URL}}` | `modules.checkout.url` | Stripe link or custom URL |
+| `{{MODULE_PLANNER}}` | `modules.planner.enabled` | Booking request form on contact page |
+| `{{MODULE_GALLERY_TYPE}}` | `modules.gallery.type` | `flickr` \| `grid` |
+
+Modules default to `display:none` when the `modules` key is absent (backwards-compatible).
 
 ## Adding a New Token
 
@@ -108,3 +172,31 @@ node tests/site-template/scaffold.test.js
 | `scripts/site-template/validate.js` | Token completeness checker |
 | `tests/site-template/scaffold.test.js` | Test suite |
 | `commands/site-init.md` | `/site-init` slash command |
+| `commands/studio-build.md` | `/studio-build` slash command |
+| `projects/design-studio/index.html` | Browser-based brand config builder |
+| `projects/design-studio/USAGE.md` | Design Studio usage guide |
+
+## Google Reviews Parser
+
+The Design Studio browser app includes a heuristic parser for pasting raw Google Maps review text.
+
+It handles two input formats:
+1. **JSON array** — `[{"author":"…","text":"…","rating":5}]` → parsed directly
+2. **Raw text** — multi-line blocks copied from Google Maps:
+   ```
+   Alice
+   5 stars
+   2 reviews
+   Amazing night out!
+   ```
+   The parser extracts name, star count, and review body from each block.
+
+Output format:
+```json
+[{ "author": "Alice", "text": "Amazing night out!", "rating": 5, "source": "google" }]
+```
+
+The parsed array is serialised as `{{REVIEWS_JSON}}` and injected into `index.html` via:
+```html
+<script>window.__reviews = {{REVIEWS_JSON}};</script>
+```

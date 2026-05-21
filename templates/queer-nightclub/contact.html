@@ -34,6 +34,7 @@
   }
 }
 </script>
+{{FONT_GOOGLE_LINK}}
 <noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -42,7 +43,7 @@
   :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; }
   html { scroll-behavior: smooth; }
   html { overflow-x: hidden; }
-  body { background: var(--void); color: var(--cream); font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+  body { background: var(--void); color: var(--cream); font-family: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
   .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .cursor.expanded { width: 56px; height: 56px; background: var(--red); }
   .cursor-label { font-family: var(--font-mono); font-size: 9px; color: var(--cream); opacity: 0; letter-spacing: 0.5px; white-space: nowrap; transition: opacity 0.2s; }
@@ -246,6 +247,41 @@
     allowfullscreen="" loading="lazy"
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
+</div>
+
+<!-- Checkout module -->
+<div style="{{MODULE_CHECKOUT}};padding:60px 5vw;text-align:center;border-top:1px solid rgba(245,240,232,0.08)">
+  <h2 style="font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;color:var(--cream)">Buy Tickets</h2>
+  <p style="color:var(--muted);margin-bottom:28px">Secure checkout via {{MODULE_CHECKOUT_URL}}</p>
+  <a href="{{MODULE_CHECKOUT_URL}}" target="_blank" rel="noopener noreferrer"
+     style="display:inline-block;background:var(--red);color:var(--cream);padding:14px 36px;font-weight:700;letter-spacing:.08em;text-decoration:none;font-size:13px;text-transform:uppercase">
+    Buy Tickets →
+  </a>
+</div>
+
+<!-- Planner / booking request module -->
+<div style="{{MODULE_PLANNER}};padding:60px 5vw;border-top:1px solid rgba(245,240,232,0.08)">
+  <h2 style="font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px;color:var(--cream)">Reserve a Spot</h2>
+  <form id="planner-form" style="max-width:540px"
+        action="https://formspree.io/f/{{FORMSPREE_CONTACT}}"
+        data-php-action="form-handler.php"
+        data-form-backend="{{FORMS_BACKEND}}"
+        method="POST">
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="hidden" name="_type" value="planner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Preferred date</label>
+        <input type="date" name="date" style="width:100%;background:transparent;border:1px solid rgba(245,240,232,0.15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
+      <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Party size</label>
+        <input type="number" name="guests" min="1" max="20" placeholder="2" style="width:100%;background:transparent;border:1px solid rgba(245,240,232,0.15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
+    </div>
+    <input type="email" name="email" placeholder="your@email.com" required
+           style="width:100%;background:transparent;border:1px solid rgba(245,240,232,0.15);color:var(--cream);padding:10px 12px;font-size:.9rem;margin-bottom:16px">
+    <button type="submit"
+            style="width:100%;background:var(--red);color:var(--cream);border:none;padding:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">
+      Request booking →
+    </button>
+  </form>
 </div>
 
 </main>

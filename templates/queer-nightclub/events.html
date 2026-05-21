@@ -42,6 +42,7 @@
   "typicalAgeRange": "16-"
 }
 </script>
+{{FONT_GOOGLE_LINK}}
 <noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -54,7 +55,7 @@
   }
   html { scroll-behavior: smooth; }
   html { overflow-x: hidden; }
-  body { background: var(--void); color: var(--cream); font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+  body { background: var(--void); color: var(--cream); font-family: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
 
   /* CURSOR */
   .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -336,6 +337,15 @@
       <div class="event-number">001</div>
     </div>
 
+  </div>
+</div>
+
+<!-- Calendar module: RA embed or custom -->
+<div style="{{MODULE_CALENDAR}};padding:60px 5vw">
+  <h2 style="font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px;color:var(--cream)">Calendar</h2>
+  <div id="calendar-embed">
+    <!-- RA embed shown by default; swap for custom list if MODULE_CALENDAR_TYPE = custom -->
+    <iframe src="https://ra.co/clubs/{{SOCIAL_RA}}/embed" width="100%" height="400" frameborder="0" title="RA Calendar"></iframe>
   </div>
 </div>
 

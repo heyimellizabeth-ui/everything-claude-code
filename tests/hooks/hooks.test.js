@@ -3270,7 +3270,8 @@ async function runTests() {
           {
             HOME: homeDir,
             USERPROFILE: homeDir,
-            CLAUDE_PROJECT_DIR: projectDir
+            CLAUDE_PROJECT_DIR: projectDir,
+            CLAUDE_CODE_ENTRYPOINT: 'cli'
           },
           projectDir
         );

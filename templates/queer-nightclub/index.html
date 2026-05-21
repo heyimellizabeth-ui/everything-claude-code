@@ -76,6 +76,7 @@
   "typicalAgeRange": "16-"
 }
 </script>
+{{FONT_GOOGLE_LINK}}
 <noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -98,7 +99,7 @@
   body {
     background: var(--void);
     color: var(--cream);
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     line-height: 1.6;
     overflow-x: hidden;
@@ -763,6 +764,12 @@
   .footer-links a { position: relative; overflow: hidden; }
   .footer-links a::after { content: ''; position: absolute; bottom: 0; left: -100%; width: 100%; height: 1px; background: var(--red); transition: left 0.25s ease; }
   .footer-links a:hover::after { left: 0; }
+
+  /* Layout variants */
+  .hero--split { flex-direction: row !important; justify-content: stretch !important; align-items: stretch !important; }
+  .hero--split .hero-content { text-align: left; flex: 1; justify-content: center; align-items: flex-start; }
+  .hero--minimal .hero-canvas-wrap, .hero--minimal canvas { display: none; }
+  .footer--minimal .footer-links, .footer--minimal .footer-social-row, .footer--minimal .footer-bpm { display: none; }
 </style>
 </head>
 <body>
@@ -809,10 +816,10 @@
 <nav>
   <a href="index.html" class="nav-logo">{{SITE_SHORT}}.</a>
   <ul class="nav-links">
-    <li><a href="events.html">Events</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li style="{{NAV_EVENTS}}"><a href="events.html">Events</a></li>
+    <li style="{{NAV_GALLERY}}"><a href="gallery.html">Gallery</a></li>
+    <li style="{{NAV_ABOUT}}"><a href="about.html">About</a></li>
+    <li style="{{NAV_CONTACT}}"><a href="contact.html">Contact</a></li>
     <li><a href="{{SOCIAL_INSTAGRAM}}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
@@ -822,7 +829,7 @@
 
 <main>
 <!-- Hero -->
-<div class="hero">
+<div class="hero hero--{{LAYOUT_HERO}}">
   <canvas id="particle-canvas"></canvas>
   <div class="hero-content">
     <h1 class="sr-only">{{SITE_NAME}} — Queer Feesten in {{VENUE_CITY}} bij {{VENUE_NAME}}</h1>
@@ -964,8 +971,11 @@
   </section>
 </div>
 
+<!-- Dynamic reviews injected by scaffold if reviews[] provided -->
+<script>window.__reviews = {{REVIEWS_JSON}};</script>
+
 <!-- Newsletter -->
-<div class="newsletter-section" id="newsletter">
+<div class="newsletter-section" id="newsletter" style="{{SECTION_NEWSLETTER}}">
   <div class="newsletter-inner">
     <div class="mil-up">
       <h2 class="newsletter-title">First to know<br>when tickets drop.</h2>
@@ -988,16 +998,20 @@
 </main>
 
 <!-- Footer -->
-<footer>
+<footer class="footer--{{LAYOUT_FOOTER}}">
   <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
   <ul class="footer-links">
     <li><a href="#events">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="about.html">About Us</a></li>
+    <li style="{{NAV_GALLERY}}"><a href="gallery.html">Gallery</a></li>
+    <li style="{{NAV_ABOUT}}"><a href="about.html">About Us</a></li>
     <li><a href="{{SOCIAL_INSTAGRAM}}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
     <li><a href="{{SOCIAL_RA}}" target="_blank" rel="noopener noreferrer">RA Profile</a></li>
-    <li><a href="#newsletter">Newsletter</a></li>
+    <li style="{{SOCIAL_FACEBOOK}}" class="footer-fb"><a href="{{SOCIAL_FACEBOOK}}" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+    <li style="{{SOCIAL_TIKTOK}}" class="footer-tt"><a href="{{SOCIAL_TIKTOK}}" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+    <li style="{{SOCIAL_SPOTIFY}}" class="footer-sp"><a href="{{SOCIAL_SPOTIFY}}" target="_blank" rel="noopener noreferrer">Spotify</a></li>
+    <li style="{{SOCIAL_YOUTUBE}}" class="footer-yt"><a href="{{SOCIAL_YOUTUBE}}" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+    <li style="{{SECTION_NEWSLETTER}}"><a href="#newsletter">Newsletter</a></li>
   </ul>
   <div class="footer-bpm">{{SITE_BPM}}</div>
 </footer>
@@ -1153,11 +1167,18 @@
     });
   }
 
-  // PRELOADER
+  // PRELOADER — force-reveal after 5s if GSAP CDN fails to load
+  const _preloaderFallback = setTimeout(() => {
+    const pl = document.getElementById('preloader');
+    if (pl) { pl.style.opacity = '0'; pl.style.pointerEvents = 'none'; setTimeout(() => { pl.style.display = 'none'; }, 600); }
+    if (typeof initScrollAnimations === 'function') initScrollAnimations();
+  }, 5000);
+
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
   const tl = gsap.timeline({
     onComplete: () => {
+      clearTimeout(_preloaderFallback);
       document.getElementById('preloader').style.display = 'none';
       initScrollAnimations();
     }
