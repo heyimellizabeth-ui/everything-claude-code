@@ -315,6 +315,39 @@ test('module tokens absent when modules key missing', () => {
   assert(map['{{MODULE_PLANNER}}'] === 'display:none', 'MODULE_PLANNER should default to hidden');
 });
 
+// ── layout tokens ───────────────────────────────────────────────────────────
+
+console.log('\n=== layout tokens ===\n');
+
+test('layout tokens use configured values', () => {
+  const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+  cfg.layout = { hero: 'split', nextEvent: 'banner', footer: 'minimal' };
+  const map = buildTokenMap(cfg);
+  assert(map['{{LAYOUT_HERO}}'] === 'split', `LAYOUT_HERO: ${map['{{LAYOUT_HERO}}']}`);
+  assert(map['{{LAYOUT_NEXT_EVENT}}'] === 'banner', `LAYOUT_NEXT_EVENT: ${map['{{LAYOUT_NEXT_EVENT}}']}`);
+  assert(map['{{LAYOUT_FOOTER}}'] === 'minimal', `LAYOUT_FOOTER: ${map['{{LAYOUT_FOOTER}}']}`);
+});
+
+test('layout tokens fall back to defaults when layout key absent', () => {
+  const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+  delete cfg.layout;
+  const map = buildTokenMap(cfg);
+  assert(map['{{LAYOUT_HERO}}'] === 'full-bleed', `LAYOUT_HERO default: ${map['{{LAYOUT_HERO}}']}`);
+  assert(map['{{LAYOUT_NEXT_EVENT}}'] === 'card', `LAYOUT_NEXT_EVENT default: ${map['{{LAYOUT_NEXT_EVENT}}']}`);
+  assert(map['{{LAYOUT_FOOTER}}'] === 'standard', `LAYOUT_FOOTER default: ${map['{{LAYOUT_FOOTER}}']}`);
+});
+
+test('scaffold output contains no unsubstituted LAYOUT tokens', () => {
+  const out = tmpDir();
+  try {
+    scaffold(EXAMPLE_CONFIG, out);
+    const idx = fs.readFileSync(path.join(out, 'index.html'), 'utf8');
+    assert(!idx.includes('{{LAYOUT_'), 'No {{LAYOUT_ tokens remain in index.html');
+  } finally {
+    fs.rmSync(out, { recursive: true, force: true });
+  }
+});
+
 // ── Results ─────────────────────────────────────────────────────────────────
 
 console.log(`\n=== Test Results ===`);

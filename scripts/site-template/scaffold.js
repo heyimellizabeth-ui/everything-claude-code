@@ -129,6 +129,11 @@ function buildTokenMap(cfg) {
     '{{SEO_DESCRIPTION}}': (cfg.seo && cfg.seo.description) || cfg.site.description,
     '{{SEO_OG_TITLE}}': (cfg.seo && cfg.seo.ogTitle) || cfg.site.name,
     '{{SEO_KEYWORDS}}': (cfg.seo && cfg.seo.keywords) || '',
+
+    // Layout variants (C2)
+    '{{LAYOUT_HERO}}':       (cfg.layout && cfg.layout.hero)      || 'full-bleed',
+    '{{LAYOUT_NEXT_EVENT}}': (cfg.layout && cfg.layout.nextEvent) || 'card',
+    '{{LAYOUT_FOOTER}}':     (cfg.layout && cfg.layout.footer)    || 'standard',
   };
 }
 

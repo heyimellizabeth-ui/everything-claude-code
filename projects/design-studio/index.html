@@ -223,6 +223,11 @@
   .char-warn { color: #febc2e; }
   .char-over { color: #ff5f57; }
 
+  /* Layout picker */
+  .layout-picker { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .layout-btn { flex:1; padding:8px 10px; font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; background:#111; border:1px solid var(--studio-border); border-radius:6px; color:var(--studio-muted); cursor:pointer; transition:border-color .15s,color .15s; }
+  .layout-btn.active { border-color:var(--studio-accent); color:var(--studio-accent); }
+
   /* Drop zone */
   .drop-zone {
     border: 2px dashed var(--studio-border);
@@ -282,6 +287,7 @@
     <button class="tab" onclick="switchTab('colors')">Colors</button>
     <button class="tab" onclick="switchTab('type')">Type</button>
     <button class="tab" onclick="switchTab('sections')">Sections</button>
+    <button class="tab" onclick="switchTab('layout')">Layout</button>
     <button class="tab" onclick="switchTab('content')">Content</button>
     <button class="tab" onclick="switchTab('import')">Import</button>
     <button class="tab" onclick="switchTab('seo')">SEO</button>
@@ -291,11 +297,11 @@
   <div class="tab-content active" id="tab-brand">
     <div class="field">
       <label>Site Name</label>
-      <input type="text" id="siteName" placeholder="Club Nacht" oninput="update()">
+      <input type="text" id="siteName" placeholder="My Club Name" oninput="update()">
     </div>
     <div class="field">
       <label>Short Name / Wordmark</label>
-      <input type="text" id="siteShort" placeholder="NACHT" oninput="update()">
+      <input type="text" id="siteShort" placeholder="SHORT" oninput="update()">
     </div>
     <div class="field">
       <label>Tagline</label>
@@ -486,6 +492,86 @@
           <div style="width:16px;height:16px;border-radius:3px;background:#C0392B"></div>
         </div>
       </div>
+      <div class="font-card" onclick="applyColorPreset('berlin')">
+        <div class="font-name">Berlin</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#0A0A0A"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#E0E0E0"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#CCFF00"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('tokyo')">
+        <div class="font-name">Tokyo</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#06020F"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#F0E8FF"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#FF0099"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('brutalist')">
+        <div class="font-name">Brutalist</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#F5F5F0"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#050505"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#FF2200"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('velvet')">
+        <div class="font-name">Velvet</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#1A0010"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#F5E8F0"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#CC1177"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('forest')">
+        <div class="font-name">Forest</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#020D05"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#E8F5E0"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#39FF14"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('coastal')">
+        <div class="font-name">Coastal</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#020810"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#EEF4FF"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#4FC3F7"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('crimson')">
+        <div class="font-name">Crimson</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#0A0003"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#F5ECED"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#DC143C"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('arctic')">
+        <div class="font-name">Arctic</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#F0F5FA"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#0A1520"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#00E5FF"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('sunset')">
+        <div class="font-name">Sunset</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#0F0804"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#FFF0E5"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#FF8C00"></div>
+        </div>
+      </div>
+      <div class="font-card" onclick="applyColorPreset('mono')">
+        <div class="font-name">Mono</div>
+        <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
+          <div style="width:16px;height:16px;border-radius:3px;background:#0A0A0A"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#FAFAFA"></div>
+          <div style="width:16px;height:16px;border-radius:3px;background:#FFFFFF;border:1px solid #333"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -634,6 +720,41 @@
     </div>
   </div>
 
+  <!-- Layout Tab -->
+  <div class="tab-content" id="tab-layout">
+    <div class="group-label">Hero Section</div>
+    <div class="field">
+      <label>Layout style</label>
+      <div class="layout-picker">
+        <button class="layout-btn active" data-section="hero" data-variant="full-bleed" onclick="selectLayout('hero','full-bleed',this)">Full Bleed</button>
+        <button class="layout-btn" data-section="hero" data-variant="split" onclick="selectLayout('hero','split',this)">Split</button>
+        <button class="layout-btn" data-section="hero" data-variant="minimal" onclick="selectLayout('hero','minimal',this)">Minimal</button>
+      </div>
+      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:2px">Full bleed: giant wordmark over full-height bg · Split: text left / image right · Minimal: centered text only</div>
+    </div>
+
+    <div class="group-label">Next Event Spotlight</div>
+    <div class="field">
+      <label>Layout style</label>
+      <div class="layout-picker">
+        <button class="layout-btn active" data-section="nextEvent" data-variant="card" onclick="selectLayout('nextEvent','card',this)">Card</button>
+        <button class="layout-btn" data-section="nextEvent" data-variant="banner" onclick="selectLayout('nextEvent','banner',this)">Banner</button>
+        <button class="layout-btn" data-section="nextEvent" data-variant="sidebar" onclick="selectLayout('nextEvent','sidebar',this)">Sidebar</button>
+      </div>
+      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:2px">Card: centered spotlight · Banner: full-width strip · Sidebar: accent bar with info block</div>
+    </div>
+
+    <div class="group-label">Footer</div>
+    <div class="field">
+      <label>Layout style</label>
+      <div class="layout-picker">
+        <button class="layout-btn active" data-section="footer" data-variant="standard" onclick="selectLayout('footer','standard',this)">Standard</button>
+        <button class="layout-btn" data-section="footer" data-variant="minimal" onclick="selectLayout('footer','minimal',this)">Minimal</button>
+      </div>
+      <div style="font-size:.7rem;color:var(--studio-muted);margin-top:2px">Standard: nav + social + BPM text · Minimal: single copyright line</div>
+    </div>
+  </div>
+
   <!-- Content Tab -->
   <div class="tab-content" id="tab-content">
     <div class="group-label">Google Reviews</div>
@@ -754,13 +875,14 @@ const state = {
     planner:    { enabled: false },
   },
   reviews: [],
-  seo: { title: '', description: '', ogTitle: '', keywords: '' }
+  seo: { title: '', description: '', ogTitle: '', keywords: '' },
+  layout: { hero: 'full-bleed', nextEvent: 'card', footer: 'standard' },
 };
 
 // ── Tab switching ──────────────────────────────────────────────────────────
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach((t, i) => {
-    const tabs = ['brand','colors','type','sections','content','import','seo'];
+    const tabs = ['brand','colors','type','sections','layout','content','import','seo'];
     t.classList.toggle('active', tabs[i] === name);
   });
   document.querySelectorAll('.tab-content').forEach(c => {
@@ -798,7 +920,17 @@ const COLOR_PRESETS = {
   ocean:  { void: '#060D14', cream: '#E8F4F5', accent: '#00B4D8', surface: '#0D1B2A', muted: '#607080' },
   ember:  { void: '#0D0500', cream: '#F5EDE8', accent: '#FF6B35', surface: '#1A0C00', muted: '#907060' },
   jade:   { void: '#050D09', cream: '#E8F5EE', accent: '#2DC653', surface: '#0A1F12', muted: '#608070' },
-  quartz: { void: '#F5F5F5', cream: '#111111', accent: '#C0392B', surface: '#E8E8E8', muted: '#666' }
+  quartz:    { void: '#F5F5F5', cream: '#111111', accent: '#C0392B', surface: '#E8E8E8', muted: '#666' },
+  berlin:    { void: '#0A0A0A', cream: '#E0E0E0', accent: '#CCFF00', surface: '#141414', muted: '#555555' },
+  tokyo:     { void: '#06020F', cream: '#F0E8FF', accent: '#FF0099', surface: '#120A20', muted: '#7050A0' },
+  brutalist: { void: '#F5F5F0', cream: '#050505', accent: '#FF2200', surface: '#E0E0DA', muted: '#777770' },
+  velvet:    { void: '#1A0010', cream: '#F5E8F0', accent: '#CC1177', surface: '#2A0020', muted: '#806070' },
+  forest:    { void: '#020D05', cream: '#E8F5E0', accent: '#39FF14', surface: '#071A0A', muted: '#508050' },
+  coastal:   { void: '#020810', cream: '#EEF4FF', accent: '#4FC3F7', surface: '#061525', muted: '#5080A0' },
+  crimson:   { void: '#0A0003', cream: '#F5ECED', accent: '#DC143C', surface: '#1A0008', muted: '#804050' },
+  arctic:    { void: '#F0F5FA', cream: '#0A1520', accent: '#00E5FF', surface: '#DDE8F5', muted: '#607080' },
+  sunset:    { void: '#0F0804', cream: '#FFF0E5', accent: '#FF8C00', surface: '#1F1208', muted: '#907850' },
+  mono:      { void: '#0A0A0A', cream: '#FAFAFA', accent: '#FFFFFF', surface: '#181818', muted: '#606060' },
 };
 
 function applyColorPreset(name) {
@@ -838,8 +970,8 @@ function getV(id) { return document.getElementById(id)?.value?.trim() || ''; }
 function collectConfig() {
   return {
     site: {
-      name:        getV('siteName')      || 'My Club',
-      short:       getV('siteShort')     || 'CLUB',
+      name:        getV('siteName')      || '(concept)',
+      short:       getV('siteShort')     || '(concept)',
       domain:      getV('siteDomain')    || 'myclub.com',
       tagline:     getV('siteTagline')   || 'Music · Dance · Community',
       description: getV('siteDescription') || 'A nightclub experience.',
@@ -891,7 +1023,116 @@ function collectConfig() {
       ogTitle:     getV('seoOgTitle')     || state.seo.ogTitle     || '',
       keywords:    getV('seoKeywords')    || state.seo.keywords    || '',
     },
+    layout: {
+      hero:      state.layout.hero      || 'full-bleed',
+      nextEvent: state.layout.nextEvent || 'card',
+      footer:    state.layout.footer    || 'standard',
+    },
   };
+}
+
+// ── Layout section builders ────────────────────────────────────────────────
+function buildHeroSection(cfg, variant) {
+  if (!cfg.sections.hero) return '';
+  const c = cfg.colors;
+  const ticket = cfg.ticketUrl
+    ? `<a href="${cfg.ticketUrl}" style="display:inline-block;background:${c.accent};color:${c.cream};padding:14px 32px;border-radius:4px;font-weight:700;letter-spacing:.08em;text-decoration:none;font-size:13px;text-transform:uppercase">Get Tickets</a>`
+    : '';
+  if (variant === 'split') {
+    return `<section style="min-height:100vh;display:flex;align-items:stretch;background:${c.void}">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 40px;text-align:left">
+        <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${cfg.venue.city} · Est. ${cfg.site.estYear}</p>
+        <h1 style="font-size:clamp(3rem,8vw,7rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:24px">${cfg.site.short}</h1>
+        <p style="font-size:clamp(14px,1.5vw,18px);color:${c.muted};max-width:380px;line-height:1.5;margin-bottom:40px">${cfg.site.tagline}</p>
+        ${ticket}
+      </div>
+      <div style="flex:1;background:${c.surface};min-height:400px;display:flex;align-items:center;justify-content:center">
+        <span style="font-size:80px;opacity:.15">🎵</span>
+      </div>
+    </section>`;
+  }
+  if (variant === 'minimal') {
+    return `<section style="padding:140px 20px 100px;text-align:center;background:${c.void}">
+      <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${cfg.venue.city} · Est. ${cfg.site.estYear}</p>
+      <h1 style="font-size:clamp(3rem,10vw,8rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:24px">${cfg.site.short}</h1>
+      <p style="font-size:clamp(14px,2vw,18px);color:${c.muted};max-width:480px;margin:0 auto 40px;line-height:1.5">${cfg.site.tagline}</p>
+      ${ticket}
+    </section>`;
+  }
+  return `<section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 20px;background:${c.void}">
+    <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${cfg.venue.city} · Est. ${cfg.site.estYear}</p>
+    <h1 style="font-size:clamp(4rem,15vw,10rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:24px">${cfg.site.short}</h1>
+    <p style="font-size:clamp(14px,2vw,18px);color:${c.muted};max-width:480px;line-height:1.5;margin-bottom:40px">${cfg.site.tagline}</p>
+    ${ticket}
+  </section>`;
+}
+
+function buildNextEventSection(cfg, variant) {
+  if (!cfg.sections['next-event']) return '';
+  const c = cfg.colors;
+  if (variant === 'banner') {
+    return `<section style="padding:40px 20px;background:${c.surface};display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center">
+      <p style="font-size:11px;letter-spacing:.2em;color:${c.accent};text-transform:uppercase;flex-basis:100%;text-align:center">Next Event</p>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif">Event Name Here</h2>
+      <div style="color:${c.muted};font-size:14px">Saturday, 1 January 2025 · ${cfg.venue.name}</div>
+      <div style="color:${c.muted};font-size:13px">${cfg.site.bpm}</div>
+    </section>`;
+  }
+  if (variant === 'sidebar') {
+    return `<section style="padding:60px 20px;background:${c.void}">
+      <div style="max-width:600px;margin:0 auto;display:flex;gap:20px">
+        <div style="width:4px;background:${c.accent};border-radius:2px;flex-shrink:0"></div>
+        <div>
+          <p style="font-size:11px;letter-spacing:.2em;color:${c.accent};text-transform:uppercase;margin-bottom:12px">Next Event</p>
+          <h2 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:12px">Event Name Here</h2>
+          <p style="color:${c.muted};margin-bottom:6px">Saturday, 1 January 2025</p>
+          <p style="color:${c.muted};font-size:13px">${cfg.venue.name} · ${cfg.site.bpm}</p>
+        </div>
+      </div>
+    </section>`;
+  }
+  return `<section style="padding:80px 20px;background:${c.surface};text-align:center">
+    <p style="font-size:11px;letter-spacing:.2em;color:${c.accent};text-transform:uppercase;margin-bottom:16px">Next Event</p>
+    <h2 style="font-size:clamp(2rem,6vw,4rem);font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:12px">Event Name Here</h2>
+    <p style="color:${c.muted};margin-bottom:8px">Saturday, 1 January 2025 · ${cfg.venue.name}</p>
+    <p style="color:${c.muted};font-size:13px">${cfg.site.bpm}</p>
+  </section>`;
+}
+
+function buildFooterSection(cfg, variant) {
+  const c = cfg.colors;
+  if (variant === 'minimal') {
+    return `<footer style="background:${c.surface};padding:20px;text-align:center;border-top:1px solid ${c.muted}30">
+      <p style="color:${c.muted};font-size:12px">&copy; ${cfg.site.name} · ${cfg.site.estYear}</p>
+    </footer>`;
+  }
+  const footerLinks = cfg.sections['footer-nav'] ? `
+    <nav style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:20px">
+      ${cfg.sections.index   ? `<a href="index.html" style="color:${c.muted};text-decoration:none;font-size:13px">Home</a>` : ''}
+      ${cfg.sections.events  ? `<a href="events.html" style="color:${c.muted};text-decoration:none;font-size:13px">Events</a>` : ''}
+      ${cfg.sections.about   ? `<a href="about.html" style="color:${c.muted};text-decoration:none;font-size:13px">About</a>` : ''}
+      ${cfg.sections.gallery ? `<a href="gallery.html" style="color:${c.muted};text-decoration:none;font-size:13px">Gallery</a>` : ''}
+      ${cfg.sections.contact ? `<a href="contact.html" style="color:${c.muted};text-decoration:none;font-size:13px">Contact</a>` : ''}
+    </nav>` : '';
+  const footerSocial = cfg.sections['footer-social'] ? `
+    <div style="display:flex;gap:16px;justify-content:center;margin-bottom:20px">
+      ${cfg.social.instagram ? `<a href="${cfg.social.instagram}" style="color:${c.muted};font-size:12px;text-decoration:none">Instagram</a>` : ''}
+      ${cfg.social.ra        ? `<a href="${cfg.social.ra}"        style="color:${c.muted};font-size:12px;text-decoration:none">Resident Advisor</a>` : ''}
+    </div>` : '';
+  const footerBpm = cfg.sections['footer-bpm']
+    ? `<p style="color:${c.muted};font-size:11px;letter-spacing:.15em">${cfg.site.bpm} · ${cfg.site.name} · ${cfg.venue.city}</p>`
+    : `<p style="color:${c.muted};font-size:11px">&copy; ${cfg.site.name}</p>`;
+  return `<footer style="background:${c.surface};padding:48px 20px;text-align:center;border-top:1px solid ${c.muted}30">
+    ${footerLinks}${footerSocial}${footerBpm}
+  </footer>`;
+}
+
+// ── Layout selector ────────────────────────────────────────────────────────
+function selectLayout(section, variant, el) {
+  state.layout[section] = variant;
+  el.closest('.layout-picker').querySelectorAll('.layout-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  update();
 }
 
 // ── Live preview ───────────────────────────────────────────────────────────
@@ -902,21 +1143,8 @@ function update() {
     encodeURIComponent(cfg.fonts.heading) + ':wght@400;700;900&family=' +
     encodeURIComponent(cfg.fonts.body)    + ':wght@400;700&display=swap';
 
-  const heroSection = cfg.sections.hero ? `
-    <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 20px;background:${c.void}">
-      <p style="font-size:11px;letter-spacing:.2em;color:${c.muted};margin-bottom:20px;text-transform:uppercase">${cfg.venue.city} · Est. ${cfg.site.estYear}</p>
-      <h1 style="font-size:clamp(4rem,15vw,10rem);font-weight:900;line-height:.9;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:24px">${cfg.site.short}</h1>
-      <p style="font-size:clamp(14px,2vw,18px);color:${c.muted};max-width:480px;line-height:1.5;margin-bottom:40px">${cfg.site.tagline}</p>
-      ${cfg.ticketUrl ? `<a href="${cfg.ticketUrl}" style="display:inline-block;background:${c.accent};color:${c.cream};padding:14px 32px;border-radius:4px;font-weight:700;letter-spacing:.08em;text-decoration:none;font-size:13px;text-transform:uppercase">Get Tickets</a>` : ''}
-    </section>` : '';
-
-  const nextEventSection = cfg.sections['next-event'] ? `
-    <section style="padding:80px 20px;background:${c.surface};text-align:center">
-      <p style="font-size:11px;letter-spacing:.2em;color:${c.accent};text-transform:uppercase;margin-bottom:16px">Next Event</p>
-      <h2 style="font-size:clamp(2rem,6vw,4rem);font-weight:700;color:${c.cream};font-family:'${cfg.fonts.heading}',sans-serif;margin-bottom:12px">Event Name Here</h2>
-      <p style="color:${c.muted};margin-bottom:8px">Saturday, 1 January 2025 · ${cfg.venue.name}</p>
-      <p style="color:${c.muted};font-size:13px">${cfg.site.bpm}</p>
-    </section>` : '';
+  const heroSection      = buildHeroSection(cfg, state.layout.hero);
+  const nextEventSection = buildNextEventSection(cfg, state.layout.nextEvent);
 
   const newsletterSection = cfg.sections.newsletter ? `
     <section style="padding:80px 20px;background:${c.void};text-align:center">
@@ -938,25 +1166,6 @@ function update() {
     <section style="padding:80px 20px;max-width:700px;margin:0 auto;text-align:center">
       <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:${c.cream};line-height:1.7;font-style:italic">"${cfg.site.tagline}. A space for everyone."</p>
     </section>` : '';
-
-  const footerLinks = cfg.sections['footer-nav'] ? `
-    <nav style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:20px">
-      ${cfg.sections.index   ? `<a href="index.html" style="color:${c.muted};text-decoration:none;font-size:13px">Home</a>` : ''}
-      ${cfg.sections.events  ? `<a href="events.html" style="color:${c.muted};text-decoration:none;font-size:13px">Events</a>` : ''}
-      ${cfg.sections.about   ? `<a href="about.html" style="color:${c.muted};text-decoration:none;font-size:13px">About</a>` : ''}
-      ${cfg.sections.gallery ? `<a href="gallery.html" style="color:${c.muted};text-decoration:none;font-size:13px">Gallery</a>` : ''}
-      ${cfg.sections.contact ? `<a href="contact.html" style="color:${c.muted};text-decoration:none;font-size:13px">Contact</a>` : ''}
-    </nav>` : '';
-
-  const footerSocial = cfg.sections['footer-social'] ? `
-    <div style="display:flex;gap:16px;justify-content:center;margin-bottom:20px">
-      ${cfg.social.instagram ? `<a href="${cfg.social.instagram}" style="color:${c.muted};font-size:12px;text-decoration:none">Instagram</a>` : ''}
-      ${cfg.social.ra        ? `<a href="${cfg.social.ra}"        style="color:${c.muted};font-size:12px;text-decoration:none">Resident Advisor</a>` : ''}
-    </div>` : '';
-
-  const footerBpm = cfg.sections['footer-bpm']
-    ? `<p style="color:${c.muted};font-size:11px;letter-spacing:.15em">${cfg.site.bpm} · ${cfg.site.name} · ${cfg.venue.city}</p>`
-    : `<p style="color:${c.muted};font-size:11px">&copy; ${cfg.site.name}</p>`;
 
   const preview = `<!DOCTYPE html>
 <html lang="${cfg.site.lang}">
@@ -986,11 +1195,7 @@ ${nextEventSection}
 ${manifestoSection}
 ${newsletterSection}
 ${instagramSection}
-<footer style="background:${c.surface};padding:48px 20px;text-align:center;border-top:1px solid ${c.muted}30">
-  ${footerLinks}
-  ${footerSocial}
-  ${footerBpm}
-</footer>
+${buildFooterSection(cfg, state.layout.footer)}
 </body>
 </html>`;
 
@@ -1238,6 +1443,11 @@ function resetDefaults() {
   // Reset reviews
   state.reviews = [];
   renderReviewsList();
+  // Reset layout
+  state.layout = { hero: 'full-bleed', nextEvent: 'card', footer: 'standard' };
+  document.querySelectorAll('.layout-btn').forEach(b => {
+    b.classList.toggle('active', state.layout[b.dataset.section] === b.dataset.variant);
+  });
   update();
 }
 

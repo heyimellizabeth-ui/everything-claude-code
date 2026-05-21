@@ -70,6 +70,11 @@
     "gallery":   { "enabled": true,  "type": "flickr" },
     "newsletter": { "enabled": true }
   },
+  "layout": {
+    "hero": "full-bleed",
+    "nextEvent": "card",
+    "footer": "standard"
+  },
   "seo": {
     "title": "Club KUDT — Party in a Queer Space · Alkmaar",
     "description": "Queer feesten in Alkmaar. Drag, disco, pop & meer in Podium Victorie. Tickets via ticketmaster.",

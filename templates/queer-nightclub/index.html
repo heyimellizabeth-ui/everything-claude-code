@@ -764,6 +764,12 @@
   .footer-links a { position: relative; overflow: hidden; }
   .footer-links a::after { content: ''; position: absolute; bottom: 0; left: -100%; width: 100%; height: 1px; background: var(--red); transition: left 0.25s ease; }
   .footer-links a:hover::after { left: 0; }
+
+  /* Layout variants */
+  .hero--split { flex-direction: row !important; justify-content: stretch !important; align-items: stretch !important; }
+  .hero--split .hero-content { text-align: left; flex: 1; justify-content: center; align-items: flex-start; }
+  .hero--minimal .hero-canvas-wrap, .hero--minimal canvas { display: none; }
+  .footer--minimal .footer-links, .footer--minimal .footer-social-row, .footer--minimal .footer-bpm { display: none; }
 </style>
 </head>
 <body>
@@ -823,7 +829,7 @@
 
 <main>
 <!-- Hero -->
-<div class="hero">
+<div class="hero hero--{{LAYOUT_HERO}}">
   <canvas id="particle-canvas"></canvas>
   <div class="hero-content">
     <h1 class="sr-only">{{SITE_NAME}} — Queer Feesten in {{VENUE_CITY}} bij {{VENUE_NAME}}</h1>
@@ -992,7 +998,7 @@
 </main>
 
 <!-- Footer -->
-<footer>
+<footer class="footer--{{LAYOUT_FOOTER}}">
   <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
   <ul class="footer-links">
     <li><a href="#events">Our Parties</a></li>
