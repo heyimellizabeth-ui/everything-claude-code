@@ -21,8 +21,7 @@
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 
   # Content Security Policy
-  # Allows: self, GSAP CDN (cdnjs), Formspree (form POST), Instagram/RA embeds blocked by default
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://clubkudt.nl https://*.staticflickr.com https://live.staticflickr.com; font-src 'self'; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://clubkudt.nl https://*.staticflickr.com https://live.staticflickr.com; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
 </IfModule>
 
 # Disable directory listing
@@ -38,6 +37,17 @@ Options -Indexes
 <FilesMatch "\.(py)$">
   Order allow,deny
   Deny from all
+</FilesMatch>
+
+# Protect data directory — deny all web requests
+RedirectMatch 404 ^/data(/.*)?$
+
+# PHP form handlers accept POST only
+<FilesMatch "^(subscribe|contact)\.php$">
+  <LimitExcept POST>
+    Order allow,deny
+    Deny from all
+  </LimitExcept>
 </FilesMatch>
 
 # Compression
