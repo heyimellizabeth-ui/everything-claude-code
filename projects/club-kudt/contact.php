@@ -79,6 +79,6 @@ if (!$sent) {
 }
 
 $rl[$ipHash] = $now;
-file_put_contents(RL_PATH, json_encode($rl));
+file_put_contents(RL_PATH, json_encode($rl), LOCK_EX);
 
 respond(true);
