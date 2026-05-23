@@ -65,7 +65,9 @@ fclose($fh);
 
 // Non-blocking notification — subscriber is already saved; mail failure is acceptable
 $body = "New subscriber:\n\nEmail: {$email}\nTime:  " . date('Y-m-d H:i:s T') . "\n";
-@sendMail('New newsletter signup: ' . $email, $body);
+if (!sendMail('New newsletter signup: ' . $email, $body)) {
+    error_log('[subscribe.php] sendMail failed for: ' . $email);
+}
 
 $rl[$ipHash] = $now;
 file_put_contents(RL_PATH, json_encode($rl));
