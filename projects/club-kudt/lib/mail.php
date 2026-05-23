@@ -47,6 +47,7 @@ function sendMail(
         // } catch (\Exception $e) {
         //     return false;
         // }
+        return false; // PHPMailer not yet installed — uncomment block above first
     }
 
     // mail() path — active until SMTP_HOST is filled in
