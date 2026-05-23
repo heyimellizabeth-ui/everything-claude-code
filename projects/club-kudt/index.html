@@ -317,6 +317,20 @@
     text-transform: uppercase;
     margin-top: 0.75rem;
   }
+  .hero-early-access {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,0,0,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .hero-early-access:hover { border-color: var(--red); color: var(--cream); }
   .cta-btn {
     display: inline-block;
     margin-top: 2.5rem;
@@ -851,6 +865,7 @@
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
+    <li><a href="#newsletter" style="color:var(--red)">Early access</a></li>
     <li><a href="https://www.instagram.com/clubkudt/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
@@ -868,6 +883,7 @@
     <p class="hero-sub mil-up">Party in a Queer Space · Alkmaar · Est. 2022</p>
     <a href="https://www.podiumvictorie.nl/programma/club-kudt-pride-after/" target="_blank" rel="noopener noreferrer" class="cta-btn mil-up" id="cta-btn" data-magnetic>Get tickets →</a>
     <p class="hero-venue-note mil-up">via Podium Victorie · official venue partner</p>
+    <a href="#newsletter" class="hero-early-access mil-up">or get early access →</a>
   </div>
   <div class="hero-scroll-hint mil-up">
     <span>Scroll</span>

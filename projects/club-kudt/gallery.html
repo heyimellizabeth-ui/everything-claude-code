@@ -100,6 +100,16 @@
   .edition-tag { display: inline-block; font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 2px; color: var(--red); text-transform: uppercase; border: 1px solid rgba(232,65,90,0.4); padding: 0.2rem 0.5rem; margin-bottom: 1rem; }
 
   /* ARCHIVE CTA */
+  .gallery-newsletter { margin-top: 4rem; padding: 3rem 2.5rem; border: 1px solid rgba(232,65,90,0.2); text-align: center; background: rgba(232,65,90,0.04); }
+  .gallery-newsletter-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 0.75rem; }
+  .gallery-newsletter-title { font-family: var(--font-mono); font-size: clamp(1.1rem, 3vw, 1.6rem); font-weight: 700; letter-spacing: 2px; color: var(--cream); margin-bottom: 0.5rem; }
+  .gallery-newsletter-sub { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 1.75rem; }
+  .gallery-newsletter-form { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; max-width: 480px; margin: 0 auto; }
+  .gallery-newsletter-input { flex: 1; min-width: 200px; padding: 0.75rem 1rem; background: transparent; border: 1px solid rgba(245,240,232,0.2); color: var(--cream); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 1px; outline: none; }
+  .gallery-newsletter-input:focus { border-color: rgba(245,240,232,0.4); }
+  .gallery-newsletter-input::placeholder { color: var(--muted); }
+  .gallery-newsletter-btn { padding: 0.75rem 1.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer; transition: opacity 0.2s; }
+  .gallery-newsletter-btn:hover { opacity: 0.85; }
   .archive-cta { margin-top: 4rem; padding: 4rem 2.5rem; border: 1px solid rgba(245,240,232,0.08); text-align: center; }
   .archive-cta-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 1rem; }
   .archive-cta-title { font-family: var(--font-mono); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: 2px; color: var(--cream); margin-bottom: 0.75rem; }
@@ -272,6 +282,17 @@
 
   </div>
 
+  <div class="gallery-newsletter mil-up" id="gallery-newsletter">
+    <div class="gallery-newsletter-label">✦ First to know</div>
+    <div class="gallery-newsletter-title">Next edition drops soon.</div>
+    <div class="gallery-newsletter-sub">Early access · No spam · Just dates</div>
+    <form class="gallery-newsletter-form" id="gallery-newsletter-form" action="https://formspree.io/f/xkokywzz" method="POST">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="email" name="email" class="gallery-newsletter-input" placeholder="your@email.com" required maxlength="254" autocomplete="email">
+      <button type="submit" class="gallery-newsletter-btn">Get early access →</button>
+    </form>
+  </div>
+
   <div class="archive-cta mil-up">
     <div class="archive-cta-label">✦ Full archive</div>
     <div class="archive-cta-title">780+ photos</div>
@@ -350,6 +371,25 @@
   gsap.utils.toArray('.mil-up').forEach(el => {
     gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
+
+  const galleryForm = document.getElementById('gallery-newsletter-form');
+  if (galleryForm) {
+    let lastSubmit = 0;
+    galleryForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (Date.now() - lastSubmit < 30000) return;
+      const honeypot = this.querySelector('input[name="_gotcha"]');
+      if (honeypot && honeypot.value) return;
+      const btn = this.querySelector('.gallery-newsletter-btn');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      try {
+        const res = await fetch(this.action, { method: 'POST', body: new FormData(this), headers: { Accept: 'application/json' } });
+        if (res.ok) { lastSubmit = Date.now(); btn.textContent = 'You\'re in ✦'; this.reset(); }
+        else { btn.textContent = 'Try again →'; btn.disabled = false; }
+      } catch { btn.textContent = 'Try again →'; btn.disabled = false; }
+    });
+  }
 })();
 </script>
 </body>
