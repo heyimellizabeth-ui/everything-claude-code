@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/lib/mail.php';
+
 define('SECRET_SALT', 'Kx7mP2nQ9vR4sT8wY3cL6dJ1eF5hG0uA');
 define('RL_PATH', __DIR__ . '/data/rl_contact.json');
 
@@ -71,12 +73,7 @@ $body = "Contact form submission from clubkudt.nl\n\n"
       . "Message:\n{$message}\n\n"
       . "---\nSent: " . date('Y-m-d H:i:s T');
 
-// Reply-To uses $email which has passed FILTER_VALIDATE_EMAIL (rejects \r and \n)
-$headers = "From: noreply@clubkudt.nl\r\n"
-         . "Reply-To: {$name} <{$email}>\r\n"
-         . "X-Mailer: PHP/" . phpversion();
-
-$sent = mail('info@clubkudt.nl', "[KUDT Contact] {$subjectLabel}: {$name}", $body, $headers);
+$sent = sendMail("[KUDT Contact] {$subjectLabel}: {$name}", $body, $email, $name);
 if (!$sent) {
     respond(false, 'Could not send message. Please email us directly at info@clubkudt.nl', 500);
 }

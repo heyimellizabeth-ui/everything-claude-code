@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/lib/mail.php';
+
 define('SECRET_SALT', 'Kx7mP2nQ9vR4sT8wY3cL6dJ1eF5hG0uA');
 define('CSV_PATH',    __DIR__ . '/data/subscribers.csv');
 define('RL_PATH',     __DIR__ . '/data/rl_subscribe.json');
@@ -23,7 +25,6 @@ $gotcha = trim($_POST['_gotcha'] ?? '');
 if ($gotcha !== '') {
     respond(false, 'bad request', 422);
 }
-
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 254) {
     respond(false, 'Invalid email address', 422);
 }
@@ -35,7 +36,6 @@ if (is_file(RL_PATH)) {
     $rl = json_decode(file_get_contents(RL_PATH), true) ?: [];
 }
 $now = time();
-// Prune stale entries
 foreach ($rl as $k => $ts) {
     if ($now - $ts > 3600) unset($rl[$k]);
 }
@@ -63,12 +63,10 @@ fwrite($fh, date('c') . ',' . $escaped . "\n");
 flock($fh, LOCK_UN);
 fclose($fh);
 
-// Notify — non-blocking, failure does not block the response
-$headers = "From: noreply@clubkudt.nl\r\nX-Mailer: PHP/" . phpversion();
-$body    = "New subscriber:\n\nEmail: {$email}\nTime:  " . date('Y-m-d H:i:s T') . "\n";
-@mail('info@clubkudt.nl', 'New newsletter signup: ' . $email, $body, $headers);
+// Non-blocking notification — subscriber is already saved; mail failure is acceptable
+$body = "New subscriber:\n\nEmail: {$email}\nTime:  " . date('Y-m-d H:i:s T') . "\n";
+@sendMail('New newsletter signup: ' . $email, $body);
 
-// Save updated rate limit
 $rl[$ipHash] = $now;
 file_put_contents(RL_PATH, json_encode($rl));
 
