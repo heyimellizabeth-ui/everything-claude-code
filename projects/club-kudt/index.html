@@ -398,6 +398,62 @@
   }
   @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+  /* Identity + stat strip */
+  .identity-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 2.5rem 3rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .identity-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid rgba(245,240,232,0.12);
+    padding: 0.4rem 1rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .identity-tag:hover { border-color: var(--red); color: var(--cream); }
+  .stat-strip {
+    display: flex;
+    border-top: 1px solid rgba(245,240,232,0.08);
+    border-bottom: 1px solid rgba(245,240,232,0.08);
+    margin-top: 2.5rem;
+  }
+  .stat-cell {
+    flex: 1;
+    padding: 2rem 3rem;
+    border-right: 1px solid rgba(245,240,232,0.08);
+  }
+  .stat-cell:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-mono);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.6rem;
+  }
+  @media (max-width: 768px) {
+    .identity-strip { padding: 2rem 1.5rem 0; }
+    .stat-strip { flex-wrap: wrap; }
+    .stat-cell { flex: 0 0 50%; border-right: none; border-bottom: 1px solid rgba(245,240,232,0.08); padding: 1.5rem; }
+    .stat-cell:nth-child(odd) { border-right: 1px solid rgba(245,240,232,0.08); }
+    .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+  }
+
   /* SECTIONS SHARED */
   section {
     padding: 6rem 3rem;
@@ -908,6 +964,36 @@
     <span class="ticker-item">Podium Victorie<span class="ticker-dot">✦</span></span>
     <span class="ticker-item">Pride Afterparty 30 Mei 2026<span class="ticker-dot">✦</span></span>
     <span class="ticker-item">No Boxes. No Bullshit.<span class="ticker-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- Identity + Stat strip -->
+<div class="mil-up">
+  <div class="identity-strip">
+    <span class="identity-tag">Queer</span>
+    <span class="identity-tag">Alkmaar</span>
+    <span class="identity-tag">Noord-Holland</span>
+    <span class="identity-tag">Est. 2022</span>
+    <span class="identity-tag">Drag · Disco · Pop</span>
+    <span class="identity-tag">18+</span>
+  </div>
+  <div class="stat-strip mil-up">
+    <div class="stat-cell">
+      <div class="stat-num">Vol. 08</div>
+      <div class="stat-label">Latest edition</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">780+</div>
+      <div class="stat-label">Event photos</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">€15</div>
+      <div class="stat-label">Tickets vanaf</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Queer-run</div>
+    </div>
   </div>
 </div>
 
