@@ -1,3 +1,6 @@
+# PHP config with secrets (copy from *.example.php)
+projects/club-kudt/lib/config.php
+
 # Environment files
 .env
 .env.local

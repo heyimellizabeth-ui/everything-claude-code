@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/lib/mail.php';
-
-define('SECRET_SALT', 'Kx7mP2nQ9vR4sT8wY3cL6dJ1eF5hG0uA');
+require_once __DIR__ . '/lib/config.php';
 define('RL_PATH', __DIR__ . '/data/rl_contact.json');
 
 ob_start();
