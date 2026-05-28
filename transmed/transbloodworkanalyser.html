@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TransMed · Bloodwork Analyser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface-2: #1a1e28;
+    --border: #252a38;
+    --text: #e8eaf0;
+    --text-muted: #7a8099;
+    --text-dim: #4a5068;
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --blue: #60a5fa;
+    --teal: #2dd4bf;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.1);
+    --purple: #a78bfa;
+    --radius: 12px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── SITE NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,15,20,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 56px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--pink);
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    margin: 0 6px;
+    flex-shrink: 0;
+  }
+
+  .nav-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
+    color: var(--text-muted);
+  }
+  .nav-pill:hover {
+    background: var(--surface-2);
+    border-color: var(--border);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-pill.active {
+    background: var(--pink-dim);
+    border-color: rgba(244,114,182,0.3);
+    color: var(--pink);
+  }
+
+  .nav-badges {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  /* ── API KEY SECTION ── */
+  .apikey-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .apikey-section.has-key {
+    border-color: rgba(74,222,128,0.25);
+    background: rgba(74,222,128,0.04);
+  }
+  .apikey-left {
+    flex: 1;
+    min-width: 200px;
+  }
+  .apikey-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .apikey-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+  .apikey-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex: 2;
+    min-width: 280px;
+  }
+  .apikey-input {
+    flex: 1;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+  .apikey-input:focus { border-color: var(--pink); }
+  .apikey-input::placeholder { color: var(--text-dim); font-family: var(--font-body); font-size: 12px; }
+  .apikey-save-btn {
+    padding: 10px 16px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .apikey-save-btn:hover { border-color: var(--pink); color: var(--text); }
+  .apikey-status {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .apikey-status.ok { background: var(--green-dim); border: 1px solid rgba(74,222,128,0.3); color: var(--green); }
+  .apikey-status.missing { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); color: var(--amber); }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    background: rgba(251,191,36,0.08);
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    display: flex;
+    gap: 12px;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    margin-bottom: 36px;
+  }
+  .intro h1 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .intro h1 em { font-style: italic; color: var(--pink); }
+  .intro p {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 600px;
+  }
+
+  /* ── PROTOCOL SELECTOR ── */
+  .protocol-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .proto-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font-body);
+  }
+  .proto-btn:hover { border-color: var(--pink); color: var(--text); }
+  .proto-btn.active {
+    background: var(--pink-dim);
+    border-color: var(--pink);
+    color: var(--pink);
+  }
+
+  /* ── INPUT GRID ── */
+  .input-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .input-section h2 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 20px;
+  }
+  .fields-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .field-unit {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+  }
+  .field input, .field select {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+  .field input:focus, .field select:focus { border-color: var(--pink); }
+  .field input::placeholder { color: var(--text-dim); font-family: var(--font-body); font-size: 13px; }
+  .field select { font-family: var(--font-body); font-size: 14px; cursor: pointer; }
+  .field select option { background: var(--surface-2); }
+
+  .context-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── FREE TEXT ── */
+  .symptoms-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .symptoms-section h2 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 14px;
+  }
+  textarea {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  textarea:focus { border-color: var(--pink); }
+  textarea::placeholder { color: var(--text-dim); }
+
+  /* ── ANALYSE BUTTON ── */
+  .analyse-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(244,114,182,0.15), rgba(96,165,250,0.1));
+    border: 1px solid rgba(244,114,182,0.4);
+    border-radius: var(--radius);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .analyse-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(244,114,182,0.25), rgba(96,165,250,0.15));
+    border-color: var(--pink);
+  }
+  .analyse-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ── LOADING ── */
+  .loading-box {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .loading-box.visible { display: block; }
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--pink);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    max-width: 360px;
+    margin: 16px auto 0;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: color 0.3s;
+  }
+  .step.active { color: var(--text-muted); }
+  .step.done { color: var(--green); }
+  .step-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .step.active .step-dot { background: var(--pink); animation: pulse 1s infinite; }
+  .step.done .step-dot { background: var(--green); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── RESULTS ── */
+  .results-box {
+    display: none;
+  }
+  .results-box.visible { display: block; }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .result-header h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: #fff;
+  }
+  .result-stamp {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+  }
+
+  .result-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+
+  .result-content h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    margin: 24px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .result-content h3:first-child { margin-top: 0; }
+  .result-content strong { color: var(--text); font-weight: 500; }
+  .result-content em { color: var(--pink); font-style: normal; }
+  .result-content code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--teal);
+  }
+  .result-content ul { padding-left: 20px; margin: 8px 0; }
+  .result-content li { margin-bottom: 6px; }
+  .result-content blockquote {
+    border-left: 3px solid var(--pink);
+    padding: 8px 16px;
+    margin: 16px 0;
+    background: var(--pink-dim);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .chip-ok { display:inline-block; background:var(--green-dim); border:1px solid rgba(74,222,128,0.3); color:var(--green); font-size:11px; font-weight:600; padding:1px 7px; border-radius:4px; font-family:var(--font-mono); }
+  .chip-warn { display:inline-block; background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.3); color:var(--amber); font-size:11px; font-weight:600; padding:1px 7px; border-radius:4px; font-family:var(--font-mono); }
+  .chip-flag { display:inline-block; background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.3); color:var(--red); font-size:11px; font-weight:600; padding:1px 7px; border-radius:4px; font-family:var(--font-mono); }
+  .chip-info { display:inline-block; background:var(--pink-dim); border:1px solid rgba(244,114,182,0.25); color:var(--pink); font-size:11px; font-weight:600; padding:1px 7px; border-radius:4px; font-family:var(--font-mono); }
+
+  .sources-strip {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .sources-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.07em; }
+  .source-tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .error-box {
+    display: none;
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.25);
+    border-radius: var(--radius);
+    padding: 20px;
+    color: var(--red);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .error-box.visible { display: block; }
+
+  .reset-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .reset-btn:hover { border-color: var(--pink); color: var(--text); }
+
+  @media (max-width: 600px) {
+    .main { padding: 24px 16px 60px; }
+    .input-section, .symptoms-section { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">TransMed</a>
+  <div class="nav-divider"></div>
+  <a class="nav-pill" href="index.html">Home</a>
+  <a class="nav-pill" href="transhrtguide.html">HRT Guide</a>
+  <a class="nav-pill active" href="transbloodworkanalyser.html">Bloodwork Analyser</a>
+  <div class="nav-badges">
+    <span class="badge">WPATH SOC8</span>
+    <span class="badge">Endocrine Society</span>
+    <span class="badge">UCSF Trans Care</span>
+    <span class="badge">PubMed</span>
+    <span class="badge">Web search backed</span>
+  </div>
+</nav>
+
+<div class="main">
+
+  <div class="disclaimer">
+    <span>⚠</span>
+    <span>This tool uses live clinical literature searches and returns only evidence-based interpretation. It cites peer-reviewed and institutional sources. It is an educational reference — not a substitute for your prescribing clinician. Never adjust your dose based on this output alone.</span>
+  </div>
+
+  <!-- API KEY -->
+  <div class="apikey-section" id="apikeySection">
+    <div class="apikey-left">
+      <div class="apikey-label">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.4"/><path d="M7.5 7.5L11 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Anthropic API Key
+        <span class="apikey-status missing" id="apikeyStatus">Not set</span>
+      </div>
+      <div class="apikey-desc">Your key is stored only in your browser's localStorage and sent directly to Anthropic — it never passes through any server. Get one at console.anthropic.com.</div>
+    </div>
+    <div class="apikey-right">
+      <input class="apikey-input" type="password" id="apikeyInput" placeholder="sk-ant-api03-…" autocomplete="off"/>
+      <button class="apikey-save-btn" onclick="saveApiKey()">Save</button>
+    </div>
+  </div>
+
+  <div class="intro">
+    <h1>Analyse your <em>hormone panel</em></h1>
+    <p>Enter your bloodwork values. The analyser searches current clinical guidelines and peer-reviewed literature, then returns a sourced, misinformation-free interpretation of your results.</p>
+  </div>
+
+  <div style="margin-bottom:8px; font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.07em">HRT type</div>
+  <div class="protocol-row" id="protoRow">
+    <button class="proto-btn active" onclick="setProto('MTF-EEn')">MTF — EEn injectable</button>
+    <button class="proto-btn" onclick="setProto('MTF-EC')">MTF — EC injectable</button>
+    <button class="proto-btn" onclick="setProto('MTF-gel')">MTF — Gel/Patch</button>
+    <button class="proto-btn" onclick="setProto('MTF-oral')">MTF — Oral E2</button>
+    <button class="proto-btn" onclick="setProto('FTM-T')">FTM — Testosterone</button>
+  </div>
+
+  <div class="input-section">
+    <h2>Lab values — enter what you have, leave blank what you don't</h2>
+    <div class="fields-grid" id="fieldsGrid">
+
+      <div class="field">
+        <label>Prolactin <span class="field-unit">μg/L or ng/mL</span></label>
+        <input type="number" id="f_prl" placeholder="e.g. 95.5" step="0.1"/>
+      </div>
+
+      <div class="field">
+        <label>Estradiol (E2) <span class="field-unit">pmol/L or pg/mL</span></label>
+        <input type="number" id="f_e2" placeholder="e.g. 535.8" step="0.1"/>
+      </div>
+
+      <div class="field">
+        <label>E2 unit</label>
+        <select id="f_e2unit">
+          <option value="pmol">pmol/L</option>
+          <option value="pgml">pg/mL</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Total testosterone <span class="field-unit">nmol/L or ng/dL</span></label>
+        <input type="number" id="f_t" placeholder="e.g. 0.79" step="0.001"/>
+      </div>
+
+      <div class="field">
+        <label>T unit</label>
+        <select id="f_tunit">
+          <option value="nmol">nmol/L</option>
+          <option value="ngdl">ng/dL</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Free testosterone <span class="field-unit">nmol/L or pg/mL</span></label>
+        <input type="number" id="f_freet" placeholder="e.g. 0.007" step="0.0001"/>
+      </div>
+
+      <div class="field">
+        <label>SHBG <span class="field-unit">nmol/L</span></label>
+        <input type="number" id="f_shbg" placeholder="e.g. 80.7" step="0.1"/>
+      </div>
+
+      <div class="field">
+        <label>LH <span class="field-unit">IU/L</span></label>
+        <input type="number" id="f_lh" placeholder="e.g. 0.3" step="0.01"/>
+      </div>
+
+      <div class="field">
+        <label>FSH <span class="field-unit">IU/L</span></label>
+        <input type="number" id="f_fsh" placeholder="e.g. 0.3" step="0.01"/>
+      </div>
+
+      <div class="field">
+        <label>Albumin <span class="field-unit">g/L</span></label>
+        <input type="number" id="f_alb" placeholder="e.g. 43.6" step="0.1"/>
+      </div>
+
+      <div class="field">
+        <label>Hematocrit <span class="field-unit">%</span></label>
+        <input type="number" id="f_hct" placeholder="e.g. 42" step="0.1"/>
+      </div>
+
+      <div class="field">
+        <label>Triglycerides <span class="field-unit">mg/dL or mmol/L</span></label>
+        <input type="number" id="f_trig" placeholder="e.g. 110" step="1"/>
+      </div>
+
+    </div>
+
+    <div class="context-row">
+      <div class="field">
+        <label>Months on HRT</label>
+        <input type="number" id="f_months" placeholder="e.g. 3" min="0" step="1"/>
+      </div>
+      <div class="field">
+        <label>Test timing (injectable)</label>
+        <select id="f_timing">
+          <option value="trough">Trough (pre-injection)</option>
+          <option value="peak">Peak (~3 days post)</option>
+          <option value="mid">Mid-cycle</option>
+          <option value="unknown">Unknown</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Antiandrogen used?</label>
+        <select id="f_aa">
+          <option value="none">None (monotherapy)</option>
+          <option value="spiro">Spironolactone</option>
+          <option value="cpa">Cyproterone acetate</option>
+          <option value="bica">Bicalutamide</option>
+          <option value="gnrh">GnRH agonist</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="symptoms-section">
+    <h2>Symptoms or context (optional)</h2>
+    <textarea id="f_symptoms" placeholder="e.g. Mild breast tenderness. No headaches, no galactorrhoea. Feeling good overall. Test drawn at trough, day 7. First test after starting EEn 10 units U-100 weekly subQ."></textarea>
+  </div>
+
+  <button class="analyse-btn" id="analyseBtn" onclick="analyse()">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M9 5v4.5l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Analyse Bloodwork
+  </button>
+
+  <div class="loading-box" id="loadingBox">
+    <div class="spinner"></div>
+    <div style="font-size:14px; color:var(--text-muted)">Searching clinical literature…</div>
+    <div class="loading-steps" id="loadingSteps">
+      <div class="step" id="step1"><div class="step-dot"></div>Querying WPATH SOC8 + Endocrine Society targets</div>
+      <div class="step" id="step2"><div class="step-dot"></div>Searching PubMed for protocol-specific studies</div>
+      <div class="step" id="step3"><div class="step-dot"></div>Cross-referencing UCSF Transgender Care guidelines</div>
+      <div class="step" id="step4"><div class="step-dot"></div>Generating evidence-based interpretation</div>
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <div class="results-box" id="resultsBox">
+    <div class="result-header">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#4ade80" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h2>Analysis complete</h2>
+      <div class="result-stamp" id="resultStamp"></div>
+    </div>
+    <div class="result-content" id="resultContent"></div>
+    <button class="reset-btn" onclick="reset()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7a6 6 0 1 0 1.5-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1 3v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      New analysis
+    </button>
+  </div>
+
+</div>
+
+<script>
+let currentProto = 'MTF-EEn';
+
+function saveApiKey() {
+  const key = document.getElementById('apikeyInput').value.trim();
+  if (!key) return;
+  localStorage.setItem('transmed_apikey', key);
+  document.getElementById('apikeyInput').value = '';
+  updateApiKeyUI();
+}
+
+function updateApiKeyUI() {
+  const key = localStorage.getItem('transmed_apikey') || '';
+  const status = document.getElementById('apikeyStatus');
+  const section = document.getElementById('apikeySection');
+  if (key) {
+    status.textContent = '✓ Set';
+    status.className = 'apikey-status ok';
+    section.classList.add('has-key');
+  } else {
+    status.textContent = 'Not set';
+    status.className = 'apikey-status missing';
+    section.classList.remove('has-key');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', updateApiKeyUI);
+
+function setProto(p) {
+  currentProto = p;
+  document.querySelectorAll('.proto-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function buildLabSummary() {
+  const fields = [
+    ['Prolactin', getVal('f_prl'), 'μg/L (same as ng/mL)'],
+    ['Estradiol (E2)', getVal('f_e2'), getVal('f_e2unit') === 'pmol' ? 'pmol/L' : 'pg/mL'],
+    ['Total testosterone', getVal('f_t'), getVal('f_tunit') === 'nmol' ? 'nmol/L' : 'ng/dL'],
+    ['Free testosterone', getVal('f_freet'), 'nmol/L'],
+    ['SHBG', getVal('f_shbg'), 'nmol/L'],
+    ['LH', getVal('f_lh'), 'IU/L'],
+    ['FSH', getVal('f_fsh'), 'IU/L'],
+    ['Albumin', getVal('f_alb'), 'g/L'],
+    ['Hematocrit', getVal('f_hct'), '%'],
+    ['Triglycerides', getVal('f_trig'), 'mg/dL'],
+  ].filter(f => f[1] !== '');
+
+  if (fields.length === 0) return null;
+  return fields.map(f => `${f[0]}: ${f[1]} ${f[2]}`).join('\n');
+}
+
+function buildSystemPrompt() {
+  return `You are a clinical endocrinology reference tool for transgender hormone therapy. You analyse bloodwork panels submitted by trans people on gender-affirming hormone therapy (GAHT).
+
+STRICT RULES:
+1. You ONLY cite peer-reviewed clinical literature, institutional guidelines, and the following approved sources:
+   - WPATH Standards of Care v8 (2022)
+   - Endocrine Society Clinical Practice Guideline (2017, Hembree et al., JCEM 102:11)
+   - UCSF Transgender Care Guidelines (transcare.ucsf.edu/guidelines)
+   - Nolan et al., Frontiers in Endocrinology (2025, PMC12148852) — prolactin specific
+   - ARUP Consult Endocrine Testing in Transgender Adults
+   - PubMed-indexed peer-reviewed studies only
+   - CCHCS/DHCS Transgender Care Guide (Oct 2025)
+
+2. You NEVER cite, reference, or base conclusions on: Reddit, forums, DIY HRT communities, anecdotal reports, YouTube, or any non-peer-reviewed source.
+
+3. For each marker provided, you state:
+   a. The value in context of its reference range
+   b. What the clinical guidelines say it should be for this protocol
+   c. Whether it is on target, needs monitoring, or needs clinical attention
+   d. The mechanism if relevant (brief, accurate)
+
+4. You are direct, not vague. "This is within range" or "This requires follow-up" — not "discuss with your doctor about everything."
+
+5. If a value is flagged, you explain specifically what the clinical threshold is and cite the source.
+
+6. At the end you give a protocol-specific summary verdict: what is working, what to watch, what to bring to the prescriber.
+
+7. Format your response with clear section headers using ### for each marker group, bold for key values, and use inline code for specific lab values like \`95.5 μg/L\`.
+
+8. Keep the tone clinical and direct. This is a person who wants to understand their results factually, not to be reassured vaguely.
+
+9. Never recommend specific dose changes. That is for the prescriber. You can state what guideline targets are and whether the values meet them.`;
+}
+
+function buildUserPrompt(labs, proto, months, timing, aa, symptoms) {
+  const protoNames = {
+    'MTF-EEn': 'Estradiol Enanthate (EEn) injectable, subcutaneous, weekly — monotherapy',
+    'MTF-EC': 'Estradiol Cypionate (EC) injectable, weekly',
+    'MTF-gel': 'Transdermal estradiol (gel or patch)',
+    'MTF-oral': 'Oral estradiol (sublingual or swallowed)',
+    'FTM-T': 'Testosterone (injectable or gel) — masculinising HRT'
+  };
+
+  const timingMap = {
+    trough: 'trough (drawn just before next injection — reflects minimum weekly level)',
+    peak: 'peak (~3 days post-injection — reflects maximum weekly level)',
+    mid: 'mid-cycle',
+    unknown: 'unknown timing relative to injection'
+  };
+
+  const aaMap = {
+    none: 'none (estrogen monotherapy)',
+    spiro: 'spironolactone',
+    cpa: 'cyproterone acetate (CPA)',
+    bica: 'bicalutamide',
+    gnrh: 'GnRH agonist'
+  };
+
+  return `Please analyse the following bloodwork panel.
+
+PROTOCOL: MTF feminising GAHT — ${protoNames[proto] || proto}
+MONTHS ON HRT: ${months || 'not specified'}
+BLOOD DRAW TIMING: ${timingMap[timing] || timing}
+ANTIANDROGEN: ${aaMap[aa] || aa}
+${symptoms ? `PATIENT CONTEXT / SYMPTOMS: ${symptoms}` : ''}
+
+LAB RESULTS:
+${labs}
+
+Please:
+1. Analyse each submitted marker against current clinical guideline targets for this specific protocol
+2. Use your web search tool to verify any values you are uncertain about against current literature — especially if you need to confirm prolactin thresholds, EEn-specific pharmacokinetics, or SHBG interpretation
+3. Flag anything that needs clinical attention with the specific threshold and source
+4. Give a clear overall verdict at the end
+5. List all sources you used`;
+}
+
+async function stepProgress(stepIndex, state) {
+  const steps = ['step1','step2','step3','step4'];
+  for (let i = 0; i < steps.length; i++) {
+    const el = document.getElementById(steps[i]);
+    if (i < stepIndex) { el.className = 'step done'; }
+    else if (i === stepIndex) { el.className = 'step active'; }
+    else { el.className = 'step'; }
+  }
+}
+
+function renderMarkdown(text) {
+  return text
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs, (match) => '<ul>' + match + '</ul>')
+    .replace(/✓/g, '<span class="chip-ok">✓ OK</span>')
+    .replace(/⚠/g, '<span class="chip-warn">⚠ WATCH</span>')
+    .replace(/🚨/g, '<span class="chip-flag">🚨 REFER</span>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/^(?!<[hubi]|<li|<bl)(.+)$/gm, '<p>$1</p>')
+    .replace(/<p><\/p>/g, '')
+    .replace(/<p>(<h3|<ul|<blockquote)/g, '$1')
+    .replace(/(<\/h3>|<\/ul>|<\/blockquote>)<\/p>/g, '$1');
+}
+
+async function analyse() {
+  const apiKey = localStorage.getItem('transmed_apikey') || '';
+  if (!apiKey) {
+    document.getElementById('errorBox').textContent = 'Please enter your Anthropic API key above before analysing.';
+    document.getElementById('errorBox').className = 'error-box visible';
+    document.getElementById('apikeyInput').focus();
+    return;
+  }
+
+  const labs = buildLabSummary();
+  if (!labs) {
+    document.getElementById('errorBox').textContent = 'Please enter at least one lab value before analysing.';
+    document.getElementById('errorBox').className = 'error-box visible';
+    return;
+  }
+
+  const months = getVal('f_months');
+  const timing = getVal('f_timing') || document.getElementById('f_timing').value;
+  const aa = getVal('f_aa') || document.getElementById('f_aa').value;
+  const symptoms = getVal('f_symptoms');
+
+  document.getElementById('errorBox').className = 'error-box';
+  document.getElementById('resultsBox').className = 'results-box';
+  document.getElementById('loadingBox').className = 'loading-box visible';
+  document.getElementById('analyseBtn').disabled = true;
+  stepProgress(0, 'active');
+
+  const stepTimers = [
+    setTimeout(() => stepProgress(0, 'done'), 800),
+    setTimeout(() => stepProgress(1, 'active'), 900),
+    setTimeout(() => stepProgress(1, 'done'), 2200),
+    setTimeout(() => stepProgress(2, 'active'), 2300),
+    setTimeout(() => stepProgress(2, 'done'), 4000),
+    setTimeout(() => stepProgress(3, 'active'), 4100),
+  ];
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'web-search-2025-03-05'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: buildSystemPrompt(),
+        tools: [
+          {
+            type: 'web_search_20250305',
+            name: 'web_search'
+          }
+        ],
+        messages: [
+          {
+            role: 'user',
+            content: buildUserPrompt(labs, currentProto, months, timing, aa, symptoms)
+          }
+        ]
+      })
+    });
+
+    stepTimers.forEach(t => clearTimeout(t));
+    stepProgress(3, 'done');
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `API error ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    const textBlocks = data.content
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('\n\n');
+
+    if (!textBlocks) {
+      throw new Error('No text response received from the API.');
+    }
+
+    document.getElementById('loadingBox').className = 'loading-box';
+    document.getElementById('resultContent').innerHTML = renderMarkdown(textBlocks);
+    document.getElementById('resultStamp').textContent = new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) + ' · ' + new Date().toLocaleDateString('en-GB');
+
+    const sourcesDiv = document.createElement('div');
+    sourcesDiv.className = 'sources-strip';
+    sourcesDiv.innerHTML = `
+      <span class="sources-label">Sources queried:</span>
+      <span class="source-tag">WPATH SOC8 2022</span>
+      <span class="source-tag">Endocrine Society 2017</span>
+      <span class="source-tag">UCSF Trans Care</span>
+      <span class="source-tag">Nolan et al. 2025</span>
+      <span class="source-tag">PubMed live search</span>
+    `;
+    document.getElementById('resultContent').appendChild(sourcesDiv);
+
+    document.getElementById('resultsBox').className = 'results-box visible';
+    document.getElementById('analyseBtn').disabled = false;
+    document.getElementById('resultsBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  } catch (err) {
+    stepTimers.forEach(t => clearTimeout(t));
+    document.getElementById('loadingBox').className = 'loading-box';
+    document.getElementById('analyseBtn').disabled = false;
+    document.getElementById('errorBox').textContent = 'Analysis failed: ' + err.message + '. Please try again.';
+    document.getElementById('errorBox').className = 'error-box visible';
+  }
+}
+
+function reset() {
+  document.getElementById('resultsBox').className = 'results-box';
+  document.getElementById('errorBox').className = 'error-box';
+  ['f_prl','f_e2','f_t','f_freet','f_shbg','f_lh','f_fsh','f_alb','f_hct','f_trig','f_months','f_symptoms'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
