@@ -525,6 +525,14 @@
       "modules": [
         "machine-learning"
       ]
+    },
+    {
+      "id": "tool:snelstart-extension",
+      "family": "tool",
+      "description": "Chrome extension for batch-uploading receipts to SnelStart.nl. Adds a side panel with folder picker, upload queue, and optional Claude Vision pre-check. Source in tools/snelstart-extension/.",
+      "modules": [
+        "snelstart-extension"
+      ]
     }
   ]
 }
