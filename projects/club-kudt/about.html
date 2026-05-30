@@ -217,7 +217,7 @@
     <div class="stats-grid">
       <div class="mil-up"><div class="stat-num">2022</div><div class="stat-label">Founded in Alkmaar</div></div>
       <div class="mil-up"><div class="stat-num">780+</div><div class="stat-label">Event photos on Flickr</div></div>
-      <div class="mil-up"><div class="stat-num">€15</div><div class="stat-label">Tickets vanaf</div></div>
+      <div class="mil-up"><div class="stat-num no-count">€14,85</div><div class="stat-label">Tickets vanaf</div></div>
       <div class="mil-up"><div class="stat-num">100%</div><div class="stat-label">Queer-run</div></div>
     </div>
   </div>
@@ -413,7 +413,7 @@
     { el: null, target: 100, prefix: '', suffix: '%', decimals: 0 }
   ];
   document.querySelectorAll('.stat-num').forEach((el, i) => {
-    if (statDefs[i]) statDefs[i].el = el;
+    if (statDefs[i] && !el.classList.contains('no-count')) statDefs[i].el = el;
   });
   statDefs.forEach(def => {
     if (!def.el) return;
