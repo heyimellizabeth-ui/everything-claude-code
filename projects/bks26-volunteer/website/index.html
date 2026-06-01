@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BKS26 — Volunteer Guide</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111;
+      --bg3: #181818;
+      --border: #222;
+      --gold: #f5a623;
+      --gold-dim: #c47d0e;
+      --text: #e8e8e8;
+      --muted: #888;
+      --danger: #ef4444;
+      --green: #22c55e;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.65; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-weight: 700; font-size: 1rem; color: var(--gold); letter-spacing: -0.3px; }
+    .nav-links { display: flex; gap: 0.2rem; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.78rem;
+      padding: 0.3rem 0.6rem; border-radius: 6px; transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg3); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
+    .hamburger span { display: block; width: 20px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; transition: 0.2s; }
+    .mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 1rem; z-index: 99; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; color: var(--text); text-decoration: none; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    @media (max-width: 700px) { .nav-links { display: none; } .hamburger { display: block; } }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(180deg, #1a0a00 0%, var(--bg) 100%);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 1rem; }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 800; color: #fff; letter-spacing: -1px; line-height: 1.1; margin-bottom: 1rem; }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub { font-size: 1rem; color: var(--muted); max-width: 500px; margin: 0 auto 2rem; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+    .pill { background: var(--bg3); border: 1px solid var(--border); border-radius: 100px; padding: 0.35rem 0.9rem; font-size: 0.78rem; color: var(--muted); }
+    .pill strong { color: var(--text); }
+
+    /* LAYOUT */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+    .section-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 0.5rem; }
+    .section-title { font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.4px; }
+    .section-intro { color: var(--muted); font-size: 0.9rem; max-width: 600px; margin-bottom: 2rem; }
+
+    /* CARDS */
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem 1.5rem; margin-bottom: 0.75rem; }
+    .card-title { font-weight: 600; font-size: 0.95rem; color: #fff; margin-bottom: 0.3rem; }
+    .card-body { font-size: 0.85rem; color: var(--muted); }
+    .card-body p { margin-bottom: 0.4rem; }
+    .card-body strong { color: var(--text); }
+
+    /* GRID */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    @media (max-width: 700px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 450px) { .grid-3 { grid-template-columns: 1fr; } }
+
+    /* HIGHLIGHT CARD */
+    .highlight { background: #1a0f00; border-color: #3a2000; }
+    .highlight .card-title { color: var(--gold); }
+
+    /* BADGE */
+    .badge { display: inline-block; font-size: 0.68rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 0.3rem; }
+    .badge-gold { background: #2a1800; color: var(--gold); }
+    .badge-green { background: #0a2015; color: var(--green); }
+    .badge-red { background: #200a0a; color: var(--danger); }
+    .badge-gray { background: #1e1e1e; color: #aaa; }
+
+    /* TIMELINE */
+    .timeline { border-left: 2px solid var(--border); padding-left: 1.5rem; margin-top: 1rem; }
+    .timeline-item { position: relative; margin-bottom: 1.5rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -1.9rem; top: 0.35rem; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; }
+    .timeline-day { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 0.2rem; }
+    .timeline-title { font-weight: 600; color: #fff; font-size: 0.9rem; }
+    .timeline-body { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* CATERING TABLE */
+    .catering-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-top: 1rem; }
+    @media (max-width: 600px) { .catering-grid { grid-template-columns: 1fr 1fr; } }
+    .catering-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; }
+    .catering-day { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 0.3rem; }
+    .catering-time { font-size: 1rem; font-weight: 700; color: var(--gold); }
+    .catering-hours { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
+
+    /* TASKS ACCORDION */
+    .task-list { margin-top: 0.5rem; }
+    .task-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.5rem; overflow: hidden; }
+    .task-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.9rem 1.2rem; cursor: pointer;
+      background: var(--bg2); transition: background 0.15s;
+    }
+    .task-header:hover { background: var(--bg3); }
+    .task-header-left { display: flex; align-items: center; gap: 0.7rem; }
+    .task-name { font-weight: 600; font-size: 0.9rem; color: #fff; }
+    .task-chevron { color: var(--muted); font-size: 0.8rem; transition: transform 0.2s; }
+    .task-item.open .task-chevron { transform: rotate(180deg); }
+    .task-body { display: none; padding: 0.8rem 1.2rem 1rem; background: var(--bg); border-top: 1px solid var(--border); font-size: 0.84rem; color: var(--muted); }
+    .task-item.open .task-body { display: block; }
+    .task-body p { margin-bottom: 0.4rem; }
+    .task-body strong { color: var(--text); }
+    .task-body .meeting-point { display: inline-flex; align-items: center; gap: 0.4rem; background: #1a1000; border: 1px solid #2a2000; border-radius: 6px; padding: 0.25rem 0.7rem; font-size: 0.78rem; color: var(--gold); margin-bottom: 0.6rem; }
+
+    /* RULES */
+    .rule-group { margin-bottom: 1.5rem; }
+    .rule-group-title { font-size: 0.78rem; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.6rem; }
+    .rule-list { list-style: none; }
+    .rule-list li { font-size: 0.84rem; color: var(--muted); padding: 0.3rem 0 0.3rem 1.2rem; position: relative; border-bottom: 1px solid #161616; }
+    .rule-list li:last-child { border-bottom: none; }
+    .rule-list li::before { content: '—'; position: absolute; left: 0; color: var(--border); }
+    .rule-list.danger li::before { content: '✕'; color: var(--danger); }
+    .rule-list.ok li::before { content: '✓'; color: var(--green); }
+
+    /* CONTACT */
+    .contact-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 0.75rem; }
+    .contact-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--bg3); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .contact-name { font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
+    .contact-role { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .contact-link { font-size: 0.78rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 0.2rem 0.6rem; color: var(--text); text-decoration: none; }
+    .contact-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ALERT */
+    .alert { border-radius: var(--radius); padding: 1rem 1.2rem; font-size: 0.84rem; margin-bottom: 1rem; }
+    .alert-gold { background: #1f1200; border: 1px solid #3a2200; color: #f5c842; }
+    .alert-red { background: #1a0505; border: 1px solid #3a0a0a; color: #fca5a5; }
+    .alert-green { background: #051a0a; border: 1px solid #0a3015; color: #86efac; }
+
+    /* STAGES */
+    .stage-pill { display: inline-block; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.8rem; font-weight: 600; color: var(--text); margin: 0.2rem; }
+    .stage-pill.main { border-color: var(--gold); color: var(--gold); }
+
+    /* FOOTER */
+    footer { padding: 2.5rem 1.5rem; text-align: center; color: #333; font-size: 0.78rem; border-top: 1px solid var(--border); }
+    footer a { color: #555; text-decoration: none; }
+    footer strong { color: #555; }
+
+    /* UTILITY */
+    .mt1 { margin-top: 0.5rem; } .mt2 { margin-top: 1rem; } .mt3 { margin-top: 1.5rem; }
+    .mb1 { margin-bottom: 0.5rem; } .mb2 { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">BKS26 ✦ Volunteers</span>
+  <div class="nav-links">
+    <a href="#about">Festival</a>
+    <a href="#travel">Getting There</a>
+    <a href="#shifts">Your Shifts</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#catering">Catering</a>
+    <a href="#safety">Safety</a>
+    <a href="#rules">Rules</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">Festival</a>
+  <a href="#travel" onclick="closeMobile()">Getting There</a>
+  <a href="#shifts" onclick="closeMobile()">Your Shifts</a>
+  <a href="#tasks" onclick="closeMobile()">Tasks</a>
+  <a href="#catering" onclick="closeMobile()">Catering &amp; Campsite</a>
+  <a href="#safety" onclick="closeMobile()">Health &amp; Safety</a>
+  <a href="#rules" onclick="closeMobile()">Rules</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-tag">Best Kept Secret 2026</p>
+  <h1>Welcome to<br /><span>your weekend</span></h1>
+  <p class="hero-sub">This guidebook has everything you need for a smooth, fun volunteer experience at BKS26. Read it, keep it handy, and reach out if you have questions.</p>
+  <div class="hero-pills">
+    <span class="pill"><strong>Thu–Mon</strong> &nbsp;12–16 June</span>
+    <span class="pill"><strong>~25,000</strong> daily guests</span>
+    <span class="pill"><strong>300</strong> volunteers</span>
+    <span class="pill"><strong>7</strong> stages</span>
+    <span class="pill">Hilvarenbeek, NL</span>
+  </div>
+</div>
+
+<!-- FESTIVAL OVERVIEW -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">Know-How</p>
+    <h2 class="section-title">Best Kept Secret</h2>
+    <p class="section-intro">Every year since 2013, BKS creates a free, loving, experimental festival on the second weekend of June — surrounded by beautiful nature at Beekse Bergen.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">The Stages</div>
+        <div class="card-body" style="margin-top:0.6rem">
+          <div style="margin-bottom:0.5rem">
+            <span class="stage-pill main">ONE</span>
+            <span class="stage-pill main">TWO</span>
+            <span style="font-size:0.75rem;color:var(--muted);margin-left:0.3rem">Mainstages — headliners</span>
+          </div>
+          <div>
+            <span class="stage-pill">The Casbah</span>
+            <span class="stage-pill">The Secret</span>
+            <span class="stage-pill">The Floor</span>
+            <span class="stage-pill">Not Nothing</span>
+            <span class="stage-pill">The Shore</span>
+          </div>
+          <p style="margin-top:0.6rem;font-size:0.78rem">The Casbah &amp; The Secret for discovery. The Floor, Not Nothing, The Shore for dancing.</p>
+        </div>
+      </div>
+      <div class="card highlight">
+        <div class="card-title">You are part of ~300</div>
+        <div class="card-body">
+          <p>One of the biggest volunteer teams at the entire festival. Without us, BKS could not exist.</p>
+          <p class="mt1">The <strong>volunteer office</strong> is your home base — hang out, relax, sign in and out. Sara and her assistants are always there.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-gold mt2">
+      <strong>Thursday 21:30 — Volunteer Meeting.</strong> Arrive on Thursday to meet the Friendly Fire team, connect with fellow volunteers, pick up your t-shirt, and sign your contract. Strongly recommended — you'll start the weekend organised and relaxed.
+    </div>
+  </div>
+</section>
+
+<!-- GETTING THERE -->
+<section id="travel">
+  <div class="container">
+    <p class="section-label">Arriving</p>
+    <h2 class="section-title">Getting There</h2>
+    <p class="section-intro">Plan your travel carefully — transport options change by day. Add extra time for your first shift.</p>
+
+    <div class="alert alert-gold">
+      <strong>Arrive 1 hour early</strong> for your first shift. The crew campsite is a 30–45 min walk from the volunteer office, and travel from Tilburg station takes time. Budget accordingly.
+    </div>
+
+    <p class="section-label mt3">Public Transport — By Day</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-day">Thursday</div>
+        <div class="timeline-title">Train → Tilburg station</div>
+        <div class="timeline-body">Take Bus 142 or 143 to Hilvarenbeek, Safaripark. OV-fiets recommended — having a bike at the festival is very convenient. Flyover usually open (7 min walk to crew accreditation).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-day">Friday</div>
+        <div class="timeline-title">Shuttle bus from Tilburg station — <span style="color:var(--gold)">€14 return</span></div>
+        <div class="timeline-body">Runs 09:00–20:00 to the festival entrance (Entrance South). From there, take a second shuttle to Entrance North (reception Beekse Bergen), then short walk to backstage accreditation. Queues can be long — allow plenty of time.</div>
+      </div>
+      <div class="timeline-item" style="margin-bottom:0">
+        <div class="timeline-day">Saturday · Sunday · Monday</div>
+        <div class="timeline-title" style="color:var(--danger)">No public bus from Tilburg</div>
+        <div class="timeline-body">The bus does not run on Fri/Sat/Sun/Mon. Plan car, bike, or lift. Do not rely on public transport after Thursday.</div>
+      </div>
+    </div>
+
+    <p class="section-label mt3">By Car</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Navigation</div>
+        <div class="card-body">
+          <p>Navigate to <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong>.</p>
+          <p class="mt1">Follow the yellow signs: <strong>Leveranciers — Backstage — Artists</strong>. They lead straight to backstage accreditation.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Parking &amp; Thursday Drive-in</div>
+        <div class="card-body">
+          <p><strong>Free crew parking</strong> at the backstage crew parking area.</p>
+          <p class="mt1">On Thursday you can drive up to the crew campsite to drop off gear — until <strong>20:00</strong>. Not possible on other days. Fill out the form for your parking ticket.</p>
+          <div class="alert alert-red" style="margin-top:0.6rem;padding:0.6rem 0.8rem">
+            Without a parking ticket you cannot use crew parking. Pick it up at backstage accreditation.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WRISTBAND -->
+<section id="wristband">
+  <div class="container">
+    <p class="section-label">Accreditation</p>
+    <h2 class="section-title">Your Wristband</h2>
+    <p class="section-intro">You'll receive an e-voucher by email in the week of the festival. Check your spam folder.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">What you need</div>
+        <div class="card-body">
+          <p>✦ E-voucher (printed or on your phone)</p>
+          <p>✦ Passport or identity card</p>
+          <p class="mt1">Without ID you cannot receive your wristband.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Where to go</div>
+        <div class="card-body">
+          <p>Go to <strong>backstage accreditation</strong> at Speelland Beekse Bergen, 5081 NJ.</p>
+          <p class="mt1">After collecting your wristband, come to the <strong>volunteer office</strong> to say hi and sign your contract.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHIFTS -->
+<section id="shifts">
+  <div class="container">
+    <p class="section-label">Your Weekend</p>
+    <h2 class="section-title">Volunteer Shifts</h2>
+    <p class="section-intro">You will work a minimum of 18 hours total, distributed across multiple days so you still have plenty of time to enjoy the festival.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Minimum hours</div>
+        <div class="card-body"><p style="font-size:2rem;font-weight:800;color:var(--gold)">18h</p><p>Distributed across days. Sometimes a little more, never leaving you without festival time.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">First shift timing</div>
+        <div class="card-body"><p>Arrive at the <strong>volunteer office 30 min early</strong> to sign your contract and get your crew t-shirt.</p><p class="mt1">Setting up your tent first? The campsite is a 45 min walk — plan accordingly.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Subsequent shifts</div>
+        <div class="card-body"><p>Be at your <strong>task meeting point 10–20 min early</strong>. Not sure where that is? Check the Tasks section below or visit the volunteer office.</p></div>
+      </div>
+    </div>
+
+    <div class="grid-2 mt2">
+      <div class="card">
+        <div class="card-title">Security &amp; Artist Hospitality</div>
+        <div class="card-body">Come to the volunteer office before your shift to collect a special pass for backstage areas. Return it after your shift.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">After your shift</div>
+        <div class="card-body">
+          <p>Never leave before your coordinator gives permission. Always ask first.</p>
+          <p class="mt1">Then come to the <strong>volunteer office to sign out</strong> — Sara will be waiting with a beer or soft drink. 🎉</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-gold mt2">
+      <strong>Collective Care:</strong> You play a role in festival safety. If a visitor is in distress: ask "Are you ok?", take them away from the crowd to a quiet space, and let your manager with a porto contact the safety department.
+    </div>
+  </div>
+</section>
+
+<!-- TASKS -->
+<section id="tasks">
+  <div class="container">
+    <p class="section-label">What you'll do</p>
+    <h2 class="section-title">Tasks &amp; Meeting Points</h2>
+    <p class="section-intro">Show up 30 min early for your first shift and 15 min early for all others. Tap any task to see what it involves.</p>
+
+    <div class="task-list" id="taskList">
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gold">★ Backstage</span>
+            <span class="task-name">Artist Hospitality</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Help the catering staff during preparation and dining hours for artists. Serve meals, keep the artist-dinner area clean. At the bar, help serve cold drinks and cocktails to artists and companions.</p>
+          <p class="mt1"><strong>Note:</strong> You receive a special backstage pass from the volunteer office before your shift.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Campsite</span>
+            <span class="task-name">Campsite Catering — Helicopterfield</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Helicopterfield mealhub</div>
+          <p>A brand new catering hub near the entrance this year. Make sure crew working at ticketscan get a good meal during their shift.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Campsite</span>
+            <span class="task-name">Campsite Management — Festivalkamperen</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Info point at the beach</div>
+          <p>On Friday, help visitors to the campsite find the right spot for their tent. Guide them with a smile so they start their festival weekend in good spirits.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Campsite</span>
+            <span class="task-name">Campsite Management — Camper</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Drop-off Point, across from Ganvie Village</div>
+          <p>Help festival-goers arriving with camper vans find a good spot. Ensure optimal use of the site. Your guidance means visitors arrive at the festival feeling happy.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Campsite</span>
+            <span class="task-name">Campsite Management — Check-in</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Check-in reception at the campsite</div>
+          <p>Help guests who have booked accommodation check in and find their place. Three versions of this shift: <strong>Comfort Camp</strong>, <strong>Group Spots</strong>, and <strong>Secret Fields</strong>.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gold">★ Backstage</span>
+            <span class="task-name">Crew Accreditation</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Welcome fellow colleagues, crew, caterers, and artists at the accreditation desk. Make sure everyone gets the right wristbands and parking tickets.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Backstage</span>
+            <span class="task-name">Crew Catering</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Assist Common Catering and their team to make meals for all backstage crew. Keep the eating area tidy and clean. The Common team is very <em>gezellig</em>. Wear good closed shoes and cover your legs.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-green">Eco</span>
+            <span class="task-name">Cup Return</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Collect cups on the festival grounds to maximise recycling. Do it standing, dancing, walking — any way you like. Clean cups are best to recycle.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-green">Eco</span>
+            <span class="task-name">Ecoteam</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Morning shift — restore the festival grounds after overnight activity. Tables moved, chairs upside down, or rain? You make sure everything looks perfect before guests arrive.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-green">Eco</span>
+            <span class="task-name">Info &amp; Waste Team</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Keep the festival clean and beautiful. Go around food areas during dinner times to clean up and keep things tidy.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">General</span>
+            <span class="task-name">Flexteam</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>All kinds of jobs, all around the festival. Last-minute tasks, last-minute changes, and everything else that needs doing. Be a flexible hero.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Entrance</span>
+            <span class="task-name">Locker Team</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Help locker staff provide lockers to visitors at the main entrance. Nobody wants to carry a raincoat in the sun!</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Entrance</span>
+            <span class="task-name">Locker Team — Powerbank Zone</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Help festival guests with their charging needs right across The Floor stage — one of the most groovy spots on the terrain.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Logistics</span>
+            <span class="task-name">Parking Management</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Help crew park their cars efficiently at the crew parking lot. Work with a fun team to keep things moving.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gold">★ Backstage</span>
+            <span class="task-name">Press &amp; Guest Area</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Press and guests share one area backstage. Keep it clean and presentable while they work on their projects and rest.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-red">🚗 Licence req.</span>
+            <span class="task-name">Runnerteam Horeca</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Supply the bars on the festival site with new loads of beverages for the bar crew (HOP). <strong>Driving licence required.</strong></p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gold">★ Backstage</span>
+            <span class="task-name">Security Team</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Guard the disabled-viewer decks at stages ONE and TWO — only disabled people and one companion per Mi-VIP pass are allowed. For Balcony Security: ensure the balcony bar doesn't get too crowded. You receive a special backstage pass from the volunteer office.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-red">🚗 Licence req.</span>
+            <span class="task-name">Shuttle Service</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Shuttle food from catering to crew who can't make it during serving hours. You'll drive with another volunteer to deliver meals. <strong>Driving licence required.</strong></p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Entrance</span>
+            <span class="task-name">Ticketcheck</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <p style="margin-bottom:0.6rem">Four locations — meeting point varies by location:</p>
+          <div class="meeting-point">📍 Main entrance — Main Entrance</div>
+          <div class="meeting-point">📍 Lake Resort — Volunteer office</div>
+          <div class="meeting-point">📍 Safari Resort — Checkpoint Safari Resort</div>
+          <div class="meeting-point">📍 Secret Fields — Secret Fields entrance</div>
+          <p>Give out wristbands in exchange for tickets and welcome guests with a smile. You are the face of the festival.</p>
+        </div>
+      </div>
+
+      <div class="task-item">
+        <div class="task-header" onclick="toggleTask(this)">
+          <div class="task-header-left">
+            <span class="badge badge-gray">Office</span>
+            <span class="task-name">Volunteer Office</span>
+          </div>
+          <span class="task-chevron">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="meeting-point">📍 Volunteer office</div>
+          <p>Help Sara, Evan, Shannah, and Emma with all kinds of different jobs in and around the volunteer office.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CATERING & CAMPSITE -->
+<section id="catering">
+  <div class="container">
+    <p class="section-label">Food &amp; Rest</p>
+    <h2 class="section-title">Catering &amp; Campsite</h2>
+    <p class="section-intro">Crew catering is backstage. Opening times vary by day — never miss a meal by planning your shifts around these windows.</p>
+
+    <div class="catering-grid">
+      <div class="catering-card">
+        <div class="catering-day">Friday</div>
+        <div class="catering-time">15:00 – 19:00</div>
+        <div class="catering-hours">4 hours</div>
+      </div>
+      <div class="catering-card">
+        <div class="catering-day">Saturday</div>
+        <div class="catering-time">08:00 – 19:00</div>
+        <div class="catering-hours">11 hours</div>
+      </div>
+      <div class="catering-card">
+        <div class="catering-day">Sunday</div>
+        <div class="catering-time">08:00 – 16:00</div>
+        <div class="catering-hours">8 hours</div>
+      </div>
+      <div class="catering-card">
+        <div class="catering-day">Monday</div>
+        <div class="catering-time">08:00 – 18:00</div>
+        <div class="catering-hours">10 hours</div>
+      </div>
+    </div>
+
+    <div class="grid-2 mt3">
+      <div class="card">
+        <div class="card-title">Crew Campsite</div>
+        <div class="card-body">
+          <p>The crew campsite is a <strong>30–45 minute walk</strong> from the volunteer office.</p>
+          <p class="mt1">Everyone can arrive from <strong>Thursday 11 June</strong>. On Thursday you can drive to the campsite to drop gear until 20:00.</p>
+          <p class="mt1">Camper/campervan spots are available — ask at the volunteer office.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">What to Bring</div>
+        <div class="card-body">
+          <p>✦ Your own tent (or rent/borrow)</p>
+          <p>✦ Reusable water bottle</p>
+          <p>✦ Appropriate footwear (Crew Catering: closed shoes, covered legs)</p>
+          <p>✦ Rain gear — leave it in your locker when the sun's out</p>
+          <p class="mt1">Consider secondhand or borrowed gear to reduce your footprint.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HEALTH & SAFETY -->
+<section id="safety">
+  <div class="container">
+    <p class="section-label">Wellbeing</p>
+    <h2 class="section-title">Health, Safety &amp; Sustainability</h2>
+    <p class="section-intro">Personal safety is a shared responsibility. You play an active role in keeping the festival safe and welcoming for everyone.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Incident Response</div>
+        <div class="card-body">
+          <p>If you see someone in need:</p>
+          <p class="mt1">1. Make them comfortable — take them away from the crowd<br />2. Don't ask detailed questions<br />3. Ask for help from a safety guard or a crew member with a transceiver</p>
+          <p class="mt1">The safety coordinator analyses the situation and takes the necessary measures.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Confidentiality Advisers</div>
+        <div class="card-body">
+          <p>An external confidential adviser is backstage <strong>Friday to Sunday</strong>. Their office is backstage — if the door is closed they're in conversation, send a message instead.</p>
+          <p class="mt1">They are not tied to the festival organisation. Speak to them confidentially about anything that made you uncomfortable.</p>
+          <p class="mt1"><em>Name and number will be added closer to the festival.</em></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Disabilities</div>
+        <div class="card-body">
+          <p>Disabled visitors enter via the Safari Park entrance. Special parking is reserved there.</p>
+          <p class="mt1">Since 2022, the festival grounds are mostly wheelchair-accessible. Disabled decks at stages ONE and TWO — only Mi-VIP pass holders + one companion.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Sustainability</div>
+        <div class="card-body">
+          <p>BKS is set in a beautiful forest at Beekse Bergen. We aim for minimal environmental impact:</p>
+          <p class="mt1">✦ Bring a reusable water bottle<br />✦ Pick up trash on the grounds<br />✦ Dispose of cigarette butts properly<br />✦ Leave the campsite tidy before departure</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-gold mt2">
+      <strong>Respect &amp; Empathy:</strong> Thousands of people from all walks of life attend BKS. Be mindful of space, approach people kindly, and communicate clearly. If you witness harassment or discrimination, bring it to the volunteer office or any crew member.
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules">
+  <div class="container">
+    <p class="section-label">Rules of Engagement</p>
+    <h2 class="section-title">What We Expect</h2>
+    <p class="section-intro">Breaching these rules can result in being blacklisted and your wristband being cut or blocked.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="rule-group">
+          <div class="rule-group-title">Hours &amp; Shifts</div>
+          <ul class="rule-list ok">
+            <li>Minimum 18 hours total during the weekend</li>
+            <li>Show up at least 15 minutes before your shift</li>
+            <li>Call or speak to your coordinator in person for cancellations within 48 hours</li>
+            <li>Give immediate notice for emergencies</li>
+          </ul>
+        </div>
+        <div class="rule-group">
+          <div class="rule-group-title">Clothes</div>
+          <ul class="rule-list ok">
+            <li>Wear your CREW t-shirt during all shifts</li>
+          </ul>
+          <ul class="rule-list danger" style="margin-top:0.3rem">
+            <li>Do not wear your CREW t-shirt when off duty</li>
+          </ul>
+        </div>
+        <div class="rule-group">
+          <div class="rule-group-title">Valuables</div>
+          <ul class="rule-list">
+            <li>Your valuables are your own responsibility</li>
+            <li>Workers' insurance covers personal injury — not belongings</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="rule-group">
+          <div class="rule-group-title">Drugs &amp; Alcohol — Zero Tolerance on Shift</div>
+          <ul class="rule-list danger">
+            <li>Strictly forbidden to use drugs or arrive drunk for a shift</li>
+            <li>No alcohol or drugs during your shift</li>
+            <li>Fighting and threatening behaviour is not accepted</li>
+          </ul>
+        </div>
+        <div class="rule-group">
+          <div class="rule-group-title">Artists &amp; Press</div>
+          <ul class="rule-list danger">
+            <li>No SLR cameras or professional photo equipment (pocket cameras &amp; phones OK)</li>
+            <li>No photos of artists, no autograph requests, no contact with artists unless your role requires it</li>
+            <li>Do not speak to the press or on behalf of BKS without authorisation — direct all press questions to the Press Zone backstage</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title">Contacts</h2>
+    <p class="section-intro">Questions? Don't hesitate — reach out anytime.</p>
+
+    <div class="contact-card">
+      <div class="contact-avatar">👩</div>
+      <div>
+        <div class="contact-name">Sara Verdegaal</div>
+        <div class="contact-role">Volunteer Coordinator — Friendly Fire</div>
+        <div class="contact-links">
+          <a class="contact-link" href="tel:+31640966109">📞 +31 6 40 96 61 09</a>
+          <a class="contact-link" href="mailto:Volunteers@bestkeptsecret.nl">✉ Volunteers@bestkeptsecret.nl</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-avatar">🍺</div>
+      <div>
+        <div class="contact-name">Lester &amp; Giulia</div>
+        <div class="contact-role">Bar Volunteer Team Supervisors — Jongens van de Bar / HOP</div>
+        <div class="contact-links">
+          <a class="contact-link" href="https://wa.me/31851155226">💬 WhatsApp +31 85 115 5226</a>
+        </div>
+        <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem">Bar team only — they manage your accreditation, catering, and schedule.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-green mt2">
+      <strong>WhatsApp Group:</strong> Join the Volunteering WhatsApp Groupchat — ask Sara for the link.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Best Kept Secret 2026</strong> &nbsp;·&nbsp; Speelland Beekse Bergen, Hilvarenbeek &nbsp;·&nbsp; 12–16 June</p>
+  <p style="margin-top:0.4rem">Questions? <a href="mailto:Volunteers@bestkeptsecret.nl">Volunteers@bestkeptsecret.nl</a> &nbsp;·&nbsp; <a href="tel:+31640966109">+31 6 40 96 61 09</a></p>
+</footer>
+
+<script>
+  // Hamburger menu
+  document.getElementById('hamburgerBtn').addEventListener('click', function() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  function closeMobile() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Task accordion
+  function toggleTask(header) {
+    const item = header.parentElement;
+    const wasOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.task-item.open').forEach(el => el.classList.remove('open'));
+    // Open this one if it wasn't already open
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.style.color = '');
+        const active = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
+        if (active) active.style.color = 'var(--gold)';
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
