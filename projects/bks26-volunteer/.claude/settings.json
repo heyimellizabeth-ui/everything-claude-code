@@ -1,0 +1,45 @@
+{
+  "_comment": "BKS26 Volunteer Coordinator — Claude Code project settings. C2: Memory Management via PreCompact and Stop hooks saving coordinator state to sessions/. No PostToolUse linters needed for this non-code project.",
+  "hooks": {
+    "PreCompact": [
+      {
+        "id": "bks26:pre-compact:save-state",
+        "purpose": "Before context compaction, save current coordinator session state (sign-in/out log, open incidents, hours tracker) to .claude/sessions/ so it survives the compaction window.",
+        "command": "node -e \"
+const fs = require('fs');
+const path = require('path');
+const dir = path.join(process.cwd(), '.claude', 'sessions');
+if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+const now = new Date();
+const stamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
+const file = path.join(dir, stamp + '-precompact.tmp');
+fs.writeFileSync(file, JSON.stringify({ event: 'PreCompact', timestamp: now.toISOString(), note: 'State saved before compaction. Resume from this file in next session.' }, null, 2));
+console.log('[bks26] PreCompact state saved to', file);
+\"",
+        "blocking": false
+      }
+    ],
+    "Stop": [
+      {
+        "id": "bks26:stop:save-session-diary",
+        "purpose": "On session end, persist a session diary entry to .claude/sessions/ capturing coordinator state. Next shift loads this file for cross-shift continuity.",
+        "command": "node -e \"
+const fs = require('fs');
+const path = require('path');
+const dir = path.join(process.cwd(), '.claude', 'sessions');
+if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+const now = new Date();
+const stamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
+const file = path.join(dir, stamp + '-session-end.tmp');
+fs.writeFileSync(file, JSON.stringify({ event: 'SessionEnd', timestamp: now.toISOString(), note: 'Session ended. Load this file at the start of the next coordinator shift for continuity.' }, null, 2));
+console.log('[bks26] Session diary saved to', file);
+\"",
+        "blocking": false
+      }
+    ]
+  },
+  "_architecture_notes": {
+    "C2": "PreCompact and Stop hooks implement the session diary pattern from the-longform-guide.md. Each hook writes a .tmp file to .claude/sessions/. The coordinator reads the most recent .tmp at shift start.",
+    "no_PostToolUse_linters": "This project has no code to lint. PostToolUse hooks are not configured — they would add latency with no benefit for a knowledge/coordination workload."
+  }
+}
