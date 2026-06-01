@@ -79,3 +79,14 @@ Use the following skills when working on related files:
 | `.github/workflows/*.yml` | `/ci-workflow` |
 
 When spawning subagents, always pass conventions from the respective skill into the agent's prompt.
+
+## Connected Repositories
+
+This project is part of a multi-repo constellation. When working across projects, reference these sibling repos for context:
+
+| Repository | Description | Stack |
+|---|---|---|
+| `heyimellizabeth-ui/llm-council` | 3-stage LLM deliberation system with anonymized peer review | Python (FastAPI) + React/Vite |
+| `heyimellizabeth-ui/buurtbezorgd` | Dutch fast-food restaurant website (FoodKing) for Hostinger deployment | HTML5/CSS3/JS/PHP/Bootstrap |
+
+Both repos follow this ECC init pattern: `CLAUDE.md` with prompt defense baseline, `.claude/settings.json` with PostToolUse/PreCompact/Stop hooks, `.claude/rules/` with guardrails + stack-specific rules, `.claude/sessions/` for cross-session memory persistence.
