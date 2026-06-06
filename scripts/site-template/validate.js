@@ -108,7 +108,7 @@ function validate(outDir, configPath) {
 
   if (warnings.length) {
     console.warn('[validate] Warnings:');
-    warnings.forEach(w => console.warn(`  ⚠  ${w}`));
+    warnings.forEach(w => console.warn(`  WARNING: ${w}`));
   }
 
   if (errors.length) {

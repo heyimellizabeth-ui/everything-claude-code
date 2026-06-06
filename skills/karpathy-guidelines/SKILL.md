@@ -83,9 +83,9 @@ For multi-step tasks, state a brief plan before starting:
 
 **Request:** "Add a feature to export user data"
 
-❌ Silently implements file export, picks JSON format, exports all users.
+FAIL: Silently implements file export, picks JSON format, exports all users.
 
-✅ Before coding:
+PASS: Before coding:
 ```
 Before implementing, I need to clarify:
 1. Scope: Export all users or a filtered subset? (privacy implications)
@@ -98,10 +98,10 @@ Simplest path: paginated JSON API endpoint. What's your preference?
 
 **Request:** "Add a function to calculate discount"
 
-❌ Creates `DiscountStrategy` ABC, `PercentageDiscount`, `FixedDiscount`, `DiscountConfig`,
+FAIL: Creates `DiscountStrategy` ABC, `PercentageDiscount`, `FixedDiscount`, `DiscountConfig`,
 `DiscountCalculator` — 80+ lines for one calculation.
 
-✅ One function:
+PASS: One function:
 ```python
 def calculate_discount(amount: float, percent: float) -> float:
     return amount * (percent / 100)
@@ -111,17 +111,17 @@ def calculate_discount(amount: float, percent: float) -> float:
 
 **Request:** "Fix the bug where empty emails crash the validator"
 
-❌ Also adds type hints, rewrites email regex, adds username length validation, reformats docstring.
+FAIL: Also adds type hints, rewrites email regex, adds username length validation, reformats docstring.
 
-✅ Only changes the two lines that guard against empty email — matches existing style exactly.
+PASS: Only changes the two lines that guard against empty email — matches existing style exactly.
 
 ### Goal-Driven Execution — Verifiable Steps
 
 **Request:** "Add rate limiting to the API"
 
-❌ Implements Redis-backed rate limiting with config system in one 300-line commit.
+FAIL: Implements Redis-backed rate limiting with config system in one 300-line commit.
 
-✅ Defines a 4-step plan, each with an explicit verify step:
+PASS: Defines a 4-step plan, each with an explicit verify step:
 ```
 1. Basic in-memory limiting on one endpoint
    Verify: 11th request in a row returns 429

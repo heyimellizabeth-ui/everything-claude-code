@@ -418,10 +418,10 @@ test('applyTokens with two-token map substitutes all tokens sequentially', () =>
 
 test('buildTokenMap with unicode site name produces valid string tokens', () => {
   const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
-  cfg.site.name = '클럽 테스트 🎵';
+  cfg.site.name = '클럽 테스트 한글';
   const map = buildTokenMap(cfg);
   assert(typeof map['{{SITE_NAME}}'] === 'string', 'SITE_NAME not a string');
-  assert(map['{{SITE_NAME}}'] === '클럽 테스트 🎵', 'SITE_NAME mismatch');
+  assert(map['{{SITE_NAME}}'] === '클럽 테스트 한글', 'SITE_NAME mismatch');
 });
 
 test('REVIEWS_JSON token escapes </script> tags to prevent injection', () => {
