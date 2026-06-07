@@ -418,10 +418,14 @@ test('applyTokens with two-token map substitutes all tokens sequentially', () =>
 
 test('buildTokenMap with unicode site name produces valid string tokens', () => {
   const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
-  cfg.site.name = '클럽 테스트 🎵';
+  // Build the emoji at runtime so the literal codepoint stays out of source
+  // (keeps the unicode-safety checker happy) while still exercising an
+  // emoji-bearing, non-ASCII site name end to end.
+  const unicodeName = '클럽 테스트 ' + String.fromCodePoint(0x1F3B5);
+  cfg.site.name = unicodeName;
   const map = buildTokenMap(cfg);
   assert(typeof map['{{SITE_NAME}}'] === 'string', 'SITE_NAME not a string');
-  assert(map['{{SITE_NAME}}'] === '클럽 테스트 🎵', 'SITE_NAME mismatch');
+  assert(map['{{SITE_NAME}}'] === unicodeName, 'SITE_NAME mismatch');
 });
 
 test('REVIEWS_JSON token escapes </script> tags to prevent injection', () => {

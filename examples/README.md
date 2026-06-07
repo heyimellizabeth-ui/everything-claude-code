@@ -19,10 +19,10 @@ Ready-to-use brand configs for common venue types. Download, customize, and buil
 **Neon Nightclub** — Electronic music, queer nightlife, Berlin.
 
 **Features enabled:**
-- ✅ Calendar (RA events)
-- ✅ Gallery (Flickr)
-- ✅ Newsletter
-- ✅ Reviews (3 sample)
+- PASS: Calendar (RA events)
+- PASS: Gallery (Flickr)
+- PASS: Newsletter
+- PASS: Reviews (3 sample)
 
 **Colors:** Dark void background (#0A0A0A), hot pink accent (#FF3366)  
 **Fonts:** Unbounded (bold headings), Inter (body)  
@@ -52,10 +52,10 @@ Ready-to-use brand configs for common venue types. Download, customize, and buil
 **Harvest Kitchen** — Farm-to-table Mediterranean, Portland.
 
 **Features enabled:**
-- ✅ Planner (booking request form)
-- ✅ Gallery (image grid)
-- ✅ Newsletter
-- ✅ Reviews (3 sample)
+- PASS: Planner (booking request form)
+- PASS: Gallery (image grid)
+- PASS: Newsletter
+- PASS: Reviews (3 sample)
 
 **Colors:** Warm earth tones (brown/gold)  
 **Fonts:** Playfair Display (elegant), Inter (body)  
@@ -87,12 +87,12 @@ Ready-to-use brand configs for common venue types. Download, customize, and buil
 **Flux Fitness** — HIIT & strength training, Austin.
 
 **Features enabled:**
-- ✅ Calendar (custom class schedule)
-- ✅ Checkout (membership link)
-- ✅ Planner (class booking)
-- ✅ Newsletter
-- ✅ Manifesto (values statement)
-- ✅ Reviews (3 sample)
+- PASS: Calendar (custom class schedule)
+- PASS: Checkout (membership link)
+- PASS: Planner (class booking)
+- PASS: Newsletter
+- PASS: Manifesto (values statement)
+- PASS: Reviews (3 sample)
 
 **Colors:** Dark modern (black/orange accent)  
 **Fonts:** Space Grotesk (modern), DM Sans (friendly)  
@@ -281,4 +281,4 @@ See [docs/TUTORIAL.md](../docs/TUTORIAL.md) for step-by-step guide.
 
 ---
 
-**Ready to build?** Pick a template, customize, and run `/studio-build`! 🚀
+**Ready to build?** Pick a template, customize, and run `/studio-build`!

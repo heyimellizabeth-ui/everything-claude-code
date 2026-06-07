@@ -17,7 +17,7 @@ or `scripts/site-template/`. Use when:
 - Creating a new site from the template
 - Adding a new brand token to the template
 - Debugging scaffold or validate output
-- Switching form backend (Formspree ↔ PHP)
+- Switching form backend (Formspree <-> PHP)
 
 ## How It Works
 
@@ -28,7 +28,7 @@ projects/design-studio/index.html  ← paste reviews, images, social, pick modul
 brand.config.json
       │
       ▼
-scaffold.js  ──reads──▶  templates/queer-nightclub/*.html
+scaffold.js  ──reads──>  templates/queer-nightclub/*.html
       │                  (token placeholders: {{TOKEN}})
       ▼
 projects/<name>/         ← fully substituted, production-ready

@@ -7,10 +7,10 @@ This guide covers hosting options, domain setup, and going live.
 
 Your generated site is **100% static HTML/CSS/JS** — no server, database, or backend required.
 This means:
-- ✅ **Fast** — pages load instantly, no compilation
-- ✅ **Secure** — no server vulnerabilities, no database to hack
-- ✅ **Cheap** — free or $1-5/month hosting
-- ✅ **Scalable** — handles viral traffic without infrastructure
+- PASS: **Fast** — pages load instantly, no compilation
+- PASS: **Secure** — no server vulnerabilities, no database to hack
+- PASS: **Cheap** — free or $1-5/month hosting
+- PASS: **Scalable** — handles viral traffic without infrastructure
 
 ## Quick Start (5 minutes)
 
@@ -116,9 +116,9 @@ Your site includes `form-handler.php` which needs PHP 7.4+ with `mail()` enabled
 ## SSL/HTTPS
 
 Modern hosting **automatically provides free SSL**:
-- Vercel: ✅ Automatic
-- Netlify: ✅ Automatic
-- GitHub Pages: ✅ Automatic
+- Vercel: PASS: Automatic
+- Netlify: PASS: Automatic
+- GitHub Pages: PASS: Automatic
 - Traditional PHP hosting: Use Let's Encrypt (free, in control panel)
 
 All generated sites redirect HTTP → HTTPS automatically.
