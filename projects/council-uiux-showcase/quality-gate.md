@@ -16,7 +16,8 @@ Static-HTML target, so the gate runs structural + accessibility + resilience che
 | `cursor-pointer` on clickables; 150–300ms hover | ✅ PASS | All links/buttons; transitions 200–250ms. |
 | Responsive 375 / 768 / 1024 / 1440 | ✅ PASS | `max-w-6xl` container; `sm:`/`lg:` grid breakpoints; chart `maintainAspectRatio:false`; flow SVG scrolls on narrow. |
 | Chart a11y fallback | ✅ PASS | Raw-data `<table>` (with `<caption>`/`scope`) in a `<details>` below the canvas, per chart-DB mandate. |
-| Graceful degradation (CDN blocked) | ✅ PASS | System-font fallback stack; content readable without JS; CSS-var theming independent of Tailwind JIT for base colors. |
-| Theme toggle re-themes chart | ✅ PASS | Chart reads CSS vars live and rebuilds on toggle (council's flagged risk item). |
+| No external dependencies (renders offline) | ✅ PASS | Verified in headless Chromium with **all** non-localhost requests blocked: **0** failed requests, **0** page errors, full styled layout + SVG chart. No CDN, no Chart.js, no web fonts. |
+| Content visible if JS fails | ✅ PASS | `<html class="no-js">` → `js` flip; `.reveal` hides only under `.js`, so a JS error can't blank the page. |
+| Theme toggle re-themes chart | ✅ PASS | Hand-drawn SVG chart reads CSS vars live and re-renders on toggle. |
 
 **Verdict: PASS** — no FAILs to remediate. Proceed to review gate.

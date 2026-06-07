@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,543 +7,502 @@
   <meta name="description" content="A showcase landing built with the everything-claude-code chelp C1 pipeline: a four-voice council decides the design, ui-ux-pro-max supplies the tokens, and the page proves the output." />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <meta property="og:title" content="Council × UI-UX Pro Max — pipeline showcase" />
-  <meta property="og:description" content="Built via /chelp C1 — council deliberation + ui-ux-pro-max design intelligence, no build step." />
+  <meta property="og:description" content="Built via /chelp C1 — council deliberation + ui-ux-pro-max design intelligence, fully self-contained." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/og-image.svg" />
 
-  <!-- Stage 4: stack per design-system.md — Tailwind + Chart.js via CDN, no build step -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Tailwind colors reference CSS variables so the theme toggle re-themes everything.
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bg: 'var(--bg)',
-            'bg-deep': 'var(--bg-deep)',
-            fg: 'var(--fg)',
-            card: 'var(--card)',
-            muted: 'var(--muted)',
-            'muted-fg': 'var(--muted-fg)',
-            line: 'var(--line)',
-            accent: 'var(--accent)',
-            atext: 'var(--accent-text)',
-            grn: 'var(--green)',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-          },
-          borderRadius: { card: '16px' },
-        },
-      },
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <!-- Flip no-js -> js immediately so content is visible by default if JS ever fails -->
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
 
   <style>
-    /* Inter (design-system.md), with a system-font fallback so the page renders offline */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    /* =========================================================================
+       Council × UI-UX Pro Max — fully self-contained (no external CSS/JS/fonts)
+       Palette + tokens from ui-ux-pro-max "Developer Tool / IDE" + cinema dark.
+       ========================================================================= */
 
-    /* ---- Theme tokens (ui-ux-pro-max "Developer Tool / IDE" palette + cinema dark layer) ---- */
     :root[data-theme="dark"] {
-      --bg: #0F172A;
-      --bg-deep: #020203;
-      --fg: #F8FAFC;
-      --card: #1B2336;
-      --muted: #272F42;
-      --muted-fg: #94A3B8;
-      --line: rgba(255, 255, 255, 0.08);
-      --accent: #5E6AD2;          /* cinema indigo (graphics: borders, glow, icons, large text) */
-      --accent-text: #A5B4FC;     /* lighter indigo for small text — AA+ on dark bg */
-      --accent-glow: rgba(94, 106, 210, 0.22);
-      --green: #22C55E;           /* "run green" CTA */
-      --chart-grid: rgba(255, 255, 255, 0.08);
+      --bg: #0F172A;        --bg-deep: #020203;     --fg: #F8FAFC;
+      --card: #1B2336;      --muted: #272F42;       --muted-fg: #94A3B8;
+      --line: rgba(255,255,255,0.09);
+      --accent: #5E6AD2;    --accent-text: #A5B4FC; --accent-glow: rgba(94,106,210,0.22);
+      --green: #22C55E;     --on-green: #04140A;    --chart-grid: rgba(255,255,255,0.10);
+      --nav-bg: rgba(15,23,42,0.80);
     }
     :root[data-theme="light"] {
-      --bg: #F8FAFC;
-      --bg-deep: #FFFFFF;
-      --fg: #0F172A;
-      --card: #FFFFFF;
-      --muted: #F1F5F9;
-      --muted-fg: #475569;
-      --line: rgba(15, 23, 42, 0.10);
-      --accent: #4F46E5;          /* darker indigo for AA on light */
-      --accent-text: #4338CA;     /* indigo-700: AA+ small text on light bg */
-      --accent-glow: rgba(79, 70, 229, 0.14);
-      --green: #15803D;           /* darker green for AA on light */
-      --chart-grid: rgba(15, 23, 42, 0.08);
+      --bg: #F8FAFC;        --bg-deep: #FFFFFF;     --fg: #0F172A;
+      --card: #FFFFFF;      --muted: #F1F5F9;       --muted-fg: #475569;
+      --line: rgba(15,23,42,0.12);
+      --accent: #4F46E5;    --accent-text: #4338CA; --accent-glow: rgba(79,70,229,0.14);
+      --green: #15803D;     --on-green: #FFFFFF;    --chart-grid: rgba(15,23,42,0.12);
+      --nav-bg: rgba(248,250,252,0.82);
     }
 
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       transition: background-color .3s ease, color .3s ease;
     }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, p { margin: 0; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; color: var(--fg); }
+    .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .accent { color: var(--accent-text); }
+    .eyebrow { font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-text); }
+    .muted { color: var(--muted-fg); }
 
-    /* Hero gradient — deep cinema base to surface (Modern Dark recommendation) */
-    .hero-bg {
+    /* ---------------- Nav ---------------- */
+    .nav {
+      position: sticky; top: 0; z-index: 30;
+      background: var(--nav-bg);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.01em; }
+    .nav-links { display: flex; align-items: center; gap: 22px; font-size: .9rem; }
+    .nav-links a { color: var(--muted-fg); transition: color .2s ease; }
+    .nav-links a:hover { color: var(--fg); }
+    .icon-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px; border-radius: 12px;
+      border: 1px solid var(--line); background: transparent; color: var(--muted-fg);
+      cursor: pointer; transition: color .2s ease, border-color .2s ease;
+    }
+    .icon-btn:hover { color: var(--fg); border-color: var(--accent); }
+    @media (max-width: 640px) { .nav-links a:not(.icon-wrap) { display: none; } }
+
+    /* ---------------- Buttons ---------------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 22px; border-radius: 14px; font-size: .92rem; font-weight: 600;
+      cursor: pointer; border: 1px solid transparent; transition: transform .15s ease, filter .2s ease, border-color .2s ease, background-color .2s ease;
+    }
+    .btn-primary { background: var(--green); color: var(--on-green); box-shadow: 0 0 0 1px var(--green), 0 10px 34px -10px var(--green); }
+    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+    .btn-ghost:hover { border-color: var(--accent); }
+
+    /* ---------------- Hero ---------------- */
+    .hero { position: relative; overflow: hidden; text-align: center;
       background:
-        radial-gradient(1200px 600px at 50% -10%, var(--accent-glow), transparent 60%),
-        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg) 70%);
+        radial-gradient(1200px 560px at 50% -12%, var(--accent-glow), transparent 60%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg) 72%);
     }
-
-    /* Ambient blobs — capped at 2, low opacity, slow drift; gated by prefers-reduced-motion */
-    .blob {
-      position: absolute;
-      border-radius: 9999px;
-      filter: blur(70px);
-      opacity: .10;
-      pointer-events: none;
-      z-index: 0;
+    .hero-inner { position: relative; z-index: 2; padding: 96px 20px 104px; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .10; pointer-events: none; z-index: 1; }
+    .blob-1 { width: 460px; height: 460px; background: var(--accent); top: -90px; left: -50px; animation: drift1 18s ease-in-out infinite; }
+    .blob-2 { width: 380px; height: 380px; background: var(--green); top: 90px; right: -40px; animation: drift2 22s ease-in-out infinite; }
+    @keyframes drift1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px,30px); } }
+    @keyframes drift2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-30px,40px); } }
+    .badge {
+      display: inline-flex; align-items: center; gap: 9px;
+      border: 1px solid var(--line); background: var(--card); color: var(--muted-fg);
+      padding: 7px 16px; border-radius: 999px; font-size: .78rem; font-weight: 500;
     }
-    .blob-1 { width: 460px; height: 460px; background: var(--accent); top: -80px; left: -60px; animation: drift1 18s ease-in-out infinite; }
-    .blob-2 { width: 380px; height: 380px; background: var(--green); top: 120px; right: -40px; animation: drift2 22s ease-in-out infinite; }
-    @keyframes drift1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px, 30px); } }
-    @keyframes drift2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-30px, 40px); } }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    h1 { margin-top: 28px; font-size: clamp(2.3rem, 6vw, 3.7rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.06; text-shadow: 0 0 20px var(--accent-glow); }
+    .subtitle { margin: 22px auto 0; max-width: 620px; font-size: 1.06rem; color: var(--muted-fg); }
+    .subtitle strong { color: var(--fg); }
+    .cta-row { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .scroll-cue { display: inline-block; margin-top: 56px; color: var(--muted-fg); transition: color .2s ease; }
+    .scroll-cue:hover { color: var(--fg); }
 
-    /* Text glow on the H1 only (council constraint) */
-    .glow { text-shadow: 0 0 18px var(--accent-glow); }
+    /* ---------------- Sections ---------------- */
+    section { padding: 92px 0; }
+    .section-head { max-width: 640px; }
+    h2 { margin-top: 12px; font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 700; letter-spacing: -.02em; }
+    .section-head p { margin-top: 16px; color: var(--muted-fg); }
+    .band { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--muted); }
 
-    /* CTA accent glow behind primary button */
-    .cta-glow { box-shadow: 0 0 0 1px var(--green), 0 8px 30px -8px var(--green); }
+    /* Flow diagram */
+    .flow-wrap { margin-top: 48px; overflow-x: auto; }
+    .flow-wrap svg { width: 100%; min-width: 620px; height: auto; display: block; }
+    .grid-3 { margin-top: 40px; display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+    .grid-feats { margin-top: 48px; display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 880px) { .grid-3, .grid-feats { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .grid-3, .grid-feats { grid-template-columns: 1fr; } }
 
-    /* Scroll reveal */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
-    .reveal.in { opacity: 1; transform: none; }
-
-    /* SVG flow draw-in */
-    .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
-    .draw.in { animation: drawIn 1.1s cubic-bezier(.16,1,.3,1) forwards; }
-    @keyframes drawIn { to { stroke-dashoffset: 0; } }
-
-    /* Feature card hover: indigo border tint + lift + glow */
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .card .ic { color: var(--accent-text); }
+    .card .ic.green { color: var(--green); }
+    .card h3 { margin-top: 16px; font-size: 1.05rem; font-weight: 600; }
+    .card p { margin-top: 8px; font-size: .92rem; color: var(--muted-fg); }
     .feature { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
-    .feature:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 14px 40px -18px var(--accent-glow); }
+    .feature:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 16px 44px -20px var(--accent-glow); }
 
-    /* Footer link underline slides in from left */
-    .flink { position: relative; }
+    /* Chart panel */
+    .panel { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+    .panel-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 14px; padding: 4px; }
+    .toggle button {
+      border: 0; background: transparent; color: var(--muted-fg);
+      padding: 7px 18px; border-radius: 10px; font-size: .88rem; font-weight: 500; cursor: pointer;
+      transition: background-color .2s ease, color .2s ease;
+    }
+    .toggle button[aria-pressed="true"] { background: var(--muted); color: var(--fg); }
+    .chart-area { margin-top: 22px; }
+    .chart-area svg { width: 100%; height: auto; display: block; }
+    details { margin-top: 22px; font-size: .9rem; }
+    summary { cursor: pointer; color: var(--muted-fg); }
+    summary:hover { color: var(--fg); }
+    .table-scroll { margin-top: 16px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: .88rem; }
+    th, td { padding: 9px 14px 9px 0; }
+    thead th { color: var(--muted-fg); font-weight: 500; border-bottom: 1px solid var(--line); }
+    tbody tr { border-bottom: 1px solid var(--line); }
+    tbody th { color: var(--fg); font-weight: 600; }
+    tbody td { color: var(--muted-fg); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+    /* ---------------- Footer ---------------- */
+    footer { border-top: 1px solid var(--line); background: var(--muted); padding: 56px 0; }
+    .foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; }
+    .foot-links { display: flex; flex-direction: column; gap: 10px; font-size: .9rem; color: var(--muted-fg); }
+    .flink { position: relative; width: fit-content; transition: color .2s ease; }
+    .flink:hover { color: var(--fg); }
     .flink::after { content: ""; position: absolute; left: 0; bottom: -2px; height: 1px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
     .flink:hover::after { transform: scaleX(1); }
+    .foot-note { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 22px; font-size: .8rem; color: var(--muted-fg); }
 
-    /* Visible focus states for keyboard nav (both themes) */
-    a:focus-visible, button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-      border-radius: 6px;
-    }
+    /* ---------------- Reveal (progressive enhancement, gated by .js) ---------------- */
+    .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
+    .js .reveal.in { opacity: 1; transform: none; }
 
-    /* Respect reduced motion: kill all animation + reveal jumps to visible */
+    /* Focus + reduced motion */
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .blob { animation: none; }
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .draw { stroke-dashoffset: 0; animation: none; }
+      .js .reveal { opacity: 1; transform: none; transition: none; }
       .feature { transition: none; }
     }
   </style>
 </head>
 
-<body class="font-sans antialiased">
+<body id="top">
   <!-- ===================== NAV ===================== -->
-  <header class="sticky top-0 z-30 backdrop-blur-md border-b border-line" style="background: color-mix(in srgb, var(--bg) 80%, transparent);">
-    <nav class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between" aria-label="Primary">
-      <a href="#top" class="flex items-center gap-2.5 font-semibold tracking-tight">
-        <span aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="30" height="30" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <circle cx="11" cy="11" r="2.4" fill="var(--accent)"/>
-            <circle cx="21" cy="11" r="2.4" fill="var(--green)"/>
-            <circle cx="11" cy="21" r="2.4" fill="var(--green)"/>
-            <circle cx="21" cy="21" r="2.4" fill="var(--accent)"/>
-          </svg>
-        </span>
-        <span>Council<span class="text-atext"> × </span>UI-UX Pro Max</span>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand" aria-label="Council times UI-UX Pro Max — home">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="30" height="30" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+          <circle cx="11" cy="11" r="2.4" fill="var(--accent)"/><circle cx="21" cy="11" r="2.4" fill="var(--green)"/>
+          <circle cx="11" cy="21" r="2.4" fill="var(--green)"/><circle cx="21" cy="21" r="2.4" fill="var(--accent)"/>
+        </svg>
+        <span>Council <span class="accent">×</span> UI-UX Pro Max</span>
       </a>
-      <div class="flex items-center gap-5 text-sm">
-        <a href="#how" class="hidden sm:inline text-muted-fg hover:text-fg transition-colors cursor-pointer">How it works</a>
-        <a href="#features" class="hidden sm:inline text-muted-fg hover:text-fg transition-colors cursor-pointer">Features</a>
-        <a href="#rankings" class="hidden sm:inline text-muted-fg hover:text-fg transition-colors cursor-pointer">Rankings</a>
-        <button id="theme-toggle" type="button" aria-label="Toggle light and dark theme"
-          class="cursor-pointer rounded-card border border-line p-2 text-muted-fg hover:text-fg hover:border-accent transition-colors">
-          <!-- sun/moon swapped in JS -->
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#rankings">Rankings</a>
+        <button id="theme-toggle" type="button" class="icon-btn" aria-label="Toggle light and dark theme">
           <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
         </button>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </header>
 
-  <main id="top">
+  <main>
     <!-- ===================== HERO ===================== -->
-    <section class="hero-bg relative overflow-hidden">
+    <section class="hero" style="padding:0;">
       <div class="blob blob-1" aria-hidden="true"></div>
       <div class="blob blob-2" aria-hidden="true"></div>
-      <div class="relative z-10 mx-auto max-w-6xl px-5 pt-24 pb-28 text-center">
-        <span class="reveal inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-1.5 text-xs font-medium text-muted-fg">
-          <span class="h-1.5 w-1.5 rounded-full bg-grn"></span>
-          Built via <code class="text-fg">/chelp</code> C1 — spec → council → design → build
-        </span>
-        <h1 class="reveal glow mt-7 text-4xl sm:text-6xl font-bold tracking-tight leading-[1.05]">
-          Decisions by council.<br />
-          <span class="text-atext">Design</span> by intelligence.
-        </h1>
-        <p class="reveal mx-auto mt-6 max-w-2xl text-base sm:text-lg text-muted-fg">
-          A four-voice council picks the visual direction. <strong class="text-fg">ui-ux-pro-max</strong>
-          supplies the real tokens — palette, type, charts. The everything-claude-code pipeline ships it.
-          This page is the output.
-        </p>
-        <div class="reveal mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a href="#how" class="cta-glow cursor-pointer rounded-card bg-grn px-6 py-3 text-sm font-semibold text-bg-deep hover:brightness-110 transition">
-            See the pipeline
-          </a>
-          <a href="#rankings" class="cursor-pointer rounded-card border border-line px-6 py-3 text-sm font-semibold text-fg hover:border-accent transition">
-            Jump to the chart
-          </a>
+      <div class="container hero-inner">
+        <span class="badge reveal"><span class="dot"></span> Built via <code>/chelp</code> C1 — spec → council → design → build</span>
+        <h1 class="reveal">Decisions by council.<br /><span class="accent">Design</span> by intelligence.</h1>
+        <p class="subtitle reveal">A four-voice council picks the visual direction. <strong>ui-ux-pro-max</strong> supplies the real tokens — palette, type, charts. The everything-claude-code pipeline ships it. This page is the output.</p>
+        <div class="cta-row reveal">
+          <a href="#how" class="btn btn-primary">See the pipeline</a>
+          <a href="#rankings" class="btn btn-ghost">Jump to the chart</a>
         </div>
-        <a href="#how" aria-label="Scroll to how it works" class="reveal mt-16 inline-block text-muted-fg hover:text-fg transition cursor-pointer">
+        <a href="#how" class="scroll-cue reveal" aria-label="Scroll to how it works">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </a>
       </div>
     </section>
 
-    <!-- ===================== HOW IT WORKS (3-stage) ===================== -->
-    <section id="how" class="mx-auto max-w-6xl px-5 py-24">
-      <div class="reveal max-w-2xl">
-        <p class="text-sm font-semibold uppercase tracking-widest text-atext">How it works</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">Three stages, anonymized and ranked</h2>
-        <p class="mt-4 text-muted-fg">
-          The council mirrors LLM-Council's deliberation: collect independent opinions, rank them blind,
-          then synthesize. Here it decided this page's visual direction.
-        </p>
-      </div>
-
-      <!-- SVG flow diagram (draws in on scroll) -->
-      <div class="reveal mt-12 overflow-x-auto">
-        <svg id="flow" viewBox="0 0 900 150" class="w-full min-w-[640px]" role="img" aria-label="Three-stage flow: collect opinions, rank blind, synthesize verdict">
-          <line class="draw" x1="150" y1="75" x2="330" y2="75" stroke="var(--accent)" stroke-width="2"/>
-          <line class="draw" x1="450" y1="75" x2="630" y2="75" stroke="var(--accent)" stroke-width="2"/>
-          <line class="draw" x1="750" y1="75" x2="860" y2="75" stroke="var(--green)" stroke-width="2"/>
-          <g>
-            <circle cx="90" cy="75" r="44" fill="var(--card)" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="90" y="70" text-anchor="middle" fill="var(--fg)" font-size="13" font-weight="600">Stage 1</text>
-            <text x="90" y="88" text-anchor="middle" fill="var(--muted-fg)" font-size="10">Collect</text>
-          </g>
-          <g>
-            <circle cx="390" cy="75" r="44" fill="var(--card)" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="390" y="70" text-anchor="middle" fill="var(--fg)" font-size="13" font-weight="600">Stage 2</text>
-            <text x="390" y="88" text-anchor="middle" fill="var(--muted-fg)" font-size="10">Rank blind</text>
-          </g>
-          <g>
-            <circle cx="690" cy="75" r="44" fill="var(--card)" stroke="var(--green)" stroke-width="1.5"/>
-            <text x="690" y="70" text-anchor="middle" fill="var(--fg)" font-size="13" font-weight="600">Stage 3</text>
-            <text x="690" y="88" text-anchor="middle" fill="var(--muted-fg)" font-size="10">Synthesize</text>
-          </g>
-        </svg>
-      </div>
-
-      <!-- Stage cards -->
-      <div class="mt-10 grid gap-5 sm:grid-cols-3">
-        <div class="reveal rounded-card border border-line bg-card p-6">
-          <div class="text-atext" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3 class="mt-4 font-semibold">Collect opinions</h3>
-          <p class="mt-2 text-sm text-muted-fg">Four voices — Architect, Skeptic, Pragmatist, Critic — answer the same question independently, with no shared transcript.</p>
+    <!-- ===================== HOW IT WORKS ===================== -->
+    <section id="how">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">How it works</p>
+          <h2>Three stages, anonymized and ranked</h2>
+          <p>The council mirrors LLM-Council's deliberation: collect independent opinions, rank them blind, then synthesize. Here it decided this page's visual direction.</p>
         </div>
-        <div class="reveal rounded-card border border-line bg-card p-6">
-          <div class="text-atext" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg>
-          </div>
-          <h3 class="mt-4 font-semibold">Rank blind</h3>
-          <p class="mt-2 text-sm text-muted-fg">Responses are anonymized and ranked on merit, then aggregated by average position — no playing favorites.</p>
+
+        <div class="flow-wrap reveal">
+          <svg viewBox="0 0 900 150" role="img" aria-label="Three-stage flow: collect opinions, rank blind, synthesize verdict">
+            <line x1="150" y1="75" x2="330" y2="75" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="450" y1="75" x2="630" y2="75" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="750" y1="75" x2="860" y2="75" stroke="var(--green)" stroke-width="2"/>
+            <g><circle cx="90" cy="75" r="44" fill="var(--card)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="90" y="70" text-anchor="middle" fill="var(--fg)" font-size="13" font-weight="600" font-family="sans-serif">Stage 1</text>
+              <text x="90" y="89" text-anchor="middle" fill="var(--muted-fg)" font-size="10" font-family="sans-serif">Collect</text></g>
+            <g><circle cx="390" cy="75" r="44" fill="var(--card)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="390" y="70" text-anchor="middle" fill="var(--fg)" font-size="13" font-weight="600" font-family="sans-serif">Stage 2</text>
+              <text x="390" y="89" text-anchor="middle" fill="var(--muted-fg)" font-size="10" font-family="sans-serif">Rank blind</text></g>
+            <g><circle cx="690" cy="75" r="44" fill="var(--card)" stroke="var(--green)" stroke-width="1.5"/>
+              <text x="690" y="70" text-anchor="middle" fill="var(--fg)" font-size="13" font-weight="600" font-family="sans-serif">Stage 3</text>
+              <text x="690" y="89" text-anchor="middle" fill="var(--muted-fg)" font-size="10" font-family="sans-serif">Synthesize</text></g>
+          </svg>
         </div>
-        <div class="reveal rounded-card border border-line bg-card p-6">
-          <div class="text-grn" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+
+        <div class="grid-3">
+          <div class="card reveal">
+            <span class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <h3>Collect opinions</h3>
+            <p>Four voices — Architect, Skeptic, Pragmatist, Critic — answer the same question independently, with no shared transcript.</p>
           </div>
-          <h3 class="mt-4 font-semibold">Synthesize</h3>
-          <p class="mt-2 text-sm text-muted-fg">A verdict reconciles the dissent. Here it changed the call: ship dark <em>and</em> a theme toggle, not just one.</p>
+          <div class="card reveal">
+            <span class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></span>
+            <h3>Rank blind</h3>
+            <p>Responses are anonymized and ranked on merit, then aggregated by average position — no playing favorites.</p>
+          </div>
+          <div class="card reveal">
+            <span class="ic green" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+            <h3>Synthesize</h3>
+            <p>A verdict reconciles the dissent. Here it changed the call: ship dark <em>and</em> a theme toggle, not just one.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== FEATURES ===================== -->
-    <section id="features" class="border-y border-line bg-muted">
-      <div class="mx-auto max-w-6xl px-5 py-24">
-        <div class="reveal max-w-2xl">
-          <p class="text-sm font-semibold uppercase tracking-widest text-atext">Features</p>
-          <h2 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">What the combined pipeline gives you</h2>
+    <section id="features" class="band">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Features</p>
+          <h2>What the combined pipeline gives you</h2>
         </div>
-        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <!-- 6 bento cards -->
-          <article class="feature reveal rounded-card border border-line bg-card p-6">
-            <div class="text-atext" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3z"/></svg></div>
-            <h3 class="mt-4 font-semibold">Four-voice council</h3>
-            <p class="mt-2 text-sm text-muted-fg">Structured disagreement before a decision — anti-anchored subagents, surfaced dissent, one verdict.</p>
-          </article>
-          <article class="feature reveal rounded-card border border-line bg-card p-6">
-            <div class="text-atext" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a3.5 3.5 0 0 0 0-7 3.5 3.5 0 0 1 0-7"/></svg></div>
-            <h3 class="mt-4 font-semibold">Real design tokens</h3>
-            <p class="mt-2 text-sm text-muted-fg">Palette, typography, landing structure, and chart choices come straight from ui-ux-pro-max's databases.</p>
-          </article>
-          <article class="feature reveal rounded-card border border-line bg-card p-6">
-            <div class="text-atext" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
-            <h3 class="mt-4 font-semibold">Score-gated build</h3>
-            <p class="mt-2 text-sm text-muted-fg">A generate → evaluate → refine loop scores Design Quality, Originality, Craft, and Functionality.</p>
-          </article>
-          <article class="feature reveal rounded-card border border-line bg-card p-6">
-            <div class="text-grn" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-            <h3 class="mt-4 font-semibold">Accessible by default</h3>
-            <p class="mt-2 text-sm text-muted-fg">Strong contrast in both themes, visible focus, reduced-motion support, and SVG icons — checked at the quality gate.</p>
-          </article>
-          <article class="feature reveal rounded-card border border-line bg-card p-6">
-            <div class="text-atext" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
-            <h3 class="mt-4 font-semibold">Self-contained output</h3>
-            <p class="mt-2 text-sm text-muted-fg">One static HTML file — Tailwind + Chart.js over CDN, no build step, opens straight in a browser.</p>
-          </article>
-          <article class="feature reveal rounded-card border border-line bg-card p-6">
-            <div class="text-grn" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 9 9"/><path d="M21 3l-3 3"/></svg></div>
-            <h3 class="mt-4 font-semibold">Dual-reviewer gate</h3>
-            <p class="mt-2 text-sm text-muted-fg">Two context-isolated reviewers must both pass before the work is considered shippable.</p>
-          </article>
+        <div class="grid-feats">
+          <article class="card feature reveal"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3z"/></svg></span><h3>Four-voice council</h3><p>Structured disagreement before a decision — anti-anchored subagents, surfaced dissent, one verdict.</p></article>
+          <article class="card feature reveal"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a3.5 3.5 0 0 0 0-7 3.5 3.5 0 0 1 0-7"/></svg></span><h3>Real design tokens</h3><p>Palette, typography, landing structure, and chart choices come straight from ui-ux-pro-max's databases.</p></article>
+          <article class="card feature reveal"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></span><h3>Score-gated build</h3><p>A generate → evaluate → refine loop scores Design Quality, Originality, Craft, and Functionality.</p></article>
+          <article class="card feature reveal"><span class="ic green" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Accessible by default</h3><p>Strong contrast in both themes, visible focus, reduced-motion support, and SVG icons — checked at the quality gate.</p></article>
+          <article class="card feature reveal"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></span><h3>Self-contained output</h3><p>One static HTML file — no CDN, no Chart.js, no build step, no network. The chart is hand-drawn SVG.</p></article>
+          <article class="card feature reveal"><span class="ic green" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 9 9"/><path d="M21 3l-3 3"/></svg></span><h3>Dual-reviewer gate</h3><p>Two context-isolated reviewers must both pass before the work is considered shippable.</p></article>
         </div>
       </div>
     </section>
 
-    <!-- ===================== RANKINGS (chart) ===================== -->
-    <section id="rankings" class="mx-auto max-w-6xl px-5 py-24">
-      <div class="reveal max-w-2xl">
-        <p class="text-sm font-semibold uppercase tracking-widest text-atext">Rankings</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">How the council scored the candidates</h2>
-        <p class="mt-4 text-muted-fg">
-          Illustrative aggregate scores for four design candidates the council weighed. Bar view ranks by
-          weighted total; radar compares the top two across the rubric axes.
-        </p>
-      </div>
-
-      <div class="reveal mt-10 rounded-card border border-line bg-card p-5 sm:p-7">
-        <div class="flex items-center justify-between gap-4 flex-wrap">
-          <div class="inline-flex rounded-card border border-line p-1" role="group" aria-label="Chart view">
-            <button id="view-bar" type="button" aria-pressed="true"
-              class="cursor-pointer rounded-[12px] px-4 py-1.5 text-sm font-medium transition">Bar</button>
-            <button id="view-radar" type="button" aria-pressed="false"
-              class="cursor-pointer rounded-[12px] px-4 py-1.5 text-sm font-medium text-muted-fg transition">Radar</button>
-          </div>
-          <p class="text-xs text-muted-fg">Illustrative data · lower avg rank = stronger</p>
+    <!-- ===================== RANKINGS ===================== -->
+    <section id="rankings">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Rankings</p>
+          <h2>How the council scored the candidates</h2>
+          <p>Illustrative aggregate scores for four design candidates the council weighed. Bar view ranks by weighted total; radar compares the top two across the rubric axes.</p>
         </div>
 
-        <div class="mt-6 relative" style="height: 360px;">
-          <canvas id="rankChart" aria-label="Council ranking chart" role="img"></canvas>
-        </div>
-
-        <!-- Mandatory a11y fallback (chart CSV): raw data table -->
-        <details class="mt-6 text-sm">
-          <summary class="cursor-pointer text-muted-fg hover:text-fg transition">View raw data table</summary>
-          <div class="mt-4 overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-              <caption class="sr-only">Council scores per design candidate across the four rubric axes</caption>
-              <thead>
-                <tr class="border-b border-line text-muted-fg">
-                  <th scope="col" class="py-2 pr-4 font-medium">Candidate</th>
-                  <th scope="col" class="py-2 pr-4 font-medium">Design Quality</th>
-                  <th scope="col" class="py-2 pr-4 font-medium">Originality</th>
-                  <th scope="col" class="py-2 pr-4 font-medium">Craft</th>
-                  <th scope="col" class="py-2 pr-4 font-medium">Functionality</th>
-                  <th scope="col" class="py-2 pr-4 font-medium">Weighted</th>
-                  <th scope="col" class="py-2 font-medium">Avg rank</th>
-                </tr>
-              </thead>
-              <tbody id="rank-table-body" class="divide-y divide-line"></tbody>
-            </table>
+        <div class="panel reveal">
+          <div class="panel-top">
+            <div class="toggle" role="group" aria-label="Chart view">
+              <button id="view-bar" type="button" aria-pressed="true">Bar</button>
+              <button id="view-radar" type="button" aria-pressed="false">Radar</button>
+            </div>
+            <p class="muted" style="font-size:.78rem;">Illustrative data · hand-drawn SVG, no libraries</p>
           </div>
-        </details>
+
+          <div class="chart-area" id="chart-area" role="img" aria-label="Council ranking chart"></div>
+
+          <details>
+            <summary>View raw data table</summary>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">Council scores per design candidate across the four rubric axes</caption>
+                <thead><tr>
+                  <th scope="col">Candidate</th><th scope="col">Design Quality</th><th scope="col">Originality</th>
+                  <th scope="col">Craft</th><th scope="col">Functionality</th><th scope="col">Weighted</th><th scope="col">Avg rank</th>
+                </tr></thead>
+                <tbody id="rank-table-body"></tbody>
+              </table>
+            </div>
+          </details>
+        </div>
       </div>
     </section>
   </main>
 
   <!-- ===================== FOOTER ===================== -->
-  <footer id="footer" class="border-t border-line bg-muted">
-    <div class="mx-auto max-w-6xl px-5 py-14">
-      <div class="flex flex-col sm:flex-row justify-between gap-8">
-        <div>
-          <div class="flex items-center gap-2.5 font-semibold">
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div style="max-width:360px;">
+          <div class="brand">
             <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" stroke="var(--accent)" stroke-width="1.5"/><circle cx="11" cy="11" r="2.4" fill="var(--accent)"/><circle cx="21" cy="11" r="2.4" fill="var(--green)"/><circle cx="11" cy="21" r="2.4" fill="var(--green)"/><circle cx="21" cy="21" r="2.4" fill="var(--accent)"/></svg>
             Council × UI-UX Pro Max
           </div>
-          <p class="mt-3 max-w-sm text-sm text-muted-fg">A test website with visuals, generated end-to-end by the chelp C1 pipeline.</p>
+          <p class="muted" style="margin-top:12px; font-size:.9rem;">A test website with visuals, generated end-to-end by the chelp C1 pipeline.</p>
         </div>
-        <nav class="flex flex-col gap-2 text-sm text-muted-fg" aria-label="Footer">
-          <a class="flink w-fit hover:text-fg transition cursor-pointer" href="#how">How it works</a>
-          <a class="flink w-fit hover:text-fg transition cursor-pointer" href="#features">Features</a>
-          <a class="flink w-fit hover:text-fg transition cursor-pointer" href="#rankings">Rankings</a>
-          <a class="flink w-fit hover:text-fg transition cursor-pointer" href="RESUME.md">Build resume</a>
+        <nav class="foot-links" aria-label="Footer">
+          <a class="flink" href="#how">How it works</a>
+          <a class="flink" href="#features">Features</a>
+          <a class="flink" href="#rankings">Rankings</a>
+          <a class="flink" href="RESUME.md">Build resume</a>
         </nav>
       </div>
-      <div class="mt-10 border-t border-line pt-6 text-xs text-muted-fg">
-        Built via <code class="text-fg">/chelp</code> C1 · council + ui-ux-pro-max · static, no build step.
-      </div>
+      <div class="foot-note">Built via <code>/chelp</code> C1 · council + ui-ux-pro-max · fully self-contained, no build step.</div>
     </div>
   </footer>
 
   <script>
-    // ---------------- Theme toggle ----------------
-    const root = document.documentElement;
-    const toggle = document.getElementById('theme-toggle');
-    const icon = document.getElementById('theme-icon');
-    const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
-    const MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>';
+    (function () {
+      'use strict';
+      var root = document.documentElement;
 
-    function applyTheme(theme) {
-      root.setAttribute('data-theme', theme);
-      icon.innerHTML = theme === 'dark' ? MOON : SUN;
-      try { localStorage.setItem('cuxpm-theme', theme); } catch (e) {}
-      if (window.__rankChart) themeChart();
-    }
-    (function initTheme() {
-      let saved = null;
+      // ---------------- Theme toggle ----------------
+      var icon = document.getElementById('theme-icon');
+      var MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>';
+      var SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+      function applyTheme(t) {
+        root.setAttribute('data-theme', t);
+        if (icon) icon.innerHTML = (t === 'dark') ? MOON : SUN;
+        try { localStorage.setItem('cuxpm-theme', t); } catch (e) {}
+        renderChart();
+      }
+      var saved = null;
       try { saved = localStorage.getItem('cuxpm-theme'); } catch (e) {}
       applyTheme(saved || 'dark');
-    })();
-    toggle.addEventListener('click', () => {
-      applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
+      var toggle = document.getElementById('theme-toggle');
+      if (toggle) toggle.addEventListener('click', function () {
+        applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      });
 
-    // ---------------- Scroll reveal + SVG draw-in ----------------
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => {
-          if (e.isIntersecting) {
-            setTimeout(() => e.target.classList.add('in'), (i % 6) * 60);
-            io.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.15 });
-      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-      const flow = document.getElementById('flow');
-      const flowIo = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            flow.querySelectorAll('.draw').forEach((l, i) => setTimeout(() => l.classList.add('in'), i * 250));
-            flowIo.unobserve(flow);
-          }
-        });
-      }, { threshold: 0.4 });
-      flowIo.observe(flow);
-    } else {
-      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
-      document.querySelectorAll('.draw').forEach((l) => l.classList.add('in'));
-    }
-
-    // ---------------- Chart (council aggregate rankings) ----------------
-    // Illustrative data. Weighted = gan-design rubric: DQ .35, Orig .30, Craft .25, Func .10
-    const candidates = [
-      { name: 'Cinematic dark + toggle', dq: 9.0, orig: 8.8, craft: 8.6, func: 9.2 },
-      { name: 'Minimal light docs',      dq: 8.1, orig: 6.9, craft: 8.4, func: 9.0 },
-      { name: 'Glass neon',              dq: 7.4, orig: 8.2, craft: 6.8, func: 7.0 },
-      { name: 'Flat corporate',          dq: 6.2, orig: 5.0, craft: 7.1, func: 8.5 },
-    ];
-    candidates.forEach((c) => { c.weighted = +(c.dq * 0.35 + c.orig * 0.30 + c.craft * 0.25 + c.func * 0.10).toFixed(2); });
-    const ranked = [...candidates].sort((a, b) => b.weighted - a.weighted);
-    ranked.forEach((c, i) => { c.rank = i + 1; });
-
-    // Build the a11y table
-    document.getElementById('rank-table-body').innerHTML = ranked.map((c) => `
-      <tr>
-        <th scope="row" class="py-2 pr-4 font-medium text-fg">${c.name}</th>
-        <td class="py-2 pr-4 text-muted-fg">${c.dq}</td>
-        <td class="py-2 pr-4 text-muted-fg">${c.orig}</td>
-        <td class="py-2 pr-4 text-muted-fg">${c.craft}</td>
-        <td class="py-2 pr-4 text-muted-fg">${c.func}</td>
-        <td class="py-2 pr-4 text-fg">${c.weighted}</td>
-        <td class="py-2 text-fg">${c.rank}</td>
-      </tr>`).join('');
-
-    function cssVar(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
-    function withAlpha(hex, a) {
-      const h = hex.replace('#', '');
-      const r = parseInt(h.substring(0, 2), 16), g = parseInt(h.substring(2, 4), 16), b = parseInt(h.substring(4, 6), 16);
-      return `rgba(${r}, ${g}, ${b}, ${a})`;
-    }
-
-    let currentView = 'bar';
-    function chartConfig(view) {
-      const fg = cssVar('--fg'), muted = cssVar('--muted-fg'), grid = cssVar('--chart-grid');
-      const accent = cssVar('--accent'), green = cssVar('--green');
-      if (view === 'bar') {
-        return {
-          type: 'bar',
-          data: {
-            labels: ranked.map((c) => c.name),
-            datasets: [{
-              label: 'Weighted score (0–10)',
-              data: ranked.map((c) => c.weighted),
-              backgroundColor: ranked.map((_, i) => (i === 0 ? green : accent)),
-              borderRadius: 8,
-              maxBarThickness: 64,
-            }],
-          },
-          options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false }, tooltip: { backgroundColor: cssVar('--card'), titleColor: fg, bodyColor: muted, borderColor: cssVar('--line'), borderWidth: 1, padding: 10 } },
-            scales: {
-              x: { ticks: { color: muted, font: { family: 'Inter' } }, grid: { display: false } },
-              y: { beginAtZero: true, max: 10, ticks: { color: muted, font: { family: 'Inter' } }, grid: { color: grid } },
-            },
-          },
-        };
+      // ---------------- Reveal on scroll (progressive enhancement) ----------------
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var reveals = document.querySelectorAll('.reveal');
+      if (!reduce && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e, i) {
+            if (e.isIntersecting) { var el = e.target; setTimeout(function () { el.classList.add('in'); }, (i % 6) * 55); io.unobserve(el); }
+          });
+        }, { threshold: 0.12 });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('in'); });
       }
-      const top2 = ranked.slice(0, 2);
-      return {
-        type: 'radar',
-        data: {
-          labels: ['Design Quality', 'Originality', 'Craft', 'Functionality'],
-          datasets: top2.map((c, i) => ({
-            label: c.name,
-            data: [c.dq, c.orig, c.craft, c.func],
-            borderColor: i === 0 ? green : accent,
-            backgroundColor: withAlpha(i === 0 ? green : accent, 0.3),
-            borderWidth: 2,
-            pointBackgroundColor: i === 0 ? green : accent,
-          })),
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { labels: { color: fg, font: { family: 'Inter' } } }, tooltip: { backgroundColor: cssVar('--card'), titleColor: fg, bodyColor: muted, borderColor: cssVar('--line'), borderWidth: 1 } },
-          scales: { r: { min: 0, max: 10, angleLines: { color: grid }, grid: { color: grid }, pointLabels: { color: muted, font: { family: 'Inter', size: 12 } }, ticks: { display: false } } },
-        },
-      };
-    }
 
-    // Re-theme by rebuilding (Chart.js v4 cannot reliably mutate type/scales in place).
-    function themeChart() { rebuildChart(); }
+      // ---------------- Data (council aggregate rankings) ----------------
+      // Weighted = gan-design rubric: DQ .35, Orig .30, Craft .25, Func .10
+      var candidates = [
+        { name: 'Cinematic dark + toggle', dq: 9.0, orig: 8.8, craft: 8.6, func: 9.2 },
+        { name: 'Minimal light docs',      dq: 8.1, orig: 6.9, craft: 8.4, func: 9.0 },
+        { name: 'Glass neon',              dq: 7.4, orig: 8.2, craft: 6.8, func: 7.0 },
+        { name: 'Flat corporate',          dq: 6.2, orig: 5.0, craft: 7.1, func: 8.5 }
+      ];
+      candidates.forEach(function (c) { c.weighted = +(c.dq * 0.35 + c.orig * 0.30 + c.craft * 0.25 + c.func * 0.10).toFixed(2); });
+      var ranked = candidates.slice().sort(function (a, b) { return b.weighted - a.weighted; });
+      ranked.forEach(function (c, i) { c.rank = i + 1; });
 
-    const ctx = document.getElementById('rankChart');
-    window.__rankChart = null;
-    function rebuildChart() {
-      if (window.__rankChart) window.__rankChart.destroy();
-      window.__rankChart = new Chart(ctx, chartConfig(currentView));
-    }
+      var tbody = document.getElementById('rank-table-body');
+      if (tbody) {
+        tbody.innerHTML = ranked.map(function (c) {
+          return '<tr><th scope="row">' + c.name + '</th><td>' + c.dq + '</td><td>' + c.orig + '</td><td>' + c.craft + '</td><td>' + c.func + '</td><td style="color:var(--fg)">' + c.weighted + '</td><td style="color:var(--fg)">' + c.rank + '</td></tr>';
+        }).join('');
+      }
 
-    // View toggle
-    const barBtn = document.getElementById('view-bar');
-    const radarBtn = document.getElementById('view-radar');
-    function setView(view) {
-      currentView = view;
-      const onBar = view === 'bar';
-      barBtn.setAttribute('aria-pressed', String(onBar));
-      radarBtn.setAttribute('aria-pressed', String(!onBar));
-      barBtn.classList.toggle('bg-muted', onBar);
-      barBtn.classList.toggle('text-fg', onBar);
-      barBtn.classList.toggle('text-muted-fg', !onBar);
-      radarBtn.classList.toggle('bg-muted', !onBar);
-      radarBtn.classList.toggle('text-fg', !onBar);
-      radarBtn.classList.toggle('text-muted-fg', onBar);
-      rebuildChart();
-    }
-    barBtn.addEventListener('click', () => setView('bar'));
-    radarBtn.addEventListener('click', () => setView('radar'));
-    setView('bar');
+      // ---------------- Hand-rolled SVG chart (no library) ----------------
+      var area = document.getElementById('chart-area');
+      var currentView = 'bar';
+      function cssVar(n) { return getComputedStyle(root).getPropertyValue(n).trim(); }
+      function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+      function hexA(hex, a) {
+        var h = hex.replace('#', '');
+        if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+        var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+        return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+      }
+
+      function barSVG() {
+        var W = 720, H = 380, padL = 36, padR = 16, padT = 28, padB = 88;
+        var x0 = padL, x1 = W - padR, y0 = padT, yBase = H - padB;
+        var plotW = x1 - x0, plotH = yBase - y0, max = 10;
+        var fg = cssVar('--fg'), muted = cssVar('--muted-fg'), grid = cssVar('--chart-grid');
+        var accent = cssVar('--accent'), green = cssVar('--green');
+        var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Weighted score by candidate, ranked descending">';
+        // gridlines + y labels
+        for (var g0 = 0; g0 <= max; g0 += 2) {
+          var gy = yBase - (g0 / max) * plotH;
+          s += '<line x1="' + x0 + '" y1="' + gy + '" x2="' + x1 + '" y2="' + gy + '" stroke="' + grid + '" stroke-width="1"/>';
+          s += '<text x="' + (x0 - 8) + '" y="' + (gy + 4) + '" text-anchor="end" font-size="11" fill="' + muted + '" font-family="sans-serif">' + g0 + '</text>';
+        }
+        var n = ranked.length, slot = plotW / n, bw = Math.min(64, slot * 0.5);
+        ranked.forEach(function (c, i) {
+          var cx = x0 + slot * (i + 0.5);
+          var bh = (c.weighted / max) * plotH;
+          var by = yBase - bh;
+          var fill = (i === 0) ? green : accent;
+          s += '<rect x="' + (cx - bw / 2) + '" y="' + by + '" width="' + bw + '" height="' + bh + '" rx="7" fill="' + fill + '"/>';
+          s += '<text x="' + cx + '" y="' + (by - 8) + '" text-anchor="middle" font-size="12.5" font-weight="600" fill="' + fg + '" font-family="sans-serif">' + c.weighted + '</text>';
+          // wrap long names onto two lines
+          var words = c.name.split(' '), line1 = words[0], line2 = '';
+          for (var w = 1; w < words.length; w++) { if ((line1 + ' ' + words[w]).length <= 12) line1 += ' ' + words[w]; else line2 += (line2 ? ' ' : '') + words[w]; }
+          s += '<text x="' + cx + '" y="' + (yBase + 22) + '" text-anchor="middle" font-size="11.5" fill="' + muted + '" font-family="sans-serif">' + esc(line1) + '</text>';
+          if (line2) s += '<text x="' + cx + '" y="' + (yBase + 38) + '" text-anchor="middle" font-size="11.5" fill="' + muted + '" font-family="sans-serif">' + esc(line2) + '</text>';
+        });
+        s += '<text x="' + x0 + '" y="' + (H - 10) + '" font-size="11.5" fill="' + muted + '" font-family="sans-serif">Weighted score (0–10), ranked best first</text>';
+        s += '</svg>';
+        return s;
+      }
+
+      function radarSVG() {
+        var W = 720, H = 380, cx = 360, cy = 180, R = 132, max = 10;
+        var axes = [['Design Quality','dq'], ['Originality','orig'], ['Craft','craft'], ['Functionality','func']];
+        var fg = cssVar('--fg'), muted = cssVar('--muted-fg'), grid = cssVar('--chart-grid');
+        var accent = cssVar('--accent'), green = cssVar('--green');
+        var top2 = ranked.slice(0, 2);
+        function pt(ai, frac) { var ang = (-90 + ai * (360 / axes.length)) * Math.PI / 180; return [cx + Math.cos(ang) * R * frac, cy + Math.sin(ang) * R * frac]; }
+        var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Radar comparison of the top two candidates across four rubric axes">';
+        // rings
+        [0.25, 0.5, 0.75, 1].forEach(function (f) {
+          var pts = axes.map(function (_, ai) { return pt(ai, f).join(','); }).join(' ');
+          s += '<polygon points="' + pts + '" fill="none" stroke="' + grid + '" stroke-width="1"/>';
+        });
+        // spokes + labels
+        axes.forEach(function (a, ai) {
+          var e = pt(ai, 1), lp = pt(ai, 1.16);
+          s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0] + '" y2="' + e[1] + '" stroke="' + grid + '" stroke-width="1"/>';
+          var anchor = Math.abs(lp[0] - cx) < 4 ? 'middle' : (lp[0] > cx ? 'start' : 'end');
+          s += '<text x="' + lp[0] + '" y="' + (lp[1] + 4) + '" text-anchor="' + anchor + '" font-size="11.5" fill="' + muted + '" font-family="sans-serif">' + a[0] + '</text>';
+        });
+        // datasets
+        top2.forEach(function (c, di) {
+          var col = (di === 0) ? green : accent;
+          var pts = axes.map(function (a, ai) { return pt(ai, c[a[1]] / max).join(','); }).join(' ');
+          s += '<polygon points="' + pts + '" fill="' + hexA(col, 0.3) + '" stroke="' + col + '" stroke-width="2"/>';
+          axes.forEach(function (a, ai) { var p = pt(ai, c[a[1]] / max); s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="' + col + '"/>'; });
+        });
+        // legend
+        top2.forEach(function (c, di) {
+          var col = (di === 0) ? green : accent, ly = H - 24 + di * 0; var lx = 40 + di * 220;
+          s += '<rect x="' + lx + '" y="' + (H - 28) + '" width="12" height="12" rx="3" fill="' + col + '"/>';
+          s += '<text x="' + (lx + 18) + '" y="' + (H - 18) + '" font-size="11.5" fill="' + fg + '" font-family="sans-serif">' + esc(c.name) + '</text>';
+        });
+        s += '</svg>';
+        return s;
+      }
+
+      function renderChart() { if (!area) return; area.innerHTML = (currentView === 'bar') ? barSVG() : radarSVG(); }
+
+      var barBtn = document.getElementById('view-bar'), radarBtn = document.getElementById('view-radar');
+      function setView(v) {
+        currentView = v;
+        var onBar = (v === 'bar');
+        if (barBtn) barBtn.setAttribute('aria-pressed', String(onBar));
+        if (radarBtn) radarBtn.setAttribute('aria-pressed', String(!onBar));
+        renderChart();
+      }
+      if (barBtn) barBtn.addEventListener('click', function () { setView('bar'); });
+      if (radarBtn) radarBtn.addEventListener('click', function () { setView('radar'); });
+
+      renderChart();
+    })();
   </script>
 </body>
 </html>

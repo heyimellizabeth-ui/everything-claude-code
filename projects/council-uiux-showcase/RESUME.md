@@ -1,7 +1,9 @@
 # Council × UI-UX Pro Max — Site Resume
 
 **Built:** June 2026 · **Pipeline:** C1 (greenfield) via `/chelp`, adapted to local tools
-**Type:** Single-page showcase landing · **Stack:** static HTML + Tailwind (CDN) + Chart.js (CDN)
+**Type:** Single-page showcase landing · **Stack:** one static HTML file — hand-written CSS, system
+fonts, and a hand-drawn inline-SVG chart. **Zero external dependencies** (no CDN, no Chart.js, no
+web fonts), so it renders with no network at all.
 
 ---
 
@@ -24,8 +26,8 @@ This is the "test website with visuals" deliverable — it opens directly in a b
 1. **Hero** — cinema-dark gradient, 2 animated ambient blobs, H1 glow, green CTA with accent glow.
 2. **How It Works** — 3-node inline-SVG flow that draws in on scroll + three stage cards.
 3. **Features** — bento grid of six cards with hover lift + indigo border tint.
-4. **Rankings** — Chart.js with a **Bar↔Radar toggle**, themed per active theme, plus a raw-data
-   `<table>` a11y fallback.
+4. **Rankings** — a **hand-drawn inline-SVG chart** (no library) with a **Bar↔Radar toggle**, themed
+   per active theme, plus a raw-data `<table>` a11y fallback.
 5. **Footer** — repo links, underline-slide hover, "built via /chelp C1" credit.
 
 Plus a **light/dark theme toggle** (the council's reframe: the toggle demonstrates the design
@@ -56,9 +58,10 @@ Each stage left an auditable artifact in this folder.
 - **Palette:** Developer Tool / IDE — bg `#0F172A`, fg `#F8FAFC`, card `#1B2336`, CTA green
   `#22C55E`, cinema indigo `#5E6AD2`. Small text uses higher-contrast `--accent-text`
   (`#A5B4FC` dark / `#4338CA` light) for WCAG AA.
-- **Typography:** Inter (with a system-font fallback stack so the page renders offline).
+- **Typography:** a system sans stack (`system-ui` → Segoe UI / Roboto / Helvetica). Inter was the
+  ui-ux-pro-max pick; we use system fonts so there is no web-font dependency.
 - **Style:** Dark Mode (OLED) + Modern Dark (Cinema) — ambient blobs, hairline borders, 16px radius.
-- **Chart:** Bar (AAA, sorted by score) default + Radar (rubric axes, 30% fill) toggle.
+- **Chart:** hand-drawn inline SVG — Bar (sorted by score) default + Radar (rubric axes, 30% fill) toggle.
 
 ---
 
@@ -70,12 +73,15 @@ python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
-Or open `index.html` directly (`file://`). Tailwind, Chart.js, and Inter load from CDN; if blocked,
-the page falls back to system fonts and remains readable, and the chart's data table still renders.
+Or just open `index.html` directly (`file://`) — it has no external resources, so it renders fully
+offline and behind restrictive networks.
 
 ## Self-Contained Notes
 
-- No bundler, no `npm install`. One HTML file + two SVG assets.
+- No bundler, no `npm install`, **no CDN, no network**. One HTML file + two local SVG assets.
+- All CSS is inline; the chart is hand-drawn inline SVG; fonts are system fonts.
+- Content is visible by default — `<html class="no-js">` flips to `js` immediately, and the reveal
+  animation only hides content once JS is confirmed, so a JS failure can't blank the page.
 - All icons are inline SVG (no emoji). Animations gated behind `prefers-reduced-motion`.
 - Theme choice persists in `localStorage` (`cuxpm-theme`).
 
