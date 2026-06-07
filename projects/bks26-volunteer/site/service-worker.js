@@ -5,7 +5,7 @@
  * Bump CACHE when the precached file list changes structurally. */
 'use strict';
 
-const CACHE = 'bks26-shell-v1';
+const CACHE = 'bks26-shell-v2';
 const SHELL = [
   './',
   './index.html',

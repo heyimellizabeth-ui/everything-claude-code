@@ -295,31 +295,12 @@
     }
     .checklist-progress-text { font-size: 0.75rem; color: var(--muted); }
 
-    /* ====== TRAVEL TABS ====== */
-    .day-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
-    .day-tab {
-      padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer;
-      font-size: 0.82rem; font-weight: 600; border: 1px solid var(--border);
-      background: var(--surface); color: var(--muted);
-      transition: all 0.15s; min-height: 44px; display: flex; align-items: center;
-      user-select: none; font-family: inherit;
-      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
-    }
-    .day-tab:hover { color: var(--text); border-color: #444; }
-    .day-tab.active-thu { background: #1a0a2e; border-color: var(--day-thu); color: #a78bfa; }
-    .day-tab.active-fri { background: #021608; border-color: var(--day-fri); color: #86efac; }
-    .day-tab.active-satmon { background: #1a0f00; border-color: var(--day-satmon); color: var(--gold); }
-
-    .day-panel { display: none; }
-    .day-panel.visible { display: block; }
-
+    /* ====== TRAVEL ====== */
     .travel-card {
       background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--brand);
       border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 0.65rem;
     }
-    .travel-card-thu { border-left: 3px solid var(--day-thu); }
-    .travel-card-fri { border-left: 3px solid var(--day-fri); }
-    .travel-card-satmon { border-left: 3px solid var(--day-satmon); }
     .travel-icon { font-size: 1.1rem; margin-right: 0.5rem; }
     .travel-method { font-weight: 700; font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; }
     .travel-detail { font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
@@ -357,17 +338,20 @@
     tbody tr:hover { background: #141414; }
     tbody td { padding: 0.75rem 1rem; vertical-align: top; color: var(--muted); line-height: 1.45; }
     tbody td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
-    .row-special { background: #110900; }
-    .row-special:hover { background: #160d00; }
-    .row-campsite { background: #040a14; }
-    .row-campsite:hover { background: #060f1c; }
-
-    @media (max-width: 600px) {
-      thead th:first-child { position: sticky; left: 0; z-index: 1; background: #161616; }
-      tbody td:first-child { position: sticky; left: 0; z-index: 1; background: #111; }
-      .row-special td:first-child { background: #110900; }
-      .row-campsite td:first-child { background: #040a14; }
+    /* Tasks as stacked cards — no horizontal scroll on phones */
+    .task-list { display: grid; grid-template-columns: 1fr; gap: 0.6rem; margin-top: 0.5rem; }
+    @media (min-width: 768px) { .task-list { grid-template-columns: 1fr 1fr; } }
+    .task-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--border); border-radius: var(--radius);
+      padding: 0.9rem 1.1rem;
     }
+    .task-card.special { border-left-color: var(--gold); }
+    .task-card.campsite { border-left-color: #3b82f6; }
+    .task-name { font-weight: 700; font-size: 0.92rem; color: #fff; margin-bottom: 0.3rem; line-height: 1.3; }
+    .task-meet { font-size: 0.82rem; color: var(--text); margin-bottom: 0.35rem; }
+    .task-note { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .task-note strong { color: var(--text); }
 
     /* ====== CATERING GRIDS ====== */
     .catering-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
@@ -666,107 +650,60 @@
 <section id="travel">
   <div class="section-eyebrow">Step 2</div>
   <h2 class="section-title">Getting There</h2>
-  <p class="section-intro">Transport options vary by day. Select your arrival day below. Address: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong>.</p>
+  <p class="section-intro">Pick your transport below — each one notes what changes per day. Address: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong>.</p>
 
-  <div class="day-tabs">
-    <button class="day-tab active-thu" id="tab-thu" onclick="showDay('thu')" type="button">Thu 11 Jun</button>
-    <button class="day-tab" id="tab-fri" onclick="showDay('fri')" type="button">Fri 12 Jun</button>
-    <button class="day-tab" id="tab-satmon" onclick="showDay('satmon')" type="button">Sat–Mon</button>
+  <div class="alert alert-red mb-2">
+    <span class="alert-icon">⚠</span>
+    <div class="alert-body">
+      <strong>No public bus on Sat, Sun &amp; Mon.</strong> The regular bus (142/143) only runs Thu &amp; Fri. For the rest of the weekend, plan to bike or drive.
+    </div>
   </div>
-
-  <!-- Thursday -->
-  <div class="day-panel visible" id="panel-thu">
-    <div class="alert alert-gold mb-2">
-      <span class="alert-icon">⚠</span>
-      <div class="alert-body">
-        <strong>Thursday setup day:</strong> Campsite opens at <strong>16:00</strong>. NO backstage access without safety gear — the site is still being built. Volunteer meeting at <strong>21:30</strong> (strongly recommended — meet the team, collect t-shirt, sign contract).
-      </div>
-    </div>
-    <div class="travel-card travel-card-thu">
-      <div class="travel-method"><span class="travel-icon">🚆</span> Train + Bus</div>
-      <div class="travel-detail">
-        <p>Train to <strong>Tilburg Centraal</strong>, then <strong>Bus 142 or 143</strong> to stop <strong>Hilvarenbeek Safaripark</strong>.</p>
-        <p>7-minute walk to crew accreditation via the flyover bridge.</p>
-        <p>Or rent an <strong>OV-fiets</strong> at Tilburg station (very convenient for the rest of the weekend).</p>
-      </div>
-    </div>
-    <div class="travel-card travel-card-thu">
-      <div class="travel-method"><span class="travel-icon">🚗</span> Car</div>
-      <div class="travel-detail">
-        <p>Navigate to: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong></p>
-        <p>Follow yellow signs: <strong>Leveranciers – Backstage – Artists</strong></p>
-        <p>You can drive directly to the crew campsite <strong>until 20:00 on Thursday</strong> to unload gear.</p>
-        <p><strong>Fill out the parking form in advance</strong> — you need this to receive your parking ticket at accreditation.</p>
-      </div>
-    </div>
-    <div class="travel-card travel-card-thu">
-      <div class="travel-method"><span class="travel-icon">🚲</span> Bike</div>
-      <div class="travel-detail">
-        <p>A bike is strongly recommended for the whole weekend. Campsite is ~45 min walk from volunteer office — a bike makes this easy.</p>
-      </div>
+  <div class="alert alert-gold mb-2">
+    <span class="alert-icon">🚲</span>
+    <div class="alert-body">
+      <strong>Bring a bike if you can.</strong> The crew campsite is a ~45-min walk from the volunteer office — a bike cuts it to under 10. Rent an <strong>OV-fiets</strong> at Tilburg station.
     </div>
   </div>
 
-  <!-- Friday -->
-  <div class="day-panel" id="panel-fri">
-    <div class="alert alert-green mb-2">
-      <span class="alert-icon">ℹ</span>
-      <div class="alert-body">
-        <strong>Festival opens Friday 12 June.</strong> Shuttle buses run from Tilburg station. Allow extra time — queues can be long.
-      </div>
-    </div>
-    <div class="travel-card travel-card-fri">
-      <div class="travel-method"><span class="travel-icon">🚌</span> Shuttle Bus (recommended)</div>
-      <div class="travel-detail">
-        <p>From <strong>Tilburg Centraal</strong> station: <strong>09:00–20:00</strong> · <strong>€14 return</strong></p>
-        <p>Route: shuttle drops at <strong>Entrance South</strong> → change to another shuttle for <strong>Entrance North</strong> (Beekse Bergen reception) → short walk to backstage accreditation.</p>
-        <p>⚠ Allow extra time — shuttle queues can be long on Friday morning.</p>
-      </div>
-    </div>
-    <div class="travel-card travel-card-fri">
-      <div class="travel-method"><span class="travel-icon">🚲</span> Bike (highly recommended)</div>
-      <div class="travel-detail">
-        <p>Bring your own or rent. Very convenient for the campsite ↔ backstage commute throughout the weekend.</p>
-      </div>
-    </div>
-    <div class="travel-card travel-card-fri">
-      <div class="travel-method"><span class="travel-icon">🚆</span> Train + Bus</div>
-      <div class="travel-detail">
-        <p>Train to <strong>Tilburg Centraal</strong>, then <strong>Bus 142 or 143</strong> to <strong>Hilvarenbeek Safaripark</strong> stop.</p>
-        <p>Regular buses also run on Friday.</p>
-      </div>
-    </div>
-    <div class="travel-card travel-card-fri">
-      <div class="travel-method"><span class="travel-icon">🚗</span> Car</div>
-      <div class="travel-detail">
-        <p>Navigate to: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong></p>
-        <p>Follow yellow signs: <strong>Leveranciers – Backstage – Artists</strong></p>
-        <p>Park at <strong>crew parking</strong> — use the parking ticket from accreditation. Remember to fill out the parking form in advance.</p>
-      </div>
+  <div class="travel-card">
+    <div class="travel-method"><span class="travel-icon">🚆</span> Train + Bus <span class="badge badge-gray">Thu &amp; Fri only</span></div>
+    <div class="travel-detail">
+      <p>Train to <strong>Tilburg Centraal</strong>, then <strong>Bus 142 or 143</strong> to stop <strong>Hilvarenbeek Safaripark</strong>.</p>
+      <p>~7-min walk to crew accreditation via the flyover bridge.</p>
+      <p><strong>Sat–Mon:</strong> this bus does not run — use the Friday shuttle window, bike, or drive.</p>
     </div>
   </div>
 
-  <!-- Sat–Mon -->
-  <div class="day-panel" id="panel-satmon">
-    <div class="alert alert-red mb-2">
-      <span class="alert-icon">⚠</span>
-      <div class="alert-body">
-        <strong>No public buses Saturday, Sunday or Monday</strong> — regular bus service does not run. Plan your travel in advance.
-      </div>
+  <div class="travel-card">
+    <div class="travel-method"><span class="travel-icon">🚌</span> Friday Shuttle <span class="badge badge-green">Fri only</span></div>
+    <div class="travel-detail">
+      <p>From <strong>Tilburg Centraal</strong>: runs <strong>09:00–20:00</strong> · <strong>€14 return</strong>.</p>
+      <p>Drops at <strong>Entrance South</strong> → change to the shuttle for <strong>Entrance North</strong> (Beekse Bergen reception) → short walk to backstage accreditation.</p>
+      <p>⚠ Queues can be long on Friday morning — allow extra time.</p>
     </div>
-    <div class="travel-card travel-card-satmon">
-      <div class="travel-method"><span class="travel-icon">🚲</span> Bike (strongly recommended)</div>
-      <div class="travel-detail">
-        <p>Best option for the whole weekend. The campsite is ~45 minutes walk from the volunteer office — a bike cuts this to under 10 minutes.</p>
-        <p>Check the <strong>BKS app map</strong> for green (bike allowed) and red (bike prohibited) zones on the grounds.</p>
-      </div>
+  </div>
+
+  <div class="travel-card">
+    <div class="travel-method"><span class="travel-icon">🚗</span> Car <span class="badge badge-gold">Parking form</span></div>
+    <div class="travel-detail">
+      <p>Navigate to <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong>, then follow the yellow <strong>Leveranciers – Backstage – Artists</strong> signs to crew parking.</p>
+      <p><strong>Fill out the parking form in advance</strong> — you collect your parking lanyard with your wristband at accreditation.</p>
+      <p><strong>Thu only:</strong> you may drive up to the crew campsite to unload <strong>until 20:00</strong>. Other days, park at crew parking.</p>
     </div>
-    <div class="travel-card travel-card-satmon">
-      <div class="travel-method"><span class="travel-icon">🚗</span> Car</div>
-      <div class="travel-detail">
-        <p>Park at <strong>crew parking</strong> using the parking ticket you received at accreditation.</p>
-        <p>Navigate to: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong></p>
-      </div>
+  </div>
+
+  <div class="travel-card">
+    <div class="travel-method"><span class="travel-icon">🚲</span> Bike <span class="badge badge-green">Best all weekend</span></div>
+    <div class="travel-detail">
+      <p>The easiest way around — especially the campsite ↔ backstage commute. Bring your own or rent an OV-fiets at Tilburg.</p>
+      <p>Check the <strong>BKS app map</strong> for green (bike allowed) and red (bike prohibited) zones — enforced with checkpoints in 2026.</p>
+    </div>
+  </div>
+
+  <div class="alert alert-gold mt-2">
+    <span class="alert-icon">⚠</span>
+    <div class="alert-body">
+      <strong>Thursday setup day:</strong> campsite opens <strong>16:00</strong>; no backstage access without safety gear (site still being built). Volunteer meeting <strong>21:30</strong> — strongly recommended (meet the team, collect t-shirt, sign contract).
     </div>
   </div>
 </section>
@@ -890,118 +827,102 @@
     </div>
   </div>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Task</th>
-          <th>Meeting Point</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="row-special">
-          <td>Artist Hospitality</td>
-          <td>Volunteer office</td>
-          <td><span class="badge badge-gold">Special pass</span> Collect backstage pass at volunteer office first; return after shift</td>
-        </tr>
-        <tr>
-          <td>Campsite Catering (Helicopterfield)</td>
-          <td>Helicopterfield Meal Hub</td>
-          <td>Note: this is the NEW Meal Hub — not main catering backstage</td>
-        </tr>
-        <tr class="row-campsite">
-          <td>Campsite Management – Festivalkamperen</td>
-          <td>Info point at the beach</td>
-          <td><span class="badge badge-gray">Campsite</span> Do NOT go to volunteer office</td>
-        </tr>
-        <tr class="row-campsite">
-          <td>Campsite Management – Camper</td>
-          <td>Drop-off Point, across from Ganvie Village</td>
-          <td><span class="badge badge-gray">Campsite</span> Do NOT go to volunteer office</td>
-        </tr>
-        <tr class="row-campsite">
-          <td>Campsite Management – Check-in</td>
-          <td>Check-in reception at the campsite</td>
-          <td><span class="badge badge-gray">Campsite</span> 3 variants: Comfort Camp, Group Spots, Secret Fields</td>
-        </tr>
-        <tr>
-          <td>Crew Accreditation</td>
-          <td>Volunteer office</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>Crew Catering</td>
-          <td>Volunteer office</td>
-          <td><span class="badge badge-red">Dress code</span> Closed shoes + covered legs required</td>
-        </tr>
-        <tr>
-          <td>Cup Return</td>
-          <td>Volunteer office</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>Ecoteam</td>
-          <td>Volunteer office</td>
-          <td>Morning shifts</td>
-        </tr>
-        <tr>
-          <td>Food &amp; Waste Team</td>
-          <td>Volunteer office</td>
-          <td>During dinner times</td>
-        </tr>
-        <tr>
-          <td>Flexteam</td>
-          <td>Volunteer office</td>
-          <td>Various ad-hoc tasks — check with Sara for assignment</td>
-        </tr>
-        <tr>
-          <td>Locker Team</td>
-          <td>Volunteer office</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>Locker Team – Powerbank Zone</td>
-          <td>Volunteer office</td>
-          <td>Near The Floor stage</td>
-        </tr>
-        <tr>
-          <td>Parking Management</td>
-          <td>Volunteer office</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>Press &amp; Guest Area</td>
-          <td>Volunteer office</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>Runner Team Horeca</td>
-          <td>Volunteer office</td>
-          <td><span class="badge badge-purple">Licence</span> Driving licence required</td>
-        </tr>
-        <tr class="row-special">
-          <td>Security Team</td>
-          <td>Volunteer office</td>
-          <td><span class="badge badge-gold">Special pass</span> Collect backstage pass at volunteer office first; return after shift</td>
-        </tr>
-        <tr>
-          <td>Shuttle Service</td>
-          <td>Volunteer office</td>
-          <td><span class="badge badge-purple">Licence</span> Driving licence required</td>
-        </tr>
-        <tr>
-          <td>Ticketcheck</td>
-          <td>Depends on assignment — see note above</td>
-          <td>Main entrance · Lake Resort → Volunteer office · Safari Resort → Checkpoint Safari Resort · Secret Fields → Secret Fields entrance</td>
-        </tr>
-        <tr>
-          <td>Volunteer Office</td>
-          <td>Volunteer office</td>
-          <td>Assisting Sara, Evan, Shannah &amp; Emma</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="task-list">
+    <div class="task-card special">
+      <div class="task-name">Artist Hospitality</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note"><span class="badge badge-gold">Special pass</span> Collect your backstage pass at the volunteer office first; return it after your shift.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Campsite Catering (Helicopterfield)</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Helicopterfield Meal Hub</div>
+      <div class="task-note">This is the <strong>NEW Meal Hub</strong> — not main catering backstage.</div>
+    </div>
+    <div class="task-card campsite">
+      <div class="task-name">Campsite Management – Festivalkamperen</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Info point at the beach</div>
+      <div class="task-note"><span class="badge badge-gray">Campsite</span> Do <strong>NOT</strong> go to the volunteer office.</div>
+    </div>
+    <div class="task-card campsite">
+      <div class="task-name">Campsite Management – Camper</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Drop-off Point, across from Ganvie Village</div>
+      <div class="task-note"><span class="badge badge-gray">Campsite</span> Do <strong>NOT</strong> go to the volunteer office.</div>
+    </div>
+    <div class="task-card campsite">
+      <div class="task-name">Campsite Management – Check-in</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Check-in reception at the campsite</div>
+      <div class="task-note"><span class="badge badge-gray">Campsite</span> 3 variants: Comfort Camp, Group Spots, Secret Fields.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Crew Accreditation</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Crew Catering</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note"><span class="badge badge-red">Dress code</span> Closed shoes + covered legs required.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Cup Return</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Ecoteam</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note">Morning shifts.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Food &amp; Waste Team</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note">During dinner times.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Flexteam</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note">Various ad-hoc tasks — check with Sara for your assignment.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Locker Team</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Locker Team – Powerbank Zone</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note">Near The Floor stage.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Parking Management</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Press &amp; Guest Area</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Runner Team Horeca</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note"><span class="badge badge-purple">Licence</span> Driving licence required.</div>
+    </div>
+    <div class="task-card special">
+      <div class="task-name">Security Team</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note"><span class="badge badge-gold">Special pass</span> Collect your backstage pass at the volunteer office first; return it after your shift.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Shuttle Service</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note"><span class="badge badge-purple">Licence</span> Driving licence required.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Ticketcheck</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Depends on your entrance — see the note above</div>
+      <div class="task-note">Main entrance · Lake Resort → Volunteer office · Safari Resort → Checkpoint Safari Resort · Secret Fields → Secret Fields entrance.</div>
+    </div>
+    <div class="task-card">
+      <div class="task-name">Volunteer Office</div>
+      <div class="task-meet"><span aria-hidden="true">📍</span> Volunteer office</div>
+      <div class="task-note">Assisting Sara, Evan, Shannah &amp; Emma.</div>
+    </div>
   </div>
 
   <p class="text-small text-muted mt-2"><span class="badge badge-gold">Special pass</span> = collect backstage pass from volunteer office before shift &nbsp;|&nbsp; <span class="badge badge-gray">Campsite</span> = own meeting point, not the volunteer office &nbsp;|&nbsp; <span class="badge badge-purple">Licence</span> = driving licence required</p>
@@ -1354,23 +1275,6 @@
     updateProgress();
   }
 
-  /* ---- TRAVEL DAY TABS ---- */
-  function showDay(day) {
-    var days = ['thu', 'fri', 'satmon'];
-    days.forEach(function (d) {
-      var panel = document.getElementById('panel-' + d);
-      var tab = document.getElementById('tab-' + d);
-      if (panel) panel.classList.toggle('visible', d === day);
-      if (tab) {
-        tab.classList.remove('active-thu', 'active-fri', 'active-satmon');
-        if (d === day) tab.classList.add('active-' + d);
-      }
-    });
-  }
-
-  /* Expose to inline onclick */
-  window.showDay = showDay;
-
   /* ---- MOBILE MENU: close when a link is tapped ---- */
   function initMobileMenuClose() {
     var toggle = document.getElementById('nav-toggle');
@@ -1449,8 +1353,6 @@
     initMobileMenuClose();
     initSmoothLinks();
     initIosInstallHint();
-    /* Set Thu tab active by default */
-    showDay('thu');
   });
 
   registerServiceWorker();
