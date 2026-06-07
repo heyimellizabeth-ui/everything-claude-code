@@ -27,6 +27,14 @@
   <!-- Favicon: BKS green-smile mark as inline SVG (no extra request) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M9 14a7 7 0 0 0 14 0' fill='none' stroke='%2335d04a' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E" />
 
+  <!-- PWA: installable, standalone, works offline on-site -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BKS Crew" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+
   <!-- Brand fonts: heavy condensed display for the wordmark + clean body -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -480,6 +488,24 @@
       padding: 0.3rem 0.75rem; font-size: 0.75rem; font-weight: 600; color: var(--text);
     }
     .stage-pill.main { border-color: var(--brand); color: var(--brand); }
+
+    /* ====== iOS INSTALL HINT ====== */
+    .ios-install {
+      position: fixed; left: 0.75rem; right: 0.75rem; bottom: 0.75rem; z-index: 250;
+      background: #161616; border: 1px solid var(--brand); border-radius: 12px;
+      padding: 0.85rem 1rem; display: none; gap: 0.75rem; align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .ios-install.show { display: flex; }
+    .ios-install .ic { font-size: 1.4rem; flex-shrink: 0; }
+    .ios-install .msg { flex: 1; font-size: 0.8rem; color: var(--text); line-height: 1.4; }
+    .ios-install .msg strong { color: var(--brand); }
+    .ios-install .close {
+      background: none; border: none; color: var(--muted); font-size: 1.4rem;
+      cursor: pointer; line-height: 1; padding: 0.25rem 0.4rem; flex-shrink: 0;
+      min-width: 44px; min-height: 44px;
+    }
+    .ios-install .close:hover { color: var(--text); }
   </style>
 </head>
 <body>
@@ -1380,14 +1406,54 @@
     });
   }
 
+  /* ---- SERVICE WORKER (offline support) ---- */
+  function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('service-worker.js').catch(function () { /* offline-only is fine */ });
+      });
+    }
+  }
+
+  /* ---- iOS "Add to Home Screen" hint (iOS Safari never prompts) ---- */
+  function initIosInstallHint() {
+    var DISMISS_KEY = 'bks26-ios-install-dismissed';
+    var ua = window.navigator.userAgent || '';
+    var isIos = /iphone|ipod|ipad/i.test(ua);
+    var isSafari = /^((?!chrome|crios|fxios|edgios).)*safari/i.test(ua);
+    var standalone = window.navigator.standalone === true ||
+      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    var dismissed = false;
+    try { dismissed = localStorage.getItem(DISMISS_KEY) === '1'; } catch (e) {}
+    if (!isIos || !isSafari || standalone || dismissed) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'ios-install';
+    bar.setAttribute('role', 'note');
+    bar.innerHTML =
+      '<span class="ic" aria-hidden="true">📲</span>' +
+      '<span class="msg">Install this guide: tap <strong>Share</strong> ' +
+      '↑ then <strong>Add to Home Screen</strong> — it then works offline on-site.</span>' +
+      '<button class="close" type="button" aria-label="Dismiss">×</button>';
+    bar.querySelector('.close').addEventListener('click', function () {
+      bar.classList.remove('show');
+      try { localStorage.setItem(DISMISS_KEY, '1'); } catch (e) {}
+    });
+    document.body.appendChild(bar);
+    setTimeout(function () { bar.classList.add('show'); }, 1200);
+  }
+
   /* ---- INIT ---- */
   document.addEventListener('DOMContentLoaded', function () {
     initChecklist();
     initMobileMenuClose();
     initSmoothLinks();
+    initIosInstallHint();
     /* Set Thu tab active by default */
     showDay('thu');
   });
+
+  registerServiceWorker();
 
 })();
 </script>

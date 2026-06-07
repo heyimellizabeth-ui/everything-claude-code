@@ -8,11 +8,31 @@ reference on their phone.
 This is the volunteer-facing companion to the coordinator assistant in the parent
 [`bks26-volunteer/`](../) project.
 
+## Install it as an iPhone app (PWA)
+
+This is an installable **Progressive Web App** — no App Store, no Xcode needed.
+
+1. Open the site link in **Safari** on iPhone.
+2. Tap **Share** → **Add to Home Screen**.
+3. Launch it from the home-screen icon: it runs full-screen (no browser chrome)
+   and **works offline** — once opened with signal, the whole guide is cached, so
+   it keeps working on-site where reception is patchy.
+
+On Android/desktop Chrome the browser shows a native "Install" prompt. iOS Safari
+doesn't, so the page shows a one-time, dismissible "Add to Home Screen" hint.
+
+> PWAs require the page to be served over **HTTPS** (or `localhost`) for the
+> service worker to register. Plain `file://` won't enable offline mode.
+
 ## What's here
 
 | File | Purpose |
 |------|---------|
 | `index.html` | The whole site — HTML, CSS and JS inline, **zero external dependencies** (fonts load from Google Fonts with system fallbacks). |
+| `manifest.webmanifest` | PWA metadata — name, icons, standalone display, theme colors. |
+| `service-worker.js` | Offline support — precaches the app shell, stale-while-revalidate for freshness. |
+| `icons/` | App icons (180 Apple-touch, 192, 512, 512 maskable) — the BKS green-smile mark. |
+| `gen-icons.py` | Regenerates the icons (pure stdlib, no deps): `python3 gen-icons.py`. |
 | `og-image.svg` | Open Graph share image for link previews (e.g. the volunteer WhatsApp group). |
 | `robots.txt` | Disallows indexing — this is an internal resource. |
 
