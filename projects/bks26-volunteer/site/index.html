@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BKS26 — Volunteer Guide · Best Kept Secret 2026</title>
+
+  <!-- Primary meta -->
+  <meta name="description" content="Everything you need to volunteer at Best Kept Secret 2026 (11–15 June, Beekse Bergen): checklist, travel, arrival & wristband, shifts, tasks & meeting points, food, campsite, rules, safety and contacts." />
+  <meta name="author" content="Best Kept Secret — Volunteer Team" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <!-- Internal volunteer resource: keep out of public search indexes -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://volunteers.bestkeptsecret.nl/" />
+
+  <!-- Open Graph (link previews in WhatsApp / socials shared with volunteers) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Best Kept Secret 2026" />
+  <meta property="og:title" content="BKS26 Volunteer Guide" />
+  <meta property="og:description" content="Your complete guide to volunteering at Best Kept Secret 2026 — 11–15 June, Beekse Bergen, Hilvarenbeek." />
+  <meta property="og:image" content="og-image.svg" />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BKS26 Volunteer Guide" />
+  <meta name="twitter:description" content="Your complete guide to volunteering at Best Kept Secret 2026 — 11–15 June, Beekse Bergen." />
+
+  <!-- Favicon: BKS green-smile mark as inline SVG (no extra request) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M9 14a7 7 0 0 0 14 0' fill='none' stroke='%2335d04a' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <!-- Brand fonts: heavy condensed display for the wordmark + clean body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ====== TOKENS ====== */
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --border: #1e1e1e;
+      /* Best Kept Secret brand: signature lime-green headers + orange accent */
+      --brand: #35d04a;
+      --brand-dim: #27a539;
+      --brand-orange: #ff6a1b;
+      --gold: #f5a623;       /* reserved for caution / warning states */
+      --gold-dim: #c8891c;
+      --text: #e8e8e8;
+      --muted: #888;
+      --green: #4caf50;
+      --red: #ef5350;
+      --radius: 10px;
+      --day-thu: #7c3aed;
+      --day-fri: #16a34a;
+      --day-satmon: #c8891c;
+    }
+
+    /* Respect reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /* Accessibility: skip-to-content link */
+    .skip-link {
+      position: absolute; left: -999px; top: 0; z-index: 300;
+      background: var(--brand); color: #03210a; font-weight: 700;
+      padding: 0.6rem 1rem; border-radius: 0 0 8px 0; text-decoration: none;
+    }
+    .skip-link:focus { left: 0; }
+    :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+    /* ====== RESET ====== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.65;
+      -webkit-text-size-adjust: 100%;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    /* ====== NAV ====== */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.25rem;
+    }
+    .nav-logo { font-weight: 800; font-size: 0.95rem; color: var(--brand); letter-spacing: -0.2px; white-space: nowrap; }
+    .nav-links { display: flex; gap: 0; flex-wrap: nowrap; overflow-x: auto; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.74rem;
+      padding: 0.3rem 0.55rem; border-radius: 6px;
+      transition: color 0.15s, background 0.15s; white-space: nowrap;
+      min-height: 44px; display: flex; align-items: center;
+    }
+    .nav-links a:hover { color: var(--text); background: #181818; }
+
+    /* Hamburger (checkbox trick — no JS required) */
+    .hamburger-toggle { display: none; }
+    .hamburger-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 0.5rem; border-radius: 6px; flex-shrink: 0;
+    }
+    .hamburger-btn:hover { background: #181818; }
+    .hamburger-btn span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); margin: 5px 0; border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .mobile-menu {
+      display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+      background: rgba(10,10,10,0.98);
+      overflow-y: auto; z-index: 199;
+      padding: 0.5rem 1rem 2rem;
+    }
+    .mobile-menu a {
+      display: flex; align-items: center; min-height: 48px;
+      color: var(--text); text-decoration: none; font-size: 1rem;
+      border-bottom: 1px solid var(--border); padding: 0 0.25rem;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    .nav-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 198;
+      background: transparent; cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .hamburger-btn { display: block; }
+      .hamburger-toggle:checked ~ .nav-backdrop { display: block; }
+      .hamburger-toggle:checked ~ .mobile-menu { display: block; }
+      .hamburger-toggle:checked ~ nav .hamburger-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger-toggle:checked ~ nav .hamburger-btn span:nth-child(2) { opacity: 0; }
+      .hamburger-toggle:checked ~ nav .hamburger-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+
+    /* ====== LAYOUT ====== */
+    .container { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+    section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+
+    .section-eyebrow {
+      font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2.5px;
+      color: var(--brand); margin-bottom: 0.4rem; font-weight: 700;
+    }
+    .section-title {
+      font-size: clamp(1.35rem, 3.5vw, 1.8rem);
+      font-weight: 800; color: #fff; margin-bottom: 0.4rem; letter-spacing: -0.4px;
+    }
+    .section-intro { color: var(--muted); font-size: 0.875rem; max-width: 640px; margin-bottom: 1.75rem; }
+
+    /* ====== HERO ====== */
+    .hero {
+      background: linear-gradient(160deg, #140800 0%, #0a0a0a 55%);
+      padding: 4.5rem 1.25rem 3.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(245,166,35,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 100px; padding: 0.3rem 1rem;
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--brand); margin-bottom: 1.25rem; font-weight: 600;
+    }
+    .hero h1 {
+      font-family: "Anton", "Inter", sans-serif;
+      font-size: clamp(2.6rem, 9vw, 4.75rem);
+      font-weight: 400; color: #fff; letter-spacing: 0.5px;
+      line-height: 0.95; margin-bottom: 0.75rem; text-transform: uppercase;
+    }
+    .hero h1 em { color: var(--brand); font-style: normal; }
+    .hero h1 .yr { color: var(--brand-orange); font-style: normal; }
+    .hero-sub { font-size: 1rem; color: var(--muted); max-width: 480px; margin: 0 auto 2rem; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+    .hero-pill {
+      background: #161616; border: 1px solid var(--border); border-radius: 100px;
+      padding: 0.3rem 0.85rem; font-size: 0.75rem; color: var(--muted);
+    }
+    .hero-pill strong { color: var(--text); }
+    .date-pill {
+      position: absolute; top: 1rem; right: 1.25rem;
+      background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.35);
+      border-radius: 100px; padding: 0.25rem 0.85rem;
+      font-size: 0.7rem; color: var(--gold); font-weight: 600; letter-spacing: 0.5px;
+    }
+    @media (max-width: 480px) { .date-pill { position: static; display: inline-block; margin-bottom: 0.75rem; } }
+
+    /* ====== CARDS ====== */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1.4rem; margin-bottom: 0.75rem;
+    }
+    .card-title { font-weight: 700; font-size: 0.95rem; color: #fff; margin-bottom: 0.35rem; }
+    .card p, .card li { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.35rem; }
+    .card p:last-child, .card li:last-child { margin-bottom: 0; }
+    .card strong { color: var(--text); }
+    .card ul { padding-left: 1.2rem; }
+
+    .card-warn { background: #120900; border-color: #2c1800; }
+    .card-warn .card-title { color: var(--gold); }
+    .card-alert { background: #110404; border-color: #2c0808; }
+    .card-alert .card-title { color: var(--red); }
+
+    /* ====== ALERTS ====== */
+    .alert {
+      border-radius: var(--radius); padding: 0.9rem 1.1rem;
+      font-size: 0.83rem; margin-bottom: 1rem; display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
+    .alert-body { flex: 1; }
+    .alert-gold { background: #150c00; border: 1px solid #3a2200; color: #f5c86a; }
+    .alert-red { background: #120000; border: 1px solid #3a0000; color: #fca5a5; }
+    .alert-green { background: #021208; border: 1px solid #0a3015; color: #86efac; }
+    .alert strong { font-weight: 600; }
+
+    /* ====== BADGE ====== */
+    .badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-right: 0.25rem;
+      vertical-align: middle;
+    }
+    .badge-gold { background: #2a1500; color: var(--gold); }
+    .badge-green { background: #0a2010; color: var(--green); }
+    .badge-red { background: #200606; color: var(--red); }
+    .badge-gray { background: #1e1e1e; color: #aaa; }
+    .badge-purple { background: #1a0a2e; color: #a78bfa; }
+
+    /* ====== CHECKLIST ====== */
+    .checklist { list-style: none; margin-top: 0.5rem; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 0.85rem;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+      min-height: 44px;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist input[type="checkbox"] {
+      appearance: none; -webkit-appearance: none;
+      width: 22px; height: 22px; border: 2px solid var(--border);
+      border-radius: 5px; background: var(--surface); cursor: pointer;
+      flex-shrink: 0; margin-top: 0.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+    .checklist input[type="checkbox"]:checked {
+      background: var(--gold); border-color: var(--gold);
+    }
+    .checklist input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute; left: 5px; top: 2px;
+      width: 8px; height: 12px;
+      border: 2px solid #000; border-top: none; border-left: none;
+      transform: rotate(45deg);
+    }
+    .checklist label {
+      font-size: 0.875rem; color: var(--text); cursor: pointer; flex: 1;
+      line-height: 1.4; padding-top: 0.1rem;
+    }
+    .checklist input:checked + label { color: var(--muted); text-decoration: line-through; }
+    .checklist label .note { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
+    .checklist input:checked + label .note { color: #555; }
+    .checklist-progress { margin-bottom: 1.25rem; }
+    .checklist-progress-bar {
+      height: 4px; background: var(--border); border-radius: 2px; margin-top: 0.4rem; overflow: hidden;
+    }
+    .checklist-progress-fill {
+      height: 100%; background: var(--gold); border-radius: 2px;
+      transition: width 0.3s ease; width: 0%;
+    }
+    .checklist-progress-text { font-size: 0.75rem; color: var(--muted); }
+
+    /* ====== TRAVEL TABS ====== */
+    .day-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .day-tab {
+      padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer;
+      font-size: 0.82rem; font-weight: 600; border: 1px solid var(--border);
+      background: var(--surface); color: var(--muted);
+      transition: all 0.15s; min-height: 44px; display: flex; align-items: center;
+      user-select: none; font-family: inherit;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+    }
+    .day-tab:hover { color: var(--text); border-color: #444; }
+    .day-tab.active-thu { background: #1a0a2e; border-color: var(--day-thu); color: #a78bfa; }
+    .day-tab.active-fri { background: #021608; border-color: var(--day-fri); color: #86efac; }
+    .day-tab.active-satmon { background: #1a0f00; border-color: var(--day-satmon); color: var(--gold); }
+
+    .day-panel { display: none; }
+    .day-panel.visible { display: block; }
+
+    .travel-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 0.65rem;
+    }
+    .travel-card-thu { border-left: 3px solid var(--day-thu); }
+    .travel-card-fri { border-left: 3px solid var(--day-fri); }
+    .travel-card-satmon { border-left: 3px solid var(--day-satmon); }
+    .travel-icon { font-size: 1.1rem; margin-right: 0.5rem; }
+    .travel-method { font-weight: 700; font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; }
+    .travel-detail { font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+    .travel-detail strong { color: var(--text); }
+    .travel-detail p { margin-bottom: 0.3rem; }
+
+    /* ====== ARRIVAL STEPS ====== */
+    .steps { margin-top: 0.5rem; }
+    .step {
+      display: flex; gap: 1rem; margin-bottom: 1.25rem; align-items: flex-start;
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #1a0f00; border: 2px solid var(--gold);
+      color: var(--gold); font-weight: 800; font-size: 0.8rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-weight: 700; color: #fff; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .step-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+    .step-desc strong { color: var(--text); }
+
+    /* ====== TASKS TABLE ====== */
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); border: 1px solid var(--border); margin-top: 0.5rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    thead th {
+      background: #161616; color: var(--muted); font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;
+      padding: 0.75rem 1rem; text-align: left;
+      position: sticky; top: 0; border-bottom: 1px solid var(--border);
+    }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #141414; }
+    tbody td { padding: 0.75rem 1rem; vertical-align: top; color: var(--muted); line-height: 1.45; }
+    tbody td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+    .row-special { background: #110900; }
+    .row-special:hover { background: #160d00; }
+    .row-campsite { background: #040a14; }
+    .row-campsite:hover { background: #060f1c; }
+
+    @media (max-width: 600px) {
+      thead th:first-child { position: sticky; left: 0; z-index: 1; background: #161616; }
+      tbody td:first-child { position: sticky; left: 0; z-index: 1; background: #111; }
+      .row-special td:first-child { background: #110900; }
+      .row-campsite td:first-child { background: #040a14; }
+    }
+
+    /* ====== CATERING GRIDS ====== */
+    .catering-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
+    @media (max-width: 600px) { .catering-split { grid-template-columns: 1fr; } }
+    .catering-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .catering-block-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; color: var(--gold); padding: 0.75rem 1rem 0.5rem; border-bottom: 1px solid var(--border); }
+    .catering-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+    .catering-row:last-child { border-bottom: none; }
+    .catering-row-label { color: var(--muted); }
+    .catering-row-value { font-weight: 600; color: var(--text); text-align: right; font-size: 0.8rem; }
+    .catering-row-meal { color: var(--gold); }
+
+    /* ====== SPAR TABLE ====== */
+    .spar-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; margin-top: 0.75rem; }
+    .spar-table th { background: #161616; color: var(--muted); font-size: 0.67rem; text-transform: uppercase; letter-spacing: 1.2px; padding: 0.6rem 0.85rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .spar-table td { padding: 0.65rem 0.85rem; color: var(--muted); border-bottom: 1px solid var(--border); }
+    .spar-table tr:last-child td { border-bottom: none; }
+    .spar-table td:first-child { color: var(--text); font-weight: 600; }
+    .spar-table td:last-child { color: var(--gold); font-weight: 600; }
+
+    /* ====== BAR TEAM ====== */
+    .bar-highlight {
+      background: #0d0a00; border: 1px solid #3a2800;
+      border-radius: var(--radius); padding: 1.5rem;
+    }
+    .bar-highlight h3 { font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: 0.25rem; }
+    .bar-subtitle { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .bar-contact-btns { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #064d2a; border: 1px solid #0a7a3f; border-radius: 8px;
+      color: #86efac; text-decoration: none; padding: 0.6rem 1.1rem;
+      font-size: 0.83rem; font-weight: 600; min-height: 44px;
+      transition: background 0.15s;
+    }
+    .btn-wa:hover { background: #0a6636; }
+
+    /* ====== RULES ====== */
+    .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    @media (max-width: 620px) { .rules-grid { grid-template-columns: 1fr; } }
+    .rule-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.2rem; }
+    .rule-card-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 0.75rem; }
+    .rule-card-title.red { color: var(--red); }
+    .rule-card-title.green { color: var(--green); }
+    .rule-card-title.gold { color: var(--gold); }
+    .rule-list { list-style: none; }
+    .rule-list li {
+      font-size: 0.82rem; color: var(--muted); padding: 0.3rem 0 0.3rem 1.4rem;
+      border-bottom: 1px solid #161616; position: relative; line-height: 1.45;
+    }
+    .rule-list li:last-child { border-bottom: none; }
+    .rule-list.dont li::before { content: '✕'; position: absolute; left: 0; color: var(--red); font-size: 0.75rem; top: 0.35rem; }
+    .rule-list.do li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 0.75rem; top: 0.35rem; }
+    .rule-list.note li::before { content: '·'; position: absolute; left: 0.2rem; color: var(--gold); font-size: 1.1rem; top: 0.1rem; }
+
+    /* ====== CONTACTS ====== */
+    .contact-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.4rem 1.5rem;
+      display: flex; gap: 1.1rem; align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+    .contact-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #1a0f00; border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; flex-shrink: 0;
+    }
+    .contact-info { flex: 1; min-width: 0; }
+    .contact-name { font-weight: 700; color: #fff; font-size: 0.95rem; margin-bottom: 0.15rem; }
+    .contact-role { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .contact-btns { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: #161616; border: 1px solid var(--border); border-radius: 7px;
+      color: var(--text); text-decoration: none; padding: 0.45rem 0.9rem;
+      font-size: 0.78rem; font-weight: 500; min-height: 40px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .contact-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .contact-btn.primary { background: var(--gold); border-color: var(--gold); color: #000; font-weight: 700; }
+    .contact-btn.primary:hover { background: var(--gold-dim); border-color: var(--gold-dim); color: #000; }
+
+    /* ====== FOOTER ====== */
+    footer {
+      padding: 2.5rem 1.25rem;
+      text-align: center;
+      color: #333;
+      font-size: 0.76rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+    .footer-contacts {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ====== UTILITY ====== */
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 1rem; }
+    .text-gold { color: var(--gold); }
+    .text-muted { color: var(--muted); font-size: 0.82rem; }
+    .text-small { font-size: 0.78rem; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+    .inline-list { list-style: none; }
+    .inline-list li { font-size: 0.83rem; color: var(--muted); padding: 0.25rem 0 0.25rem 1.3rem; position: relative; }
+    .inline-list li::before { content: '→'; position: absolute; left: 0; color: var(--gold-dim); font-size: 0.7rem; top: 0.3rem; }
+    .inline-list li strong { color: var(--text); }
+
+    /* ====== STAGES ====== */
+    .stage-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+    .stage-pill {
+      background: #161616; border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.3rem 0.75rem; font-size: 0.75rem; font-weight: 600; color: var(--text);
+    }
+    .stage-pill.main { border-color: var(--brand); color: var(--brand); }
+  </style>
+</head>
+<body>
+
+<a href="#checklist" class="skip-link">Skip to content</a>
+
+<!-- Hamburger state (CSS trick, must be outside nav) -->
+<input type="checkbox" id="nav-toggle" class="hamburger-toggle" style="display:none;" />
+<label for="nav-toggle" class="nav-backdrop" aria-hidden="true"></label>
+
+<nav aria-label="Primary">
+  <span class="nav-logo">BKS&rsquo;26 &#9788; Volunteers</span>
+  <div class="nav-links">
+    <a href="#checklist">Checklist</a>
+    <a href="#travel">Travel</a>
+    <a href="#arrival">Arrival</a>
+    <a href="#shifts">Shifts</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#food">Food</a>
+    <a href="#campsite">Campsite</a>
+    <a href="#barteam">Bar Team</a>
+    <a href="#rules">Rules</a>
+    <a href="#safety">Safety</a>
+    <a href="#contacts">Contacts</a>
+  </div>
+  <label for="nav-toggle" class="hamburger-btn" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </label>
+</nav>
+<label for="nav-toggle" class="mobile-menu" id="mobile-nav">
+  <a href="#checklist" onclick="document.getElementById('nav-toggle').checked=false">✓&nbsp; Before You Arrive</a>
+  <a href="#travel" onclick="document.getElementById('nav-toggle').checked=false">✈&nbsp; Getting There</a>
+  <a href="#arrival" onclick="document.getElementById('nav-toggle').checked=false">🎫&nbsp; Arrival &amp; Wristband</a>
+  <a href="#shifts" onclick="document.getElementById('nav-toggle').checked=false">⏱&nbsp; Your Shifts</a>
+  <a href="#tasks" onclick="document.getElementById('nav-toggle').checked=false">📋&nbsp; Tasks &amp; Meeting Points</a>
+  <a href="#food" onclick="document.getElementById('nav-toggle').checked=false">🍽&nbsp; Food &amp; Catering</a>
+  <a href="#campsite" onclick="document.getElementById('nav-toggle').checked=false">⛺&nbsp; Crew Campsite</a>
+  <a href="#barteam" onclick="document.getElementById('nav-toggle').checked=false">🍺&nbsp; Bar Team</a>
+  <a href="#rules" onclick="document.getElementById('nav-toggle').checked=false">📜&nbsp; Rules</a>
+  <a href="#safety" onclick="document.getElementById('nav-toggle').checked=false">🛡&nbsp; Health &amp; Safety</a>
+  <a href="#contacts" onclick="document.getElementById('nav-toggle').checked=false">📞&nbsp; Contacts</a>
+</label>
+
+<!-- ================================================================
+     HERO
+================================================================ -->
+<div class="hero">
+  <div class="date-pill">Crew: 11–15 June 2026</div>
+  <div class="hero-badge">Volunteer Guide 2026</div>
+  <h1>Best Kept <em>Secret</em> <span class="yr">&rsquo;26</span></h1>
+  <p class="hero-sub">Everything you need to volunteer at BKS&rsquo;26 — from before you pack to after your last shift.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">Festival <strong>12–14 June</strong></span>
+    <span class="hero-pill">Crew <strong>11–15 June</strong></span>
+    <span class="hero-pill">Beekse Bergen, Hilvarenbeek</span>
+    <span class="hero-pill"><strong>~25,000</strong> guests/day</span>
+    <span class="hero-pill"><strong>~300</strong> volunteers</span>
+    <span class="hero-pill">Coordinator: <strong>Sara Verdegaal</strong></span>
+  </div>
+  <div class="stage-pills" style="justify-content:center; margin-top:1.25rem;">
+    <span class="stage-pill main">ONE</span>
+    <span class="stage-pill main">TWO</span>
+    <span class="stage-pill">The Casbah</span>
+    <span class="stage-pill">The Secret</span>
+    <span class="stage-pill">The Floor</span>
+    <span class="stage-pill">Not Nothing</span>
+    <span class="stage-pill">The Shore</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ================================================================
+     QUICK CONTACTS (top strip)
+================================================================ -->
+<div style="padding: 1.25rem 0; border-bottom: 1px solid var(--border); display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+  <span class="text-small text-muted" style="flex-shrink:0;">Quick contact:</span>
+  <a href="tel:+31640966109" class="contact-btn" style="min-height:36px; padding:0.35rem 0.85rem; font-size:0.76rem;">📞 Sara +31 6 40 96 61 09</a>
+  <a href="mailto:Volunteers@bestkeptsecret.nl" class="contact-btn" style="min-height:36px; padding:0.35rem 0.85rem; font-size:0.76rem;">✉ Volunteers@bestkeptsecret.nl</a>
+  <a href="https://wa.me/31851155226" class="contact-btn" style="min-height:36px; padding:0.35rem 0.85rem; font-size:0.76rem;">💬 Bar Team WhatsApp</a>
+</div>
+
+<!-- ================================================================
+     1. BEFORE YOU ARRIVE
+================================================================ -->
+<section id="checklist">
+  <div class="section-eyebrow">Step 1</div>
+  <h2 class="section-title">Before You Arrive</h2>
+  <p class="section-intro">Tick off each item before heading to the festival. Your progress is saved in your browser.</p>
+
+  <div class="checklist-progress">
+    <div class="checklist-progress-text" id="checklist-status">0 of 8 complete</div>
+    <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="checklist-fill"></div></div>
+  </div>
+
+  <ul class="checklist" id="bks-checklist">
+    <li>
+      <input type="checkbox" id="c1" data-key="c1" />
+      <label for="c1">E-voucher received by email
+        <span class="note">Check your spam folder — it arrives in the week of the festival</span>
+      </label>
+    </li>
+    <li>
+      <input type="checkbox" id="c2" data-key="c2" />
+      <label for="c2">Passport or ID card packed
+        <span class="note">Mandatory at accreditation — no ID means no wristband</span>
+      </label>
+    </li>
+    <li>
+      <input type="checkbox" id="c3" data-key="c3" />
+      <label for="c3">Crew parking form submitted
+        <span class="note">Car drivers only — required to receive your parking ticket at accreditation</span>
+      </label>
+    </li>
+    <li>
+      <input type="checkbox" id="c4" data-key="c4" />
+      <label for="c4">Comfortable closed-toe shoes packed
+        <span class="note">Required for crew catering; strongly recommended for all shifts</span>
+      </label>
+    </li>
+    <li>
+      <input type="checkbox" id="c5" data-key="c5" />
+      <label for="c5">Layers + rainwear packed
+        <span class="note">Dutch June weather is unpredictable — you're outside a lot</span>
+      </label>
+    </li>
+    <li>
+      <input type="checkbox" id="c6" data-key="c6" />
+      <label for="c6">WhatsApp volunteer group joined
+        <span class="note">Link is sent with your confirmation email</span>
+      </label>
+    </li>
+    <li>
+      <input type="checkbox" id="c7" data-key="c7" />
+      <label for="c7">Camper spot applied for (if applicable)
+        <span class="note">Limited spots — deadline is <strong>June 4th</strong>. Skip if not relevant.</span>
+      </label>
+    </li>
+    <li>
+      <input type="checkbox" id="c8" data-key="c8" />
+      <label for="c8">BKS app downloaded
+        <span class="note">Has the map, bike zone info and schedule — useful on-site</span>
+      </label>
+    </li>
+  </ul>
+
+  <div class="alert alert-gold mt-2">
+    <span class="alert-icon">⚠</span>
+    <div class="alert-body">
+      <strong>Reusable water bottle:</strong> Bring your own — free water, lemonade, coffee and tea are available at crew catering any time. Saves cups and the planet.
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     2. GETTING THERE
+================================================================ -->
+<section id="travel">
+  <div class="section-eyebrow">Step 2</div>
+  <h2 class="section-title">Getting There</h2>
+  <p class="section-intro">Transport options vary by day. Select your arrival day below. Address: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong>.</p>
+
+  <div class="day-tabs">
+    <button class="day-tab active-thu" id="tab-thu" onclick="showDay('thu')" type="button">Thu 11 Jun</button>
+    <button class="day-tab" id="tab-fri" onclick="showDay('fri')" type="button">Fri 12 Jun</button>
+    <button class="day-tab" id="tab-satmon" onclick="showDay('satmon')" type="button">Sat–Mon</button>
+  </div>
+
+  <!-- Thursday -->
+  <div class="day-panel visible" id="panel-thu">
+    <div class="alert alert-gold mb-2">
+      <span class="alert-icon">⚠</span>
+      <div class="alert-body">
+        <strong>Thursday setup day:</strong> Campsite opens at <strong>16:00</strong>. NO backstage access without safety gear — the site is still being built. Volunteer meeting at <strong>21:30</strong> (strongly recommended — meet the team, collect t-shirt, sign contract).
+      </div>
+    </div>
+    <div class="travel-card travel-card-thu">
+      <div class="travel-method"><span class="travel-icon">🚆</span> Train + Bus</div>
+      <div class="travel-detail">
+        <p>Train to <strong>Tilburg Centraal</strong>, then <strong>Bus 142 or 143</strong> to stop <strong>Hilvarenbeek Safaripark</strong>.</p>
+        <p>7-minute walk to crew accreditation via the flyover bridge.</p>
+        <p>Or rent an <strong>OV-fiets</strong> at Tilburg station (very convenient for the rest of the weekend).</p>
+      </div>
+    </div>
+    <div class="travel-card travel-card-thu">
+      <div class="travel-method"><span class="travel-icon">🚗</span> Car</div>
+      <div class="travel-detail">
+        <p>Navigate to: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong></p>
+        <p>Follow yellow signs: <strong>Leveranciers – Backstage – Artists</strong></p>
+        <p>You can drive directly to the crew campsite <strong>until 20:00 on Thursday</strong> to unload gear.</p>
+        <p><strong>Fill out the parking form in advance</strong> — you need this to receive your parking ticket at accreditation.</p>
+      </div>
+    </div>
+    <div class="travel-card travel-card-thu">
+      <div class="travel-method"><span class="travel-icon">🚲</span> Bike</div>
+      <div class="travel-detail">
+        <p>A bike is strongly recommended for the whole weekend. Campsite is ~45 min walk from volunteer office — a bike makes this easy.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Friday -->
+  <div class="day-panel" id="panel-fri">
+    <div class="alert alert-green mb-2">
+      <span class="alert-icon">ℹ</span>
+      <div class="alert-body">
+        <strong>Festival opens Friday 12 June.</strong> Shuttle buses run from Tilburg station. Allow extra time — queues can be long.
+      </div>
+    </div>
+    <div class="travel-card travel-card-fri">
+      <div class="travel-method"><span class="travel-icon">🚌</span> Shuttle Bus (recommended)</div>
+      <div class="travel-detail">
+        <p>From <strong>Tilburg Centraal</strong> station: <strong>09:00–20:00</strong> · <strong>€14 return</strong></p>
+        <p>Route: shuttle drops at <strong>Entrance South</strong> → change to another shuttle for <strong>Entrance North</strong> (Beekse Bergen reception) → short walk to backstage accreditation.</p>
+        <p>⚠ Allow extra time — shuttle queues can be long on Friday morning.</p>
+      </div>
+    </div>
+    <div class="travel-card travel-card-fri">
+      <div class="travel-method"><span class="travel-icon">🚲</span> Bike (highly recommended)</div>
+      <div class="travel-detail">
+        <p>Bring your own or rent. Very convenient for the campsite ↔ backstage commute throughout the weekend.</p>
+      </div>
+    </div>
+    <div class="travel-card travel-card-fri">
+      <div class="travel-method"><span class="travel-icon">🚆</span> Train + Bus</div>
+      <div class="travel-detail">
+        <p>Train to <strong>Tilburg Centraal</strong>, then <strong>Bus 142 or 143</strong> to <strong>Hilvarenbeek Safaripark</strong> stop.</p>
+        <p>Regular buses also run on Friday.</p>
+      </div>
+    </div>
+    <div class="travel-card travel-card-fri">
+      <div class="travel-method"><span class="travel-icon">🚗</span> Car</div>
+      <div class="travel-detail">
+        <p>Navigate to: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong></p>
+        <p>Follow yellow signs: <strong>Leveranciers – Backstage – Artists</strong></p>
+        <p>Park at <strong>crew parking</strong> — use the parking ticket from accreditation. Remember to fill out the parking form in advance.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sat–Mon -->
+  <div class="day-panel" id="panel-satmon">
+    <div class="alert alert-red mb-2">
+      <span class="alert-icon">⚠</span>
+      <div class="alert-body">
+        <strong>No public buses Saturday, Sunday or Monday</strong> — regular bus service does not run. Plan your travel in advance.
+      </div>
+    </div>
+    <div class="travel-card travel-card-satmon">
+      <div class="travel-method"><span class="travel-icon">🚲</span> Bike (strongly recommended)</div>
+      <div class="travel-detail">
+        <p>Best option for the whole weekend. The campsite is ~45 minutes walk from the volunteer office — a bike cuts this to under 10 minutes.</p>
+        <p>Check the <strong>BKS app map</strong> for green (bike allowed) and red (bike prohibited) zones on the grounds.</p>
+      </div>
+    </div>
+    <div class="travel-card travel-card-satmon">
+      <div class="travel-method"><span class="travel-icon">🚗</span> Car</div>
+      <div class="travel-detail">
+        <p>Park at <strong>crew parking</strong> using the parking ticket you received at accreditation.</p>
+        <p>Navigate to: <strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     3. ARRIVAL & WRISTBAND
+================================================================ -->
+<section id="arrival">
+  <div class="section-eyebrow">Step 3</div>
+  <h2 class="section-title">Arrival &amp; Wristband</h2>
+  <p class="section-intro">Follow this sequence on your first day. Getting wristbanded and signed in correctly takes about 20–30 minutes.</p>
+
+  <div class="alert alert-gold mb-2">
+    <span class="alert-icon">📧</span>
+    <div class="alert-body">
+      <strong>E-voucher:</strong> You'll receive it by email in the week of the festival. Check your spam folder. Bring it on your phone or printed — plus your <strong>passport or ID card</strong>. No ID = no wristband.
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Navigate to the site</div>
+        <div class="step-desc"><strong>Speelland Beekse Bergen, 5081 NJ Hilvarenbeek</strong><br>Follow signs: <strong>Backstage – Leveranciers – Artists</strong></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Go to backstage accreditation tent</div>
+        <div class="step-desc">Present your <strong>e-voucher + passport/ID</strong>. Collect your <strong>wristband</strong>. If you're driving, also collect your <strong>parking lanyard</strong>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Go to the volunteer office</div>
+        <div class="step-desc">Located <strong>next to the accreditation tent</strong>, near backstage parking — <strong>new location this year</strong>. Sign your volunteer agreement and collect your <strong>crew t-shirt</strong>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Thursday only: Attend the volunteer meeting</div>
+        <div class="step-desc"><strong>21:30 on Thursday 11 June.</strong> Strongly recommended — meet the team, ask questions, collect t-shirt and sign contract if you haven't already.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Problems? Call Sara</div>
+        <div class="step-desc"><a href="tel:+31640966109" style="color:var(--gold); font-weight:600;">+31 6 40 96 61 09</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     4. YOUR SHIFTS
+================================================================ -->
+<section id="shifts">
+  <div class="section-eyebrow">Step 4</div>
+  <h2 class="section-title">Your Shifts</h2>
+  <p class="section-intro">At least 18 hours total, spread across days. These rules apply to every shift — know them before your first day.</p>
+
+  <div class="alert alert-gold mb-2">
+    <span class="alert-icon">⏰</span>
+    <div class="alert-body">
+      <strong>First shift:</strong> Arrive at the <strong>volunteer office 30 minutes early</strong> to sign your contract and collect your t-shirt (if not done at the Thursday meeting).<br>
+      <strong>All subsequent shifts:</strong> Arrive <strong>10–20 minutes early</strong> at the <strong>task meeting point</strong> (see Tasks section).
+    </div>
+  </div>
+
+  <div class="card card-warn mb-1">
+    <div class="card-title">🔐 Security &amp; Artist Hospitality — Extra Step</div>
+    <p>If your shift is <strong>Security</strong> or <strong>Artist Hospitality</strong>: come to the <strong>volunteer office first</strong> to collect your special backstage pass before going to the meeting point. Return the pass after your shift ends.</p>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-title">During your shift</div>
+    <ul class="inline-list">
+      <li><strong>Never leave</strong> your shift before the coordinator gives you explicit permission</li>
+      <li>Wear your <strong>crew t-shirt during shifts only</strong> — take it off when off-duty</li>
+      <li>No alcohol or drugs during shifts — this includes showing up intoxicated</li>
+    </ul>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-title">After every shift</div>
+    <ul class="inline-list">
+      <li>Go to the <strong>volunteer office to sign out</strong></li>
+      <li>Sara has a beer or soft drink waiting for you</li>
+      <li>Security / Artist Hospitality: return your backstage pass before leaving</li>
+    </ul>
+  </div>
+
+  <div class="card card-alert mb-1">
+    <div class="card-title">Can't make your shift?</div>
+    <p>Contact your coordinator as soon as possible. If it's less than 48 hours before your shift, call or speak to them in person. No-shows or late cancellations without notice risk wristband blacklisting.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Campsite note</div>
+    <p>The crew campsite is <strong>~45 minutes walk from the volunteer office</strong> (new location this year). Plan your commute time — a bike is strongly recommended.</p>
+  </div>
+</section>
+
+<!-- ================================================================
+     5. TASKS & MEETING POINTS
+================================================================ -->
+<section id="tasks">
+  <div class="section-eyebrow">Section 5</div>
+  <h2 class="section-title">Tasks &amp; Meeting Points</h2>
+  <p class="section-intro">All 20 volunteer tasks and where to go for each. Check your schedule for your assigned task(s). Note: campsite tasks have their own meeting points — do NOT go to the volunteer office for those.</p>
+
+  <div class="alert alert-gold mb-2">
+    <span class="alert-icon">📍</span>
+    <div class="alert-body">
+      <strong>Ticketcheck volunteers:</strong> Your meeting point depends on which entrance you're assigned — check your schedule carefully. Four options: Main Entrance / Lake Resort: Volunteer Office / Safari Resort: Checkpoint Safari Resort / Secret Fields: Secret Fields Entrance.
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Meeting Point</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-special">
+          <td>Artist Hospitality</td>
+          <td>Volunteer office</td>
+          <td><span class="badge badge-gold">Special pass</span> Collect backstage pass at volunteer office first; return after shift</td>
+        </tr>
+        <tr>
+          <td>Campsite Catering (Helicopterfield)</td>
+          <td>Helicopterfield Meal Hub</td>
+          <td>Note: this is the NEW Meal Hub — not main catering backstage</td>
+        </tr>
+        <tr class="row-campsite">
+          <td>Campsite Management – Festivalkamperen</td>
+          <td>Info point at the beach</td>
+          <td><span class="badge badge-gray">Campsite</span> Do NOT go to volunteer office</td>
+        </tr>
+        <tr class="row-campsite">
+          <td>Campsite Management – Camper</td>
+          <td>Drop-off Point, across from Ganvie Village</td>
+          <td><span class="badge badge-gray">Campsite</span> Do NOT go to volunteer office</td>
+        </tr>
+        <tr class="row-campsite">
+          <td>Campsite Management – Check-in</td>
+          <td>Check-in reception at the campsite</td>
+          <td><span class="badge badge-gray">Campsite</span> 3 variants: Comfort Camp, Group Spots, Secret Fields</td>
+        </tr>
+        <tr>
+          <td>Crew Accreditation</td>
+          <td>Volunteer office</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Crew Catering</td>
+          <td>Volunteer office</td>
+          <td><span class="badge badge-red">Dress code</span> Closed shoes + covered legs required</td>
+        </tr>
+        <tr>
+          <td>Cup Return</td>
+          <td>Volunteer office</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Ecoteam</td>
+          <td>Volunteer office</td>
+          <td>Morning shifts</td>
+        </tr>
+        <tr>
+          <td>Food &amp; Waste Team</td>
+          <td>Volunteer office</td>
+          <td>During dinner times</td>
+        </tr>
+        <tr>
+          <td>Flexteam</td>
+          <td>Volunteer office</td>
+          <td>Various ad-hoc tasks — check with Sara for assignment</td>
+        </tr>
+        <tr>
+          <td>Locker Team</td>
+          <td>Volunteer office</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Locker Team – Powerbank Zone</td>
+          <td>Volunteer office</td>
+          <td>Near The Floor stage</td>
+        </tr>
+        <tr>
+          <td>Parking Management</td>
+          <td>Volunteer office</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Press &amp; Guest Area</td>
+          <td>Volunteer office</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Runner Team Horeca</td>
+          <td>Volunteer office</td>
+          <td><span class="badge badge-purple">Licence</span> Driving licence required</td>
+        </tr>
+        <tr class="row-special">
+          <td>Security Team</td>
+          <td>Volunteer office</td>
+          <td><span class="badge badge-gold">Special pass</span> Collect backstage pass at volunteer office first; return after shift</td>
+        </tr>
+        <tr>
+          <td>Shuttle Service</td>
+          <td>Volunteer office</td>
+          <td><span class="badge badge-purple">Licence</span> Driving licence required</td>
+        </tr>
+        <tr>
+          <td>Ticketcheck</td>
+          <td>Depends on assignment — see note above</td>
+          <td>Main entrance · Lake Resort → Volunteer office · Safari Resort → Checkpoint Safari Resort · Secret Fields → Secret Fields entrance</td>
+        </tr>
+        <tr>
+          <td>Volunteer Office</td>
+          <td>Volunteer office</td>
+          <td>Assisting Sara, Evan, Shannah &amp; Emma</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="text-small text-muted mt-2"><span class="badge badge-gold">Special pass</span> = collect backstage pass from volunteer office before shift &nbsp;|&nbsp; <span class="badge badge-gray">Campsite</span> = own meeting point, not the volunteer office &nbsp;|&nbsp; <span class="badge badge-purple">Licence</span> = driving licence required</p>
+</section>
+
+<!-- ================================================================
+     6. FOOD & CATERING
+================================================================ -->
+<section id="food">
+  <div class="section-eyebrow">Section 6</div>
+  <h2 class="section-title">Food &amp; Catering</h2>
+  <p class="section-intro">Crew catering is backstage. Your wristband is scanned to confirm your shift. Check which meal you're entitled to based on your shift time.</p>
+
+  <div class="alert alert-gold mb-2">
+    <span class="alert-icon">🍴</span>
+    <div class="alert-body">
+      <strong>Ticketscan shifts</strong> go to the <strong>NEW Meal Hub at the helicopterfield</strong> — not main catering backstage. Some remote shifts have meals shuttled to you — check your schedule.
+    </div>
+  </div>
+
+  <div class="catering-split">
+    <div class="catering-block">
+      <div class="catering-block-title">Meal by shift time</div>
+      <div class="catering-row">
+        <div class="catering-row-label">08:00–14:00 shift</div>
+        <div class="catering-row-value catering-row-meal">Lunch <span class="text-small" style="color:var(--muted); display:block;">Eat breakfast before starting</span></div>
+      </div>
+      <div class="catering-row">
+        <div class="catering-row-label">14:00–20:00 shift</div>
+        <div class="catering-row-value catering-row-meal">Lunch <span class="text-small" style="color:var(--muted); display:block;">Eat breakfast before starting</span></div>
+      </div>
+      <div class="catering-row">
+        <div class="catering-row-label">20:00–01:00 shift</div>
+        <div class="catering-row-value catering-row-meal">Dinner</div>
+      </div>
+    </div>
+    <div class="catering-block">
+      <div class="catering-block-title">Catering opening hours</div>
+      <div class="catering-row">
+        <div class="catering-row-label">☀ Breakfast</div>
+        <div class="catering-row-value">07:00–10:30</div>
+      </div>
+      <div class="catering-row">
+        <div class="catering-row-label">🍱 Lunch</div>
+        <div class="catering-row-value">12:00–15:00</div>
+      </div>
+      <div class="catering-row">
+        <div class="catering-row-label">🍽 Dinner</div>
+        <div class="catering-row-value">18:00–21:00 <span class="text-small" style="color:var(--muted); display:block;">Thu: until 20:00</span></div>
+      </div>
+      <div class="catering-row">
+        <div class="catering-row-label">💧 Free drinks</div>
+        <div class="catering-row-value" style="font-size:0.76rem;">Water, lemonade, coffee, tea — anytime</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-red mt-2">
+    <span class="alert-icon">🚫</span>
+    <div class="alert-body"><strong>Alcohol strictly forbidden during shifts.</strong> Bring your own reusable water bottle — free water is always available.</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     7. CREW CAMPSITE
+================================================================ -->
+<section id="campsite">
+  <div class="section-eyebrow">Section 7</div>
+  <h2 class="section-title">Crew Campsite</h2>
+  <p class="section-intro">The campsite has moved this year — it's now closer to the regular entrance but further from the volunteer office.</p>
+
+  <div class="alert alert-gold mb-2">
+    <span class="alert-icon">📍</span>
+    <div class="alert-body">
+      <strong>New location this year.</strong> ~45 min walk from the volunteer office. A <strong>bike is strongly recommended</strong> for the campsite ↔ backstage commute.
+    </div>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-title">Key facts</div>
+    <ul class="inline-list">
+      <li>Opens <strong>Thursday 11 June at 16:00</strong></li>
+      <li>Bring your <strong>own tent + sleeping gear</strong> — nothing is provided</li>
+      <li>Leave luggage at the volunteer office if you arrive before 16:00 Thursday</li>
+      <li>Thursday: <strong>bring your own food</strong> (unless you have a Thursday shift)</li>
+      <li>Sunday: <strong>crew party</strong> after last Sunday shifts</li>
+    </ul>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-title">Accommodation alternatives</div>
+    <p>ComfortCamp, Secret Fields glamping, or Beekse Bergen cottages available on the BKS accommodation page — these sell out fast. Camper/caravan spots are limited; apply via form <strong>before June 4th</strong>.</p>
+  </div>
+
+  <div class="card mb-2">
+    <div class="card-title">🚲 Bike free zones — strictly enforced in 2026</div>
+    <p>Checkpoints are placed throughout the grounds. Bikes are allowed in <strong>green zones</strong> and prohibited in <strong>red zones</strong>. Check the BKS app map before cycling.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛒 Spar shop at the campsite</div>
+    <div class="table-wrapper" style="border:none; margin-top:0.75rem;">
+      <table class="spar-table">
+        <thead>
+          <tr><th>Day</th><th>Opening hours</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Friday</td><td>15:00–19:00</td></tr>
+          <tr><td>Saturday</td><td>08:00–19:00</td></tr>
+          <tr><td>Sunday</td><td>08:00–16:00</td></tr>
+          <tr><td>Monday</td><td>08:00–18:00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-small text-muted mt-1">Available: tents, airbeds, sleeping bags, folding chairs, ground sheets, duct tape, pumps.</p>
+  </div>
+</section>
+
+<!-- ================================================================
+     8. BAR VOLUNTEER TEAM
+================================================================ -->
+<section id="barteam">
+  <div class="section-eyebrow">Section 8</div>
+  <h2 class="section-title">Bar Volunteer Team</h2>
+  <p class="section-intro">Bar volunteers are a separate team with their own coordinators. If you're on the bar team, this is your primary contact.</p>
+
+  <div class="bar-highlight">
+    <h3>Lester &amp; Giulia</h3>
+    <p class="bar-subtitle">Bar Team Coordinators — Jongens van de Bar / HOP</p>
+
+    <ul class="inline-list">
+      <li>Lester &amp; Giulia handle your <strong>accreditation, catering and schedule</strong> — not Sara</li>
+      <li>Same ~18 hour commitment as all volunteers</li>
+      <li>Same crew campsite &amp; volunteer spot near crew parking</li>
+      <li>The bar team is large — you'll work with lots of people</li>
+    </ul>
+
+    <div class="bar-contact-btns">
+      <a href="https://wa.me/31851155226" class="btn-wa" target="_blank" rel="noopener">
+        <span>💬</span> WhatsApp Bar Team
+      </a>
+      <a href="tel:+31851155226" class="contact-btn" style="min-height:44px;">📞 +31 85 115 5226</a>
+    </div>
+  </div>
+
+  <div class="alert alert-gold mt-2">
+    <span class="alert-icon">ℹ</span>
+    <div class="alert-body">
+      All other volunteer rules (shifts, t-shirt, no alcohol during shifts, sign-out, etc.) still apply to bar team volunteers.
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     9. RULES OF ENGAGEMENT
+================================================================ -->
+<section id="rules">
+  <div class="section-eyebrow">Section 9</div>
+  <h2 class="section-title">Rules of Engagement</h2>
+  <p class="section-intro">Read these before your first shift. These are not optional — breaking them has consequences.</p>
+
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-card-title red">Never do</div>
+      <ul class="rule-list dont">
+        <li>Drink alcohol or use drugs during shifts — showing up drunk/high = wristband cut</li>
+        <li>Leave your shift before the coordinator gives permission</li>
+        <li>Wear the crew t-shirt off-shift</li>
+        <li>No-show or cancel late without notice — risk of wristband blacklist</li>
+        <li>Fight, threaten or intimidate anyone</li>
+        <li>Photograph artists or approach them for autographs</li>
+        <li>Speak to press on behalf of BKS (refer them to the Press Zone backstage)</li>
+        <li>Bring SLR cameras or professional photo gear</li>
+        <li>Smoke inside backstage tents — outdoor air only</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <div class="rule-card-title green">Always do</div>
+      <ul class="rule-list do">
+        <li>Arrive 10–20 min early at meeting point (30 min early for first shift at volunteer office)</li>
+        <li>Wear crew t-shirt during every shift</li>
+        <li>Sign out at the volunteer office after every shift</li>
+        <li>Contact coordinator ASAP if you can't make a shift (&lt;48h = call or in person)</li>
+        <li>Bring your own reusable water bottle</li>
+        <li>Pick up litter and dispose of cigarette butts properly</li>
+        <li>Look out for guests and colleagues in distress — get help from crew/security</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <div class="rule-card-title gold">Commitment</div>
+      <ul class="rule-list note">
+        <li>Minimum <strong>18 hours total</strong>, distributed across days</li>
+        <li>Pocket cameras and phones are fine for personal photos</li>
+        <li>Artist privacy: no photos of artists, no press contact</li>
+        <li>Valuables: your responsibility (workers insurance covers personal injury only, not belongings)</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <div class="rule-card-title gold">Special passes</div>
+      <ul class="rule-list note">
+        <li>Security &amp; Artist Hospitality: collect backstage pass at volunteer office before shift</li>
+        <li>Return your backstage pass immediately after your shift ends</li>
+        <li>Security gear required Thursday backstage — site is still under construction</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     10. HEALTH & SAFETY
+================================================================ -->
+<section id="safety">
+  <div class="section-eyebrow">Section 10</div>
+  <h2 class="section-title">Health &amp; Safety</h2>
+  <p class="section-intro">Your wellbeing matters. Know who to contact and what support is available.</p>
+
+  <div class="card card-warn mb-1">
+    <div class="card-title">Feeling ill or unsafe?</div>
+    <p>Contact <strong>Sara: <a href="tel:+31640966109" style="color:var(--gold);">+31 6 40 96 61 09</a></strong>, speak to your task coordinator on-shift, or come directly to the volunteer office.</p>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-title">Confidential adviser</div>
+    <p>Available backstage <strong>Friday through Sunday</strong>. Name and contact number will be shared closer to the festival. Completely confidential.</p>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-title">Accessibility</div>
+    <ul class="inline-list">
+      <li>Safari Park entrance has <strong>special parking for disabilities</strong></li>
+      <li>Stages <strong>ONE and TWO</strong> have disabled decks</li>
+      <li>Grounds are <strong>wheelchair accessible</strong></li>
+    </ul>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-title">Respect &amp; empathy</div>
+    <p>If you see someone being harassed, in distress or in danger — don't ignore it. Get help from nearby crew or security. You're part of making BKS a safe space.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Sustainability</div>
+    <ul class="inline-list">
+      <li>Bring your own reusable water bottle</li>
+      <li>Pick up litter when you see it</li>
+      <li>No cigarette butts on the ground</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================
+     11. CONTACTS
+================================================================ -->
+<section id="contacts">
+  <div class="section-eyebrow">Section 11</div>
+  <h2 class="section-title">Contacts</h2>
+  <p class="section-intro">Save these before you arrive — signal can be patchy on-site.</p>
+
+  <div class="contact-card">
+    <div class="contact-avatar">👩</div>
+    <div class="contact-info">
+      <div class="contact-name">Sara Verdegaal</div>
+      <div class="contact-role">Volunteer Coordinator — BKS26</div>
+      <div class="contact-btns">
+        <a href="tel:+31640966109" class="contact-btn primary">📞 +31 6 40 96 61 09</a>
+        <a href="mailto:Volunteers@bestkeptsecret.nl" class="contact-btn">✉ Volunteers@bestkeptsecret.nl</a>
+        <a href="https://wa.me/31640966109" class="contact-btn" target="_blank" rel="noopener">💬 WhatsApp Sara</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="contact-avatar">🍺</div>
+    <div class="contact-info">
+      <div class="contact-name">Lester &amp; Giulia</div>
+      <div class="contact-role">Bar Team Coordinators — Jongens van de Bar / HOP</div>
+      <div class="contact-btns">
+        <a href="tel:+31851155226" class="contact-btn primary">📞 +31 85 115 5226</a>
+        <a href="https://wa.me/31851155226" class="contact-btn" target="_blank" rel="noopener">💬 WhatsApp Bar Team</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-gold mt-2">
+    <span class="alert-icon">💾</span>
+    <div class="alert-body">
+      Save both numbers to your phone now. On-site signal is unreliable. <strong>Sara: +31 6 40 96 61 09 · Bar team: +31 85 115 5226</strong>
+    </div>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <div class="footer-contacts">
+    <a href="tel:+31640966109" class="contact-btn" style="font-size:0.76rem; min-height:38px;">📞 Sara: +31 6 40 96 61 09</a>
+    <a href="mailto:Volunteers@bestkeptsecret.nl" class="contact-btn" style="font-size:0.76rem; min-height:38px;">✉ Volunteers@bestkeptsecret.nl</a>
+    <a href="https://wa.me/31851155226" class="contact-btn" style="font-size:0.76rem; min-height:38px;">💬 Bar Team: +31 85 115 5226</a>
+  </div>
+  <p><strong style="color:#555;">Best Kept Secret 2026</strong> &nbsp;·&nbsp; 11–15 June &nbsp;·&nbsp; Beekse Bergen, Hilvarenbeek</p>
+  <p style="margin-top:0.4rem;">Volunteer guide — for internal use only &nbsp;·&nbsp; Questions? <a href="mailto:Volunteers@bestkeptsecret.nl">Volunteers@bestkeptsecret.nl</a></p>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT (inline — zero external dependencies)
+================================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ---- CHECKLIST with localStorage ---- */
+  var STORAGE_KEY = 'bks26-checklist';
+
+  function loadChecklist() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) { return {}; }
+  }
+
+  function saveChecklist(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function updateProgress() {
+    var boxes = document.querySelectorAll('#bks-checklist input[type="checkbox"]');
+    var checked = 0;
+    boxes.forEach(function (cb) { if (cb.checked) checked++; });
+    var total = boxes.length;
+    var pct = total ? Math.round((checked / total) * 100) : 0;
+    var fill = document.getElementById('checklist-fill');
+    var status = document.getElementById('checklist-status');
+    if (fill) fill.style.width = pct + '%';
+    if (status) status.textContent = checked + ' of ' + total + ' complete' + (checked === total ? ' — you\'re all set! ✓' : '');
+  }
+
+  function initChecklist() {
+    var state = loadChecklist();
+    var boxes = document.querySelectorAll('#bks-checklist input[type="checkbox"]');
+    boxes.forEach(function (cb) {
+      var key = cb.getAttribute('data-key');
+      if (key && state[key]) cb.checked = true;
+      cb.addEventListener('change', function () {
+        var s = loadChecklist();
+        s[cb.getAttribute('data-key')] = cb.checked;
+        saveChecklist(s);
+        updateProgress();
+      });
+    });
+    updateProgress();
+  }
+
+  /* ---- TRAVEL DAY TABS ---- */
+  function showDay(day) {
+    var days = ['thu', 'fri', 'satmon'];
+    days.forEach(function (d) {
+      var panel = document.getElementById('panel-' + d);
+      var tab = document.getElementById('tab-' + d);
+      if (panel) panel.classList.toggle('visible', d === day);
+      if (tab) {
+        tab.classList.remove('active-thu', 'active-fri', 'active-satmon');
+        if (d === day) tab.classList.add('active-' + d);
+      }
+    });
+  }
+
+  /* Expose to inline onclick */
+  window.showDay = showDay;
+
+  /* ---- MOBILE MENU: close when a link is tapped ---- */
+  function initMobileMenuClose() {
+    var toggle = document.getElementById('nav-toggle');
+    var links = document.querySelectorAll('#mobile-nav a');
+    links.forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (toggle) toggle.checked = false;
+      });
+    });
+  }
+
+  /* ---- SMOOTH SCROLL polyfill for Safari < 15.4 ---- */
+  function smoothScrollTo(target) {
+    if (!target) return;
+    var top = target.getBoundingClientRect().top + window.pageYOffset - 64;
+    if ('scrollBehavior' in document.documentElement.style) {
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    } else {
+      window.scrollTo(0, top);
+    }
+  }
+
+  function initSmoothLinks() {
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href').slice(1);
+        var target = document.getElementById(id);
+        if (target) {
+          e.preventDefault();
+          smoothScrollTo(target);
+        }
+      });
+    });
+  }
+
+  /* ---- INIT ---- */
+  document.addEventListener('DOMContentLoaded', function () {
+    initChecklist();
+    initMobileMenuClose();
+    initSmoothLinks();
+    /* Set Thu tab active by default */
+    showDay('thu');
+  });
+
+})();
+</script>
+
+</body>
+</html>
