@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flavours — Brasa y Mar</title>
+  <meta name="description" content="An illustrated wall of the flavours that come out of the Brasa y Mar hearth.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/site.css">
+  <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <header class="nav">
+    <a href="index.html" class="brand">Brasa <span>y</span> Mar</a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html" class="active">Flavours</a></li>
+        <li><a href="reservations.html" class="btn">Reserve</a></li>
+      </ul>
+    </nav>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </header>
+  <div class="drawer" aria-hidden="true">
+    <a href="index.html">Home</a><a href="menu.html">Menu</a><a href="about.html">About</a><a href="gallery.html">Flavours</a><a href="reservations.html">Reserve</a>
+  </div>
+
+  <section class="hero" style="padding-bottom:2rem">
+    <div class="hero-bg" data-parallax="0.15" aria-hidden="true"></div>
+    <div class="container" style="display:block;text-align:center">
+      <span class="eyebrow reveal">A Flavours Wall</span>
+      <h1 class="reveal" style="font-size:clamp(2.4rem,6vw,4rem)">Painted in <em>saffron</em>.</h1>
+      <p class="lead reveal" style="margin:1.2rem auto 0">Hand-drawn impressions of what lands on the table —
+        our colours, our textures, our hearth. (Swap in your own food photography any time; see the deploy guide.)</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="flavours">
+        <figure class="flavour reveal"><div class="dish" role="img" aria-label="Seafood paella impression"><i class="shrimp"></i><i class="clam"></i><i class="scallop"></i><i class="lemon"></i></div><figcaption>Paella de Marisco<small>Prawns · clams · saffron rice</small></figcaption></figure>
+        <figure class="flavour reveal"><div class="dish" role="img" aria-label="Squid ink rice impression" style="--pan:#15110f"><i class="scallop"></i><i class="lemon"></i></div><figcaption>Arroz Negro<small>Squid ink · cuttlefish · aioli</small></figcaption></figure>
+        <figure class="flavour reveal"><div class="dish" role="img" aria-label="Garlic prawns impression"><i class="shrimp"></i><i class="shrimp2"></i><i class="lemon"></i></div><figcaption>Gambas al Ajillo<small>Garlic · guindilla · olive oil</small></figcaption></figure>
+        <figure class="flavour reveal"><div class="dish" role="img" aria-label="Vegetable paella impression"><i class="scallop"></i><i class="lemon"></i></div><figcaption>Paella de Verduras<small>Artichoke · piquillo · paprika</small></figcaption></figure>
+        <figure class="flavour reveal"><div class="dish" role="img" aria-label="Octopus impression"><i class="clam"></i><i class="clam c2"></i></div><figcaption>Pulpo a la Brasa<small>Flame-charred · smoked potato</small></figcaption></figure>
+        <figure class="flavour reveal"><div class="dish" role="img" aria-label="Valenciana paella impression"><i class="shrimp2"></i><i class="lemon"></i><i class="clam"></i></div><figcaption>Paella Valenciana<small>Rabbit · chicken · rosemary</small></figcaption></figure>
+      </div>
+      <div class="section-head reveal" style="margin-top:3rem;margin-bottom:0">
+        <a href="reservations.html" class="btn btn--lg">Taste it for real</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div><a href="index.html" class="brand">Brasa <span>y</span> Mar</a><p class="muted" style="margin-top:.8rem;max-width:34ch">Wood-fired Spanish paella &amp; tapas on the coast.</p></div>
+      <div><h4>Visit</h4><ul><li>Paseo Marítimo (set your address)</li><li>Open Tue–Sun · 1pm–11pm</li><li><a href="tel:+10000000000">Call to book</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="about.html">About</a></li><li><a href="gallery.html">Flavours</a></li><li><a href="reservations.html">Reservations</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">© <span id="yr">2026</span> Brasa y Mar · Illustrations are CSS art — replace with photos when ready.</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="assets/site.js"></script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

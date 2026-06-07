@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /form-handler.php
+
+# Replace example.com with your live domain before launch.
+Sitemap: https://example.com/sitemap.xml

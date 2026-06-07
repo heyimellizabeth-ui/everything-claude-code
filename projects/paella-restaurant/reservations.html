@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservations — Brasa y Mar</title>
+  <meta name="description" content="Reserve a table at Brasa y Mar. Tell us when you're coming and we'll have the pan ready.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/site.css">
+  <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <header class="nav">
+    <a href="index.html" class="brand">Brasa <span>y</span> Mar</a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html">Flavours</a></li>
+        <li><a href="reservations.html" class="btn active">Reserve</a></li>
+      </ul>
+    </nav>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </header>
+  <div class="drawer" aria-hidden="true">
+    <a href="index.html">Home</a><a href="menu.html">Menu</a><a href="about.html">About</a><a href="gallery.html">Flavours</a><a href="reservations.html">Reserve</a>
+  </div>
+
+  <section class="hero" style="padding-bottom:2rem">
+    <div class="hero-bg" data-parallax="0.15" aria-hidden="true"></div>
+    <div class="container" style="display:block;text-align:center">
+      <span class="eyebrow reveal">Reservations</span>
+      <h1 class="reveal" style="font-size:clamp(2.4rem,6vw,4rem)">Tell us when, <em>we'll do the rest</em>.</h1>
+      <p class="lead reveal" style="margin:1.2rem auto 0">Request a table below. We'll confirm by email or phone. For parties of eight or more, please call us directly.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:1rem">
+    <div class="container">
+      <form class="form-wrap reveal" id="reserveForm" action="form-handler.php" method="POST" novalidate>
+        <input type="hidden" name="_type" value="reservation">
+        <!-- honeypot: bots fill this; humans never see it -->
+        <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+
+        <div class="field-row">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" required autocomplete="name"></div>
+          <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" required autocomplete="tel"></div>
+        </div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email"></div>
+        <div class="field-row">
+          <div class="field"><label for="date">Date</label><input id="date" name="date" type="date" required></div>
+          <div class="field"><label for="time">Time</label><input id="time" name="time" type="time" required></div>
+        </div>
+        <div class="field">
+          <label for="party">Party size</label>
+          <select id="party" name="party" required>
+            <option value="">Select…</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select>
+        </div>
+        <div class="field"><label for="notes">Notes (allergies, occasion, seating)</label><textarea id="notes" name="notes"></textarea></div>
+        <button type="submit" class="btn btn--lg" style="width:100%">Request reservation</button>
+        <p class="form-note">We'll only use your details to confirm this booking. No spam, ever.</p>
+        <div class="form-status" id="reserveStatus" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section--cream2">
+    <div class="container">
+      <div class="news reveal">
+        <div>
+          <span class="eyebrow" style="color:var(--saffron)">Stay in the Loop</span>
+          <h2>Specials, straight to your inbox.</h2>
+          <p class="lead">Seasonal paellas, wine nights, and the odd surprise from the hearth.</p>
+        </div>
+        <form id="newsForm" action="form-handler.php" method="POST">
+          <input type="hidden" name="_type" value="newsletter">
+          <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+          <label for="news-email" class="hp">Email</label>
+          <input id="news-email" name="email" type="email" placeholder="you@email.com" required>
+          <button type="submit" class="btn">Join</button>
+        </form>
+      </div>
+      <div class="form-status" id="newsStatus" role="status" aria-live="polite" style="max-width:680px;margin:1rem auto 0"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div><a href="index.html" class="brand">Brasa <span>y</span> Mar</a><p class="muted" style="margin-top:.8rem;max-width:34ch">Wood-fired Spanish paella &amp; tapas on the coast.</p></div>
+      <div><h4>Visit</h4><ul><li>Paseo Marítimo (set your address)</li><li>Open Tue–Sun · 1pm–11pm</li><li><a href="tel:+10000000000">Call to book</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="about.html">About</a></li><li><a href="gallery.html">Flavours</a></li><li><a href="reservations.html">Reservations</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">© <span id="yr">2026</span> Brasa y Mar · Reservation emails go to the address set in form-handler.php.</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="assets/site.js"></script>
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    BrasaForm(document.getElementById('reserveForm'), document.getElementById('reserveStatus'));
+    BrasaForm(document.getElementById('newsForm'), document.getElementById('newsStatus'));
+    // Prevent booking in the past.
+    var d = document.getElementById('date'); if (d) d.min = new Date().toISOString().split('T')[0];
+  </script>
+</body>
+</html>
