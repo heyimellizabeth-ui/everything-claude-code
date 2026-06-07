@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#020203"/>
+      <stop offset="0.7" stop-color="#0F172A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="0%" r="70%">
+      <stop offset="0" stop-color="#5E6AD2" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#5E6AD2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g transform="translate(96, 150)">
+    <rect x="0" y="0" width="64" height="64" rx="16" fill="#1B2336" stroke="#5E6AD2" stroke-width="2"/>
+    <circle cx="22" cy="22" r="5" fill="#5E6AD2"/>
+    <circle cx="42" cy="22" r="5" fill="#22C55E"/>
+    <circle cx="22" cy="42" r="5" fill="#22C55E"/>
+    <circle cx="42" cy="42" r="5" fill="#5E6AD2"/>
+  </g>
+  <text x="96" y="320" font-family="Inter, sans-serif" font-size="68" font-weight="700" fill="#F8FAFC">Council <tspan fill="#5E6AD2">×</tspan> UI-UX Pro Max</text>
+  <text x="96" y="392" font-family="Inter, sans-serif" font-size="34" font-weight="400" fill="#94A3B8">Decisions by council. Design by intelligence.</text>
+  <g transform="translate(96, 470)">
+    <rect x="0" y="0" width="360" height="48" rx="12" fill="#22C55E"/>
+    <text x="180" y="31" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#0F172A">Built via /chelp C1 pipeline</text>
+  </g>
+</svg>
