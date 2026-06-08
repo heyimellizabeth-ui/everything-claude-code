@@ -197,6 +197,7 @@ commands:
   - learn-eval
   - loop-start
   - loop-status
+  - marktplaats-search
   - model-route
   - multi-backend
   - multi-execute
