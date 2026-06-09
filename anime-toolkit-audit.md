@@ -19,7 +19,7 @@ V4 is a modular, tree-shakeable rewrite. You import only what you use, which cha
 | **Keyframes** | Per-property keyframe arrays *and* tween-level keyframe sequences with per-step duration/easing; percentage-based keyframes too. | `{ translateX:[{to:100},{to:0}] }` / `keyframes:[…]` | **[PARITY]**. GSAP uses `keyframes`/timelines; equivalent power. | ~0. |
 | **Staggering** | Distributes delay/value across many targets; supports `from`, `start`, `ease`, **grid `[cols,rows]`**, `axis`, `reversed`, `modifier`. Usable for delay *or any value*, and as timeline positions. | `stagger(100,{ from:'center', grid:[14,5], axis:'x' })` | **[ADVANTAGE]**. Same expressiveness, but it's a first-class util usable anywhere; GSAP's is config-bound. | Anime wins — grid stagger is free in core. |
 | **Timeline** | Sequenced multi-target orchestration with labels, absolute/relative/stagger positions, per-add overrides, nested sync. | `createTimeline({defaults}).add(t,p,pos).sync().label().call().set()` | **[PARITY]**. Both excellent. GSAP timelines are marginally richer for nested-timeline reuse. | Comparable. |
-| **Playback controls** | Full transport: play/pause/restart/reverse/alternate/resume/complete/cancel/**revert**/seek/stretch/refresh; `.then()` Promise. | `anim.pause()`, `anim.seek(t)`, `anim.progress=0.5`, `await anim` | **[PARITY]**. `revert()` ↔ GSAP `revert()`; `cancel()` ↔ `kill()`. | ~0. |
+| **Playback controls** | Full transport: play/pause/restart/reverse/alternate/resume/complete/cancel/**revert**/seek/stretch/refresh; `.then()` Promise. | `anim.pause()`, `anim.seek(t)`, `anim.progress=0.5`, `await anim` | **[PARITY]**. `revert()` maps to GSAP `revert()`; `cancel()` maps to `kill()`. | ~0. |
 | **Callbacks** | Lifecycle hooks. | `onBegin,onUpdate,onComplete,onLoop,onPause,onRender,onBeforeUpdate` + `then()` | **[PARITY]**. Renamed (`onStart`→`onBegin`, `onRepeat`→`onLoop`). | ~0. |
 | **Easing** | Power eases (Quad…Bounce, in/out/inOut), `cubicBezier`, `steps`, `irregular`, **`createSpring({stiffness,damping,mass,velocity})`**, and custom `(t)=>number`. | `ease:'outExpo'`, `ease:createSpring({stiffness:120})` | **[PARITY]** / mild **[ADVANTAGE]** — spring + irregular built in (GSAP springs need CustomEase/plugins). | Anime wins — no plugin for spring. |
 | **SVG** | Line drawing (`createDrawable`), shape morph (`morphTo`), motion path (`createMotionPath` → `{translateX,translateY,rotate}`). | `svg.createDrawable('.p')`, `svg.morphTo('#to')`, `svg.createMotionPath('#path')` | **[PARITY for the common 80%]**. GSAP MorphSVG handles disparate point counts more gracefully (see Section C). | **[ADVANTAGE]** — these are free; GSAP DrawSVG/MorphSVG are paid Club plugins. |
@@ -44,17 +44,17 @@ Selected by technique value across the seven query themes. `Stack-fit` = replica
 
 | # | Pen (source) | Technique | Core methods | Stack-fit | Est. effort | Impact |
 |---|---|---|---|---|---|---|
-| 1 | [Advanced staggering — juliangarnier/MZXQNV](https://codepen.io/juliangarnier/pen/MZXQNV) *(official, ~very high)* | Grid-based stagger ripple from a point | `stagger(v,{grid,from})` | ✅ direct | quick | 5 |
-| 2 | [Seamless infinite loop — juliangarnier/rGjMyW](https://codepen.io/juliangarnier/pen/rGjMyW) *(official)* | Looping timeline w/ alternating eases | `createTimeline`, `loop`, `alternate` | ✅ direct | quick | 4 |
-| 3 | [Fireworks canvas — juliangarnier/gmOwJX](https://codepen.io/juliangarnier/pen/gmOwJX) *(official, ~very high)* | Anime drives **canvas** particle props per-frame | `animate` on JS objects, `onRender` | ✅ direct | half-day | 5 |
-| 4 | [Scroll-controlled — equinusocio/GeBxJz](https://codepen.io/equinusocio/pen/GeBxJz) *(V3/legacy)* | Scrubbed progress tied to scroll | V4: `onScroll({sync})` | ✅ rewrite | quick | 4 |
-| 5 | [Text effect — SitePoint/NQYpNr](https://codepen.io/SitePoint/pen/NQYpNr) *(V3/legacy)* | Per-letter split + staggered transform | split + `stagger`, `animate` | ✅ rewrite | quick | 4 |
-| 6 | [Multi-line text — andrewmillen/rZjVKZ](https://codepen.io/andrewmillen/pen/rZjVKZ) *(V3/legacy)* | Line-masked reveal `translateY 100%→0` | `animate`, `stagger`, overflow mask | ✅ rewrite | quick | 4 |
-| 7 | [SVG path morph — spz/vbbQmM](https://codepen.io/spz/pen/vbbQmM) *(V3/legacy)* | Shape `d`-attribute morphing | V4: `svg.morphTo` | ✅ rewrite | half-day | 5 |
-| 8 | [SVG line/timeline — brianacamp/QBmzja](https://codepen.io/brianacamp/pen/QBmzja) *(V3/legacy)* | Stroke line-drawing reveal | V4: `svg.createDrawable` | ✅ rewrite | quick | 4 |
-| 9 | [Timeline orchestration — Shokeen/KqzmvV](https://codepen.io/Shokeen/pen/KqzmvV) | Labeled multi-target timeline + seek | `createTimeline`, labels, `seek` | ✅ direct | quick | 3 |
-| 10 | [Particles three.js+anime — keel/bYxOWZ](https://codepen.io/keel/pen/bYxOWZ) | Anime tweens **R3F/Three** object values | `animate` on `{x,y,z}` objects | ✅ direct | day | 5 |
-| 11 | [Morphing shapes — Shokeen/VWjzLL](https://codepen.io/Shokeen/pen/VWjzLL) | Looping multi-state morph | `svg.morphTo`, timeline | ✅ rewrite | half-day | 4 |
+| 1 | [Advanced staggering — juliangarnier/MZXQNV](https://codepen.io/juliangarnier/pen/MZXQNV) *(official, ~very high)* | Grid-based stagger ripple from a point | `stagger(v,{grid,from})` | Yes (direct) | quick | 5 |
+| 2 | [Seamless infinite loop — juliangarnier/rGjMyW](https://codepen.io/juliangarnier/pen/rGjMyW) *(official)* | Looping timeline w/ alternating eases | `createTimeline`, `loop`, `alternate` | Yes (direct) | quick | 4 |
+| 3 | [Fireworks canvas — juliangarnier/gmOwJX](https://codepen.io/juliangarnier/pen/gmOwJX) *(official, ~very high)* | Anime drives **canvas** particle props per-frame | `animate` on JS objects, `onRender` | Yes (direct) | half-day | 5 |
+| 4 | [Scroll-controlled — equinusocio/GeBxJz](https://codepen.io/equinusocio/pen/GeBxJz) *(V3/legacy)* | Scrubbed progress tied to scroll | V4: `onScroll({sync})` | Yes (rewrite) | quick | 4 |
+| 5 | [Text effect — SitePoint/NQYpNr](https://codepen.io/SitePoint/pen/NQYpNr) *(V3/legacy)* | Per-letter split + staggered transform | split + `stagger`, `animate` | Yes (rewrite) | quick | 4 |
+| 6 | [Multi-line text — andrewmillen/rZjVKZ](https://codepen.io/andrewmillen/pen/rZjVKZ) *(V3/legacy)* | Line-masked reveal `translateY 100%→0` | `animate`, `stagger`, overflow mask | Yes (rewrite) | quick | 4 |
+| 7 | [SVG path morph — spz/vbbQmM](https://codepen.io/spz/pen/vbbQmM) *(V3/legacy)* | Shape `d`-attribute morphing | V4: `svg.morphTo` | Yes (rewrite) | half-day | 5 |
+| 8 | [SVG line/timeline — brianacamp/QBmzja](https://codepen.io/brianacamp/pen/QBmzja) *(V3/legacy)* | Stroke line-drawing reveal | V4: `svg.createDrawable` | Yes (rewrite) | quick | 4 |
+| 9 | [Timeline orchestration — Shokeen/KqzmvV](https://codepen.io/Shokeen/pen/KqzmvV) | Labeled multi-target timeline + seek | `createTimeline`, labels, `seek` | Yes (direct) | quick | 3 |
+| 10 | [Particles three.js+anime — keel/bYxOWZ](https://codepen.io/keel/pen/bYxOWZ) | Anime tweens **R3F/Three** object values | `animate` on `{x,y,z}` objects | Yes (direct) | day | 5 |
+| 11 | [Morphing shapes — Shokeen/VWjzLL](https://codepen.io/Shokeen/pen/VWjzLL) | Looping multi-state morph | `svg.morphTo`, timeline | Yes (rewrite) | half-day | 4 |
 
 *(Constraint compliance: every jQuery/ScrollMagic dependency was dropped; legacy `anime.stagger`/`anime.timeline` calls map to V4 `stagger`/`createTimeline`.)*
 
