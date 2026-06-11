@@ -1,0 +1,4 @@
+# Internal volunteer resource for Best Kept Secret 2026.
+# Not intended for public search indexing.
+User-agent: *
+Disallow: /
