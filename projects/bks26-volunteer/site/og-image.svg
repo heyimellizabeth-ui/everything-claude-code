@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Best Kept Secret 2026 Volunteer Guide">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="0%" r="75%">
+      <stop offset="0%" stop-color="#35d04a" stop-opacity="0.18"/>
+      <stop offset="70%" stop-color="#0a0a0a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect x="40" y="40" width="1120" height="550" rx="20" fill="none" stroke="#1e1e1e" stroke-width="2"/>
+
+  <text x="80" y="150" font-family="Arial, sans-serif" font-size="26" letter-spacing="6" font-weight="700" fill="#35d04a">VOLUNTEER GUIDE</text>
+
+  <text x="76" y="320" font-family="Arial Narrow, Arial, sans-serif" font-size="150" font-weight="900" fill="#ffffff" letter-spacing="-2">
+    BEST KEPT <tspan fill="#35d04a">SECRET</tspan> <tspan fill="#ff6a1b">&#8217;26</tspan>
+  </text>
+
+  <!-- green smile mark -->
+  <g transform="translate(80,400)">
+    <circle cx="46" cy="46" r="46" fill="#0a0a0a" stroke="#1e1e1e" stroke-width="2"/>
+    <path d="M22 46a24 24 0 0 0 48 0" fill="none" stroke="#35d04a" stroke-width="11" stroke-linecap="round"/>
+  </g>
+
+  <text x="196" y="430" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#e8e8e8">11&#8211;15 June 2026</text>
+  <text x="196" y="476" font-family="Arial, sans-serif" font-size="28" fill="#888888">Beekse Bergen &#183; Hilvarenbeek &#183; ~300 crew</text>
+
+  <text x="80" y="556" font-family="Arial, sans-serif" font-size="24" fill="#666666">Checklist &#183; Travel &#183; Shifts &#183; Tasks &#183; Food &#183; Campsite &#183; Rules &#183; Contacts</text>
+</svg>
