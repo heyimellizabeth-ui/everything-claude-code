@@ -88,24 +88,24 @@ See the preview update with your font choices.
 
 Toggle which pages to generate:
 
-✅ **Keep enabled:**
+PASS: **Keep enabled:**
 - Index (home)
 - Events
 - About
 - Contact
 
-❌ **Disable:**
+FAIL: **Disable:**
 - Gallery (we'll skip this)
 - Manifesto (optional brand statement)
 
 Toggle **Modules:**
 
-✅ **Calendar** — RA event embed (enabled)
-✅ **Gallery** — Flickr embed (enabled)
-✅ **Newsletter** — Email signup (enabled)
+PASS: **Calendar** — RA event embed (enabled)
+PASS: **Gallery** — Flickr embed (enabled)
+PASS: **Newsletter** — Email signup (enabled)
 
-❌ **Checkout** — Stripe button (disabled for now)
-❌ **Planner** — Booking form (disabled for now)
+FAIL: **Checkout** — Stripe button (disabled for now)
+FAIL: **Planner** — Booking form (disabled for now)
 
 ---
 
@@ -152,7 +152,7 @@ Alternatively, paste JSON:
 
 ## Step 7: Download Config (1 min)
 
-Click **"⬇ Download Config"** button.
+Click **" Download Config"** button.
 
 `brand-config.json` saves to `~/Downloads/`.
 
@@ -184,18 +184,18 @@ In Claude Code, run:
 ```
 
 The command will:
-1. ✅ Locate your config file
-2. ✅ Derive project name: `neon`
-3. ✅ Create `projects/neon/` directory
-4. ✅ Scaffold all pages (events.html, about.html, contact.html — NOT gallery.html)
-5. ✅ Inject fonts (Unbounded, Inter from Google Fonts)
-6. ✅ Inject reviews (2 reviews visible on home page with star ratings)
-7. ✅ Inject hero image (background-image on hero section)
-8. ✅ Enable calendar module on events page
-9. ✅ Hide checkout module (display:none)
-10. ✅ Generate brand assets (favicon, og-image)
-11. ✅ Validate — no unresolved {{TOKENS}}
-12. ✅ Report: "Site ready at `projects/neon/index.html`"
+1. PASS: Locate your config file
+2. PASS: Derive project name: `neon`
+3. PASS: Create `projects/neon/` directory
+4. PASS: Scaffold all pages (events.html, about.html, contact.html — NOT gallery.html)
+5. PASS: Inject fonts (Unbounded, Inter from Google Fonts)
+6. PASS: Inject reviews (2 reviews visible on home page with star ratings)
+7. PASS: Inject hero image (background-image on hero section)
+8. PASS: Enable calendar module on events page
+9. PASS: Hide checkout module (display:none)
+10. PASS: Generate brand assets (favicon, og-image)
+11. PASS: Validate — no unresolved {{TOKENS}}
+12. PASS: Report: "Site ready at `projects/neon/index.html`"
 
 Output:
 ```
@@ -218,14 +218,14 @@ open projects/neon/index.html
 ```
 
 You should see:
-- ✅ **Hero section** with your background image
-- ✅ **Reviews** visible with 5-star ratings (Alex 5★, Jordan 4★)
-- ✅ **Next Event** block with your tagline
-- ✅ **Newsletter signup** form
-- ✅ **Social links** (Instagram, RA, Facebook, TikTok, Spotify, YouTube)
-- ✅ **Fonts** — Unbounded headings, Inter body text
-- ✅ **Colors** — Ember red accent on buttons, dark background
-- ✅ **Responsive** — Works on mobile, tablet, desktop
+- PASS: **Hero section** with your background image
+- PASS: **Reviews** visible with 5-star ratings (Alex 5★, Jordan 4★)
+- PASS: **Next Event** block with your tagline
+- PASS: **Newsletter signup** form
+- PASS: **Social links** (Instagram, RA, Facebook, TikTok, Spotify, YouTube)
+- PASS: **Fonts** — Unbounded headings, Inter body text
+- PASS: **Colors** — Ember red accent on buttons, dark background
+- PASS: **Responsive** — Works on mobile, tablet, desktop
 
 Click **Events** → Calendar embed from RA (live event listings)
 Click **About** → Team section (placeholder for bios)
@@ -313,10 +313,10 @@ For design polish (animations, hover states, responsive tweaks):
 ```
 
 This runs Claude's design polish chain:
-- ✅ GSAP animations (entrance, scroll-triggered)
-- ✅ Responsive breakpoints (mobile, tablet, desktop)
-- ✅ Hover states (buttons, links)
-- ✅ Accessibility audit (contrast, ARIA labels)
+- PASS: GSAP animations (entrance, scroll-triggered)
+- PASS: Responsive breakpoints (mobile, tablet, desktop)
+- PASS: Hover states (buttons, links)
+- PASS: Accessibility audit (contrast, ARIA labels)
 
 ---
 
@@ -350,15 +350,15 @@ Done! Your site is live. Share the URL: `https://neon-nightclub.com`
 
 In 15 minutes, you created a **production-ready static website**:
 
-✅ Custom branding (colors, fonts, venue info)
-✅ Live reviews from your guests
-✅ Responsive design (mobile, tablet, desktop)
-✅ Event calendar integration (RA)
-✅ Newsletter signup (Formspree)
-✅ Contact form
-✅ Social media links (7 platforms)
-✅ SEO-optimized (JSON-LD, OG tags, sitemap)
-✅ 0 downtime, 0 server costs (static hosting)
+PASS: Custom branding (colors, fonts, venue info)
+PASS: Live reviews from your guests
+PASS: Responsive design (mobile, tablet, desktop)
+PASS: Event calendar integration (RA)
+PASS: Newsletter signup (Formspree)
+PASS: Contact form
+PASS: Social media links (7 platforms)
+PASS: SEO-optimized (JSON-LD, OG tags, sitemap)
+PASS: 0 downtime, 0 server costs (static hosting)
 
 ---
 

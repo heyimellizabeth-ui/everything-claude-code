@@ -213,7 +213,7 @@ test('validate catches remaining {{TOKEN}} in a file', () => {
     let exited = false;
     const origExit = process.exit;
     process.exit = () => { exited = true; throw new Error('exit called'); };
-    try { validate(out, null); } catch (_) {}
+    try { validate(out, null); } catch (_) { /* expected: stubbed process.exit throws */ }
     process.exit = origExit;
     assert(exited, 'validate did not call process.exit on leftover token');
   } finally {
@@ -358,7 +358,7 @@ test('scaffold exits on missing config file', () => {
     let exited = false;
     const origExit = process.exit;
     process.exit = () => { exited = true; throw new Error('exit called'); };
-    try { scaffold('/nonexistent/brand-config.json', out); } catch (_) {}
+    try { scaffold('/nonexistent/brand-config.json', out); } catch (_) { /* expected: stubbed process.exit throws */ }
     process.exit = origExit;
     assert(exited, 'process.exit not called for missing config');
   } finally {
@@ -375,7 +375,7 @@ test('scaffold exits on invalid JSON in config', () => {
     let exited = false;
     const origExit = process.exit;
     process.exit = () => { exited = true; throw new Error('exit called'); };
-    try { scaffold(cfgPath, out); } catch (_) {}
+    try { scaffold(cfgPath, out); } catch (_) { /* expected: stubbed process.exit throws */ }
     process.exit = origExit;
     assert(exited, 'process.exit not called for invalid JSON');
   } finally {
@@ -418,10 +418,10 @@ test('applyTokens with two-token map substitutes all tokens sequentially', () =>
 
 test('buildTokenMap with unicode site name produces valid string tokens', () => {
   const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
-  cfg.site.name = '클럽 테스트 🎵';
+  cfg.site.name = '클럽 테스트 ' + String.fromCodePoint(0x1F3B5);
   const map = buildTokenMap(cfg);
   assert(typeof map['{{SITE_NAME}}'] === 'string', 'SITE_NAME not a string');
-  assert(map['{{SITE_NAME}}'] === '클럽 테스트 🎵', 'SITE_NAME mismatch');
+  assert(map['{{SITE_NAME}}'] === '클럽 테스트 ' + String.fromCodePoint(0x1F3B5), 'SITE_NAME mismatch');
 });
 
 test('REVIEWS_JSON token escapes </script> tags to prevent injection', () => {

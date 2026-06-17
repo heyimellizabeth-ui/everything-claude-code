@@ -59,7 +59,7 @@ test('validate catches {{LEFTOVER_TOKEN}} in HTML and calls process.exit', () =>
     let exited = false;
     const origExit = process.exit;
     process.exit = () => { exited = true; throw new Error('exit called'); };
-    try { validate(out, null); } catch (_) {}
+    try { validate(out, null); } catch (_) { /* expected: stubbed process.exit throws */ }
     process.exit = origExit;
     assert(exited, 'validate did not call process.exit on leftover token');
   } finally {
@@ -80,9 +80,9 @@ test('validate warns when original brand string remains after rename', () => {
     fs.writeFileSync(altCfgPath, JSON.stringify(base), 'utf8');
     scaffold(EXAMPLE_CONFIG, out); // scaffold with ORIGINAL config — source brand strings will appear
     // validate against alt config — domain differs, should trigger brand string check
-    let warnFired = false;
+    let _warnFired = false;
     const origWarn = console.warn;
-    console.warn = (msg) => { if (msg && msg.includes('source')) warnFired = true; origWarn(msg); };
+    console.warn = (msg) => { if (msg && msg.includes('source')) _warnFired = true; origWarn(msg); };
     let caught = null;
     try { validate(out, altCfgPath); } catch (e) { caught = e; }
     console.warn = origWarn;
@@ -103,7 +103,7 @@ test('validate skips binary files (.ico, .png)', () => {
     let exited = false;
     const origExit = process.exit;
     process.exit = () => { exited = true; throw new Error('exit called'); };
-    try { validate(out, null); } catch (_) {}
+    try { validate(out, null); } catch (_) { /* expected: stubbed process.exit throws */ }
     process.exit = origExit;
     assert(!exited, 'validate scanned binary .ico file and exited unexpectedly');
   } finally {
@@ -115,7 +115,7 @@ test('validate handles missing output directory by calling process.exit', () => 
   let exited = false;
   const origExit = process.exit;
   process.exit = () => { exited = true; throw new Error('exit called'); };
-  try { validate('/nonexistent/output-dir', null); } catch (_) {}
+  try { validate('/nonexistent/output-dir', null); } catch (_) { /* expected: stubbed process.exit throws */ }
   process.exit = origExit;
   assert(exited, 'validate did not call process.exit for missing output dir');
 });
