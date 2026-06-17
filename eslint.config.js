@@ -30,5 +30,15 @@ module.exports = [
         languageOptions: {
             sourceType: 'module'
         }
+    },
+    {
+        // Service workers run in the ServiceWorkerGlobalScope, not Node.
+        files: ['**/service-worker.js'],
+        languageOptions: {
+            globals: {
+                ...globals.serviceworker,
+                ...globals.browser
+            }
+        }
     }
 ];
