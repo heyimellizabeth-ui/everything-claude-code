@@ -86,7 +86,7 @@ function validate(outDir, configPath) {
       const templateConfigPath = path.join(outDir, 'brand.config.json');
       let outputCfg = null;
       if (fs.existsSync(templateConfigPath)) {
-        try { outputCfg = JSON.parse(fs.readFileSync(templateConfigPath, 'utf8')); } catch (_) {}
+        try { outputCfg = JSON.parse(fs.readFileSync(templateConfigPath, 'utf8')); } catch (_) { /* ignore malformed config */ }
       }
 
       // Only warn if the output brand differs from the source (i.e. user actually renamed)
@@ -108,7 +108,7 @@ function validate(outDir, configPath) {
 
   if (warnings.length) {
     console.warn('[validate] Warnings:');
-    warnings.forEach(w => console.warn(`  ⚠  ${w}`));
+    warnings.forEach(w => console.warn(`  WARNING: ${w}`));
   }
 
   if (errors.length) {
