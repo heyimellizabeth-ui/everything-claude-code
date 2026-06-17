@@ -1,0 +1,67 @@
+name: Deploy Sockwave
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/sockwave/**'
+      - '.github/workflows/deploy-sockwave.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Build site
+        working-directory: projects/sockwave
+        run: |
+          npm install
+          npm run build
+
+      # Publish projects/sockwave/dist into the /sockwave subfolder of the
+      # gh-pages branch. We update only that subfolder (non-destructive), so the
+      # bks26 guide served from the gh-pages root is left untouched.
+      - name: Publish to gh-pages/sockwave
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          export GIT_AUTHOR_NAME="github-actions[bot]"
+          export GIT_AUTHOR_EMAIL="41898282+github-actions[bot]@users.noreply.github.com"
+          export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+          export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          # Create gh-pages if it does not exist yet, then add a worktree on it.
+          if git ls-remote --exit-code --heads "$REMOTE" gh-pages >/dev/null 2>&1; then
+            git fetch "$REMOTE" gh-pages:gh-pages
+            git worktree add ghp gh-pages
+          else
+            git worktree add --orphan -b gh-pages ghp
+          fi
+
+          rm -rf ghp/sockwave
+          mkdir -p ghp/sockwave
+          cp -r projects/sockwave/dist/. ghp/sockwave/
+
+          cd ghp
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+          else
+            git commit -m "deploy: sockwave (${GITHUB_SHA})"
+            git push "$REMOTE" gh-pages
+          fi

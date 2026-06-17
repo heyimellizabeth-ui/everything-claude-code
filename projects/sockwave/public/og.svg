@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0a0a0b" />
+  <g fill="none" stroke="#ec4899" stroke-linecap="round">
+    <path d="M0 470 C 200 360, 360 360, 560 470 S 1000 560, 1200 380" stroke-width="3" opacity="0.85" />
+    <path d="M0 510 C 220 400, 380 400, 600 500 S 1010 580, 1200 430" stroke-width="2" opacity="0.5" />
+    <path d="M0 540 C 240 450, 420 450, 640 530 S 1040 600, 1200 470" stroke-width="1.5" opacity="0.3" />
+  </g>
+  <text x="80" y="250" fill="#fafafa" font-family="'Syncopate', sans-serif" font-weight="700" font-size="96" letter-spacing="-4">SOCKWAVE</text>
+  <text x="84" y="320" fill="#ec4899" font-family="'Space Mono', monospace" font-size="30" letter-spacing="6">GENERATIVE · INTERACTIVE · LIVE</text>
+</svg>

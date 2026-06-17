@@ -1,0 +1,37 @@
+/*
+ * Sockwave design tokens.
+ * Generated from the ui-ux-pro-max design engine:
+ *   style  = Exaggerated Minimalism
+ *   fonts  = Syncopate (display) + Space Mono (body)
+ *   accent = creative pink on near-black ink
+ */
+:root {
+  /* Color — primitive */
+  --ink: #0a0a0b;
+  --ink-2: #18181b;
+  --paper: #fafafa;
+  --accent: #ec4899;
+  --accent-2: #f9a8d4;
+  --muted: #71717a;
+  --border: #27272a;
+
+  /* Color — semantic */
+  --bg: var(--ink);
+  --bg-elevated: var(--ink-2);
+  --fg: var(--paper);
+  --fg-dim: var(--muted);
+  --cta: var(--accent);
+  --cta-fg: var(--ink);
+
+  /* Type */
+  --font-display: 'Syncopate', system-ui, sans-serif;
+  --font-body: 'Space Mono', ui-monospace, monospace;
+  --tracking-tight: -0.05em;
+  --tracking-wide: 0.35em;
+
+  /* Space + motion */
+  --pad: clamp(1.25rem, 5vw, 6rem);
+  --maxw: 1200px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 220ms;
+}

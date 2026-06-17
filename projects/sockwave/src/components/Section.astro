@@ -1,0 +1,36 @@
+---
+interface Props {
+  eyebrow?: string;
+  id?: string;
+}
+const { eyebrow, id } = Astro.props;
+---
+
+<section class="reveal" id={id}>
+  <div class="wrap">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .reveal {
+    padding-block: clamp(5rem, 16vh, 12rem);
+    opacity: 0;
+    transform: translateY(2.5rem);
+    transition:
+      opacity 0.8s var(--ease),
+      transform 0.8s var(--ease);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
