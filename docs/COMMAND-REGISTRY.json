@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 81,
+  "totalCommands": 83,
   "commands": [
     {
       "command": "aside",
@@ -32,7 +32,7 @@
     {
       "command": "c1",
       "description": "Web chain 1 — full web project from scratch (spec → design → build → ship)",
-      "type": "review",
+      "type": "orchestration",
       "primaryAgents": [],
       "allAgents": [],
       "skills": [],
@@ -813,6 +813,15 @@
       "path": "commands/setup-pm.md"
     },
     {
+      "command": "site-init",
+      "description": "Scaffold a new site from the queer-nightclub template using a brand config",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/site-init.md"
+    },
+    {
       "command": "skill-create",
       "description": "Analyze local git history to extract coding patterns and generate SKILL.md files. Local version of the Skill Creator GitHub App.",
       "type": "testing",
@@ -829,6 +838,15 @@
       "allAgents": [],
       "skills": [],
       "path": "commands/skill-health.md"
+    },
+    {
+      "command": "studio-build",
+      "description": "Build a site from a brand-config.json downloaded from the Design Studio",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/studio-build.md"
     },
     {
       "command": "test-coverage",
@@ -862,10 +880,10 @@
     "byType": {
       "build": 2,
       "general": 8,
-      "orchestration": 6,
+      "orchestration": 7,
       "planning": 2,
       "refactoring": 1,
-      "review": 11,
+      "review": 12,
       "testing": 51
     },
     "topAgents": [

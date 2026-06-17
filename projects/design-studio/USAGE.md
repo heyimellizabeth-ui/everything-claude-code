@@ -26,7 +26,7 @@ Or open the file in any browser — no server needed.
         ↓
 5. Toggle Sections    (choose which pages and home sections to include)
         ↓
-6. Click "⬇ Download Config"
+6. Click " Download Config"
         ↓   saves brand-config.json to ~/Downloads/
 7. In Claude Code, run:  /studio-build
         ↓
@@ -209,10 +209,10 @@ Reviews appear on the home page with star ratings. Images are applied via backgr
 The `/studio-build` command scaffolds your site and reports which content slots still need manual editing:
 
 ### Automated slots (pre-filled from config)
-- ✅ Reviews — injected from `reviews[]`
-- ✅ Social links — drawn from `social.*` 
-- ✅ Hero image — applied from `images.hero`
-- ✅ Modules — calendar, checkout, planner visibility based on `modules.*`
+- PASS: Reviews — injected from `reviews[]`
+- PASS: Social links — drawn from `social.*`
+- PASS: Hero image — applied from `images.hero`
+- PASS: Modules — calendar, checkout, planner visibility based on `modules.*`
 
 ### Manual slots (still need editing)
 - **Event data** — event names, dates, ticket links in `index.html` and `events.html`
