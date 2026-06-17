@@ -1,0 +1,121 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.05vw, 1.1rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.95;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+a {
+  color: inherit;
+}
+
+/* Visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.25rem;
+}
+
+/* Skip link for keyboard users. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  background: var(--accent);
+  color: var(--cta-fg);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  z-index: 50;
+  transition: top var(--dur) var(--ease);
+}
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* Motion toggle button (fixed, top-right). */
+.motion-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: color-mix(in srgb, var(--bg-elevated) 80%, transparent);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.motion-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.motion-toggle .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.motion-toggle[aria-pressed='true'] .dot {
+  background: var(--muted);
+}

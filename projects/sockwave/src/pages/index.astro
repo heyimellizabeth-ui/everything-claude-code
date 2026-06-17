@@ -1,0 +1,185 @@
+---
+import '../styles/global.css';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const title = 'Sockwave — an immersive generative-art experience';
+const description =
+  'A live flow-field rendered in your browser. Cursor-reactive, scroll-tuned, built procedurally with the ui-ux-pro-max design engine.';
+const ogUrl = `${base}/og.svg`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0a0b" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syncopate:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#manifesto">Skip to content</a>
+
+    <button class="motion-toggle" type="button" aria-pressed="false" title="Toggle animation">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="label">Motion on</span>
+    </button>
+
+    <main>
+      <Hero />
+
+      <Section eyebrow="The idea" id="manifesto">
+        <h2 class="statement">
+          No stock art.<br />No images.<br /><span class="accent">Just code</span>, drawing itself.
+        </h2>
+        <p class="lede">
+          Every pixel on this page is generated at runtime from a flow field —
+          a few sine waves summed into motion. The design language (type, color,
+          rhythm) came straight out of the <code>ui-ux-pro-max</code> engine:
+          <em>Exaggerated Minimalism</em>, Syncopate over Space Mono, one
+          electric pink against the dark.
+        </p>
+      </Section>
+
+      <Section eyebrow="How it reacts">
+        <ul class="reacts">
+          <li><span class="num">01</span><span>Move your cursor — particles bend toward it.</span></li>
+          <li><span class="num">02</span><span>Scroll — the field speeds up and the swirl tightens.</span></li>
+          <li><span class="num">03</span><span>Prefer calm? Motion off swaps in a static poster frame.</span></li>
+        </ul>
+      </Section>
+
+      <Section eyebrow="Run it yourself">
+        <h2 class="statement small">Make your own.</h2>
+        <p class="lede">
+          This whole site was scaffolded from one command and the design engine
+          that ships in the repo.
+        </p>
+        <pre class="cmd"><code>python3 src/ui-ux-pro-max/scripts/search.py "your idea" --design-system</code></pre>
+        <p>
+          <a class="cta" href="https://github.com/heyimellizabeth-ui/everything-claude-code">
+            See the source →
+          </a>
+        </p>
+      </Section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap">
+        <span>Sockwave</span>
+        <span>Rendered live · no images · no API</span>
+        <span>Design tokens via ui-ux-pro-max</span>
+      </div>
+    </footer>
+
+    <style>
+      .statement {
+        font-size: clamp(2.25rem, 8vw, 7rem);
+      }
+      .statement.small {
+        font-size: clamp(2rem, 6vw, 5rem);
+      }
+      .statement .accent {
+        color: var(--accent);
+      }
+      .lede {
+        max-width: 56ch;
+        margin-top: 2rem;
+        font-size: clamp(1rem, 1.4vw, 1.25rem);
+        color: var(--fg);
+        opacity: 0.82;
+      }
+      code {
+        color: var(--accent-2);
+      }
+      .reacts {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 1.5rem;
+      }
+      .reacts li {
+        display: grid;
+        grid-template-columns: 4rem 1fr;
+        align-items: baseline;
+        gap: 1rem;
+        font-size: clamp(1.1rem, 2.4vw, 1.8rem);
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
+      }
+      .reacts .num {
+        font-family: var(--font-display);
+        color: var(--accent);
+        font-size: 1rem;
+      }
+      .cmd {
+        margin-top: 2rem;
+        padding: 1.1rem 1.25rem;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 0.85rem;
+      }
+      .cmd code {
+        color: var(--fg);
+      }
+      .cta {
+        display: inline-block;
+        margin-top: 2rem;
+        background: var(--cta);
+        color: var(--cta-fg);
+        font-family: var(--font-display);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        padding: 0.95rem 1.6rem;
+        border-radius: 4px;
+        transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+      }
+      .cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px -12px var(--accent);
+      }
+      .foot {
+        border-top: 1px solid var(--border);
+        padding-block: 2.5rem;
+        color: var(--fg-dim);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .foot .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+        justify-content: space-between;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cta:hover {
+          transform: none;
+        }
+      }
+    </style>
+  </body>
+</html>

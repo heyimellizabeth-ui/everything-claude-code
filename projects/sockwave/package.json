@@ -1,0 +1,15 @@
+{
+  "name": "sockwave",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sockwave — an immersive generative-art web experience built with the ui-ux-pro-max design engine.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.7.0"
+  }
+}

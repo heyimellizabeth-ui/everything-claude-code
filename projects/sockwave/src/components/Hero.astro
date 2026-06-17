@@ -1,0 +1,168 @@
+---
+// The hero: a full-viewport generative canvas behind oversized kinetic type.
+---
+
+<header class="hero" id="top">
+  <canvas id="sockwave-canvas" aria-hidden="true"></canvas>
+  <div class="hero-inner wrap">
+    <p class="eyebrow reveal-line">Generative · Interactive · Built by the system</p>
+    <h1 class="title">
+      <span class="line reveal-line">Blow</span>
+      <span class="line reveal-line">Your</span>
+      <span class="line accent reveal-line">Socks Off</span>
+    </h1>
+    <p class="sub reveal-line">
+      A flow-field rendered live in your browser. Move your cursor — the wave
+      answers. Scroll — it retunes.
+    </p>
+    <a class="scroll-cue" href="#manifesto" aria-label="Scroll to continue">
+      <span>Scroll</span>
+      <svg width="16" height="28" viewBox="0 0 16 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="14" height="26" rx="7" stroke="currentColor" stroke-width="1.5" />
+        <circle class="dot" cx="8" cy="8" r="2.5" fill="currentColor" />
+      </svg>
+    </a>
+  </div>
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  #sockwave-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 0;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-block: 6rem;
+    pointer-events: none;
+  }
+  .hero-inner a {
+    pointer-events: auto;
+  }
+  .title {
+    font-size: clamp(3rem, 13vw, 12rem);
+    margin: 0;
+  }
+  .title .line {
+    display: block;
+  }
+  .title .accent {
+    color: var(--accent);
+  }
+  .sub {
+    max-width: 34ch;
+    margin-top: 2rem;
+    color: var(--fg);
+    opacity: 0.78;
+  }
+
+  /* Intro reveal: lines clip up into place. */
+  .reveal-line {
+    opacity: 0;
+    transform: translateY(0.4em);
+    animation: rise 0.9s var(--ease) forwards;
+  }
+  .title .line:nth-child(1) { animation-delay: 0.15s; }
+  .title .line:nth-child(2) { animation-delay: 0.28s; }
+  .title .line:nth-child(3) { animation-delay: 0.41s; }
+  .sub { animation-delay: 0.6s; }
+  .scroll-cue { animation-delay: 0.8s; }
+
+  @keyframes rise {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: var(--pad);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: color var(--dur) var(--ease), opacity var(--dur) var(--ease);
+  }
+  .scroll-cue:hover {
+    color: var(--accent);
+    opacity: 1;
+  }
+  .scroll-cue .dot {
+    animation: bob 1.8s var(--ease) infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-line {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .scroll-cue .dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { createSockwave } from '../scripts/sockwave.ts';
+
+  const canvas = document.getElementById('sockwave-canvas') as HTMLCanvasElement | null;
+  if (canvas) {
+    const engine = createSockwave(canvas);
+
+    // Respect the OS preference and let the floating toggle override it.
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const apply = (reduced: boolean) => {
+      engine.setReducedMotion(reduced);
+      const toggle = document.querySelector<HTMLButtonElement>('.motion-toggle');
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', String(reduced));
+        toggle.querySelector('.label')!.textContent = reduced ? 'Motion off' : 'Motion on';
+      }
+    };
+    apply(mq.matches);
+    mq.addEventListener('change', (e) => apply(e.matches));
+
+    const toggle = document.querySelector<HTMLButtonElement>('.motion-toggle');
+    toggle?.addEventListener('click', () => {
+      apply(toggle.getAttribute('aria-pressed') !== 'true');
+    });
+  }
+
+  // Scroll-reveal for the sections below the hero.
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.18 },
+  );
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>

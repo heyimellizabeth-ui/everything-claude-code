@@ -1,0 +1,7 @@
+# Astro / build
+dist/
+.astro/
+node_modules/
+
+# Local preview screenshots
+.preview/
