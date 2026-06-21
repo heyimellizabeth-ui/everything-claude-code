@@ -86,6 +86,7 @@ When invoked:
 ## Diagnostic Commands
 
 ```bash
+cargo check
 cargo clippy -- -D warnings
 cargo fmt --check
 cargo test
@@ -100,4 +101,4 @@ cargo build --release 2>&1 | head -50
 - **Warning**: MEDIUM issues only
 - **Block**: CRITICAL or HIGH issues found
 
-For detailed Rust code examples and anti-patterns, see `skill: rust-patterns`.
+For detailed Rust code examples and anti-patterns, see `skill: rust-patterns`; for test coverage and strategy, see `skill: rust-testing`.

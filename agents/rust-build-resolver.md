@@ -154,4 +154,4 @@ Remaining errors: 3
 
 Final: `Build Status: SUCCESS/FAILED | Errors Fixed: N | Files Modified: list`
 
-For detailed Rust error patterns and code examples, see `skill: rust-patterns`.
+For detailed Rust error patterns and code examples, see `skill: rust-patterns`. For errors that arise at FFI/interop boundaries during a Rust migration, see `skill: rust-migration`.
