@@ -85,7 +85,7 @@ jobs:
             # and pnpm is only exercised here as a compatibility lane.
             pnpm) pnpm install --ignore-scripts --config.strict-dep-builds=false --no-frozen-lockfile ;;
             # Yarn Berry (v4+) removed --ignore-engines; engine checking is no longer a core feature
-            yarn) yarn install --mode=skip-build ;;
+            yarn) yarn install --mode=skip-build --no-immutable ;;
             bun) bun install --ignore-scripts ;;
             *) echo "Unsupported package manager: ${{ matrix.pm }}" && exit 1 ;;
           esac
