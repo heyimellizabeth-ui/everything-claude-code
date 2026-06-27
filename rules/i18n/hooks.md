@@ -43,7 +43,7 @@ Emit a warning (do not block) if a locale file has keys the base `en.json` lacks
 After editing any translation file for `ar`, `fa`, or `ar-SY` locales:
 
 - Confirm the file is saved as UTF-8 (no BOM, no `\uXXXX` escapes for Arabic/Persian characters)
-- Warn if the file contains Unicode bidirectional control characters outside of intentional markup (`‏`, `‫`, `‮`, `⁧`)
+- Warn if the file contains Unicode bidirectional control characters outside of intentional markup (U+200F, U+202B, U+202E, U+2067)
 - Warn if any value contains an unmatched or orphaned bidi override sequence
 
 ## Recommended Claude Code Hook Configuration

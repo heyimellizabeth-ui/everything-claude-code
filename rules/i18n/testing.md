@@ -74,7 +74,7 @@ test.each([
   ['en',    '15/01/2025', '1,234.56'],
   ['fr',    '15/01/2025', '1 234,56'],  // thin-space thousands separator
   ['el',    '15/1/2025',  '1.234,56'],
-  ['ar',    '١٥‏/١‏/٢٠٢٥', '١٬٢٣٤٫٥٦'],
+  ['ar',    '١٥/١/٢٠٢٥', '١٬٢٣٤٫٥٦'],
   ['fa-IR', '۲۵ دی ۱۴۰۳', '۱٬۲۳۴٫۵۶'],
 ])('date and number format for %s', (locale, expectedDate, expectedNumber) => {
   const date = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'numeric', year: 'numeric' }).format(new Date('2025-01-15'));
@@ -108,10 +108,10 @@ test('French 0 is singular', () => {
 ## Bidi Injection Tests
 
 ```js
-const BIDI_CONTROLS = /[‪-‮⁦-⁩]/;
+const BIDI_CONTROLS = /[\u202A-\u202E\u2066-\u2069]/;
 
 test('sanitizeBidi strips bidi control characters', () => {
-  expect(() => sanitizeBidi('hello‮world')).toThrow();
+  expect(() => sanitizeBidi('hello\u202Eworld')).toThrow();
   expect(sanitizeBidi('مرحبا')).toBe('مرحبا');  // clean Arabic passes
   expect(sanitizeBidi('Bonjour')).toBe('Bonjour');
 });

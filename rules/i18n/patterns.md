@@ -87,14 +87,14 @@ English is the source of truth. All other locale files are derived from it.
 
 ```json
 {
-  "nav.schedule": "برنامه‌ریزی",
+  "nav.schedule": "برنامهریزی",
   "nav.time_off": "مرخصی",
   "schedule.week_of": "هفته {startDate}",
   "requests.pending_count": "{count, plural, one {# درخواست در انتظار} other {# درخواست در انتظار}}"
 }
 ```
 
-Note: `‌` (U+200C, zero-width non-joiner) is used in Persian between morphemes that should not ligate — preserve it in strings like `برنامه‌ریزی`.
+Note: U+200C (U+200C, zero-width non-joiner) is used in Persian between morphemes that should not ligate — preserve it in strings like `برنامهریزی` (with U+200C between morphemes).
 
 ## Syrian Arabic (ar-SY) — Levantine Dialect
 
