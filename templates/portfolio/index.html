@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="{{SITE_LANG}}" data-theme="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>{{SITE_NAME}} — {{OWNER_ROLE}} · {{OWNER_CITY}}</title>
+<meta name="description" content="{{SITE_DESCRIPTION}}">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://{{SITE_DOMAIN}}/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{SITE_NAME}} — {{OWNER_ROLE}}">
+<meta property="og:description" content="{{SITE_DESCRIPTION}}">
+<meta property="og:image" content="https://{{SITE_DOMAIN}}/og-image.png">
+<meta property="og:url" content="https://{{SITE_DOMAIN}}/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="{{SITE_LOCALE}}">
+<meta property="og:site_name" content="{{SITE_NAME}}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{SITE_NAME}} — {{OWNER_ROLE}}">
+<meta name="twitter:description" content="{{SITE_DESCRIPTION}}">
+<meta name="twitter:image" content="https://{{SITE_DOMAIN}}/og-image.png">
+
+<!-- JSON-LD: Person + WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{OWNER_NAME}}",
+  "jobTitle": "{{OWNER_ROLE}}",
+  "url": "https://{{SITE_DOMAIN}}",
+  "email": "mailto:{{OWNER_EMAIL}}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "{{OWNER_CITY}}",
+    "addressCountry": "{{OWNER_COUNTRY}}"
+  },
+  "sameAs": [
+    "{{SOCIAL_INSTAGRAM}}",
+    "{{SOCIAL_LINKEDIN}}",
+    "{{SOCIAL_GITHUB}}"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{SITE_NAME}}",
+  "url": "https://{{SITE_DOMAIN}}"
+}
+</script>
+
+{{FONT_GOOGLE_LINK}}
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; } .hero-name .char { opacity: 1 !important; transform: none !important; }</style></noscript>
+
+<style>
+  /* ============ BASE (shared across all pages) ============ */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --paper: {{COLOR_PAPER}};
+    --ink: {{COLOR_INK}};
+    --surface: {{COLOR_SURFACE}};
+    --muted: {{COLOR_MUTED}};
+    --accent: {{COLOR_ACCENT}};
+    --on-accent: {{COLOR_PAPER}};
+    --line: color-mix(in srgb, var(--ink) 14%, transparent);
+    --font-heading: '{{FONT_HEADING}}', Georgia, serif;
+    --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: {{COLOR_PAPER_DARK}};
+      --ink: {{COLOR_INK_DARK}};
+      --surface: {{COLOR_SURFACE_DARK}};
+      --muted: {{COLOR_MUTED_DARK}};
+      --accent: {{COLOR_ACCENT_DARK}};
+      --on-accent: {{COLOR_PAPER_DARK}};
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: {{COLOR_PAPER}};
+    --ink: {{COLOR_INK}};
+    --surface: {{COLOR_SURFACE}};
+    --muted: {{COLOR_MUTED}};
+    --accent: {{COLOR_ACCENT}};
+    --on-accent: {{COLOR_PAPER}};
+  }
+  :root[data-theme="dark"] {
+    --paper: {{COLOR_PAPER_DARK}};
+    --ink: {{COLOR_INK_DARK}};
+    --surface: {{COLOR_SURFACE_DARK}};
+    --muted: {{COLOR_MUTED_DARK}};
+    --accent: {{COLOR_ACCENT_DARK}};
+    --on-accent: {{COLOR_PAPER_DARK}};
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100dvh;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    transition: background 0.3s, color 0.3s;
+  }
+
+  ::selection { background: var(--accent); color: var(--on-accent); }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  .skip-link {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--ink); color: var(--paper);
+    padding: 12px 20px; z-index: 200; font-weight: 600; text-decoration: none;
+  }
+  .skip-link:focus { left: 0; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); }
+
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+  }
+
+  h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; }
+  .display-xl { font-size: clamp(44px, 11vw, 128px); line-height: 0.98; letter-spacing: -0.02em; }
+  .display-lg { font-size: clamp(32px, 6vw, 64px); }
+  .display-md { font-size: clamp(24px, 3.4vw, 32px); }
+
+  .muted { color: var(--muted); }
+
+  /* ---- Header / nav ---- */
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header .container {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 64px; gap: 16px;
+  }
+  .wordmark {
+    font-family: var(--font-heading); font-weight: 700; font-size: 20px;
+    text-decoration: none; letter-spacing: -0.01em; padding: 10px 0;
+  }
+  .wordmark em { font-style: normal; color: var(--accent); }
+  .nav-desktop { display: none; }
+  .nav-desktop a {
+    text-decoration: none; font-size: 15px; font-weight: 500;
+    padding: 10px 14px; color: var(--muted); transition: color 0.2s;
+  }
+  .nav-desktop a:hover, .nav-desktop a:focus-visible { color: var(--ink); }
+  .nav-desktop a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 6px; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+  .header-actions { display: flex; align-items: center; gap: 4px; }
+
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border: none; background: none;
+    color: var(--ink); cursor: pointer; border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .icon-btn:hover { background: var(--surface); }
+  .icon-btn svg { width: 22px; height: 22px; }
+
+  .theme-toggle .icon-moon { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: none; }
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: block; }
+  }
+
+  .nav-toggle { position: relative; z-index: 130; }
+
+  .menu-overlay {
+    position: fixed; inset: 0; z-index: 120;
+    background: var(--paper);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 0 clamp(20px, 8vw, 80px);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  }
+  .menu-overlay.open { opacity: 1; visibility: visible; transform: none; }
+  .menu-overlay a {
+    font-family: var(--font-heading); font-size: clamp(36px, 9vw, 72px);
+    font-weight: 600; text-decoration: none; line-height: 1.3;
+    display: flex; align-items: baseline; gap: 16px; padding: 8px 0;
+  }
+  .menu-overlay a .num { font-family: var(--font-body); font-size: 14px; color: var(--accent); }
+  .menu-overlay a:hover, .menu-overlay a:focus-visible { color: var(--accent); }
+  .menu-footer { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: clamp(20px, 8vw, 80px); font-size: 14px; color: var(--muted); }
+
+  @media (min-width: 768px) {
+    .nav-desktop { display: flex; gap: 4px; }
+    .nav-toggle, .menu-overlay { display: none; }
+  }
+
+  /* ---- Buttons / links ---- */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: var(--on-accent);
+    font-weight: 600; font-size: 16px; text-decoration: none;
+    padding: 16px 28px; min-height: 52px; border-radius: 999px; border: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:active { opacity: 0.8; }
+  .btn-primary svg { width: 18px; height: 18px; }
+
+  .link-arrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 600; text-decoration: none; color: var(--accent);
+    min-height: 44px;
+  }
+  .link-arrow svg { width: 18px; height: 18px; transition: transform 0.2s; }
+  .link-arrow:hover svg { transform: translateX(4px); }
+
+  /* ---- Reveal on scroll ---- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---- Footer ---- */
+  .site-footer { border-top: 1px solid var(--line); margin-top: clamp(64px, 10vw, 128px); }
+  .site-footer .container {
+    padding-top: 40px; padding-bottom: max(40px, env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .footer-row { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: space-between; align-items: center; }
+  .footer-social { display: flex; gap: 4px; list-style: none; }
+  .footer-social a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 8px; color: var(--muted); transition: color 0.2s, background 0.2s;
+  }
+  .footer-social a:hover { color: var(--ink); background: var(--surface); }
+  .footer-social svg { width: 20px; height: 20px; }
+  .colophon { font-size: 14px; color: var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* ============ PAGE: index ============ */
+  .hero { padding-top: clamp(56px, 12vh, 140px); padding-bottom: clamp(40px, 8vh, 96px); }
+  .hero .eyebrow { display: block; margin-bottom: 20px; }
+  .hero-name { margin: 0 0 28px; overflow: hidden; }
+  .hero-name .char { display: inline-block; }
+  .js .hero-name.animate .char {
+    opacity: 0; transform: translateY(0.55em);
+    animation: char-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes char-in { to { opacity: 1; transform: none; } }
+  .hero-sub { max-width: 560px; font-size: 18px; color: var(--muted); margin-bottom: 32px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; padding: 8px 14px;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+  }
+  .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+  /* Signature: tagline marquee */
+  .marquee {
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    overflow: hidden; white-space: nowrap; padding: 14px 0;
+  }
+  .marquee-track { display: inline-block; animation: marquee 28s linear infinite; }
+  .marquee span {
+    font-family: var(--font-heading); font-size: 20px; font-style: italic;
+    color: var(--muted); padding-right: 48px;
+  }
+  .marquee span em { font-style: normal; color: var(--accent); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+  /* Selected work - asymmetric editorial grid */
+  .work-section { padding-top: clamp(56px, 10vw, 112px); }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); flex-wrap: wrap; }
+  .work-list { display: grid; gap: clamp(48px, 7vw, 88px); }
+  .work-card { display: grid; gap: 20px; text-decoration: none; }
+  .work-media {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 4px;
+    overflow: hidden; aspect-ratio: 16 / 10;
+  }
+  .work-media svg { width: 100%; height: 100%; display: block; transition: transform 0.35s ease; }
+  .work-card:hover .work-media svg { transform: scale(1.03); }
+  .work-info { display: flex; gap: 16px; align-items: baseline; }
+  .work-num { font-size: 14px; font-weight: 600; color: var(--accent); min-width: 32px; }
+  .work-title { font-size: clamp(22px, 3vw, 30px); margin-bottom: 6px; }
+  .work-desc { color: var(--muted); max-width: 480px; margin-bottom: 10px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+  .tag {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; color: var(--muted);
+  }
+  @media (min-width: 768px) {
+    .work-card { grid-template-columns: 7fr 5fr; align-items: end; }
+    .work-card:nth-child(even) { grid-template-columns: 5fr 7fr; }
+    .work-card:nth-child(even) .work-media { order: 2; }
+    .work-card:nth-child(even) { transform: translateY(0); }
+    .work-card:nth-child(odd) .work-info { padding-bottom: 8px; }
+  }
+
+  /* About teaser */
+  .about-teaser { padding-top: clamp(72px, 12vw, 140px); }
+  .about-teaser blockquote {
+    font-family: var(--font-heading); font-size: clamp(24px, 4.4vw, 44px);
+    line-height: 1.25; max-width: 900px; border: none;
+  }
+  .about-teaser blockquote em { font-style: italic; color: var(--accent); }
+  .about-teaser .link-arrow { margin-top: 24px; }
+
+  /* Contact CTA */
+  .contact-cta { padding-top: clamp(72px, 12vw, 140px); }
+  .contact-cta .panel {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    padding: clamp(32px, 6vw, 72px);
+    display: flex; flex-direction: column; gap: 24px; align-items: flex-start;
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="wordmark" href="index.html" aria-label="{{SITE_NAME}} home">{{SITE_NAME}}<em>.</em></a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="work.html">{{NAV_WORK}}</a>
+      <a href="about.html">{{NAV_ABOUT}}</a>
+      <a href="contact.html">{{NAV_CONTACT}}</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="menu-overlay" id="menu" aria-label="Mobile">
+  <a href="work.html"><span class="num">01</span>{{NAV_WORK}}</a>
+  <a href="about.html"><span class="num">02</span>{{NAV_ABOUT}}</a>
+  <a href="contact.html"><span class="num">03</span>{{NAV_CONTACT}}</a>
+  <p class="menu-footer">{{OWNER_CITY}} · {{OWNER_EMAIL}}</p>
+</nav>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero container">
+    <span class="eyebrow">{{OWNER_ROLE}} · {{OWNER_CITY}}</span>
+    <h1 class="hero-name display-xl" data-split>{{OWNER_NAME}}</h1>
+    <p class="hero-sub">{{SITE_DESCRIPTION}}</p>
+    <div class="hero-meta">
+      <span class="badge"><span class="dot" aria-hidden="true"></span>{{AVAILABILITY}}</span>
+      <a class="link-arrow" href="work.html">See the work
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- SIGNATURE MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>{{SITE_TAGLINE}} <em>·</em></span><span>{{SITE_TAGLINE}} <em>·</em></span><span>{{SITE_TAGLINE}} <em>·</em></span><span>{{SITE_TAGLINE}} <em>·</em></span>
+    </div>
+  </div>
+
+  <!-- SELECTED WORK -->
+  <section class="work-section container" aria-labelledby="work-heading">
+    <div class="section-head">
+      <h2 id="work-heading" class="display-lg">Selected work</h2>
+      <a class="link-arrow" href="work.html">Full index
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="work-list">
+      <!-- PROJECT CARD — duplicate this block per project; swap the inline SVG for
+           <img src="assets/work/your-image.webp" width="1600" height="1000" alt="..." loading="lazy"> -->
+      <a class="work-card reveal" href="work.html#tidemark">
+        <div class="work-media">
+          <svg viewBox="0 0 1600 1000" role="img" aria-label="Tidemark — festival identity preview" preserveAspectRatio="xMidYMid slice"><rect width="1600" height="1000" fill="{{COLOR_SURFACE}}"/><path d="M0 700 Q 400 620 800 700 T 1600 700 V1000 H0 Z" fill="{{COLOR_ACCENT}}" opacity="0.85"/><path d="M0 780 Q 400 700 800 780 T 1600 780 V1000 H0 Z" fill="{{COLOR_INK}}" opacity="0.12"/><text x="80" y="200" font-family="Georgia, serif" font-size="120" fill="{{COLOR_INK}}">Tidemark</text></svg>
+        </div>
+        <div class="work-info">
+          <span class="work-num" aria-hidden="true">01</span>
+          <div>
+            <h3 class="work-title">Tidemark Festival</h3>
+            <p class="work-desc">Identity and website for a coastal literary festival — a tide-table grid system and a type-first program browser.</p>
+            <ul class="tags"><li class="tag">Identity</li><li class="tag">Web</li><li class="tag">2025</li></ul>
+          </div>
+        </div>
+      </a>
+
+      <a class="work-card reveal" href="work.html#ledger-loom">
+        <div class="work-media">
+          <svg viewBox="0 0 1600 1000" role="img" aria-label="Ledger and Loom — e-commerce preview" preserveAspectRatio="xMidYMid slice"><rect width="1600" height="1000" fill="{{COLOR_SURFACE}}"/><g stroke="{{COLOR_ACCENT}}" stroke-width="6" opacity="0.8"><path d="M200 0V1000M400 0V1000M600 0V1000M800 0V1000M1000 0V1000M1200 0V1000M1400 0V1000"/></g><g stroke="{{COLOR_INK}}" stroke-width="3" opacity="0.25"><path d="M0 250H1600M0 500H1600M0 750H1600"/></g></svg>
+        </div>
+        <div class="work-info">
+          <span class="work-num" aria-hidden="true">02</span>
+          <div>
+            <h3 class="work-title">Ledger &amp; Loom</h3>
+            <p class="work-desc">E-commerce build for a weaving studio — thread-count product configurator, checkout in three screens.</p>
+            <ul class="tags"><li class="tag">E-commerce</li><li class="tag">Web</li><li class="tag">2025</li></ul>
+          </div>
+        </div>
+      </a>
+
+      <a class="work-card reveal" href="work.html#fieldnotes">
+        <div class="work-media">
+          <svg viewBox="0 0 1600 1000" role="img" aria-label="Fieldnotes — journaling app preview" preserveAspectRatio="xMidYMid slice"><rect width="1600" height="1000" fill="{{COLOR_SURFACE}}"/><rect x="560" y="120" width="480" height="760" rx="48" fill="{{COLOR_INK}}" opacity="0.9"/><rect x="600" y="200" width="400" height="24" rx="12" fill="{{COLOR_PAPER}}" opacity="0.7"/><rect x="600" y="260" width="320" height="24" rx="12" fill="{{COLOR_PAPER}}" opacity="0.5"/><rect x="600" y="320" width="360" height="24" rx="12" fill="{{COLOR_PAPER}}" opacity="0.5"/><circle cx="800" cy="760" r="44" fill="{{COLOR_ACCENT}}"/></svg>
+        </div>
+        <div class="work-info">
+          <span class="work-num" aria-hidden="true">03</span>
+          <div>
+            <h3 class="work-title">Fieldnotes</h3>
+            <p class="work-desc">An offline-first journaling PWA — plain-text hearted, sync when you want it, nothing tracked.</p>
+            <ul class="tags"><li class="tag">Product</li><li class="tag">App</li><li class="tag">2024</li></ul>
+          </div>
+        </div>
+      </a>
+
+      <a class="work-card reveal" href="work.html#aurelia">
+        <div class="work-media">
+          <svg viewBox="0 0 1600 1000" role="img" aria-label="Aurelia type specimen preview" preserveAspectRatio="xMidYMid slice"><rect width="1600" height="1000" fill="{{COLOR_SURFACE}}"/><text x="120" y="620" font-family="Georgia, serif" font-size="460" font-style="italic" fill="{{COLOR_ACCENT}}">Aa</text><text x="900" y="620" font-family="Georgia, serif" font-size="460" fill="{{COLOR_INK}}" opacity="0.85">Gg</text></svg>
+        </div>
+        <div class="work-info">
+          <span class="work-num" aria-hidden="true">04</span>
+          <div>
+            <h3 class="work-title">Aurelia Specimen</h3>
+            <p class="work-desc">Interactive type-specimen microsite — variable-font axes you can play like an instrument.</p>
+            <ul class="tags"><li class="tag">Type</li><li class="tag">Interaction</li><li class="tag">2024</li></ul>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT TEASER -->
+  <section class="about-teaser container reveal" aria-labelledby="about-heading">
+    <span class="eyebrow" id="about-heading">About</span>
+    <blockquote>Good typography is the interface. I design <em>editorial systems</em> and build them into fast, accessible websites.</blockquote>
+    <a class="link-arrow" href="about.html">More about {{OWNER_FIRST}}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section class="contact-cta container reveal" aria-labelledby="cta-heading">
+    <div class="panel">
+      <span class="eyebrow">{{AVAILABILITY}}</span>
+      <h2 id="cta-heading" class="display-lg">Have a project in mind?</h2>
+      <a class="btn-primary" href="contact.html">Start a conversation
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-row">
+      <a class="wordmark" href="index.html">{{SITE_NAME}}<em>.</em></a>
+      <ul class="footer-social">
+        <li><a href="{{SOCIAL_INSTAGRAM}}" aria-label="Instagram" rel="me noopener" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a></li>
+        <li><a href="{{SOCIAL_LINKEDIN}}" aria-label="LinkedIn" rel="me noopener" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A5.5 5.5 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a></li>
+        <li><a href="{{SOCIAL_GITHUB}}" aria-label="GitHub" rel="me noopener" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.3 6.4-1.5 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.7 16 2.5a13.4 13.4 0 0 0-7 0C6.3.7 5.1 1 5.1 1A5 5 0 0 0 5 4.8a5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.3 6.7 6.4 7a3.4 3.4 0 0 0-.9 2.6V22"/></svg></a></li>
+        <li><a href="{{SOCIAL_DRIBBBLE}}" aria-label="Dribbble" rel="me noopener" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M19.1 5.7A17 17 0 0 1 8.6 21.4M4.9 5.7a17 17 0 0 0 14.2 7.7c.8 0 1.6 0 2.4-.2M2.5 10.5a17 17 0 0 1 11.4-4.2c1 0 2 .1 3 .3"/></svg></a></li>
+      </ul>
+    </div>
+    <div class="footer-row">
+      <p class="colophon"><a href="mailto:{{OWNER_EMAIL}}" style="color: var(--ink);">{{OWNER_EMAIL}}</a> · {{OWNER_CITY}}, {{OWNER_COUNTRY}}</p>
+      <p class="colophon">&copy; <span data-year>2026</span> {{OWNER_NAME}} · <a href="404.html" style="color: inherit;">Colophon</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    document.documentElement.classList.add('js');
+
+    // Theme toggle - persisted, defaults to prefers-color-scheme
+    var root = document.documentElement;
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+    } catch (e) { /* private mode - theme just follows system */ }
+    var toggle = document.querySelector('.theme-toggle');
+    if (toggle) toggle.addEventListener('click', function () {
+      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var current = root.getAttribute('data-theme') || (systemDark ? 'dark' : 'light');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) { /* non-fatal */ }
+    });
+
+    // Mobile menu
+    var navToggle = document.querySelector('.nav-toggle');
+    var menu = document.getElementById('menu');
+    if (navToggle && menu) {
+      navToggle.addEventListener('click', function () {
+        var open = menu.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menu.classList.contains('open')) navToggle.click();
+      });
+    }
+
+    // Kinetic hero: split name into chars (skipped under reduced motion)
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nameEl = document.querySelector('[data-split]');
+    if (nameEl && !reduced) {
+      var text = nameEl.textContent;
+      nameEl.textContent = '';
+      nameEl.setAttribute('aria-label', text);
+      nameEl.classList.add('animate');
+      Array.prototype.forEach.call(text, function (ch, i) {
+        var s = document.createElement('span');
+        s.className = 'char';
+        s.setAttribute('aria-hidden', 'true');
+        s.textContent = ch === ' ' ? ' ' : ch;
+        s.style.animationDelay = (i * 35) + 'ms';
+        nameEl.appendChild(s);
+      });
+    }
+
+    // Reveal on scroll
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !reduced) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(function (el) { io.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    // Footer year
+    var y = document.querySelector('[data-year]');
+    if (y) y.textContent = String(new Date().getFullYear());
+  })();
+</script>
+</body>
+</html>

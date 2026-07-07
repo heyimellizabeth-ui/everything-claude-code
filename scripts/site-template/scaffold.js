@@ -3,10 +3,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const TEMPLATE_DIR = path.resolve(__dirname, '../../templates/queer-nightclub');
+const TEMPLATES_ROOT = path.resolve(__dirname, '../../templates');
+const TEMPLATE_DIR = path.join(TEMPLATES_ROOT, 'queer-nightclub');
 
 function usage() {
-  console.error('Usage: node scaffold.js --config <brand.config.json> --out <output-dir>');
+  console.error('Usage: node scaffold.js --config <brand.config.json> --out <output-dir> [--template <queer-nightclub|portfolio>]');
   process.exit(1);
 }
 
@@ -15,6 +16,7 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--config') args.config = argv[++i];
     if (argv[i] === '--out') args.out = argv[++i];
+    if (argv[i] === '--template') args.template = argv[++i];
   }
   return args;
 }
@@ -137,6 +139,92 @@ function buildTokenMap(cfg) {
   };
 }
 
+function buildPortfolioTokenMap(cfg) {
+  const social = cfg.social || {};
+  const light = (cfg.colors && cfg.colors.light) || {};
+  const dark = (cfg.colors && cfg.colors.dark) || {};
+  const nav = cfg.nav || {};
+  const owner = cfg.owner || {};
+  const forms = cfg.forms || {};
+
+  return {
+    // Site
+    '{{SITE_NAME}}': cfg.site.name,
+    '{{SITE_DOMAIN}}': cfg.site.domain,
+    '{{SITE_TAGLINE}}': cfg.site.tagline || '',
+    '{{SITE_DESCRIPTION}}': cfg.site.description || '',
+    '{{SITE_LANG}}': cfg.site.lang || 'en',
+    '{{SITE_LOCALE}}': cfg.site.locale || 'en_US',
+
+    // Owner
+    '{{OWNER_NAME}}': owner.name,
+    '{{OWNER_FIRST}}': owner.first || (owner.name || '').split(' ')[0],
+    '{{OWNER_ROLE}}': owner.role || '',
+    '{{OWNER_CITY}}': owner.city || '',
+    '{{OWNER_COUNTRY}}': owner.country || '',
+    '{{OWNER_EMAIL}}': owner.email || '',
+    '{{AVAILABILITY}}': owner.availability || '',
+
+    // Colors — light + dark are separate token sets (dark is tonal, not inverted)
+    '{{COLOR_PAPER}}': light.paper,
+    '{{COLOR_INK}}': light.ink,
+    '{{COLOR_SURFACE}}': light.surface,
+    '{{COLOR_MUTED}}': light.muted,
+    '{{COLOR_ACCENT}}': light.accent,
+    '{{COLOR_PAPER_DARK}}': dark.paper,
+    '{{COLOR_INK_DARK}}': dark.ink,
+    '{{COLOR_SURFACE_DARK}}': dark.surface,
+    '{{COLOR_MUTED_DARK}}': dark.muted,
+    '{{COLOR_ACCENT_DARK}}': dark.accent,
+
+    // Fonts — config may carry the exact <link> markup; fall back to the generated one
+    '{{FONT_HEADING}}': (cfg.fonts && cfg.fonts.heading) || 'Georgia',
+    '{{FONT_BODY}}': (cfg.fonts && cfg.fonts.body) || 'system-ui',
+    '{{FONT_GOOGLE_LINK}}': (cfg.fonts && cfg.fonts.googleLink) || googleFontsLink(cfg.fonts),
+
+    // Nav labels
+    '{{NAV_WORK}}': nav.work || 'Work',
+    '{{NAV_ABOUT}}': nav.about || 'About',
+    '{{NAV_CONTACT}}': nav.contact || 'Contact',
+
+    // Social
+    '{{SOCIAL_INSTAGRAM}}': social.instagram || '',
+    '{{SOCIAL_LINKEDIN}}': social.linkedin || '',
+    '{{SOCIAL_GITHUB}}': social.github || '',
+    '{{SOCIAL_DRIBBBLE}}': social.dribbble || '',
+
+    // Forms
+    '{{FORMS_BACKEND}}': forms.backend || 'formspree',
+    '{{FORMSPREE_CONTACT}}': forms.contactKey || '',
+    '{{FORMS_RECIPIENT_EMAIL}}': forms.recipientEmail || '',
+  };
+}
+
+// Per-template scaffolding contract. Adding a template = one entry here
+// plus its buildTokenMap; everything else (walk, copy, validate) is shared.
+const TEMPLATE_DEFS = {
+  'queer-nightclub': {
+    dir: TEMPLATE_DIR,
+    buildTokenMap,
+    requiredFields: ['site.name', 'site.domain', 'colors.accent', 'venue.city', 'forms.backend'],
+    pageSectionMap: {
+      'events.html': 'events',
+      'about.html': 'about',
+      'gallery.html': 'gallery',
+      'contact.html': 'contact',
+    },
+    skipFiles: ['brand.config.json'],
+  },
+  portfolio: {
+    dir: path.join(TEMPLATES_ROOT, 'portfolio'),
+    buildTokenMap: buildPortfolioTokenMap,
+    requiredFields: ['site.name', 'site.domain', 'owner.name', 'owner.email'],
+    pageSectionMap: {},
+    // README.md documents the template itself — not a deployable site file
+    skipFiles: ['brand.config.json', 'README.md'],
+  },
+};
+
 function applyTokens(content, tokenMap) {
   let result = content;
   for (const [token, value] of Object.entries(tokenMap)) {
@@ -163,8 +251,7 @@ function isBinary(filePath) {
   return BINARY_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
-function validateConfig(cfg) {
-  const required = ['site.name', 'site.domain', 'colors.accent', 'venue.city', 'forms.backend'];
+function validateConfig(cfg, required) {
   const missing = required.filter(p => {
     const [a, b] = p.split('.');
     return !cfg[a] || !cfg[a][b];
@@ -175,7 +262,13 @@ function validateConfig(cfg) {
   }
 }
 
-function scaffold(configPath, outDir) {
+function scaffold(configPath, outDir, templateName = 'queer-nightclub') {
+  const def = TEMPLATE_DEFS[templateName];
+  if (!def) {
+    console.error(`[scaffold] Unknown template "${templateName}". Available: ${Object.keys(TEMPLATE_DEFS).join(', ')}`);
+    process.exit(1);
+  }
+
   if (!fs.existsSync(configPath)) {
     console.error('[scaffold] Config file not found');
     process.exit(1);
@@ -189,31 +282,23 @@ function scaffold(configPath, outDir) {
     process.exit(1);
   }
 
-  validateConfig(cfg);
-  const tokenMap = buildTokenMap(cfg);
+  validateConfig(cfg, def.requiredFields);
+  const tokenMap = def.buildTokenMap(cfg);
 
   fs.mkdirSync(outDir, { recursive: true });
 
-  const files = walkFiles(TEMPLATE_DIR);
+  const files = walkFiles(def.dir);
   let count = 0;
 
-  // Pages that can be disabled via sections config
-  const PAGE_SECTION_MAP = {
-    'events.html': 'events',
-    'about.html': 'about',
-    'gallery.html': 'gallery',
-    'contact.html': 'contact',
-  };
-
   for (const rel of files) {
-    // Skip brand.config.json itself — user provides their own
-    if (rel === 'brand.config.json') continue;
+    // Skip template-internal files (user provides their own brand.config.json)
+    if (def.skipFiles.includes(rel)) continue;
 
     // Skip disabled pages
-    const sectionKey = PAGE_SECTION_MAP[rel];
+    const sectionKey = def.pageSectionMap[rel];
     if (sectionKey && cfg.sections && cfg.sections[sectionKey] === false) continue;
 
-    const src = path.join(TEMPLATE_DIR, rel);
+    const src = path.join(def.dir, rel);
     const dest = path.join(outDir, rel);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
 
@@ -235,7 +320,7 @@ function scaffold(configPath, outDir) {
 if (require.main === module) {
   const args = parseArgs(process.argv.slice(2));
   if (!args.config || !args.out) usage();
-  scaffold(path.resolve(args.config), path.resolve(args.out));
+  scaffold(path.resolve(args.config), path.resolve(args.out), args.template || 'queer-nightclub');
 }
 
-module.exports = { scaffold, buildTokenMap, applyTokens };
+module.exports = { scaffold, buildTokenMap, buildPortfolioTokenMap, applyTokens };

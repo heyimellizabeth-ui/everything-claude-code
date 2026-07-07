@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F7F3EC"/>
+
+  <!-- editorial frame -->
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#1C1814" stroke-width="2" opacity="0.16"/>
+
+  <!-- accent rule -->
+  <line x1="96" y1="150" x2="360" y2="150" stroke="#9C3A10" stroke-width="6"/>
+
+  <!-- name -->
+  <text x="92" y="330" font-family="Georgia, 'Times New Roman', serif" font-size="112" font-weight="600" fill="#1C1814" letter-spacing="-2">{{OWNER_NAME}}</text>
+
+  <!-- role -->
+  <text x="96" y="400" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-style="italic" fill="#9C3A10">{{OWNER_ROLE}}</text>
+
+  <!-- footer line -->
+  <text x="96" y="520" font-family="system-ui, 'Helvetica Neue', sans-serif" font-size="20" fill="#5D554A" letter-spacing="2">{{SITE_DOMAIN}}</text>
+  <text x="1104" y="520" font-family="system-ui, 'Helvetica Neue', sans-serif" font-size="20" fill="#5D554A" letter-spacing="2" text-anchor="end">{{OWNER_CITY}}</text>
+</svg>

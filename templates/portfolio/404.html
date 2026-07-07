@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="{{SITE_LANG}}" data-theme="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Page not found — {{SITE_NAME}}</title>
+<meta name="description" content="This page doesn't exist. Back to {{SITE_NAME}}.">
+<meta name="robots" content="noindex, follow">
+
+{{FONT_GOOGLE_LINK}}
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --paper: {{COLOR_PAPER}};
+    --ink: {{COLOR_INK}};
+    --surface: {{COLOR_SURFACE}};
+    --muted: {{COLOR_MUTED}};
+    --accent: {{COLOR_ACCENT}};
+    --on-accent: {{COLOR_PAPER}};
+    --line: color-mix(in srgb, var(--ink) 14%, transparent);
+    --font-heading: '{{FONT_HEADING}}', Georgia, serif;
+    --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: {{COLOR_PAPER_DARK}};
+      --ink: {{COLOR_INK_DARK}};
+      --surface: {{COLOR_SURFACE_DARK}};
+      --muted: {{COLOR_MUTED_DARK}};
+      --accent: {{COLOR_ACCENT_DARK}};
+      --on-accent: {{COLOR_PAPER_DARK}};
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: {{COLOR_PAPER}};
+    --ink: {{COLOR_INK}};
+    --surface: {{COLOR_SURFACE}};
+    --muted: {{COLOR_MUTED}};
+    --accent: {{COLOR_ACCENT}};
+    --on-accent: {{COLOR_PAPER}};
+  }
+  :root[data-theme="dark"] {
+    --paper: {{COLOR_PAPER_DARK}};
+    --ink: {{COLOR_INK_DARK}};
+    --surface: {{COLOR_SURFACE_DARK}};
+    --muted: {{COLOR_MUTED_DARK}};
+    --accent: {{COLOR_ACCENT_DARK}};
+    --on-accent: {{COLOR_PAPER_DARK}};
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100dvh;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+    padding: clamp(24px, 6vw, 80px);
+    padding-left: max(clamp(24px, 6vw, 80px), env(safe-area-inset-left));
+    padding-right: max(clamp(24px, 6vw, 80px), env(safe-area-inset-right));
+  }
+
+  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .code {
+    font-family: var(--font-heading);
+    font-size: clamp(96px, 28vw, 320px);
+    font-weight: 600; line-height: 0.9; letter-spacing: -0.03em;
+  }
+  .code em { font-style: italic; color: var(--accent); }
+  h1 {
+    font-family: var(--font-heading); font-weight: 600;
+    font-size: clamp(24px, 4vw, 40px); margin-top: 24px;
+  }
+  p { color: var(--muted); margin-top: 12px; max-width: 480px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: var(--on-accent);
+    font-weight: 600; font-size: 16px; text-decoration: none;
+    padding: 16px 28px; min-height: 52px; border-radius: 999px;
+    margin-top: 32px; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="code" aria-hidden="true">4<em>0</em>4</div>
+  <h1>This page moved, or never was.</h1>
+  <p>The link is stale or the address has a typo. Everything that does exist is one click away.</p>
+  <a class="btn-primary" href="index.html">Back to the start
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+  </a>
+</main>
+<script>
+  (function () {
+    var root = document.documentElement;
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+    } catch (e) { /* theme follows system */ }
+  })();
+</script>
+</body>
+</html>

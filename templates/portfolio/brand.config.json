@@ -1,0 +1,66 @@
+{
+  "_comment": "Demo values below are FICTIONAL (persona 'Noor Visser') - replace every value with your own. Each key maps to a token placeholder in the HTML files; see README.md for the full token table.",
+  "site": {
+    "name": "Noor Visser",
+    "domain": "noorvisser.example",
+    "tagline": "Editorial systems, built to ship",
+    "description": "Independent digital designer and creative developer. Editorial identity systems and fast, accessible websites - designed and built by one pair of hands.",
+    "lang": "en",
+    "locale": "en_US"
+  },
+  "owner": {
+    "name": "Noor Visser",
+    "first": "Noor",
+    "role": "Digital designer & creative developer",
+    "city": "Amsterdam",
+    "country": "NL",
+    "email": "hello@noorvisser.example",
+    "availability": "Booking projects for autumn 2026"
+  },
+  "colors": {
+    "light": {
+      "paper": "#F7F3EC",
+      "ink": "#1C1814",
+      "surface": "#EFE9DF",
+      "muted": "#5D554A",
+      "accent": "#9C3A10"
+    },
+    "dark": {
+      "paper": "#171310",
+      "ink": "#EDE7DC",
+      "surface": "#221C16",
+      "muted": "#A79C8C",
+      "accent": "#E8794A"
+    },
+    "_contrast": "Computed 2026-07-07 (WCAG): ink/paper 15.95, muted/paper 6.63, accent/paper 6.27, accent/surface 5.75 | dark: ink 15.01, muted 6.84, accent 6.39, accent/surface 5.83. Recompute if you change any value; keep every text pair >= 4.5."
+  },
+  "fonts": {
+    "heading": "Fraunces",
+    "body": "Inter",
+    "googleLink": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link href=\"https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">"
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/your-handle/",
+    "linkedin": "https://www.linkedin.com/in/your-handle/",
+    "github": "https://github.com/your-handle",
+    "dribbble": "https://dribbble.com/your-handle"
+  },
+  "forms": {
+    "backend": "formspree",
+    "contactKey": "YOUR_FORMSPREE_ID",
+    "recipientEmail": "hello@noorvisser.example"
+  },
+  "seo": {
+    "titleSuffix": "Digital designer & creative developer",
+    "keywords": "portfolio, digital design, creative developer, identity, editorial, web design"
+  },
+  "notes": {
+    "projects": "Project cards/rows live directly in index.html and work.html as commented HTML blocks - duplicate a block to add a project. data-tags on each work.html row drives the filter.",
+    "images": "Ships with inline SVG placeholders so the template renders standalone. Swap each placeholder for <img src=... width height alt loading=\"lazy\"> per the comments in the HTML."
+  }
+}
