@@ -4,7 +4,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { scaffold } = require('../../scripts/site-template/scaffold');
+const { scaffold, buildPortfolioTokenMap } = require('../../scripts/site-template/scaffold');
 const { validate } = require('../../scripts/site-template/validate');
 
 const TEMPLATE_DIR = path.resolve(__dirname, '../../templates/portfolio');
@@ -132,6 +132,49 @@ test('default template stays queer-nightclub (back-compat)', () => {
   } finally {
     cleanTmp(out);
   }
+});
+
+console.log('\n=== buildPortfolioTokenMap defaults ===\n');
+
+test('minimal config falls back to defaults for every optional field', () => {
+  const map = buildPortfolioTokenMap({
+    site: { name: 'A Studio', domain: 'a.example' },
+    owner: { name: 'Ada Lovelace', email: 'ada@a.example' },
+  });
+  assert(map['{{SITE_LANG}}'] === 'en', 'lang default');
+  assert(map['{{SITE_LOCALE}}'] === 'en_US', 'locale default');
+  assert(map['{{SITE_TAGLINE}}'] === '', 'tagline default');
+  assert(map['{{SITE_DESCRIPTION}}'] === '', 'description default');
+  assert(map['{{OWNER_FIRST}}'] === 'Ada', 'first name derived from owner.name');
+  assert(map['{{OWNER_ROLE}}'] === '', 'role default');
+  assert(map['{{OWNER_CITY}}'] === '' && map['{{OWNER_COUNTRY}}'] === '', 'location defaults');
+  assert(map['{{AVAILABILITY}}'] === '', 'availability default');
+  assert(map['{{FONT_HEADING}}'] === 'Georgia' && map['{{FONT_BODY}}'] === 'system-ui', 'font defaults');
+  assert(map['{{FONT_GOOGLE_LINK}}'] === '', 'no fonts config -> empty google link');
+  assert(map['{{NAV_WORK}}'] === 'Work' && map['{{NAV_ABOUT}}'] === 'About' && map['{{NAV_CONTACT}}'] === 'Contact', 'nav defaults');
+  assert(map['{{SOCIAL_INSTAGRAM}}'] === '' && map['{{SOCIAL_LINKEDIN}}'] === ''
+    && map['{{SOCIAL_GITHUB}}'] === '' && map['{{SOCIAL_DRIBBBLE}}'] === '', 'social defaults');
+  assert(map['{{FORMS_BACKEND}}'] === 'formspree', 'forms backend default');
+  assert(map['{{FORMSPREE_CONTACT}}'] === '' && map['{{FORMS_RECIPIENT_EMAIL}}'] === '', 'forms defaults');
+});
+
+test('fonts without an explicit googleLink fall back to the generated <link>', () => {
+  const map = buildPortfolioTokenMap({
+    site: { name: 'A Studio', domain: 'a.example' },
+    owner: { name: 'Ada Lovelace', first: 'Ada', email: 'ada@a.example' },
+    fonts: { heading: 'Fraunces', body: 'Inter' },
+  });
+  assert(map['{{FONT_GOOGLE_LINK}}'].includes('fonts.googleapis.com'), 'generated link expected');
+  assert(map['{{FONT_GOOGLE_LINK}}'].includes('Fraunces'), 'heading family in link');
+});
+
+test('explicit fonts.googleLink wins over the generated one', () => {
+  const map = buildPortfolioTokenMap({
+    site: { name: 'A Studio', domain: 'a.example' },
+    owner: { name: 'Ada Lovelace', email: 'ada@a.example' },
+    fonts: { heading: 'Fraunces', body: 'Inter', googleLink: '<link rel="stylesheet" href="custom">' },
+  });
+  assert(map['{{FONT_GOOGLE_LINK}}'] === '<link rel="stylesheet" href="custom">', 'explicit link should win');
 });
 
 // ── Results ─────────────────────────────────────────────────────────────────
