@@ -130,39 +130,36 @@
   import { createSockwave } from '../scripts/sockwave.mjs';
 
   const canvas = document.getElementById('sockwave-canvas');
-  if (canvas instanceof HTMLCanvasElement) {
-    const engine = createSockwave(canvas);
+  const toggle = document.querySelector('.motion-toggle');
 
+  let engine = null;
+  if (canvas instanceof HTMLCanvasElement) {
+    try {
+      engine = createSockwave(canvas);
+    } catch (err) {
+      console.error('[sockwave] engine failed to start', err);
+    }
+  }
+
+  if (!engine) {
+    // Nothing to toggle without the engine.
+    if (toggle) toggle.hidden = true;
+  } else {
     // Respect the OS preference and let the floating toggle override it.
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     const apply = (reduced) => {
       engine.setReducedMotion(reduced);
-      const toggle = document.querySelector('.motion-toggle');
       if (toggle) {
         toggle.setAttribute('aria-pressed', String(reduced));
-        toggle.querySelector('.label').textContent = reduced ? 'Motion off' : 'Motion on';
+        const label = toggle.querySelector('.label');
+        if (label) label.textContent = reduced ? 'Motion off' : 'Motion on';
       }
     };
     apply(mq.matches);
     mq.addEventListener('change', (e) => apply(e.matches));
 
-    const toggle = document.querySelector('.motion-toggle');
     toggle?.addEventListener('click', () => {
       apply(toggle.getAttribute('aria-pressed') !== 'true');
     });
   }
-
-  // Scroll-reveal for the sections below the hero.
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      }
-    },
-    { threshold: 0.18 },
-  );
-  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 </script>

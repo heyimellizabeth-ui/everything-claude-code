@@ -15,6 +15,7 @@ const ogUrl = `${base}/og.svg`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0a0a0b" />
@@ -89,6 +90,35 @@ const ogUrl = `${base}/og.svg`;
         <span>Design tokens via ui-ux-pro-max</span>
       </div>
     </footer>
+
+    <script is:inline>
+      // Scroll-reveal for the sections below the hero. Kept independent of the
+      // canvas engine so content still appears if the engine fails to start.
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        function show(el) {
+          el.classList.add('is-visible');
+        }
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(show);
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                show(entry.target);
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0, rootMargin: '0px 0px -15% 0px' }
+        );
+        els.forEach(function (el) {
+          io.observe(el);
+        });
+      })();
+    </script>
 
     <style>
       .statement {

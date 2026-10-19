@@ -45,10 +45,11 @@ function flowAngle(x, y, t, swirl) {
 
 /**
  * @param {HTMLCanvasElement} canvas
- * @returns {Sockwave}
+ * @returns {Sockwave | null} null when a 2D context is unavailable
  */
 export function createSockwave(canvas) {
   const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return null;
   let width = 0;
   let height = 0;
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -243,8 +244,10 @@ export function createSockwave(canvas) {
     else if (!reduced) start();
   }
 
-  const ro = new ResizeObserver(() => resize());
-  ro.observe(canvas);
+  // Fall back to window resize where ResizeObserver is missing.
+  const ro = 'ResizeObserver' in window ? new ResizeObserver(() => resize()) : null;
+  if (ro) ro.observe(canvas);
+  else window.addEventListener('resize', resize);
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });
   window.addEventListener('pointerout', onPointerLeave, { passive: true });
@@ -259,7 +262,8 @@ export function createSockwave(canvas) {
     setReducedMotion,
     destroy() {
       stop();
-      ro.disconnect();
+      if (ro) ro.disconnect();
+      else window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerout', onPointerLeave);
       window.removeEventListener('scroll', onScroll);
