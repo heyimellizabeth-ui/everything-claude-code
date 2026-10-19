@@ -3,8 +3,9 @@
  *
  * Pink particles drift across an ink field, their direction sampled from a
  * cheap animated value-noise field. The pointer bends nearby particles toward
- * it; scroll progress retunes the field (speed, swirl, hue spread) so the
- * visual evolves as you move down the page.
+ * it; scrolling the hero away retunes the field (speed, swirl, hue spread) as
+ * it slides out of view. The loop pauses when the hero is offscreen or the tab
+ * is hidden.
  *
  * Zero dependencies, Canvas 2D, reduced-motion aware. No network, no assets.
  */
@@ -59,6 +60,7 @@ export function createSockwave(canvas) {
   let raf = 0;
   let running = false;
   let reduced = false;
+  let inView = true;
   let t = 0;
 
   const pointer = { x: 0, y: 0, active: false };
@@ -198,8 +200,12 @@ export function createSockwave(canvas) {
     ctx.globalCompositeOperation = 'source-over';
   }
 
+  function canAnimate() {
+    return !reduced && inView && !document.hidden;
+  }
+
   function start() {
-    if (running || reduced) return;
+    if (running || !canAnimate()) return;
     running = true;
     raf = window.requestAnimationFrame(loop);
   }
@@ -232,17 +238,39 @@ export function createSockwave(canvas) {
     pointer.y = e.clientY - rect.top;
     pointer.active = true;
   }
-  function onPointerLeave() {
+  /** @param {PointerEvent} e */
+  function onPointerOut(e) {
+    // Only when the pointer leaves the window, not when it crosses elements.
+    if (!e.relatedTarget) pointer.active = false;
+  }
+  /** @param {PointerEvent} e */
+  function onPointerEnd(e) {
+    // Touch and pen have no hover: stop attracting once the contact ends.
+    if (e.pointerType !== 'mouse') pointer.active = false;
+  }
+  function onBlur() {
     pointer.active = false;
   }
   function onScroll() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    scrollProgress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+    // Progress is how far the hero has slid out of view (0 at top, 1 gone).
+    const r = canvas.getBoundingClientRect();
+    scrollProgress = Math.min(1, Math.max(0, -r.top / (r.height || window.innerHeight)));
   }
   function onVisibility() {
-    if (document.hidden) stop();
-    else if (!reduced) start();
+    if (canAnimate()) start();
+    else stop();
   }
+
+  // Pause the loop while the hero canvas is scrolled out of view.
+  const io =
+    'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => {
+          inView = entries[entries.length - 1].isIntersecting;
+          if (inView) start();
+          else stop();
+        })
+      : null;
+  if (io) io.observe(canvas);
 
   // Fall back to window resize where ResizeObserver is missing.
   const ro = 'ResizeObserver' in window ? new ResizeObserver(() => resize()) : null;
@@ -250,7 +278,10 @@ export function createSockwave(canvas) {
   else window.addEventListener('resize', resize);
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });
-  window.addEventListener('pointerout', onPointerLeave, { passive: true });
+  window.addEventListener('pointerout', onPointerOut, { passive: true });
+  window.addEventListener('pointerup', onPointerEnd, { passive: true });
+  window.addEventListener('pointercancel', onPointerEnd, { passive: true });
+  window.addEventListener('blur', onBlur);
   window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('visibilitychange', onVisibility);
 
@@ -265,7 +296,11 @@ export function createSockwave(canvas) {
       if (ro) ro.disconnect();
       else window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerout', onPointerLeave);
+      if (io) io.disconnect();
+      window.removeEventListener('pointerout', onPointerOut);
+      window.removeEventListener('pointerup', onPointerEnd);
+      window.removeEventListener('pointercancel', onPointerEnd);
+      window.removeEventListener('blur', onBlur);
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibility);
       particles = [];
