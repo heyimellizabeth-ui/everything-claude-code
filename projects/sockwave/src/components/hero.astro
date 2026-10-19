@@ -127,26 +127,26 @@
 </style>
 
 <script>
-  import { createSockwave } from '../scripts/sockwave.ts';
+  import { createSockwave } from '../scripts/sockwave.mjs';
 
-  const canvas = document.getElementById('sockwave-canvas') as HTMLCanvasElement | null;
-  if (canvas) {
+  const canvas = document.getElementById('sockwave-canvas');
+  if (canvas instanceof HTMLCanvasElement) {
     const engine = createSockwave(canvas);
 
     // Respect the OS preference and let the floating toggle override it.
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const apply = (reduced: boolean) => {
+    const apply = (reduced) => {
       engine.setReducedMotion(reduced);
-      const toggle = document.querySelector<HTMLButtonElement>('.motion-toggle');
+      const toggle = document.querySelector('.motion-toggle');
       if (toggle) {
         toggle.setAttribute('aria-pressed', String(reduced));
-        toggle.querySelector('.label')!.textContent = reduced ? 'Motion off' : 'Motion on';
+        toggle.querySelector('.label').textContent = reduced ? 'Motion off' : 'Motion on';
       }
     };
     apply(mq.matches);
     mq.addEventListener('change', (e) => apply(e.matches));
 
-    const toggle = document.querySelector<HTMLButtonElement>('.motion-toggle');
+    const toggle = document.querySelector('.motion-toggle');
     toggle?.addEventListener('click', () => {
       apply(toggle.getAttribute('aria-pressed') !== 'true');
     });
