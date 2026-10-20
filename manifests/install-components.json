@@ -335,6 +335,14 @@
       ]
     },
     {
+      "id": "capability:reverse-engineering",
+      "family": "capability",
+      "description": "RECC reverse-engineering workflows backed by the REA MCP server.",
+      "modules": [
+        "reverse-engineering"
+      ]
+    },
+    {
       "id": "agent:architect",
       "family": "agent",
       "description": "System design and architecture agent.",

@@ -673,6 +673,34 @@
       "defaultInstall": false,
       "cost": "medium",
       "stability": "stable"
+    },
+    {
+      "id": "reverse-engineering",
+      "kind": "skills",
+      "description": "RECC: reverse-engineering workflows that pair ECC planning, TDD, and review with the REA MCP server (rea-agents) for binaries, Electron/JS, Android, .NET, WASM, firmware, and web targets.",
+      "paths": [
+        "skills/reverse-engineer-anything",
+        "skills/re-evidence-discipline",
+        "skills/re-feature-to-implementation",
+        "skills/re-target-playbooks",
+        "skills/re-scope-and-legality"
+      ],
+      "targets": [
+        "claude",
+        "cursor",
+        "antigravity",
+        "codex",
+        "opencode",
+        "codebuddy",
+        "joycode",
+        "qwen"
+      ],
+      "dependencies": [
+        "security"
+      ],
+      "defaultInstall": false,
+      "cost": "medium",
+      "stability": "beta"
     }
   ]
 }
