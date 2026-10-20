@@ -221,6 +221,7 @@ commands:
   - re-compare
   - re-doctor
   - re-investigate
+  - re-pipeline
   - re-rebuild
   - re-verify
   - refactor-clean
