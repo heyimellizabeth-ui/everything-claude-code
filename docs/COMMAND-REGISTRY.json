@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 83,
+  "totalCommands": 88,
   "commands": [
     {
       "command": "aside",
@@ -692,6 +692,51 @@
       "path": "commands/quality-gate.md"
     },
     {
+      "command": "re-compare",
+      "description": "RECC — compare two versions of a shipped application or artifact with REA and explain what changed in behavior, with evidence.",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/re-compare.md"
+    },
+    {
+      "command": "re-doctor",
+      "description": "RECC — read-only diagnosis of the REA MCP connection and analysis providers for this agent, with the exact repair steps.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/re-doctor.md"
+    },
+    {
+      "command": "re-investigate",
+      "description": "RECC — reverse engineer a shipped binary, app, package, firmware image, or website to answer a question, with REA evidence. Runs re-planner then re-investigator and writes .recc/plan.md and .recc/findings.md.",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/re-investigate.md"
+    },
+    {
+      "command": "re-rebuild",
+      "description": "RECC — turn reverse-engineering findings into a clean-room spec and a test-first implementation of an equivalent feature in this project.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/re-rebuild.md"
+    },
+    {
+      "command": "re-verify",
+      "description": "RECC — verify that a reconstructed feature matches the behavior observed in the original target, and write a parity report.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/re-verify.md"
+    },
+    {
       "command": "refactor-clean",
       "description": "Safely identify and remove dead code with verification after each change.",
       "type": "testing",
@@ -883,8 +928,8 @@
       "orchestration": 7,
       "planning": 2,
       "refactoring": 1,
-      "review": 12,
-      "testing": 51
+      "review": 14,
+      "testing": 54
     },
     "topAgents": [
       {

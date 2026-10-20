@@ -144,6 +144,20 @@
 
 ---
 
+## Reverse Engineering (RECC)
+
+Requires the REA MCP server (`rea-agents`). See [docs/RECC.md](docs/RECC.md).
+
+| Command | What it does |
+|---------|-------------|
+| `/re-investigate` | Plan and run an evidence-first REA investigation of a binary, app, package, firmware, or site |
+| `/re-compare` | Explain behavior changes between two versions of a shipped app |
+| `/re-rebuild` | Turn findings into a clean-room spec and a test-first implementation |
+| `/re-verify` | Check a reconstruction against the observed behavior (parity report) |
+| `/re-doctor` | Read-only diagnosis of the REA connection and analysis providers |
+
+---
+
 ## Quick Decision Guide
 
 ```
@@ -156,4 +170,5 @@ Resuming next day?              → /resume-session
 Context getting heavy?          → /context-budget then /checkpoint
 Want to extract what you learned? → /learn-eval then /evolve
 Running repeated tasks?         → /loop-start
+How does a shipped app do X?    → /re-investigate, then /re-rebuild
 ```

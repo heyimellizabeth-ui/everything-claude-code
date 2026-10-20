@@ -85,7 +85,22 @@
         "devops-infra",
         "machine-learning",
         "supply-chain-domain",
-        "document-processing"
+        "document-processing",
+        "reverse-engineering"
+      ]
+    },
+    "recc": {
+      "description": "RECC: reverse-engineering setup combining ECC workflows with the REA MCP server (evidence-first investigation, clean-room rebuilds, parity checks).",
+      "modules": [
+        "rules-core",
+        "agents-core",
+        "commands-core",
+        "hooks-runtime",
+        "platform-configs",
+        "workflow-quality",
+        "security",
+        "research-apis",
+        "reverse-engineering"
       ]
     }
   }
