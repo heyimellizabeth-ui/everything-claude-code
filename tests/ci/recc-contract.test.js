@@ -73,7 +73,9 @@ function runTests() {
 
   if (test('vendored reverse-engineer-anything skill matches the pinned version', () => {
     const skill = fs.readFileSync(path.join(ROOT, 'skills', 'reverse-engineer-anything', 'SKILL.md'), 'utf8');
-    assert.ok(skill.includes(`\norigin: rea@${pin}\n`), `expected origin: rea@${pin}`);
+    // Windows checkouts may use CRLF line endings.
+    const origins = skill.split(/\r?\n/).filter(line => line.startsWith('origin:'));
+    assert.deepStrictEqual(origins, [`origin: rea@${pin}`]);
   })) passed++; else failed++;
 
   if (test('RECC agents, skills, and commands exist', () => {
