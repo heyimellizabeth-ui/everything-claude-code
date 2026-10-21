@@ -5,7 +5,10 @@
  * Bump CACHE when the precached file list changes structurally. */
 'use strict';
 
-const CACHE = 'bks26-shell-v2';
+// v3: purge anything cached for /sockwave/ by earlier versions of this worker.
+const CACHE = 'bks26-shell-v3';
+// Sockwave is deployed under this scope but is a separate site; never handle it.
+const SOCKWAVE_PATH = new URL('./sockwave/', self.registration.scope).pathname;
 const SHELL = [
   './',
   './index.html',
@@ -41,6 +44,7 @@ self.addEventListener('fetch', (event) => {
   const sameOrigin = url.origin === self.location.origin;
   const isFont = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
   if (!sameOrigin && !isFont) return; // let anything else hit the network normally
+  if (sameOrigin && (url.pathname === SOCKWAVE_PATH.slice(0, -1) || url.pathname.startsWith(SOCKWAVE_PATH))) return;
 
   event.respondWith(
     caches.open(CACHE).then(async (cache) => {

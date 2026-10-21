@@ -22,18 +22,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 0
           persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: '22'
 
       - name: Build site
         working-directory: projects/sockwave
         run: |
-          npm install
+          npm ci --ignore-scripts
           npm run build
 
       # Publish projects/sockwave/dist into the /sockwave subfolder of the
       # gh-pages branch. We update only that subfolder (non-destructive), so the
-      # bks26 guide served from the gh-pages root is left untouched.
+      # bks26 guide served from the gh-pages root is left untouched. .nojekyll
+      # stops Pages from running Jekyll, which would drop the _astro/ assets.
       - name: Publish to gh-pages/sockwave
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,7 +52,7 @@ jobs:
 
           # Create gh-pages if it does not exist yet, then add a worktree on it.
           if git ls-remote --exit-code --heads "$REMOTE" gh-pages >/dev/null 2>&1; then
-            git fetch "$REMOTE" gh-pages:gh-pages
+            git fetch --no-tags "$REMOTE" gh-pages:gh-pages
             git worktree add ghp gh-pages
           else
             git worktree add --orphan -b gh-pages ghp
@@ -56,6 +61,7 @@ jobs:
           rm -rf ghp/sockwave
           mkdir -p ghp/sockwave
           cp -r projects/sockwave/dist/. ghp/sockwave/
+          touch ghp/.nojekyll
 
           cd ghp
           git add -A
