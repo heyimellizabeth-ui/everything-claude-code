@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 88,
+  "totalCommands": 89,
   "commands": [
     {
       "command": "aside",
@@ -719,6 +719,15 @@
       "path": "commands/re-investigate.md"
     },
     {
+      "command": "re-pipeline",
+      "description": "RECC — run the whole reverse-engineering pipeline in one go: investigate a target, rebuild the feature clean-room and test-first, then verify parity. Stops at the scope check and the spec confirmation, and resumes from existing .recc/ files.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/re-pipeline.md"
+    },
+    {
       "command": "re-rebuild",
       "description": "RECC — turn reverse-engineering findings into a clean-room spec and a test-first implementation of an equivalent feature in this project.",
       "type": "testing",
@@ -929,7 +938,7 @@
       "planning": 2,
       "refactoring": 1,
       "review": 14,
-      "testing": 54
+      "testing": 55
     },
     "topAgents": [
       {
