@@ -195,6 +195,12 @@ def analyze(
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": build_content(frames, transcript)}],
         )
+    except TypeError as exc:
+        if "authentication" in str(exc).lower():
+            raise AnalyzerError(
+                "no Claude credentials found; set ANTHROPIC_API_KEY or run `ant auth login`"
+            ) from exc
+        raise
     except anthropic.APIStatusError as exc:
         raise AnalyzerError(f"Claude API error ({exc.status_code}): {exc.message}") from exc
     except anthropic.APIConnectionError as exc:

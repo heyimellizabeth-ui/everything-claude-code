@@ -100,3 +100,10 @@ def test_analyze_video_end_to_end_with_fake_client(sample_video):
         client=fake_client('{"summary": "ok"}'),
     )
     assert result.report == {"summary": "ok"} and len(result.frames) == 3
+
+
+def test_missing_credentials_is_friendly():
+    client = mock.Mock()
+    client.messages.create.side_effect = TypeError("Could not resolve authentication method")
+    with pytest.raises(analyzer.AnalyzerError, match="ANTHROPIC_API_KEY"):
+        analyzer.analyze([], "", client=client)
