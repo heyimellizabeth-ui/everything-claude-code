@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Club KUDT Halloween Editie: a haunted house glowing red at night">
+  <title>Club KUDT Halloween Editie</title>
+  <defs>
+    <radialGradient id="moon" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#F5F0E8" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#F5F0E8" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#F5F0E8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="60%" r="60%">
+      <stop offset="0" stop-color="#E8415A" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#E8415A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fog" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F5F0E8" stop-opacity="0"/>
+      <stop offset="1" stop-color="#F5F0E8" stop-opacity="0.22"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="neon" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- sky -->
+  <rect width="1600" height="900" fill="#0D0D0D"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <circle cx="1230" cy="190" r="170" fill="url(#moon)"/>
+  <circle cx="1230" cy="190" r="70" fill="#F5F0E8"/>
+  <circle cx="1205" cy="170" r="14" fill="#0D0D0D" opacity="0.12"/>
+  <circle cx="1255" cy="215" r="9" fill="#0D0D0D" opacity="0.12"/>
+
+  <!-- stars -->
+  <g fill="#F5F0E8" opacity="0.7">
+    <circle cx="120" cy="90" r="2"/><circle cx="260" cy="170" r="1.5"/><circle cx="420" cy="60" r="2"/>
+    <circle cx="560" cy="140" r="1.5"/><circle cx="700" cy="80" r="2"/><circle cx="880" cy="150" r="1.5"/>
+    <circle cx="1010" cy="60" r="2"/><circle cx="1450" cy="110" r="2"/><circle cx="1530" cy="240" r="1.5"/>
+    <circle cx="60" cy="300" r="1.5"/><circle cx="340" cy="280" r="2"/>
+  </g>
+
+  <!-- bats -->
+  <g fill="#0D0D0D" stroke="#F5F0E8" stroke-opacity="0.35" stroke-width="1">
+    <path d="M1010 120 q18 -24 40 0 q-16 -8 -20 4 q-4 -12 -20 -4z"/>
+    <path d="M1380 330 q14 -18 30 0 q-12 -6 -15 3 q-3 -9 -15 -3z"/>
+    <path d="M330 220 q16 -20 34 0 q-13 -7 -17 3 q-4 -10 -17 -3z"/>
+  </g>
+
+  <!-- house -->
+  <g id="house">
+    <!-- main body -->
+    <path d="M470 760 V430 L560 380 V300 L620 270 L680 300 V360 L800 290 L920 360 V300 L980 270 L1040 300 V380 L1130 430 V760 Z" fill="#161212" stroke="#E8415A" stroke-width="3" stroke-opacity="0.55"/>
+    <!-- central tower -->
+    <path d="M700 760 V330 L800 130 L900 330 V760 Z" fill="#0F0B0B" stroke="#E8415A" stroke-width="3" stroke-opacity="0.7"/>
+    <path d="M800 130 V70" stroke="#E8415A" stroke-width="3"/>
+    <path d="M800 70 l34 14 l-34 14z" fill="#E8415A"/>
+    <!-- roof lines -->
+    <path d="M690 330 H910 M720 250 H880" stroke="#E8415A" stroke-opacity="0.35" stroke-width="2"/>
+
+    <!-- tower window (big, glowing) -->
+    <path d="M770 300 a30 30 0 0 1 60 0 V370 H770 Z" fill="#E8415A" filter="url(#neon)"/>
+    <path d="M800 270 V370 M770 320 H830" stroke="#0D0D0D" stroke-width="4"/>
+
+    <!-- windows left -->
+    <g fill="#E8415A" filter="url(#neon)">
+      <rect x="510" y="480" width="60" height="90" rx="30" ry="30"/>
+      <rect x="610" y="480" width="60" height="90" rx="30" ry="30"/>
+      <rect x="530" y="620" width="50" height="76" rx="25" ry="25" opacity="0.8"/>
+    </g>
+    <!-- windows right -->
+    <g fill="#E8415A" filter="url(#neon)">
+      <rect x="930" y="480" width="60" height="90" rx="30" ry="30"/>
+      <rect x="1030" y="480" width="60" height="90" rx="30" ry="30"/>
+      <rect x="1020" y="620" width="50" height="76" rx="25" ry="25" opacity="0.8"/>
+    </g>
+    <g stroke="#0D0D0D" stroke-width="3">
+      <path d="M540 480 V570 M510 525 H570 M640 480 V570 M610 525 H670 M960 480 V570 M930 525 H990 M1060 480 V570 M1030 525 H1090"/>
+    </g>
+
+    <!-- upper tower windows -->
+    <g fill="#F5F0E8" opacity="0.9">
+      <rect x="780" y="420" width="40" height="64" rx="20"/>
+      <rect x="780" y="520" width="40" height="64" rx="20" opacity="0.6"/>
+    </g>
+
+    <!-- door -->
+    <path d="M750 760 V640 a50 50 0 0 1 100 0 V760 Z" fill="#E8415A" filter="url(#neon)"/>
+    <path d="M800 590 V760" stroke="#0D0D0D" stroke-width="4"/>
+    <circle cx="782" cy="690" r="5" fill="#0D0D0D"/><circle cx="818" cy="690" r="5" fill="#0D0D0D"/>
+  </g>
+
+  <!-- neon sign -->
+  <g filter="url(#neon)" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-weight="700">
+    <rect x="520" y="780" width="560" height="0" fill="none"/>
+    <text x="800" y="835" font-size="76" letter-spacing="14" fill="#F5F0E8">CLUB KUDT</text>
+  </g>
+  <text x="800" y="872" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="20" letter-spacing="10" fill="#E8415A">HALLOWEEN EDITIE · 30 OKT 2026</text>
+
+  <!-- fence -->
+  <g stroke="#E8415A" stroke-opacity="0.4" stroke-width="3" fill="#0D0D0D">
+    <path d="M60 760 H440 M1160 760 H1540"/>
+    <g>
+      <path d="M80 760 V700 l8 -14 l8 14 V760z"/><path d="M140 760 V700 l8 -14 l8 14 V760z"/>
+      <path d="M200 760 V700 l8 -14 l8 14 V760z"/><path d="M260 760 V700 l8 -14 l8 14 V760z"/>
+      <path d="M320 760 V700 l8 -14 l8 14 V760z"/><path d="M380 760 V700 l8 -14 l8 14 V760z"/>
+      <path d="M1180 760 V700 l8 -14 l8 14 V760z"/><path d="M1240 760 V700 l8 -14 l8 14 V760z"/>
+      <path d="M1300 760 V700 l8 -14 l8 14 V760z"/><path d="M1360 760 V700 l8 -14 l8 14 V760z"/>
+      <path d="M1420 760 V700 l8 -14 l8 14 V760z"/><path d="M1480 760 V700 l8 -14 l8 14 V760z"/>
+    </g>
+  </g>
+
+  <!-- pumpkins -->
+  <g>
+    <g transform="translate(300 745)">
+      <ellipse cx="0" cy="0" rx="62" ry="50" fill="#E8415A"/>
+      <path d="M-14 -50 q14 -16 28 0" stroke="#F5F0E8" stroke-width="5" fill="none"/>
+      <path d="M-30 -8 l14 -18 l12 18z M8 -8 l12 -18 l14 18z" fill="#0D0D0D"/>
+      <path d="M-32 14 q32 26 64 0 l-8 -6 l-10 8 l-14 -8 l-14 8 l-10 -8z" fill="#0D0D0D"/>
+    </g>
+    <g transform="translate(1310 755) scale(0.85)">
+      <ellipse cx="0" cy="0" rx="62" ry="50" fill="#E8415A"/>
+      <path d="M-14 -50 q14 -16 28 0" stroke="#F5F0E8" stroke-width="5" fill="none"/>
+      <path d="M-30 -8 l14 -18 l12 18z M8 -8 l12 -18 l14 18z" fill="#0D0D0D"/>
+      <path d="M-32 14 q32 26 64 0 l-8 -6 l-10 8 l-14 -8 l-14 8 l-10 -8z" fill="#0D0D0D"/>
+    </g>
+  </g>
+
+  <!-- ghost -->
+  <g transform="translate(1080 560)" opacity="0.92">
+    <path d="M0 0 a40 44 0 0 1 80 0 V96 l-14 -12 l-13 14 l-13 -14 l-13 14 l-13 -14 l-14 12z" fill="#F5F0E8"/>
+    <circle cx="26" cy="-4" r="7" fill="#0D0D0D"/><circle cx="54" cy="-4" r="7" fill="#0D0D0D"/>
+    <ellipse cx="40" cy="20" rx="8" ry="11" fill="#0D0D0D"/>
+  </g>
+
+  <!-- fog -->
+  <g filter="url(#blur)">
+    <ellipse cx="300" cy="790" rx="420" ry="60" fill="#F5F0E8" opacity="0.14"/>
+    <ellipse cx="1300" cy="800" rx="460" ry="64" fill="#F5F0E8" opacity="0.14"/>
+    <ellipse cx="800" cy="770" rx="520" ry="46" fill="#F5F0E8" opacity="0.10"/>
+  </g>
+  <rect y="640" width="1600" height="260" fill="url(#fog)"/>
+</svg>
