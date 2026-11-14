@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 88,
+  "totalCommands": 89,
   "commands": [
     {
       "command": "aside",
@@ -156,6 +156,15 @@
         "tdd-workflow"
       ],
       "path": "commands/cpp-test.md"
+    },
+    {
+      "command": "design-gate",
+      "description": "Run the Hallmark design linter on a page, folder or URL and block on Floor failures.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/design-gate.md"
     },
     {
       "command": "ecc-guide",
@@ -929,7 +938,7 @@
       "planning": 2,
       "refactoring": 1,
       "review": 14,
-      "testing": 54
+      "testing": 55
     },
     "topAgents": [
       {

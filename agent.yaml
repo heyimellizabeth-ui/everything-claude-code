@@ -168,6 +168,7 @@ commands:
   - cpp-build
   - cpp-review
   - cpp-test
+  - design-gate
   - ecc-guide
   - evolve
   - fastapi-review
