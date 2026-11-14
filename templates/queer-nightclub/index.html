@@ -5,13 +5,13 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{SITE_NAME}} — {{SITE_TAGLINE}} · {{VENUE_CITY}}</title>
-<meta name="description" content="{{SITE_NAME}} — Queer feesten in {{VENUE_CITY}}. Drag, disco, pop & meer in {{VENUE_NAME}}. Tickets vanaf €15. {{VENUE_REGION}}'s thuis voor queer nightlife.">
+<title>{{SITE_NAME}}: {{SITE_TAGLINE}} | {{VENUE_CITY}}</title>
+<meta name="description" content="{{SITE_NAME}}: Queer feesten in {{VENUE_CITY}}. Drag, disco, pop & meer in {{VENUE_NAME}}. Tickets vanaf €15. {{VENUE_REGION}}'s thuis voor queer nightlife.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://{{SITE_DOMAIN}}/">
 
 <!-- Open Graph -->
-<meta property="og:title" content="{{SITE_NAME}} — {{SITE_TAGLINE}} · {{VENUE_CITY}}">
+<meta property="og:title" content="{{SITE_NAME}}: {{SITE_TAGLINE}} | {{VENUE_CITY}}">
 <meta property="og:description" content="Queer feesten in {{VENUE_CITY}}. Drag, disco, pop & meer. Tickets via {{VENUE_NAME}}.">
 <meta property="og:image" content="https://{{SITE_DOMAIN}}/og-image.png">
 <meta property="og:url" content="https://{{SITE_DOMAIN}}/">
@@ -21,7 +21,7 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{SITE_NAME}} — {{SITE_TAGLINE}} · {{VENUE_CITY}}">
+<meta name="twitter:title" content="{{SITE_NAME}}: {{SITE_TAGLINE}} | {{VENUE_CITY}}">
 <meta name="twitter:description" content="Queer feesten in {{VENUE_CITY}}. Drag, disco, pop & meer.">
 <meta name="twitter:image" content="https://{{SITE_DOMAIN}}/og-image.png">
 
@@ -77,11 +77,14 @@
 }
 </script>
 {{FONT_GOOGLE_LINK}}
-<noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+<script>if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
 <style>
+  /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
+   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
+   * built: the project · redesign: polish · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
@@ -90,19 +93,20 @@
     --red: {{COLOR_ACCENT}};
     --surface: {{COLOR_SURFACE}};
     --muted: {{COLOR_MUTED}};
-    --font-mono: 'Courier New', Courier, monospace;
+    --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+    --cream-a06: color-mix(in srgb, var(--cream) 6%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a12: color-mix(in srgb, var(--cream) 12%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent); --cream-a30: color-mix(in srgb, var(--cream) 30%, transparent); --cream-a40: color-mix(in srgb, var(--cream) 40%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a05: color-mix(in srgb, var(--red) 5%, transparent); --red-a08: color-mix(in srgb, var(--red) 8%, transparent); --red-a40: color-mix(in srgb, var(--red) 40%, transparent);
   }
 
   html { scroll-behavior: smooth; }
 
-  html { overflow-x: hidden; }
+  html { overflow-x: clip; }
   body {
     background: var(--void);
     color: var(--cream);
-    font-family: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-body);
     font-size: 16px;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
     cursor: none;
   }
 
@@ -132,7 +136,7 @@
     font-size: 9px;
     color: var(--cream);
     opacity: 0;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.02em;
     white-space: nowrap;
     transition: opacity 0.2s;
   }
@@ -164,7 +168,7 @@
     position: absolute;
     text-align: center;
   }
-  .preloader-word {
+  .js .preloader-word {
     font-family: var(--font-mono);
     font-size: clamp(2rem, 6vw, 5rem);
     font-weight: 700;
@@ -175,7 +179,7 @@
     transform: translateY(30px);
   }
   .preloader-word.red { color: var(--red); }
-  .preloader-reveal {
+  .js .preloader-reveal {
     position: absolute;
     font-family: var(--font-mono);
     font-size: clamp(2.5rem, 8vw, 7rem);
@@ -186,6 +190,7 @@
     overflow: hidden;
     white-space: nowrap;
   }
+  html:not(.js) .preloader { display: none; }
   .preloader-bar {
     position: absolute;
     top: 0; left: 0;
@@ -221,10 +226,9 @@
   .nav-links a {
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    letter-spacing: 2px;
+    letter-spacing: 0.02em;
     color: var(--muted);
     text-decoration: none;
-    text-transform: uppercase;
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--cream); }
@@ -232,7 +236,7 @@
   /* HERO */
   .hero {
     position: relative;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -267,17 +271,15 @@
   .hero-sub {
     font-family: var(--font-mono);
     font-size: clamp(0.6rem, 1.2vw, 0.9rem);
-    letter-spacing: 4px;
+    letter-spacing: 0.02em;
     color: var(--muted);
-    text-transform: uppercase;
     margin-top: 1.5rem;
   }
   .hero-venue-note {
     font-family: var(--font-mono);
     font-size: 0.6rem;
-    letter-spacing: 2px;
-    color: rgba(245,240,232,0.3);
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--cream-a30);
     margin-top: 0.75rem;
   }
   .cta-btn {
@@ -289,9 +291,8 @@
     font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 0.02em;
     text-decoration: none;
-    text-transform: uppercase;
     border: none;
     cursor: none;
     position: relative;
@@ -304,9 +305,8 @@
     transform: translateX(-50%);
     font-family: var(--font-mono);
     font-size: 0.6rem;
-    letter-spacing: 3px;
+    letter-spacing: 0.02em;
     color: var(--muted);
-    text-transform: uppercase;
     z-index: 2;
   }
   .scroll-line {
@@ -342,7 +342,7 @@
     text-transform: uppercase;
   }
   .ticker-dot {
-    color: rgba(245,240,232,0.4);
+    color: var(--cream-a40);
     margin: 0 0.5rem;
   }
   @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -357,15 +357,14 @@
   .section-num {
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    letter-spacing: 3px;
+    letter-spacing: 0.02em;
     color: var(--red);
-    text-transform: uppercase;
     margin-bottom: 1rem;
   }
   .section-line {
     width: 100%;
     height: 1px;
-    background: rgba(245,240,232,0.08);
+    background: var(--cream-a08);
     margin-bottom: 4rem;
   }
 
@@ -407,10 +406,9 @@
   .tag {
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     padding: 0.4rem 0.8rem;
-    border: 1px solid rgba(245,240,232,0.15);
+    border: 1px solid var(--cream-a15);
     color: var(--muted);
   }
 
@@ -433,7 +431,7 @@
     gap: 1.5rem;
   }
   .event-card {
-    border: 1px solid rgba(245,240,232,0.12);
+    border: 1px solid var(--cream-a12);
     padding: 2rem;
     position: relative;
     cursor: none;
@@ -446,12 +444,12 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(232,65,90,0.05) 0%, transparent 60%);
+    background: linear-gradient(135deg, var(--red-a05) 0%, transparent 60%);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
   }
-  .event-card:hover { border-color: rgba(232,65,90,0.4); }
+  .event-card:hover { border-color: var(--red-a40); }
   .event-card:hover::before { opacity: 1; }
   .event-card.featured {
     border-color: var(--red);
@@ -460,8 +458,7 @@
   .event-badge {
     font-family: var(--font-mono);
     font-size: 0.6rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--red);
     margin-bottom: 1rem;
   }
@@ -469,7 +466,7 @@
     font-family: var(--font-mono);
     font-size: clamp(1.2rem, 3vw, 2rem);
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 0.02em;
     line-height: 1.1;
     margin-bottom: 1rem;
   }
@@ -482,17 +479,16 @@
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--muted);
-    letter-spacing: 1px;
+    letter-spacing: 0.02em;
   }
   .event-cta {
     display: inline-block;
     margin-top: 1.5rem;
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    letter-spacing: 2px;
+    letter-spacing: 0.02em;
     color: var(--red);
     text-decoration: none;
-    text-transform: uppercase;
     position: relative;
     z-index: 1;
     border-bottom: 1px solid var(--red);
@@ -504,8 +500,8 @@
     right: 1.5rem;
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    color: rgba(245,240,232,0.15);
-    letter-spacing: 2px;
+    color: var(--cream-a15);
+    letter-spacing: 0.02em;
   }
 
   /* TESTIMONIALS */
@@ -521,7 +517,7 @@
     gap: 2rem;
     align-items: start;
     padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(245,240,232,0.06);
+    border-bottom: 1px solid var(--cream-a06);
   }
   .testimonial:last-child { border-bottom: none; }
   .testimonial-mark {
@@ -542,15 +538,14 @@
   .testimonial-author {
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    letter-spacing: 2px;
+    letter-spacing: 0.02em;
     color: var(--muted);
-    text-transform: uppercase;
   }
 
   /* NEWSLETTER */
   .newsletter-section {
-    border-top: 1px solid rgba(245,240,232,0.08);
-    border-bottom: 1px solid rgba(245,240,232,0.08);
+    border-top: 1px solid var(--cream-a08);
+    border-bottom: 1px solid var(--cream-a08);
     padding: 5rem 3rem;
     max-width: 100%;
   }
@@ -565,9 +560,8 @@
   .newsletter-sub {
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.02em;
     color: var(--muted);
-    text-transform: uppercase;
     margin-top: 0.75rem;
   }
   .newsletter-title {
@@ -583,7 +577,7 @@
   }
   .newsletter-input {
     background: transparent;
-    border: 1px solid rgba(245,240,232,0.2);
+    border: 1px solid var(--cream-a20);
     border-right: none;
     color: var(--cream);
     font-family: var(--font-mono);
@@ -591,10 +585,10 @@
     padding: 0.9rem 1.5rem;
     width: 280px;
     outline: none;
-    letter-spacing: 1px;
+    letter-spacing: 0.02em;
   }
   .newsletter-input::placeholder { color: var(--muted); }
-  .newsletter-input:focus { border-color: rgba(245,240,232,0.4); }
+  .newsletter-input:focus { border-color: var(--cream-a40); }
   .newsletter-submit {
     background: var(--red);
     border: none;
@@ -602,8 +596,7 @@
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     padding: 0.9rem 1.5rem;
     cursor: none;
     white-space: nowrap;
@@ -632,10 +625,9 @@
   .footer-links a {
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    letter-spacing: 2px;
+    letter-spacing: 0.02em;
     color: var(--muted);
     text-decoration: none;
-    text-transform: uppercase;
     transition: color 0.2s;
   }
   .footer-links a:hover { color: var(--cream); }
@@ -643,13 +635,12 @@
   .footer-bpm {
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    letter-spacing: 4px;
+    letter-spacing: 0.02em;
     color: var(--muted);
-    text-transform: uppercase;
   }
 
   /* UTIL */
-  .mil-up {
+  .js .mil-up {
     opacity: 0;
     transform: translateY(40px);
   }
@@ -703,10 +694,9 @@
   .nav-drawer a {
     font-family: var(--font-mono);
     font-size: 1.5rem;
-    letter-spacing: 4px;
+    letter-spacing: 0.02em;
     color: var(--cream);
     text-decoration: none;
-    text-transform: uppercase;
     transition: color 0.2s;
   }
   .nav-drawer a:hover { color: var(--red); }
@@ -733,9 +723,9 @@
   .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 
   /* C3: DIRECTIONAL REVEALS */
-  .mil-left { opacity: 0; transform: translateX(-40px); }
-  .mil-right { opacity: 0; transform: translateX(40px); }
-  .mil-scale { opacity: 0; transform: scale(0.92); }
+  .js .mil-left { opacity: 0; transform: translateX(-40px); }
+  .js .mil-right { opacity: 0; transform: translateX(40px); }
+  .js .mil-scale { opacity: 0; transform: scale(0.92); }
 
   /* C3: NAV SLIDE */
   nav { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
@@ -747,7 +737,7 @@
 
   /* C3: TAG HOVER */
   .tag { transition: border-color 0.2s, color 0.2s, background 0.2s; }
-  .tag:hover { border-color: var(--red); color: var(--cream); background: rgba(232,65,90,0.08); }
+  .tag:hover { border-color: var(--red); color: var(--cream); background: var(--red-a08); }
 
   /* C3: SECTION NUM HOVER */
   .section-num { transition: color 0.2s; cursor: default; }
@@ -758,24 +748,30 @@
 
   /* C3: TESTIMONIAL LEFT-ACCENT */
   .testimonial { border-left: 2px solid transparent; transition: border-color 0.3s, background 0.3s; padding-left: 1.5rem; }
-  .testimonial:hover { border-left-color: var(--red); background: rgba(232,65,90,0.04); }
+  .testimonial:hover { border-left-color: var(--red); background: var(--red-a04); }
 
   /* C3: FOOTER LINK UNDERLINE SLIDE */
   .footer-links a { position: relative; overflow: hidden; }
-  .footer-links a::after { content: ''; position: absolute; bottom: 0; left: -100%; width: 100%; height: 1px; background: var(--red); transition: left 0.25s ease; }
-  .footer-links a:hover::after { left: 0; }
+  .footer-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--red); transform: translateX(-101%); transition: transform 0.25s ease; }
+  .footer-links a:hover::after { transform: translateX(0); }
 
   /* Layout variants */
   .hero--split { flex-direction: row !important; justify-content: stretch !important; align-items: stretch !important; }
   .hero--split .hero-content { text-align: left; flex: 1; justify-content: center; align-items: flex-start; }
   .hero--minimal .hero-canvas-wrap, .hero--minimal canvas { display: none; }
   .footer--minimal .footer-links, .footer--minimal .footer-social-row, .footer--minimal .footer-bpm { display: none; }
+
+  :focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
 
 <!-- SVG Glitch Filters -->
-<svg class="svg-filters" xmlns="http://www.w3.org/2000/svg">
+<svg class="svg-filters" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="glitch-idle">
       <feTurbulence type="fractalNoise" baseFrequency="0.0001" numOctaves="1" result="noise"/>
@@ -830,13 +826,13 @@
 <main>
 <!-- Hero -->
 <div class="hero hero--{{LAYOUT_HERO}}">
-  <canvas id="particle-canvas"></canvas>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
   <div class="hero-content">
-    <h1 class="sr-only">{{SITE_NAME}} — Queer Feesten in {{VENUE_CITY}} bij {{VENUE_NAME}}</h1>
+    <h1 class="sr-only">{{SITE_NAME}}, Queer Feesten in {{VENUE_CITY}} bij {{VENUE_NAME}}</h1>
     <span class="hero-wordmark mil-up" id="hero-wordmark">KUDT</span>
-    <p class="hero-sub mil-up">{{SITE_TAGLINE}} · {{VENUE_CITY}} · Est. {{SITE_EST}}</p>
-    <a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer" class="cta-btn mil-up" id="cta-btn" data-magnetic>Get tickets →</a>
-    <p class="hero-venue-note mil-up">via {{VENUE_NAME}} · official venue partner</p>
+    <p class="hero-sub mil-up">{{SITE_TAGLINE}}, {{VENUE_CITY}}, Est. {{SITE_EST}}</p>
+    <a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer" class="cta-btn mil-up" id="cta-btn" data-magnetic>Get tickets</a>
+    <p class="hero-venue-note mil-up">via {{VENUE_NAME}}, official venue partner</p>
   </div>
   <div class="hero-scroll-hint mil-up">
     <span>Scroll</span>
@@ -867,18 +863,18 @@
 <!-- About -->
 <div class="section-wrap" id="about">
   <section>
-    <div class="section-num mil-up">01 — About</div>
+    <div class="section-num mil-up">01. About</div>
     <div class="section-line"></div>
     <div class="about-grid">
       <div class="about-counter mil-left">01.</div>
       <div>
         <h2 class="about-title mil-up">Alkmaar's first queer night.<br>No trip to Amsterdam required.</h2>
-        <p class="about-body mil-up">Pop, classics, disco & special acts. Drag queens, doorbitches, pole dancers. 70s to 00s bangers and the people you've been looking for. Every edition at {{VENUE_NAME}} — the heart of {{VENUE_REGION}}'s queer scene.</p>
+        <p class="about-body mil-up">Pop, classics, disco & special acts. Drag queens, doorbitches, pole dancers. 70s to 00s bangers and the people you've been looking for. Every edition at {{VENUE_NAME}}, the heart of {{VENUE_REGION}}'s queer scene.</p>
         <div class="about-tags mil-up">
           <span class="tag">Drag</span>
           <span class="tag">Disco</span>
           <span class="tag">Pop</span>
-          <span class="tag">70s–00s</span>
+          <span class="tag">70s to 00s</span>
           <span class="tag">18+</span>
           <span class="tag">{{VENUE_NAME}}</span>
           <span class="tag">Alkmaar</span>
@@ -891,7 +887,7 @@
 <!-- Events -->
 <div class="section-wrap" id="events">
   <section>
-    <div class="section-num mil-up">02 — Events</div>
+    <div class="section-num mil-up">02. Events</div>
     <div class="section-line"></div>
     <div class="events-header">
       <h2 class="events-title mil-up">Upcoming</h2>
@@ -899,15 +895,15 @@
     <div class="events-grid">
 
       <div class="event-card featured mil-up" data-tilt data-cursor-label="TICKETS">
-        <div class="event-badge">✦ Next edition · Pride Special</div>
+        <div class="event-badge">✦ Next edition, Pride Special</div>
         <div class="event-name">PRIDE AFTER PARTY</div>
         <div class="event-meta">
           <span>30 Mei 2026</span>
-          <span>21:00 – 02:00</span>
+          <span>21:00 to 02:00</span>
           <span>Grolsch Zaal, {{VENUE_NAME}}</span>
-          <span>16+ · {{VENUE_CITY}}</span>
+          <span>16+, {{VENUE_CITY}}</span>
         </div>
-        <a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer" class="event-cta">Get tickets →</a>
+        <a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer" class="event-cta">Get tickets</a>
         <div class="event-number">001</div>
       </div>
 
@@ -915,12 +911,12 @@
         <div class="event-badge">✦ Recurring</div>
         <div class="event-name">{{SITE_NAME}}</div>
         <div class="event-meta">
-          <span>Next date TBA · 2026</span>
+          <span>Next date TBA, 2026</span>
           <span>Kleine Zaal</span>
           <span>{{VENUE_NAME}}, Alkmaar</span>
           <span>18+</span>
         </div>
-        <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">Check tickets at {{VENUE_NAME}} →</a>
+        <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">Check tickets at {{VENUE_NAME}}</a>
         <div class="event-number">002</div>
       </div>
 
@@ -928,11 +924,11 @@
         <div class="event-badge">✦ Collaboration</div>
         <div class="event-name">MUSEUMNACHT ALKMAAR</div>
         <div class="event-meta">
-          <span>Annual · September</span>
+          <span>Annual, September</span>
           <span>Kleine Zaal, Victorie</span>
           <span>Rainbow Paradise edition</span>
         </div>
-        <a href="https://museumnacht-alkmaar.nl/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">More info →</a>
+        <a href="https://museumnacht-alkmaar.nl/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">More info</a>
         <div class="event-number">003</div>
       </div>
 
@@ -943,28 +939,28 @@
 <!-- Testimonials -->
 <div class="section-wrap">
   <section>
-    <div class="section-num mil-up">03 — Community</div>
+    <div class="section-num mil-up">03. Community</div>
     <div class="section-line"></div>
     <div class="testimonials-grid">
       <div class="testimonial mil-up">
         <div class="testimonial-mark">"</div>
         <div>
-          <p class="testimonial-body">First time I walked in and didn't have to explain myself to anyone. The door team, the crowd, the whole energy — I felt seen before I even hit the dancefloor.</p>
-          <p class="testimonial-author">Alex T. · Regular since Dec {{SITE_EST}} · First edition attendee</p>
+          <p class="testimonial-body">First time I walked in and didn't have to explain myself to anyone. The door team, the crowd, the whole energy, I felt seen before I even hit the dancefloor.</p>
+          <p class="testimonial-author">Alex T., Regular since Dec {{SITE_EST}}, First edition attendee</p>
         </div>
       </div>
       <div class="testimonial mil-up">
         <div class="testimonial-mark">"</div>
         <div>
-          <p class="testimonial-body">Finally a queer night in {{VENUE_CITY}} where I don't have to travel to Amsterdam. The drag acts, the music, the vibe — this is exactly what {{VENUE_REGION}} needed.</p>
-          <p class="testimonial-author">Riv K. · Attends every edition · {{VENUE_NAME}} regular</p>
+          <p class="testimonial-body">Finally a queer night in {{VENUE_CITY}} where I don't have to travel to Amsterdam. The drag acts, the music, the vibe, this is exactly what {{VENUE_REGION}} needed.</p>
+          <p class="testimonial-author">Riv K., Attends every edition, {{VENUE_NAME}} regular</p>
         </div>
       </div>
       <div class="testimonial mil-up">
         <div class="testimonial-mark">"</div>
         <div>
           <p class="testimonial-body">{{SITE_NAME}} is proof that queer nightlife doesn't have to mean a trip to the Reguliersdwarsstraat. It's right here in {{VENUE_CITY}} and it's better than I expected.</p>
-          <p class="testimonial-author">Luna S. · {{VENUE_REGION}} queer community · 2023–present</p>
+          <p class="testimonial-author">Luna S., {{VENUE_REGION}} queer community, since 2023</p>
         </div>
       </div>
     </div>
@@ -990,7 +986,7 @@
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
       <input type="hidden" name="_type" value="newsletter">
       <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required maxlength="254" autocomplete="email">
-      <button type="submit" class="newsletter-submit">Get early access →</button>
+      <button type="submit" class="newsletter-submit">Get early access</button>
     </form>
   </div>
 </div>
@@ -999,7 +995,7 @@
 
 <!-- Footer -->
 <footer class="footer--{{LAYOUT_FOOTER}}">
-  <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
   <ul class="footer-links">
     <li><a href="#events">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>
@@ -1330,11 +1326,11 @@
           btn.style.color = 'var(--red)';
           this.reset();
         } else {
-          btn.textContent = 'Try again →';
+          btn.textContent = 'Try again';
           btn.disabled = false;
         }
       } catch {
-        btn.textContent = 'Try again →';
+        btn.textContent = 'Try again';
         btn.disabled = false;
       }
     });

@@ -5,40 +5,45 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 — Lost on the Dancefloor · {{SITE_NAME}}</title>
+<title>404: Lost on the Dancefloor | {{SITE_NAME}}</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <style>
+  /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
+   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
+   * built: the project · redesign: polish · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; }
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: system-ui, -apple-system, sans-serif;
+    --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a06: color-mix(in srgb, var(--cream) 6%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent);
+  }
   html, body { height: 100%; }
-  html { overflow-x: hidden; }
-  body { background: var(--void); color: var(--cream); font-family: system-ui, -apple-system, sans-serif; overflow: hidden; cursor: none; display: flex; flex-direction: column; }
+  html { overflow-x: clip; }
+  body { background: var(--void); color: var(--cream); font-family: var(--font-body); overflow-x: clip; overflow-y: hidden; cursor: none; display: flex; flex-direction: column; }
   .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s; }
   .cursor.expanded { width: 56px; height: 56px; background: var(--red); }
 
   nav { padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
   .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--cream); }
 
   .error-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem; position: relative; }
 
-  .error-num { font-family: var(--font-mono); font-size: clamp(8rem, 25vw, 22rem); font-weight: 700; letter-spacing: 0.05em; line-height: 0.85; color: rgba(245,240,232,0.04); position: absolute; user-select: none; }
+  .error-num { font-family: var(--font-mono); font-size: clamp(8rem, 25vw, 22rem); font-weight: 700; letter-spacing: 0.05em; line-height: 0.85; color: var(--cream-a04); position: absolute; user-select: none; }
   .error-content { position: relative; z-index: 2; }
-  .error-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .error-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 1.5rem; }
   .error-title { font-family: var(--font-mono); font-size: clamp(1.5rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: 2px; line-height: 1.1; margin-bottom: 1.5rem; }
   .error-title span { color: var(--red); }
-  .error-sub { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 3rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .error-sub { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 3rem; max-width: 400px; margin-left: auto; margin-right: auto; }
   .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .btn-primary { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; }
-  .btn-secondary { display: inline-block; padding: 1rem 2.5rem; background: transparent; border: 1px solid rgba(245,240,232,0.2); color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; transition: all 0.2s; }
+  .btn-primary { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; text-decoration: none; }
+  .btn-secondary { display: inline-block; padding: 1rem 2.5rem; background: transparent; border: 1px solid var(--cream-a20); color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; text-decoration: none; transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s; }
   .btn-secondary:hover { border-color: var(--cream); color: var(--cream); }
 
-  footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(245,240,232,0.06); }
+  footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a06); }
   .footer-brand { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--muted); }
-  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
 
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); transition: transform 0.3s, opacity 0.3s; }
@@ -47,13 +52,19 @@
   .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
   .nav-drawer.open { display: flex; }
-  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 4px; color: var(--cream); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; transition: color 0.2s; }
   .nav-drawer a:hover { color: var(--red); }
 
   @media (max-width: 768px) {
-    body { cursor: auto; overflow: auto; } .cursor { display: none; }
+    body { cursor: auto; overflow-y: auto; } .cursor { display: none; }
     nav { padding: 1.2rem 1.5rem; } .nav-links { display: none; } .nav-hamburger { display: flex; }
     footer { padding: 1.5rem; }
+  }
+
+  :focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   }
 </style>
 </head>
@@ -79,16 +90,16 @@
   <div class="error-content">
     <div class="error-tag">✦ Error 404</div>
     <h1 class="error-title">Lost on<br>the <span>Dancefloor</span></h1>
-    <p class="error-sub">This page doesn't exist — but the party does. Find your way back.</p>
+    <p class="error-sub">This page doesn't exist, but the party does. Find your way back.</p>
     <div class="error-actions">
-      <a href="index.html" class="btn-primary">Back to home →</a>
+      <a href="index.html" class="btn-primary">Back to home</a>
       <a href="events.html" class="btn-secondary">See events</a>
     </div>
   </div>
 </main>
 
 <footer>
-  <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
   <div class="footer-bpm">{{SITE_BPM}}</div>
 </footer>
 

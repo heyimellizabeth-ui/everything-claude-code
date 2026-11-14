@@ -5,20 +5,20 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact {{SITE_NAME}} — Samenwerking &amp; Booking Alkmaar</title>
-<meta name="description" content="Neem contact op met {{SITE_NAME}} — queer feesten in {{VENUE_CITY}} bij {{VENUE_NAME}}. Samenwerkingen, press, booking & algemene vragen.">
+<title>Contact {{SITE_NAME}}: Samenwerking &amp; Booking Alkmaar</title>
+<meta name="description" content="Neem contact op met {{SITE_NAME}}: queer feesten in {{VENUE_CITY}} bij {{VENUE_NAME}}. Samenwerkingen, press, booking & algemene vragen.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://{{SITE_DOMAIN}}/contact.html">
-<meta property="og:title" content="Contact {{SITE_NAME}} — Samenwerking &amp; Booking {{VENUE_CITY}}">
-<meta property="og:description" content="Samenwerkingen, press, booking & vragen — neem contact op met {{SITE_NAME}}.">
+<meta property="og:title" content="Contact {{SITE_NAME}}: Samenwerking &amp; Booking {{VENUE_CITY}}">
+<meta property="og:description" content="Samenwerkingen, press, booking & vragen: neem contact op met {{SITE_NAME}}.">
 <meta property="og:image" content="https://{{SITE_DOMAIN}}/og-image.png">
 <meta property="og:url" content="https://{{SITE_DOMAIN}}/contact.html">
 <meta property="og:locale" content="{{SITE_LOCALE}}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{SITE_NAME}}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Contact {{SITE_NAME}} — Samenwerking &amp; Booking {{VENUE_CITY}}">
-<meta name="twitter:description" content="Samenwerkingen, press, booking & vragen — neem contact op met {{SITE_NAME}}.">
+<meta name="twitter:title" content="Contact {{SITE_NAME}}: Samenwerking &amp; Booking {{VENUE_CITY}}">
+<meta name="twitter:description" content="Samenwerkingen, press, booking & vragen: neem contact op met {{SITE_NAME}}.">
 <meta name="twitter:image" content="https://{{SITE_DOMAIN}}/og-image.png">
 <script type="application/ld+json">
 {
@@ -35,33 +35,38 @@
 }
 </script>
 {{FONT_GOOGLE_LINK}}
-<noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
 <style>
+  /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
+   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
+   * built: the project · redesign: polish · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; }
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+    --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a10: color-mix(in srgb, var(--cream) 10%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
+  }
   html { scroll-behavior: smooth; }
-  html { overflow-x: hidden; }
-  body { background: var(--void); color: var(--cream); font-family: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+  html { overflow-x: clip; }
+  body { background: var(--void); color: var(--cream); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: clip; cursor: none; }
   .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .cursor.expanded { width: 56px; height: 56px; background: var(--red); }
-  .cursor-label { font-family: var(--font-mono); font-size: 9px; color: var(--cream); opacity: 0; letter-spacing: 0.5px; white-space: nowrap; transition: opacity 0.2s; }
+  .cursor-label { font-family: var(--font-mono); font-size: 9px; color: var(--cream); opacity: 0; letter-spacing: 0.02em; white-space: nowrap; transition: opacity 0.2s; }
   .cursor.expanded .cursor-label { opacity: 1; }
   .progress-bar { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--red); z-index: 9998; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: rgba(13,13,13,0.85); backdrop-filter: blur(8px); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: var(--void-a85); backdrop-filter: blur(8px); }
   .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--cream); }
 
-  .page-header { padding: 10rem 3rem 4rem; border-bottom: 1px solid rgba(245,240,232,0.08); }
+  .page-header { padding: 10rem 3rem 4rem; border-bottom: 1px solid var(--cream-a08); }
   .page-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem; }
+  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 1rem; }
   .page-title { font-family: var(--font-mono); font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; letter-spacing: 2px; line-height: 0.9; }
   .page-title span { color: var(--red); }
-  .page-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; text-align: right; line-height: 2; }
+  .page-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); text-align: right; line-height: 2; }
 
   /* CONTACT LAYOUT */
   .contact-main { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
@@ -69,48 +74,48 @@
   /* FORM */
   .contact-form-section h2 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; color: var(--muted); }
   .form-group { margin-bottom: 1.5rem; }
-  .form-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 0.5rem; }
+  .form-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); display: block; margin-bottom: 0.5rem; }
   .form-input, .form-select, .form-textarea {
-    width: 100%; background: var(--surface); border: 1px solid rgba(245,240,232,0.1); color: var(--cream);
+    width: 100%; background: var(--surface); border: 1px solid var(--cream-a10); color: var(--cream);
     font-family: var(--font-mono); font-size: 0.85rem; padding: 0.85rem 1rem;
     outline: none; transition: border-color 0.2s; appearance: none;
   }
   .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--red); }
   .form-textarea { height: 140px; resize: vertical; }
   .form-select option { background: var(--surface); }
-  .form-submit { width: 100%; padding: 1rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; border: none; cursor: none; transition: opacity 0.2s; margin-top: 0.5rem; }
+  .form-submit { width: 100%; padding: 1rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.02em; border: none; cursor: none; transition: opacity 0.2s; margin-top: 0.5rem; }
   .form-submit:hover { opacity: 0.85; }
 
   /* INFO */
   .contact-info h2 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; color: var(--muted); }
-  .info-block { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(245,240,232,0.08); }
+  .info-block { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--cream-a08); }
   .info-block:last-child { border-bottom: none; }
-  .info-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 0.75rem; }
-  .info-value { font-family: var(--font-mono); font-size: 0.85rem; color: var(--cream); letter-spacing: 1px; line-height: 1.8; }
+  .info-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 0.75rem; }
+  .info-value { font-family: var(--font-mono); font-size: 0.85rem; color: var(--cream); letter-spacing: 0.02em; line-height: 1.8; }
   .info-value a { color: var(--cream); text-decoration: none; transition: color 0.2s; }
   .info-value a:hover { color: var(--red); }
   .info-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
 
   /* SOCIALS */
   .social-links { display: flex; flex-direction: column; gap: 0.75rem; }
-  .social-link { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; display: flex; align-items: center; gap: 0.75rem; }
+  .social-link { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.75rem; }
   .social-link:hover { color: var(--cream); }
   .social-link::before { content: '→'; color: var(--red); }
 
   /* MAP PLACEHOLDER */
   .map-section { padding: 0 3rem 6rem; max-width: 1200px; margin: 0 auto; }
-  .map-placeholder { background: var(--surface); border: 1px solid rgba(245,240,232,0.08); padding: 4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1rem; }
+  .map-placeholder { background: var(--surface); border: 1px solid var(--cream-a08); padding: 4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1rem; }
   .map-placeholder h3 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 2px; }
-  .map-placeholder p { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 1px; color: var(--muted); }
-  .map-placeholder a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--red); text-decoration: none; text-transform: uppercase; margin-top: 0.5rem; }
+  .map-placeholder p { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); }
+  .map-placeholder a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--red); text-decoration: none; margin-top: 0.5rem; }
 
-  footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(245,240,232,0.08); flex-wrap: wrap; gap: 1.5rem; }
+  footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
   .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }
   .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
-  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cream); }
-  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; }
-  .mil-up { opacity: 0; transform: translateY(30px); }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
+  .js .mil-up { opacity: 0; transform: translateY(30px); }
 
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); transition: transform 0.3s, opacity 0.3s; }
@@ -119,7 +124,7 @@
   .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
   .nav-drawer.open { display: flex; }
-  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 4px; color: var(--cream); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; transition: color 0.2s; }
   .nav-drawer a:hover { color: var(--red); }
 
   @media (max-width: 768px) {
@@ -128,6 +133,12 @@
     .page-header, .map-section { padding-left: 1.5rem; padding-right: 1.5rem; }
     .contact-main { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
     footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+
+  :focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   }
 </style>
 </head>
@@ -154,12 +165,11 @@
 <div class="page-header">
   <div class="page-header-inner">
     <div>
-      <div class="page-num mil-up">05 — Contact</div>
       <h1 class="page-title mil-up">Get in<br><span>Touch</span></h1>
     </div>
     <div class="page-meta mil-up">
-      Samenwerkingen · Press<br>
-      Booking · Algemeen
+      Samenwerkingen, press,<br>
+      booking, algemeen
     </div>
   </div>
 </div>
@@ -197,7 +207,7 @@
         <label class="form-label" for="message">Message</label>
         <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what's on your mind…" required></textarea>
       </div>
-      <button type="submit" class="form-submit" id="contact-submit">Send message →</button>
+      <button type="submit" class="form-submit" id="contact-submit">Send message</button>
     </form>
   </div>
 
@@ -217,13 +227,13 @@
         {{VENUE_REGION}}, NL
       </div>
       <div class="info-sub" style="margin-top:0.75rem;">
-        <a href="https://www.podiumvictorie.nl" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:1px;">podiumvictorie.nl →</a>
+        <a href="https://www.podiumvictorie.nl" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:1px;">podiumvictorie.nl</a>
       </div>
     </div>
 
     <div class="info-block">
       <div class="info-label">Response time</div>
-      <div class="info-value">Within 3–5 working days</div>
+      <div class="info-value">Within 3 to 5 working days</div>
     </div>
 
     <div class="info-block">
@@ -240,27 +250,27 @@
 
 <div class="map-section">
   <iframe
-    title="{{VENUE_NAME}} — {{VENUE_CITY}}"
+    title="{{VENUE_NAME}}, {{VENUE_CITY}}"
     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2433.885!2d4.735!3d52.631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47cf580079b12345%3A0x1234abcd!2sPodium+Victorie%2C+Alkmaar!5e0!3m2!1snl!2snl!4v1"
     width="100%" height="320"
-    style="border:1px solid rgba(245,240,232,0.08);filter:grayscale(1) brightness(0.6);display:block;"
+    style="border:1px solid var(--cream-a08);filter:grayscale(1) brightness(0.6);display:block;"
     allowfullscreen="" loading="lazy"
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </div>
 
 <!-- Checkout module -->
-<div style="{{MODULE_CHECKOUT}};padding:60px 5vw;text-align:center;border-top:1px solid rgba(245,240,232,0.08)">
+<div style="{{MODULE_CHECKOUT}};padding:60px 5vw;text-align:center;border-top:1px solid var(--cream-a08)">
   <h2 style="font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;color:var(--cream)">Buy Tickets</h2>
   <p style="color:var(--muted);margin-bottom:28px">Secure checkout via {{MODULE_CHECKOUT_URL}}</p>
   <a href="{{MODULE_CHECKOUT_URL}}" target="_blank" rel="noopener noreferrer"
      style="display:inline-block;background:var(--red);color:var(--cream);padding:14px 36px;font-weight:700;letter-spacing:.08em;text-decoration:none;font-size:13px;text-transform:uppercase">
-    Buy Tickets →
+    Buy Tickets
   </a>
 </div>
 
 <!-- Planner / booking request module -->
-<div style="{{MODULE_PLANNER}};padding:60px 5vw;border-top:1px solid rgba(245,240,232,0.08)">
+<div style="{{MODULE_PLANNER}};padding:60px 5vw;border-top:1px solid var(--cream-a08)">
   <h2 style="font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px;color:var(--cream)">Reserve a Spot</h2>
   <form id="planner-form" style="max-width:540px"
         action="https://formspree.io/f/{{FORMSPREE_CONTACT}}"
@@ -271,15 +281,15 @@
     <input type="hidden" name="_type" value="planner">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
       <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Preferred date</label>
-        <input type="date" name="date" style="width:100%;background:transparent;border:1px solid rgba(245,240,232,0.15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
+        <input type="date" name="date" style="width:100%;background:transparent;border:1px solid var(--cream-a15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
       <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Party size</label>
-        <input type="number" name="guests" min="1" max="20" placeholder="2" style="width:100%;background:transparent;border:1px solid rgba(245,240,232,0.15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
+        <input type="number" name="guests" min="1" max="20" placeholder="2" style="width:100%;background:transparent;border:1px solid var(--cream-a15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
     </div>
     <input type="email" name="email" placeholder="your@email.com" required
-           style="width:100%;background:transparent;border:1px solid rgba(245,240,232,0.15);color:var(--cream);padding:10px 12px;font-size:.9rem;margin-bottom:16px">
+           style="width:100%;background:transparent;border:1px solid var(--cream-a15);color:var(--cream);padding:10px 12px;font-size:.9rem;margin-bottom:16px">
     <button type="submit"
             style="width:100%;background:var(--red);color:var(--cream);border:none;padding:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">
-      Request booking →
+      Request booking
     </button>
   </form>
 </div>
@@ -287,7 +297,7 @@
 </main>
 
 <footer>
-  <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
   <ul class="footer-links">
     <li><a href="events.html">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>
@@ -355,8 +365,8 @@
         const res = await fetch(endpoint, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } });
         const json = await res.json().catch(() => ({}));
         if (res.ok && json.ok !== false) { btn.textContent = 'Sent ✦'; form.reset(); }
-        else { btn.textContent = 'Try again →'; btn.disabled = false; }
-      } catch { btn.textContent = 'Try again →'; btn.disabled = false; }
+        else { btn.textContent = 'Try again'; btn.disabled = false; }
+      } catch { btn.textContent = 'Try again'; btn.disabled = false; }
     });
   }
 

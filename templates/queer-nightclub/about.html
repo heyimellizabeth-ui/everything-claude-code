@@ -5,11 +5,11 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Over {{SITE_NAME}} — Queer Nightlife {{VENUE_CITY}} sinds 2022</title>
-<meta name="description" content="{{SITE_NAME}} — 100% queer-run feestenreeks in {{VENUE_CITY}}. Opgericht in {{SITE_EST}} bij {{VENUE_NAME}}. Drag, disco, pop & queer community in {{VENUE_REGION}}.">
+<title>Over {{SITE_NAME}}: Queer Nightlife {{VENUE_CITY}} sinds 2022</title>
+<meta name="description" content="{{SITE_NAME}}: 100% queer-run feestenreeks in {{VENUE_CITY}}. Opgericht in {{SITE_EST}} bij {{VENUE_NAME}}. Drag, disco, pop & queer community in {{VENUE_REGION}}.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://{{SITE_DOMAIN}}/about.html">
-<meta property="og:title" content="Over {{SITE_NAME}} — Queer Nightlife {{VENUE_CITY}} sinds 2022">
+<meta property="og:title" content="Over {{SITE_NAME}}: Queer Nightlife {{VENUE_CITY}} sinds 2022">
 <meta property="og:description" content="100% queer-run feestenreeks in {{VENUE_CITY}}. Opgericht in 2022.">
 <meta property="og:image" content="https://{{SITE_DOMAIN}}/og-image.png">
 <meta property="og:url" content="https://{{SITE_DOMAIN}}/about.html">
@@ -17,98 +17,103 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{SITE_NAME}}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Over {{SITE_NAME}} — Queer Nightlife {{VENUE_CITY}} sinds 2022">
+<meta name="twitter:title" content="Over {{SITE_NAME}}: Queer Nightlife {{VENUE_CITY}} sinds 2022">
 <meta name="twitter:description" content="100% queer-run feestenreeks in {{VENUE_CITY}}. Opgericht in 2022.">
 <meta name="twitter:image" content="https://{{SITE_DOMAIN}}/og-image.png">
 {{FONT_GOOGLE_LINK}}
-<noscript><style>.mil-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
 <style>
+  /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
+   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
+   * built: the project · redesign: polish · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; }
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+    --cream-a02: color-mix(in srgb, var(--cream) 2%, transparent); --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --cream-a60: color-mix(in srgb, var(--cream) 60%, transparent); --cream-a75: color-mix(in srgb, var(--cream) 75%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a30: color-mix(in srgb, var(--red) 30%, transparent); --red-a35: color-mix(in srgb, var(--red) 35%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
+  }
   html { scroll-behavior: smooth; }
-  html { overflow-x: hidden; }
-  body { background: var(--void); color: var(--cream); font-family: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+  html { overflow-x: clip; }
+  body { background: var(--void); color: var(--cream); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: clip; cursor: none; }
   .cursor { position: fixed; width: 14px; height: 14px; background: var(--cream); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: background 0.2s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .cursor.expanded { width: 56px; height: 56px; background: var(--red); }
-  .cursor-label { font-family: var(--font-mono); font-size: 9px; color: var(--cream); opacity: 0; letter-spacing: 0.5px; white-space: nowrap; transition: opacity 0.2s; }
+  .cursor-label { font-family: var(--font-mono); font-size: 9px; color: var(--cream); opacity: 0; letter-spacing: 0.02em; white-space: nowrap; transition: opacity 0.2s; }
   .cursor.expanded .cursor-label { opacity: 1; }
   .progress-bar { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--red); z-index: 9998; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: rgba(13,13,13,0.85); backdrop-filter: blur(8px); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: var(--void-a85); backdrop-filter: blur(8px); }
   .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--cream); }
 
-  .page-header { padding: 10rem 3rem 4rem; border-bottom: 1px solid rgba(245,240,232,0.08); }
+  .page-header { padding: 10rem 3rem 4rem; border-bottom: 1px solid var(--cream-a08); }
   .page-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem; }
+  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 1rem; }
   .page-title { font-family: var(--font-mono); font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; letter-spacing: 2px; line-height: 0.9; }
   .page-title span { color: var(--red); }
 
   /* MISSION */
   .mission { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-  .mission-num { font-family: var(--font-mono); font-size: clamp(6rem, 15vw, 12rem); font-weight: 700; color: rgba(245,240,232,0.04); line-height: 1; }
+  .mission-num { font-family: var(--font-mono); font-size: clamp(6rem, 15vw, 12rem); font-weight: 700; color: var(--cream-a04); line-height: 1; }
   .mission-text h2 { font-family: var(--font-mono); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: 2px; margin-bottom: 1.5rem; line-height: 1.2; }
   .mission-text h2 em { color: var(--red); font-style: normal; }
-  .mission-text p { font-size: 1rem; color: rgba(245,240,232,0.75); line-height: 1.8; max-width: 480px; }
+  .mission-text p { font-size: 1rem; color: var(--cream-a75); line-height: 1.8; max-width: 480px; }
 
   /* TAGS */
   .tags-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-  .tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid rgba(245,240,232,0.15); color: var(--muted); }
+  .tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; padding: 0.4rem 0.8rem; border: 1px solid var(--cream-a15); color: var(--muted); }
 
   /* STATS */
   .stats-section { background: var(--surface); padding: 5rem 3rem; }
   .stats-inner { max-width: 1200px; margin: 0 auto; }
-  .stats-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 3rem; }
+  .stats-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 3rem; }
   .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; }
   .stat-num { font-family: var(--font-mono); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; letter-spacing: 2px; }
-  .stat-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 0.5rem; }
+  .stat-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); margin-top: 0.5rem; }
 
   /* VALUES */
   .values-section { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
   .section-header { margin-bottom: 3rem; }
-  .section-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .section-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 0.5rem; }
   .section-line { width: 2rem; height: 1px; background: var(--red); margin-bottom: 1.5rem; }
   .values-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
-  .value-card { padding: 2rem; border: 1px solid rgba(245,240,232,0.08); }
+  .value-card { padding: 2rem; border: 1px solid var(--cream-a08); }
   .value-icon { font-family: var(--font-mono); font-size: 1.5rem; color: var(--red); margin-bottom: 1rem; }
-  .value-title { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.75rem; }
-  .value-body { font-size: 0.9rem; color: rgba(245,240,232,0.6); line-height: 1.7; }
+  .value-title { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 0.75rem; }
+  .value-body { font-size: 0.9rem; color: var(--cream-a60); line-height: 1.7; }
 
   /* TIMELINE */
   .timeline-section { padding: 6rem 3rem; background: var(--surface); }
   .timeline-inner { max-width: 1200px; margin: 0 auto; }
   .timeline { margin-top: 3rem; }
-  .timeline-item { display: grid; grid-template-columns: 8rem 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid rgba(245,240,232,0.08); }
-  .timeline-year { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; padding-top: 0.25rem; }
+  .timeline-item { display: grid; grid-template-columns: 8rem 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid var(--cream-a08); }
+  .timeline-year { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--red); padding-top: 0.25rem; }
   .timeline-content h3 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 0.5rem; }
-  .timeline-content p { font-size: 0.9rem; color: rgba(245,240,232,0.6); line-height: 1.7; }
+  .timeline-content p { font-size: 0.9rem; color: var(--cream-a60); line-height: 1.7; }
 
   /* TEAM */
   .team-section { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
   .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
-  .team-card { border: 1px solid rgba(245,240,232,0.08); padding: 2rem; }
-  .team-role { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 0.75rem; }
-  .team-name { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 0.5rem; }
-  .team-bio { font-size: 0.85rem; color: rgba(245,240,232,0.6); line-height: 1.7; }
+  .team-card { border: 1px solid var(--cream-a08); padding: 2rem; }
+  .team-role { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 0.75rem; }
+  .team-name { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+  .team-bio { font-size: 0.85rem; color: var(--cream-a60); line-height: 1.7; }
 
   /* CTA */
-  .about-cta { padding: 6rem 3rem; text-align: center; border-top: 1px solid rgba(245,240,232,0.08); }
+  .about-cta { padding: 6rem 3rem; text-align: center; border-top: 1px solid var(--cream-a08); }
   .about-cta h2 { font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; letter-spacing: 2px; margin-bottom: 1.5rem; }
   .about-cta h2 span { color: var(--red); }
-  .about-cta a { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; }
+  .about-cta a { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; text-decoration: none; }
 
-  footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(245,240,232,0.08); flex-wrap: wrap; gap: 1.5rem; }
+  footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
   .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }
   .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
-  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cream); }
-  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; }
-  .mil-up { opacity: 0; transform: translateY(30px); }
-  .mil-left { opacity: 0; transform: translateX(-40px); }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
+  .js .mil-up { opacity: 0; transform: translateY(30px); }
+  .js .mil-left { opacity: 0; transform: translateX(-40px); }
 
   /* C3: NAV SLIDE */
   nav { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
@@ -120,13 +125,13 @@
 
   /* C3: VALUE CARD HOVER */
   .value-card { transition: border-color 0.25s, background 0.25s; }
-  .value-card:hover { border-color: rgba(232,65,90,0.35); background: rgba(232,65,90,0.04); }
+  .value-card:hover { border-color: var(--red-a35); background: var(--red-a04); }
   .value-icon { transition: transform 0.3s; }
   .value-card:hover .value-icon { transform: scale(1.2); }
 
   /* C3: TEAM CARD HOVER */
   .team-card { transition: border-color 0.25s; }
-  .team-card:hover { border-color: rgba(232,65,90,0.3); }
+  .team-card:hover { border-color: var(--red-a30); }
 
   /* C3: TAG HOVER */
   .tag { transition: border-color 0.2s, color 0.2s; }
@@ -134,12 +139,12 @@
 
   /* C3: TIMELINE HOVER */
   .timeline-item { transition: background 0.25s; border-radius: 2px; }
-  .timeline-item:hover { background: rgba(245,240,232,0.02); }
+  .timeline-item:hover { background: var(--cream-a02); }
 
   /* C3: FOOTER LINK UNDERLINE SLIDE */
   .footer-links a { position: relative; overflow: hidden; }
-  .footer-links a::after { content: ''; position: absolute; bottom: 0; left: -100%; width: 100%; height: 1px; background: var(--red); transition: left 0.25s ease; }
-  .footer-links a:hover::after { left: 0; }
+  .footer-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--red); transform: translateX(-101%); transition: transform 0.25s ease; }
+  .footer-links a:hover::after { transform: translateX(0); }
 
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); transition: transform 0.3s, opacity 0.3s; }
@@ -148,7 +153,7 @@
   .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
   .nav-drawer.open { display: flex; }
-  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 4px; color: var(--cream); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; transition: color 0.2s; }
   .nav-drawer a:hover { color: var(--red); }
 
   @media (max-width: 768px) {
@@ -161,6 +166,12 @@
     .values-grid, .team-grid { grid-template-columns: 1fr; }
     .timeline-item { grid-template-columns: 5rem 1fr; gap: 1rem; }
     footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+
+  :focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   }
 </style>
 </head>
@@ -187,7 +198,6 @@
 <div class="page-header">
   <div class="page-header-inner">
     <div>
-      <div class="page-num mil-up">04 — About</div>
       <h1 class="page-title mil-up">Who<br>We <span>Are</span></h1>
     </div>
   </div>
@@ -196,8 +206,8 @@
 <div class="mission">
   <div class="mission-num mil-up">01</div>
   <div class="mission-text">
-    <h2 class="mil-up">Alkmaar's first <em>queer</em> party — no boxes, no bullshit.</h2>
-    <p class="mil-up">We bring Reguliersdwarsstraat energy to {{VENUE_REGION}}. Pop, classics, disco & special acts. Drag, doorbitches, pole dancers. 70s to 00s bangers and the people you've been looking for. Since {{SITE_EST}} — right here in {{VENUE_CITY}} at {{VENUE_NAME}}.</p>
+    <h2 class="mil-up">Alkmaar's first <em>queer</em> party: no boxes, no bullshit.</h2>
+    <p class="mil-up">We bring Reguliersdwarsstraat energy to {{VENUE_REGION}}. Pop, classics, disco & special acts. Drag, doorbitches, pole dancers. 70s to 00s bangers and the people you've been looking for. Since {{SITE_EST}}, right here in {{VENUE_CITY}} at {{VENUE_NAME}}.</p>
     <div class="tags-row mil-up">
       <span class="tag">Drag</span>
       <span class="tag">Disco</span>
@@ -224,14 +234,14 @@
 
 <div class="values-section">
   <div class="section-header mil-up">
-    <div class="section-num">02 — Values</div>
+    <div class="section-num">02. Values</div>
     <div class="section-line"></div>
   </div>
   <div class="values-grid">
     <div class="value-card">
       <div class="value-icon">✦</div>
       <div class="value-title">Radical inclusion</div>
-      <p class="value-body">Every body, every expression, every identity. You walk in and you belong — no questions, no explanations required.</p>
+      <p class="value-body">Every body, every expression, every identity. You walk in and you belong, no questions, no explanations required.</p>
     </div>
     <div class="value-card">
       <div class="value-icon">◈</div>
@@ -241,7 +251,7 @@
     <div class="value-card">
       <div class="value-icon">▲</div>
       <div class="value-title">Platform for talent</div>
-      <p class="value-body">Drag artists, pole performers, DJs, and creatives — we build stages for people who deserve them.</p>
+      <p class="value-body">Drag artists, pole performers, DJs, and creatives, we build stages for people who deserve them.</p>
     </div>
   </div>
 </div>
@@ -249,42 +259,42 @@
 <div class="timeline-section">
   <div class="timeline-inner">
     <div class="section-header mil-up">
-      <div class="section-num">03 — Timeline</div>
+      <div class="section-num">03. Timeline</div>
       <div class="section-line"></div>
     </div>
     <div class="timeline">
       <div class="timeline-item mil-up">
         <div class="timeline-year">Dec 2022</div>
         <div class="timeline-content">
-          <h3>Vol. 01 — The First Edition</h3>
+          <h3>Vol. 01: The First Edition</h3>
           <p>{{SITE_NAME}} launches at {{VENUE_NAME}}, {{VENUE_CITY}}. {{VENUE_REGION}}'s first dedicated queer night is born. Sold out. The dancefloor didn't stop until 02:00.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">2023</div>
         <div class="timeline-content">
-          <h3>Vol. 02 & 03 — Finding the Rhythm</h3>
+          <h3>Vol. 02 & 03: Finding the Rhythm</h3>
           <p>Two more editions. The community grows. Drag lineups expand. The Kleine Zaal at {{VENUE_NAME}} becomes home.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">Sep 2024</div>
         <div class="timeline-content">
-          <h3>Museumnacht {{VENUE_CITY}} — Rainbow Paradise</h3>
-          <p>First major collaboration. {{SITE_NAME}} brings queer energy to Alkmaar's Museum Night — an annual highlight ever since.</p>
+          <h3>Museumnacht {{VENUE_CITY}}: Rainbow Paradise</h3>
+          <p>First major collaboration. {{SITE_NAME}} brings queer energy to Alkmaar's Museum Night, an annual highlight ever since.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">2025</div>
         <div class="timeline-content">
-          <h3>Vol. 06 — Growing the Movement</h3>
+          <h3>Vol. 06: Growing the Movement</h3>
           <p>780+ photos archived. A loyal community. Bigger lineups, deeper roots in {{VENUE_REGION}}'s queer scene.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">May 2026</div>
         <div class="timeline-content">
-          <h3>Pride After Party — Grolsch Zaal</h3>
+          <h3>Pride After Party: Grolsch Zaal</h3>
           <p>Biggest edition yet. Moving to the Grolsch Zaal for our Pride Special. Drag, disco, and the whole community.</p>
         </div>
       </div>
@@ -294,37 +304,37 @@
 
 <div class="team-section">
   <div class="section-header mil-up">
-    <div class="section-num">04 — The Crew</div>
+    <div class="section-num">04. The Crew</div>
     <div class="section-line"></div>
   </div>
   <div class="team-grid">
     <div class="team-card">
-      <div class="team-role">Founder · Creative Direction</div>
+      <div class="team-role">Founder, Creative Direction</div>
       <div class="team-name">{{SITE_NAME}} Team</div>
-      <p class="team-bio">100% queer-run and community-driven. The people behind KUDT are the same people on the dancefloor — we build what we want to attend.</p>
+      <p class="team-bio">100% queer-run and community-driven. The people behind KUDT are the same people on the dancefloor, we build what we want to attend.</p>
     </div>
     <div class="team-card">
       <div class="team-role">Venue Partner</div>
       <div class="team-name">{{VENUE_NAME}}</div>
-      <p class="team-bio">Alkmaar's home for live music and nightlife. Our home since edition one — Kleine Zaal and Grolsch Zaal.</p>
+      <p class="team-bio">Alkmaar's home for live music and nightlife. Our home since edition one, Kleine Zaal and Grolsch Zaal.</p>
     </div>
     <div class="team-card">
       <div class="team-role">Community</div>
       <div class="team-name">{{VENUE_REGION}} Queer Scene</div>
-      <p class="team-bio">From {{VENUE_CITY}} to Den Helder, from Hoorn to Zaandam — the community that shows up, every edition, every time.</p>
+      <p class="team-bio">From {{VENUE_CITY}} to Den Helder, from Hoorn to Zaandam, the community that shows up, every edition, every time.</p>
     </div>
   </div>
 </div>
 
 <div class="about-cta">
   <h2 class="mil-up">Ready to<br><span>show up?</span></h2>
-  <a href="events.html" class="mil-up">See upcoming events →</a>
+  <a href="events.html" class="mil-up">See upcoming events</a>
 </div>
 
 </main>
 
 <footer>
-  <div class="footer-brand">KUDT · ALKMAAR · EST. {{SITE_EST}} · © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
   <ul class="footer-links">
     <li><a href="events.html">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>
