@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 88,
+  "totalCommands": 91,
   "commands": [
     {
       "command": "aside",
@@ -35,7 +35,9 @@
       "type": "orchestration",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c1.md"
     },
     {
@@ -44,16 +46,20 @@
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c2.md"
     },
     {
       "command": "c3",
       "description": "Web chain 3 — design iteration sprint for polishing UI, animations, or responsive layout",
-      "type": "review",
+      "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c3.md"
     },
     {
@@ -63,6 +69,7 @@
       "primaryAgents": [],
       "allAgents": [],
       "skills": [
+        "chelp-advisor",
         "security-scan"
       ],
       "path": "commands/c4.md"
@@ -73,7 +80,9 @@
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c5.md"
     },
     {
@@ -86,12 +95,35 @@
       "path": "commands/checkpoint.md"
     },
     {
+      "command": "chelp-advisor",
+      "description": "Consult the chelp advisor (Opus) at a chain checkpoint, before building or before shipping, and get ranked, evidence-backed advice.",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "chelp-advisor"
+      ],
+      "path": "commands/chelp-advisor.md"
+    },
+    {
+      "command": "chelp-pipeline",
+      "description": "Activate the chelp pipeline: check that Hallmark, the browser checks and the advisor are ready, prove them with a smoke test, and print the exact fix for anything missing.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "chelp-advisor"
+      ],
+      "path": "commands/chelp-pipeline.md"
+    },
+    {
       "command": "chelp",
       "description": "List all web design command chains (c1–c5) with descriptions and when to use each",
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
       "skills": [
+        "chelp-advisor",
         "security-scan"
       ],
       "path": "commands/chelp.md"
@@ -156,6 +188,15 @@
         "tdd-workflow"
       ],
       "path": "commands/cpp-test.md"
+    },
+    {
+      "command": "design-gate",
+      "description": "Run the Hallmark design linter on a page, folder or URL and block on Floor failures.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/design-gate.md"
     },
     {
       "command": "ecc-guide",
@@ -890,7 +931,9 @@
       "type": "review",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/studio-build.md"
     },
     {
@@ -929,7 +972,7 @@
       "planning": 2,
       "refactoring": 1,
       "review": 14,
-      "testing": 54
+      "testing": 57
     },
     "topAgents": [
       {
@@ -975,6 +1018,10 @@
     ],
     "topSkills": [
       {
+        "skill": "chelp-advisor",
+        "count": 9
+      },
+      {
         "skill": "continuous-learning-v2",
         "count": 6
       },
@@ -1008,10 +1055,6 @@
       },
       {
         "skill": "golang-patterns",
-        "count": 2
-      },
-      {
-        "skill": "golang-testing",
         "count": 2
       }
     ]

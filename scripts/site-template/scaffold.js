@@ -36,6 +36,75 @@ function googleFontsLink(fonts) {
   return `<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?${qs}&display=swap" rel="stylesheet">`;
 }
 
+/** Expand #rgb or #rrggbb to #rrggbb, or null for any other value. */
+function expandHex(value) {
+  const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(value || '').trim());
+  if (!m) return null;
+  const h = m[1].length === 3 ? m[1].split('').map(c => c + c).join('') : m[1];
+  return `#${h.toUpperCase()}`;
+}
+
+/** WCAG relative luminance of a #rrggbb colour. */
+function luminance(hex) {
+  const channels = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map(c => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)));
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrastRatio(a, b) {
+  const la = luminance(a);
+  const lb = luminance(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+/** Mix colour a toward colour b by t (0 to 1). */
+function mixHex(a, b, t) {
+  const part = (hex, i) => parseInt(hex.slice(i, i + 2), 16);
+  return '#' + [1, 3, 5].map(i => Math.round(part(a, i) + (part(b, i) - part(a, i)) * t)
+    .toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
+/**
+ * Pick the text colour for a surface filled with the accent: whichever of the
+ * brand's dark and light colours has the higher WCAG contrast against it. For a
+ * mid-tone accent neither may reach 4.5:1, so the better one is then pushed
+ * toward black or white until it does. Falls back to the light colour when a
+ * colour is not a hex value.
+ */
+function accentInk(colors) {
+  const accent = expandHex(colors.accent);
+  const dark = expandHex(colors.void);
+  const light = expandHex(colors.cream);
+  if (!accent || !dark || !light) return colors.cream;
+  const best = contrastRatio(accent, dark) >= contrastRatio(accent, light) ? colors.void : colors.cream;
+  const bestHex = expandHex(best);
+  if (contrastRatio(accent, bestHex) >= 4.5) return best;
+  const extreme = contrastRatio(accent, '#000000') >= contrastRatio(accent, '#FFFFFF') ? '#000000' : '#FFFFFF';
+  for (let step = 1; step <= 20; step++) {
+    const candidate = mixHex(bestHex, extreme, step / 20);
+    if (contrastRatio(accent, candidate) >= 4.5) return candidate;
+  }
+  return extreme;
+}
+
+/**
+ * A version of `color` that reads as text on both the page and the surface
+ * colour: unchanged when it already reaches the ratio, otherwise mixed toward
+ * the brand's foreground colour in 5 percent steps until it does. This keeps the
+ * hue where it can and makes any brand's accent or muted text readable.
+ */
+function textSafe(color, colors, ratio = 4.5) {
+  const base = expandHex(color);
+  const backgrounds = [expandHex(colors.void), expandHex(colors.surface)].filter(Boolean);
+  const foreground = expandHex(colors.cream);
+  if (!base || !foreground || backgrounds.length === 0) return color;
+  for (let step = 0; step <= 20; step++) {
+    const candidate = mixHex(base, foreground, step / 20);
+    if (backgrounds.every(bg => contrastRatio(candidate, bg) >= ratio)) return step === 0 ? color : candidate;
+  }
+  return colors.cream;
+}
+
 function buildTokenMap(cfg) {
   const social = cfg.social || {};
   const reviews = cfg.reviews || [];
@@ -58,6 +127,9 @@ function buildTokenMap(cfg) {
     '{{COLOR_VOID}}': cfg.colors.void,
     '{{COLOR_CREAM}}': cfg.colors.cream,
     '{{COLOR_ACCENT}}': cfg.colors.accent,
+    '{{COLOR_ACCENT_INK}}': accentInk(cfg.colors),
+    '{{COLOR_ACCENT_TEXT}}': textSafe(cfg.colors.accent, cfg.colors),
+    '{{COLOR_MUTED_TEXT}}': textSafe(cfg.colors.muted, cfg.colors),
     '{{COLOR_SURFACE}}': cfg.colors.surface,
     '{{COLOR_MUTED}}': cfg.colors.muted,
 
@@ -238,4 +310,4 @@ if (require.main === module) {
   scaffold(path.resolve(args.config), path.resolve(args.out));
 }
 
-module.exports = { scaffold, buildTokenMap, applyTokens };
+module.exports = { scaffold, buildTokenMap, applyTokens, accentInk, textSafe, contrastRatio };

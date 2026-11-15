@@ -154,7 +154,8 @@ Modules default to `display:none` when the `modules` key is absent (backwards-co
 # Scaffold a new site
 node scripts/site-template/scaffold.js --config projects/my-club/brand.config.json --out projects/my-club
 
-# Validate no tokens missed
+# Validate no tokens missed (also runs Hallmark's Floor check when Hallmark is installed;
+# --no-design skips it, --require-hallmark fails when Hallmark is missing)
 node scripts/site-template/validate.js --dir projects/my-club
 
 # Run tests
@@ -169,7 +170,7 @@ node tests/site-template/scaffold.test.js
 | `templates/queer-nightclub/*.html` | Token-substituted HTML pages |
 | `templates/queer-nightclub/form-handler.php` | PHP form backend |
 | `scripts/site-template/scaffold.js` | Scaffold engine |
-| `scripts/site-template/validate.js` | Token completeness checker |
+| `scripts/site-template/validate.js` | Token completeness checker, plus the optional Hallmark Floor check |
 | `tests/site-template/scaffold.test.js` | Test suite |
 | `commands/site-init.md` | `/site-init` slash command |
 | `commands/studio-build.md` | `/studio-build` slash command |

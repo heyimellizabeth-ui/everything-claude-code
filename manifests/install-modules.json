@@ -98,6 +98,8 @@
         ".qwen",
         "mcp-configs",
         "scripts/auto-update.js",
+        "scripts/chelp-pipeline.js",
+        "scripts/design-gate.js",
         "scripts/setup-package-manager.js"
       ],
       "targets": [
@@ -137,6 +139,7 @@
         "skills/django-verification",
         "skills/dotnet-patterns",
         "skills/fastapi-patterns",
+        "skills/astryx-components",
         "skills/frontend-design-direction",
         "skills/frontend-patterns",
         "skills/frontend-slides",
@@ -227,6 +230,7 @@
         "skills/agent-sort",
         "skills/agent-introspection-debugging",
         "skills/ai-regression-testing",
+        "skills/chelp-advisor",
         "skills/configure-ecc",
         "skills/code-tour",
         "skills/continuous-learning",

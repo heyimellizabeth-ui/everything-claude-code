@@ -1112,6 +1112,19 @@ function runTests() {
     cleanupTestDir(testDir);
   })) passed++; else failed++;
 
+  if (test('accepts a reference to a command from an external skill (/hallmark)', () => {
+    const testDir = createTestDir();
+    const agentsDir = createTestDir();
+    const skillsDir = createTestDir();
+    fs.writeFileSync(path.join(testDir, 'my-cmd.md'), '# Command\nBuild it with `/hallmark`, then check it.');
+
+    const result = runValidatorWithDirs('validate-commands', {
+      COMMANDS_DIR: testDir, AGENTS_DIR: agentsDir, SKILLS_DIR: skillsDir
+    });
+    assert.strictEqual(result.code, 0, 'Should accept /hallmark: ' + result.stderr);
+    cleanupTestDir(testDir); cleanupTestDir(agentsDir); cleanupTestDir(skillsDir);
+  })) passed++; else failed++;
+
   if (test('detects broken command cross-reference', () => {
     const testDir = createTestDir();
     const agentsDir = createTestDir();

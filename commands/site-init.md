@@ -70,6 +70,9 @@ node scripts/site-template/validate.js --dir projects/<name>
 
 Fix any remaining `{{TOKEN}}` errors before proceeding.
 
+If Hallmark is installed, `validate.js` also runs its Floor check and fails on any Floor FAIL. Without
+Hallmark it prints a warning and continues. Pass `--no-design` to skip the check.
+
 ### 5 — Generate brand assets
 
 ```bash

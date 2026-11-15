@@ -201,7 +201,7 @@ Output:
 ```
 [scaffold] Generating site from projects/neon/brand.config.json
 [scaffold] 12 files written to projects/neon
-[validate] ✓ 13 files checked — no unsubstituted tokens
+[validate] ✓ 13 files checked, no unsubstituted tokens, Hallmark static Floor checked
 [assets] Generated favicon.ico, og-image.svg
 [report] Site ready! Pages: index, events, about, contact
 [report] Manual slots: event dates, team bios, map embed, Formspree keys
