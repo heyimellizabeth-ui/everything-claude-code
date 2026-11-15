@@ -82,6 +82,10 @@ node scripts/site-template/validate.js --dir projects/<projectName>
 
 Fix any remaining `{{TOKEN}}` placeholders before continuing.
 
+`validate.js` also runs Hallmark's Floor check on the output when Hallmark is installed, and fails on any
+Floor FAIL. Without Hallmark it prints a warning and continues. Pass `--no-design` to skip the check, or
+`--require-hallmark` to fail when Hallmark is missing.
+
 ### 8 — Generate brand assets
 
 ```bash
@@ -129,13 +133,16 @@ After the session handoff offer, prompt:
 > Your site is ready at `projects/<slug>/index.html`.
 >
 > What next?
-> - `/c3` — Design polish (animations, responsive breakpoints, hover states, micro-interactions)
-> - `/c4` — Production hardening (security headers, CSP, performance audit, PR)
+> - `/c3` — Design polish (animations, responsive breakpoints, hover states, micro-interactions), run with `/hallmark redesign projects/<slug> polish`
+> - `/c4` — Production hardening (security headers, CSP, performance audit, PR), gated with `/design-gate projects/<slug> --tier floor --render --require-render`
 > - `/c5` — Cleanup and docs sync (unused files, README, deployment guide)
 > - Done for now
 
 Run the chosen chain with the project slug and `projects/<slug>/` as the working context.
 Pass the `brand.config.json` path so the chain has access to brand values without re-reading the scaffold.
+
+Studio sites pass the static Floor but still report the words-per-screen budget (gate 58) on sample copy, so
+use `--tier floor` and replace the sample copy with the club's own, shorter copy.
 
 ## Usage Examples
 

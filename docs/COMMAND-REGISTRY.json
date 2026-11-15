@@ -50,7 +50,7 @@
     {
       "command": "c3",
       "description": "Web chain 3 — design iteration sprint for polishing UI, animations, or responsive layout",
-      "type": "review",
+      "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
       "skills": [],
@@ -937,8 +937,8 @@
       "orchestration": 7,
       "planning": 2,
       "refactoring": 1,
-      "review": 14,
-      "testing": 55
+      "review": 13,
+      "testing": 56
     },
     "topAgents": [
       {
