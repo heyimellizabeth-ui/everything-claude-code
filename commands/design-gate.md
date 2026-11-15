@@ -58,7 +58,7 @@ Hallmark is a separate, optional skill. This command wraps it and never copies i
 - With `--require-render`, a run without the browser checks blocks. The summary says `render: NOT RUN`
   and prints the reason when `--render` or `--url` was asked for but the browser checks did not run.
 - A `--before` run only records the page and never blocks.
-- Studio sites from `/studio-build`: use `--tier floor`. They pass the Floor, but the full tier still
+- Studio sites from `/studio-build`: use `--tier floor`. A scaffolded site passes the static Floor; with `--render` it still reports the words-per-screen budget (gate 58) on sample copy, and the full tier still
   reports Reflex findings that a project may waive in its own stamp.
 
 Exit codes: `0` pass or skipped, `1` blocked, `2` usage or runtime error.

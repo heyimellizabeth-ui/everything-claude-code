@@ -106,7 +106,8 @@ npx astryx search <query>                    # components, hooks, docs, template
 Hallmark deals a theme unless the user names one, asks for custom, or the project has a locked
 `design.md`. For a landing page in an Astryx project, tell Hallmark in the prompt that the Astryx theme
 is the system, and name it (for example "the project's Astryx neutral theme"), so it builds a page
-inside that theme instead of dealing its own. Do not expect it to infer this from `package.json`.
+inside that theme instead of dealing its own. Do not expect it to infer this from `package.json`. This landing-page flow has not been run end to end.
+The settings-page flow (template, components, gate) has.
 
 When the two disagree, the order is: the user's own words, then Hallmark's Floor, then the project's
 Astryx theme and rules, then Hallmark's Reflex gates and the ECC design skills.
@@ -121,12 +122,15 @@ not read StyleX style objects: a hex colour, `transition: all` and `overflowX: h
 `stylex.create` were not flagged. In an Astryx app the running page is the real check, so always run
 `--url` with the render tier. The source path still catches the global CSS and the markup.
 
-**Fix in the app's global CSS** (all three removed the source-level FAILs in the test app):
+**Fix in the app's global CSS.** This exact file was built and run (Vite app, `settings` template, `stone`
+theme): `/design-gate src --url ... --scope app --require-render` printed `Floor 0 FAIL · Reflex 0
+(3 waived) · render: ran` and PASS. Without the 39b waiver it blocks on one open Reflex.
 
 ```css
 /* Hallmark · checked: <date> · genre: modern-minimal (inferred)
- * floor: 0 FAIL · fixed: 0 · structural: 0 printed
  * built: the project · v2.0.0 */
+/* Hallmark · waive 26b · no :active or :disabled rule in this file, no aria-disabled in the markup · the Astryx components style their own pressed and disabled states from the library */
+/* Hallmark · waive 39b · the 20px controls are the native inputs and icon buttons inside Astryx fields that stand 32px tall · the settings fields come from the Astryx library and the field wrapper is the control */
 @import '@astryxdesign/core/reset.css';
 @import '@astryxdesign/core/astryx.css';
 
@@ -135,19 +139,23 @@ body {
   overflow-x: clip;
 }
 
-:focus-visible {
+a:focus-visible {
   outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
   outline-offset: var(--focus-outline-offset);
 }
 ```
 
-- The stamp (gate 20) must be the first line of the CSS. Only `@charset` may come before it.
-- `overflow-x: clip` (gate 34). Never `hidden`.
+- The stamp (gate 20) must be the first line of the CSS. Only `@charset` may come before it. Do not
+  write `floor: 0 FAIL` in it unless the last gate run said so.
+- `overflow-x: clip` on `html` and `body` (gate 34). Never `hidden`.
 - Astryx draws its own focus ring from `node_modules`, so the linter sees none in the app's source
-  (gate 26a). A `:focus-visible` rule that uses Astryx's focus tokens satisfies it and matches the
-  library's ring.
-- Reflex 26b "no :active / :disabled styling" fires for the same reason. Waive it in the stamp with
-  the reason "Astryx components style their own states". Do not add empty rules to silence it.
+  (gate 26a). A rule that uses Astryx's focus tokens satisfies it. Keep it on `a`: a global
+  `:focus-visible` rule also hits the bare `<input>` inside Astryx's field and draws a second,
+  rectangular ring there. This was seen in a screenshot, in a layered rule as well.
+- Reflex 26b ("no :active or :disabled styling") fires for the same reason. The waiver line above is
+  the syntax Hallmark reads: `waive <gate> · <guard evidence> · <reason>`. The reason must be at least 24
+  characters and share a word with the page. `summary.waived` rises to 2 when it works. Never add empty
+  rules to silence a gate.
 
 **Chart colours.** Astryx's chart templates already use CSS variables, written with a hex fallback:
 `var(--color-data-categorical-blue, #0171E3)`. The hex fallbacks are what gate 48 flags. Remove the
@@ -161,12 +169,25 @@ Either raise `--size-element-lg` in the theme, or waive 39b with a reason. App s
 
 **Known gaps in the library, not in the app:**
 
-- Field edge contrast (Floor, gate 40): on the neutral theme, text fields measure 1.48:1 against what
-  surrounds them, under the 3:1 minimum. This is a theme colour. Try another theme with
-  `npx astryx theme list`, or raise the field border token in a custom theme, and re-run the gate.
+- Theme contrast (Floor, gate 40). Same `settings` template, each stock theme, `/design-gate --url`:
+
+  | Theme | Result |
+  |-------|--------|
+  | `stone` | Floor 0 FAIL |
+  | `neutral` | field edge 1.48:1 (needs 3:1) |
+  | `butter` | field edge 1.29:1 |
+  | `matcha` | field edge 1.87:1 |
+  | `chocolate` | secondary text 3.13:1 (needs 4.5:1) |
+  | `gothic` | 8 FAIL, mostly text on the page background (dark-only theme) |
+
+  Start from `npx astryx theme add stone` when the gate must pass, and re-run the gate after any theme
+  change. One page of one template was tested; another template can behave differently. A gate that
+  blocks on a theme's colours means the theme is wrong, not the gate.
 - Gate 48 on the placeholder colours in `astryx.css`, and the 10a "transitioning width" finding on a
-  progress bar, come from library code. The gate on a real app will show them; record them in the
-  hand-off instead of patching `node_modules`.
+  progress bar, come from library code. They show up when a rendered page includes those components.
+  Record them in the hand-off. Do not patch `node_modules`.
+- Reflex 39b on the `settings` page: native inputs measure 20px inside a 32px field. Waive it with that
+  guard evidence, or leave it open and say so.
 
 ### 6. Run the design gate
 
