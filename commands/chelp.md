@@ -19,6 +19,23 @@ everything-claude-code commands tuned for a specific phase of web development.
 
 ---
 
+## Component Directory: Astryx
+
+For React work, the chains use the Astryx design system as the component directory. Before a chain
+writes UI code, look the component up instead of writing raw HTML and CSS:
+
+```
+npx astryx build "<what you are building>"   the page template to start from
+npx astryx component <Name> --dense          props and usage for one component
+npx astryx search <query>                    components, hooks, docs, templates, themes
+```
+
+Hallmark's Floor stays the design gate (`/design-gate`). The `astryx-components` skill has the setup,
+the rules, how Astryx and Hallmark divide the work, and the known Floor gaps to close. Static HTML
+sites from `/studio-build` do not use Astryx.
+
+---
+
 ## /c1 — Full Web Project from Scratch
 
 **Chain:** `/prp-prd` → `/prp-plan` → `/update-codemaps` → `/gan-design` → `/multi-frontend` → `/quality-gate` → `/santa-loop`
