@@ -144,7 +144,7 @@ function runTests() {
   });
 
   check('detects that the render tier ran', () => {
-    const dir = makeFakeSkill({ ...CLEAN, render: 'on' });
+    const dir = makeFakeSkill({ ...CLEAN, render: 'ran' });
     try {
       assert.strictEqual(hallmark.runSloplint('.', { skillDir: dir, render: true }).renderRan, true);
     } finally {
@@ -161,6 +161,45 @@ function runTests() {
       assert.strictEqual(result.available, true);
       assert.strictEqual(result.ok, false);
       assert.ok(/boom/.test(result.error));
+    } finally {
+      cleanup(dir);
+    }
+  });
+
+  check('treats "not run: ..." as render not run, and keeps the reason', () => {
+    const dir = makeFakeSkill({ ...CLEAN, render: 'not run: no puppeteer-core found locally, globally or via HALLMARK_PUPPETEER' });
+    try {
+      const result = hallmark.runSloplint('.', { skillDir: dir, render: true });
+      assert.strictEqual(result.renderRan, false);
+      assert.ok(/no puppeteer-core/.test(result.renderNote));
+      const gate = hallmark.evaluateGate(result, { requireRender: true });
+      assert.strictEqual(gate.pass, false);
+      assert.ok(/no puppeteer-core/.test(gate.reasons.join(' ')));
+      assert.ok(/NOT RUN/.test(hallmark.summarize(result)));
+    } finally {
+      cleanup(dir);
+    }
+  });
+
+  check('a --before run records and never blocks on findings', () => {
+    const dir = makeFakeSkill({ ...CLEAN, fails: 4, reflex: 2 });
+    try {
+      const result = hallmark.runSloplint('.', { skillDir: dir, before: true });
+      assert.strictEqual(result.recording, true);
+      assert.strictEqual(hallmark.evaluateGate(result).pass, true);
+      assert.ok(/recorded for --kept/.test(hallmark.summarize(result)));
+    } finally {
+      cleanup(dir);
+    }
+  });
+
+  check('--kept findings arrive as FAILs and block', () => {
+    const findings = [{ gate: 'kept', grade: 'FAIL', tier: 'floor', file: 'index.html', line: 1, evidence: 'links the page had before and no longer has: rooms.html' }];
+    const dir = makeFakeSkill({ ...CLEAN, fails: 1 }, findings, 1);
+    try {
+      const result = hallmark.runSloplint('.', { skillDir: dir, kept: true });
+      assert.strictEqual(hallmark.evaluateGate(result).pass, false);
+      assert.strictEqual(hallmark.topGates(result.findings)[0].gate, 'kept');
     } finally {
       cleanup(dir);
     }
@@ -247,6 +286,19 @@ function runTests() {
       assert.strictEqual(runCli(['.', '--require-hallmark'], env).status, 1);
     } finally {
       cleanup(home);
+    }
+  });
+
+  check('a URL-only run says the source was not checked', () => {
+    const dir = makeFakeSkill(CLEAN);
+    try {
+      const run = runCli(['--url', 'http://localhost:1/'], { HALLMARK_SKILL_DIR: dir });
+      assert.strictEqual(run.status, 0, run.stdout + run.stderr);
+      assert.ok(/only the running page was checked/.test(run.stdout));
+      const both = runCli(['src', '--url', 'http://localhost:1/'], { HALLMARK_SKILL_DIR: dir });
+      assert.ok(!/only the running page/.test(both.stdout));
+    } finally {
+      cleanup(dir);
     }
   });
 

@@ -105,7 +105,8 @@ function parseSloplintOutput(stdout) {
  * @returns {{
  *   available: boolean, ok: boolean, error: string|null,
  *   fails: number, reflex: number, warns: number, waived: number,
- *   renderRan: boolean, renderRequested: boolean, findings: object[]
+ *   renderRan: boolean, renderNote: string, renderRequested: boolean,
+ *   recording: boolean, findings: object[]
  * }}
  */
 function runSloplint(target, options = {}) {
@@ -118,7 +119,9 @@ function runSloplint(target, options = {}) {
     warns: 0,
     waived: 0,
     renderRan: false,
+    renderNote: '',
     renderRequested: Boolean(options.render || (options.urls && options.urls.length)),
+    recording: Boolean(options.before),
     findings: []
   };
 
@@ -160,7 +163,9 @@ function runSloplint(target, options = {}) {
     reflex: Number(summary.reflex) || 0,
     warns: Number(summary.warns) || 0,
     waived: Number(summary.waived) || 0,
-    renderRan: Boolean(summary.render) && summary.render !== 'off',
+    renderRan: summary.render === 'ran',
+    renderNote: typeof summary.render === 'string' && summary.render.startsWith('not run') ? summary.render : '',
+    recording: Boolean(options.before),
     findings: parsed.findings
   };
 }
@@ -171,6 +176,7 @@ function runSloplint(target, options = {}) {
  * - Any Floor FAIL blocks.
  * - An open REFLEX blocks unless only the floor tier was requested.
  * - With requireRender, a run whose render tier did not run blocks.
+ * - A --before run only records the page, so it never blocks on findings.
  *
  * @param {object} result - Output of runSloplint
  * @param {{ tier?: string, requireRender?: boolean }} [options]
@@ -180,10 +186,12 @@ function evaluateGate(result, options = {}) {
   const reasons = [];
   if (!result.available) reasons.push(result.error || 'Hallmark skill not found');
   else if (!result.ok) reasons.push(result.error || 'sloplint did not complete');
-  else {
+  else if (result.recording) {
+    // --before records links, fields and handlers for a later --kept run.
+  } else {
     if (result.fails > 0) reasons.push(`${result.fails} FAIL`);
     if (options.tier !== 'floor' && result.reflex > 0) reasons.push(`${result.reflex} open REFLEX (fix or waive in the stamp)`);
-    if (options.requireRender && !result.renderRan) reasons.push('render tier did not run (needs puppeteer-core and Chrome)');
+    if (options.requireRender && !result.renderRan) reasons.push(result.renderNote || 'render tier did not run (needs puppeteer-core and Chrome)');
   }
   return { pass: reasons.length === 0, reasons };
 }
@@ -199,7 +207,8 @@ function summarize(result) {
   const parts = [`Floor ${result.fails} FAIL`, `Reflex ${result.reflex}`];
   if (result.waived) parts[1] += ` (${result.waived} waived)`;
   parts.push(`${result.warns} WARN`);
-  parts.push(`render: ${result.renderRan ? 'ran' : 'skipped'}`);
+  if (result.recording) parts.unshift('recorded for --kept');
+  parts.push(`render: ${result.renderRan ? 'ran' : result.renderRequested ? 'NOT RUN' : 'skipped'}`);
   return parts.join(' · ');
 }
 

@@ -23,9 +23,9 @@ Hallmark is a separate, optional skill. This command wraps it and never copies i
 | `--genre <genre>` | `editorial`, `modern-minimal`, `atmospheric` or `playful`. |
 | `--render` | Also run the browser checks at eight widths. |
 | `--require-render` | Fail if the browser checks did not run. Use before shipping. |
-| `--url <url>` | Lint a running dev server route. Implies `--render`. |
-| `--before` | Record the page's links, fields, handlers and headings before a redesign. |
-| `--kept` | After a redesign, fail if anything recorded by `--before` went missing. |
+| `--url <url>` | Lint a running dev server route. Implies `--render`. Pass the source path too: a URL alone checks only the running page, not tokens, overflow, the stamp or copy rules. |
+| `--before` | Record the page's links, fields, handlers and headings before a redesign. Never blocks. |
+| `--kept` | After a redesign, fail if anything recorded by `--before` went missing. Run it from the same folder, on files with the same names. |
 | `--require-hallmark` | Fail instead of skipping when Hallmark is not installed. |
 | `--json` | Print the full result as JSON. |
 
@@ -55,7 +55,11 @@ Hallmark is a separate, optional skill. This command wraps it and never copies i
 
 - Any `FAIL` blocks.
 - An open `REFLEX` blocks, unless `--tier floor` was given.
-- With `--require-render`, a run without the browser checks blocks.
+- With `--require-render`, a run without the browser checks blocks. The summary says `render: NOT RUN`
+  and prints the reason when `--render` or `--url` was asked for but the browser checks did not run.
+- A `--before` run only records the page and never blocks.
+- Studio sites from `/studio-build`: use `--tier floor`. They pass the Floor, but the full tier still
+  reports Reflex findings that a project may waive in its own stamp.
 
 Exit codes: `0` pass or skipped, `1` blocked, `2` usage or runtime error.
 
@@ -79,7 +83,8 @@ Exit codes: `0` pass or skipped, `1` blocked, `2` usage or runtime error.
 ```
 /design-gate projects/my-club --tier floor
 /design-gate src/app --scope app --render
-/design-gate --url http://localhost:3000/pricing --require-render
+/design-gate src --url http://localhost:3000/pricing --require-render
+/design-gate projects/my-club --before
 /design-gate projects/my-club --kept
 ```
 

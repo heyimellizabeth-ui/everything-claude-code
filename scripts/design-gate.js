@@ -62,6 +62,10 @@ function main(argv) {
     console.log(JSON.stringify({ pass: gate.pass, reasons: gate.reasons, summary, result }, null, 2));
   } else {
     console.log(`[design-gate] ${summary}`);
+    if (result.renderNote) console.log(`[design-gate] ${result.renderNote}`);
+    if (!target && result.available) {
+      console.log('[design-gate] NOTE: only the running page was checked. Pass the source path too (for example `src --url ...`) so tokens, overflow, the stamp and copy rules are checked.');
+    }
     for (const entry of hallmark.topGates(result.findings)) {
       console.log(`  ${entry.grade} ${entry.gate} x${entry.count}  ${entry.example}`);
     }
