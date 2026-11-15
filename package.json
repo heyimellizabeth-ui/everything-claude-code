@@ -66,6 +66,7 @@
     "scripts/ci/scan-supply-chain-iocs.js",
     "scripts/ci/supply-chain-advisory-sources.js",
     "scripts/consult.js",
+    "scripts/chelp-pipeline.js",
     "scripts/design-gate.js",
     "scripts/auto-update.js",
     "scripts/claw.js",

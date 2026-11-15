@@ -17,6 +17,12 @@ everything-claude-code commands tuned for a specific phase of web development.
 | `/c4` | Production-Ready Shipping | Hardening, security audit, PR creation | none | `/design-gate --require-render` |
 | `/c5` | Maintenance and Cleanup | Dead code removal, doc sync, codebase health | `/hallmark audit` | `/design-gate` |
 
+## Get Started: /chelp-pipeline
+
+Run `/chelp-pipeline` once on a new machine or project. It checks that Hallmark, puppeteer-core and Chrome
+are present, proves the browser checks work with a smoke test, and prints the exact fix for anything
+missing (`--install` runs the installs). It ends with `READY`, `READY (static checks only)` or `NOT READY`.
+
 ## Design Quality: Hallmark
 
 The chains use the [Hallmark](https://github.com/nutlope/hallmark) design skill. It builds pages that do

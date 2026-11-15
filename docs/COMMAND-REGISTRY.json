@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 90,
+  "totalCommands": 91,
   "commands": [
     {
       "command": "aside",
@@ -104,6 +104,17 @@
         "chelp-advisor"
       ],
       "path": "commands/chelp-advisor.md"
+    },
+    {
+      "command": "chelp-pipeline",
+      "description": "Activate the chelp pipeline: check that Hallmark, the browser checks and the advisor are ready, prove them with a smoke test, and print the exact fix for anything missing.",
+      "type": "testing",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "chelp-advisor"
+      ],
+      "path": "commands/chelp-pipeline.md"
     },
     {
       "command": "chelp",
@@ -961,7 +972,7 @@
       "planning": 2,
       "refactoring": 1,
       "review": 14,
-      "testing": 56
+      "testing": 57
     },
     "topAgents": [
       {
@@ -1008,7 +1019,7 @@
     "topSkills": [
       {
         "skill": "chelp-advisor",
-        "count": 8
+        "count": 9
       },
       {
         "skill": "continuous-learning-v2",
