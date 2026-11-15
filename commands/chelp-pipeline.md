@@ -64,12 +64,28 @@ here (a Hallmark stamp, `design.md` or `.hallmark` record) or only report.
 
 ## Cloud sessions
 
-Installs do not survive between cloud sessions, so put the setup in the environment's setup script. One
-line does it:
+Installs do not survive between cloud sessions, so put the setup in the environment's setup script (the
+cloud environment menu in the session's title bar, then Edit, then Setup script). This version works in
+any session, with or without the ECC repository attached: it uses the checkout when there is one and
+otherwise fetches ECC from GitHub.
 
 ```bash
-bash everything-claude-code/scripts/setup-chelp-cloud.sh everything-claude-code
+ECC="$PWD/everything-claude-code"
+if [ ! -f "$ECC/scripts/setup-chelp-cloud.sh" ]; then
+  ECC="${ECC_BOOT_DIR:-/opt/ecc}"
+  rm -rf "$ECC"
+  git clone --depth 1 https://github.com/heyimellizabeth-ui/everything-claude-code "$ECC" >/dev/null 2>&1 \
+    || echo "[chelp-setup] could not fetch everything-claude-code from GitHub"
+fi
+if [ -f "$ECC/scripts/setup-chelp-cloud.sh" ]; then
+  bash "$ECC/scripts/setup-chelp-cloud.sh" "$ECC" || true
+else
+  echo "[chelp-setup] chelp setup script not found: attach everything-claude-code to the session or check the network"
+fi
 ```
+
+Paste it into every environment you want the pipeline in. It runs only when a container is built fresh,
+not when a session is resumed, and only in environments that have it.
 
 `scripts/setup-chelp-cloud.sh` installs the ECC commands, agents, skills and scripts into `~/.claude`, so
 `/chelp`, `/c1` to `/c5`, `/design-gate`, `/chelp-pipeline` and `/chelp-advisor` exist; puppeteer-core

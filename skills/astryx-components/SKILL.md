@@ -48,7 +48,9 @@ npx astryx theme add neutral
 `init` writes a managed Astryx block into the project's `CLAUDE.md`. `theme add` writes
 `src/astryx-themes.ts`. Then:
 
-- Import `@astryxdesign/core/reset.css` and `@astryxdesign/core/astryx.css` in the global CSS.
+- Import `@astryxdesign/core/reset.css` and `@astryxdesign/core/astryx.css` in the global CSS. **Not when
+  the project uses the Astryx build plugin** (`@astryxdesign/build`, which compiles Astryx from source);
+  see the next section.
 - Wrap the app: `<Theme theme={themes[defaultThemeSlug]}><App /></Theme>`, with `Theme` from
   `@astryxdesign/core/theme`.
 - `npx astryx theme list` shows the other themes. Ask the user which look they want before building
@@ -58,6 +60,18 @@ npx astryx theme add neutral
 
 Checked on a fresh Vite React 19 project with `@astryxdesign/core` 0.7.16: the `settings` template
 builds and renders.
+
+**Where the CSS comes from decides the import.** Check `package.json` and the bundler config first:
+
+| Setup | Global CSS |
+|-------|------------|
+| Default: prebuilt packages, no Astryx build plugin | import `reset.css` and `astryx.css` |
+| `@astryxdesign/build` in Vite (`astryxStylex`, with `@astryxdesign/core` aliased to its `src`) | import `reset.css` only. Do **not** import `astryx.css`: it does not exist under `core/src`, and the build fails with `ENOENT ... core/src/astryx.css`. The plugin emits the Astryx CSS itself (`astryx-stylex-*.css`, in `@layer astryx-base`). |
+| `@astryxdesign/build` with Next.js and Turbopack | `reset.css`, the theme CSS and the line `@astryx;` in place of `astryx.css` (see the plugin's README) |
+| Only a plain StyleX compiler for your own or swizzled code (`@stylexjs/*`) | keep `astryx.css`; the compiler builds only your own source |
+
+Both the failing and the passing Vite build were run on 0.7.16. When in doubt, build once and read the
+first error.
 
 ### 2. Bootstrap on every branch
 
@@ -132,7 +146,7 @@ theme): `/design-gate src --url ... --scope app --require-render` printed `Floor
 /* Hallmark · waive 26b · no :active or :disabled rule in this file, no aria-disabled in the markup · the Astryx components style their own pressed and disabled states from the library */
 /* Hallmark · waive 39b · the 20px controls are the native inputs and icon buttons inside Astryx fields that stand 32px tall · the settings fields come from the Astryx library and the field wrapper is the control */
 @import '@astryxdesign/core/reset.css';
-@import '@astryxdesign/core/astryx.css';
+@import '@astryxdesign/core/astryx.css'; /* omit this line with @astryxdesign/build */
 
 html,
 body {
