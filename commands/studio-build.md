@@ -141,8 +141,8 @@ After the session handoff offer, prompt:
 Run the chosen chain with the project slug and `projects/<slug>/` as the working context.
 Pass the `brand.config.json` path so the chain has access to brand values without re-reading the scaffold.
 
-Studio sites pass the static Floor but still report the words-per-screen budget (gate 58) on sample copy, so
-use `--tier floor` and replace the sample copy with the club's own, shorter copy.
+A freshly scaffolded site passes `--tier floor` with the browser checks. Keep the club's own copy short:
+more than about 95 words in any one screen brings back the words-per-screen failure (gate 58).
 
 ## Usage Examples
 

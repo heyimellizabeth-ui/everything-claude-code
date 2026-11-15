@@ -49,6 +49,7 @@
    * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
    * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  [hidden] { display: none !important; }
   :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     --cream-a06: color-mix(in srgb, var(--cream) 6%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a30: color-mix(in srgb, var(--red) 30%, transparent); --red-a40: color-mix(in srgb, var(--red) 40%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
   }
@@ -115,7 +116,7 @@
   .archive-cta-links a:hover { opacity: 0.8; }
 
   footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
-  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); }
   .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
   .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cream); }
@@ -228,7 +229,7 @@
       <div class="edition-name">Kudt Vol. 06</div>
       <div class="edition-date">25 Mei 2025</div>
       <div class="edition-photos">Kleine Zaal, {{VENUE_NAME}}</div>
-      <span class="edition-arrow">Photos on Flickr</span>
+      <span class="edition-arrow">Flickr</span>
     </a>
 
     <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720315942759" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
@@ -236,7 +237,7 @@
       <div class="edition-name">Kudt Vol. 05</div>
       <div class="edition-date">22 Mrt 2025</div>
       <div class="edition-photos">Kleine Zaal, {{VENUE_NAME}}</div>
-      <span class="edition-arrow">Photos on Flickr</span>
+      <span class="edition-arrow">Flickr</span>
     </a>
 
     <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720313459001" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
@@ -244,7 +245,7 @@
       <div class="edition-name">Kudt Vol. 04</div>
       <div class="edition-date">18 Nov 2024</div>
       <div class="edition-photos">Kleine Zaal, {{VENUE_NAME}}</div>
-      <span class="edition-arrow">Photos on Flickr</span>
+      <span class="edition-arrow">Flickr</span>
     </a>
 
     <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720311362491" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
@@ -252,7 +253,7 @@
       <div class="edition-name">Kudt Vol. 03</div>
       <div class="edition-date">16 Sep 2024</div>
       <div class="edition-photos">Kleine Zaal, {{VENUE_NAME}}</div>
-      <span class="edition-arrow">Photos on Flickr</span>
+      <span class="edition-arrow">Flickr</span>
     </a>
 
     <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720308932002" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
@@ -260,7 +261,7 @@
       <div class="edition-name">Kudt Vol. 02</div>
       <div class="edition-date">27 Mei 2023</div>
       <div class="edition-photos">Kleine Zaal, {{VENUE_NAME}}</div>
-      <span class="edition-arrow">Photos on Flickr</span>
+      <span class="edition-arrow">Flickr</span>
     </a>
 
     <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720306889370" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
@@ -268,7 +269,7 @@
       <div class="edition-name">Kudt Vol. 01</div>
       <div class="edition-date">10 Dec 2022</div>
       <div class="edition-photos">Kleine Zaal, {{VENUE_NAME}}</div>
-      <span class="edition-arrow">Photos on Flickr</span>
+      <span class="edition-arrow">Flickr</span>
     </a>
 
     <a href="https://www.flickr.com/photos/197933149@N02/albums/72177720321214209" target="_blank" rel="noopener noreferrer" class="edition-card mil-up" data-cursor-label="VIEW">
@@ -277,7 +278,7 @@
       <div class="edition-name">Museumnacht Alkmaar</div>
       <div class="edition-date">September 2024</div>
       <div class="edition-photos">Kleine Zaal, Victorie</div>
-      <span class="edition-arrow">Photos on Flickr</span>
+      <span class="edition-arrow">Flickr</span>
     </a>
 
   </div>
@@ -321,7 +322,7 @@
 </main>
 
 <footer>
-  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">© 2026 {{SITE_NAME}}, {{VENUE_CITY}}</div>
   <ul class="footer-links">
     <li><a href="events.html">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>

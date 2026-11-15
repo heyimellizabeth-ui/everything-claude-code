@@ -51,6 +51,7 @@
    * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
    * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  [hidden] { display: none !important; }
   :root {
     --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}};
     --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}};
@@ -110,7 +111,7 @@
 
   /* FOOTER */
   footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
-  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); }
   .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
   .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cream); }
@@ -361,7 +362,7 @@
 </main>
 
 <footer>
-  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">© 2026 {{SITE_NAME}}, {{VENUE_CITY}}</div>
   <ul class="footer-links">
     <li><a href="events.html">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>

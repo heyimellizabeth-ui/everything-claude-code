@@ -13,6 +13,7 @@
    * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
    * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  [hidden] { display: none !important; }
   :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: system-ui, -apple-system, sans-serif;
     --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a06: color-mix(in srgb, var(--cream) 6%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent);
   }
@@ -42,7 +43,7 @@
   .btn-secondary:hover { border-color: var(--cream); color: var(--cream); }
 
   footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a06); }
-  .footer-brand { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 3px; color: var(--muted); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
   .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
 
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
@@ -99,7 +100,7 @@
 </main>
 
 <footer>
-  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">© 2026 {{SITE_NAME}}, {{VENUE_CITY}}</div>
   <div class="footer-bpm">{{SITE_BPM}}</div>
 </footer>
 

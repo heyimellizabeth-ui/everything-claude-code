@@ -7,7 +7,7 @@
  *
  * Usage:
  *   node scripts/design-gate.js [path] [--tier floor] [--scope app|component]
- *     [--genre <genre>] [--render] [--require-render] [--before] [--kept]
+ *     [--genre <genre>] [--render] [--require-render] [--enforce] [--before] [--kept]
  *     [--url <url> ...] [--json]
  *
  * Exit codes: 0 pass (or Hallmark missing without --require-hallmark),
@@ -17,7 +17,7 @@
 const hallmark = require('./lib/hallmark');
 
 const VALUE_FLAGS = new Set(['--tier', '--scope', '--genre', '--url']);
-const BOOLEAN_FLAGS = new Set(['--render', '--require-render', '--require-hallmark', '--before', '--kept', '--json']);
+const BOOLEAN_FLAGS = new Set(['--render', '--require-render', '--require-hallmark', '--enforce', '--before', '--kept', '--json']);
 
 function parseArgs(argv) {
   const options = { urls: [] };
@@ -57,9 +57,13 @@ function main(argv) {
   const result = hallmark.runSloplint(target, options);
   const gate = hallmark.evaluateGate(result, { tier: options.tier, requireRender: options.requireRender });
   const summary = hallmark.summarize(result);
+  // Blocking applies to pages Hallmark built or polished. Elsewhere the gate
+  // reports and exits 0, unless --enforce is passed.
+  const project = hallmark.isHallmarkProject(target);
+  const enforced = Boolean(options.enforce || project.hallmark);
 
   if (options.json) {
-    console.log(JSON.stringify({ pass: gate.pass, reasons: gate.reasons, summary, result }, null, 2));
+    console.log(JSON.stringify({ pass: gate.pass, enforced, reasons: gate.reasons, summary, result }, null, 2));
   } else {
     console.log(`[design-gate] ${summary}`);
     if (result.renderNote) console.log(`[design-gate] ${result.renderNote}`);
@@ -70,13 +74,16 @@ function main(argv) {
       console.log(`  ${entry.grade} ${entry.gate} x${entry.count}  ${entry.example}`);
     }
     if (!result.available && !options.requireHallmark) console.log('[design-gate] SKIPPED');
-    else if (!gate.pass) console.log(`[design-gate] BLOCKED: ${gate.reasons.join('; ')}`);
+    else if (!gate.pass && !enforced) {
+      console.log(`[design-gate] REPORT ONLY: ${gate.reasons.join('; ')}`);
+      console.log(`[design-gate] Not a Hallmark project (${project.reason}), so nothing is blocked. Add --enforce to block, or run /hallmark audit <path> for a full report.`);
+    } else if (!gate.pass) console.log(`[design-gate] BLOCKED: ${gate.reasons.join('; ')}`);
     else console.log('[design-gate] PASS');
   }
 
   if (!result.available) return options.requireHallmark ? 1 : 0;
   if (!result.ok) return 2;
-  return gate.pass ? 0 : 1;
+  return gate.pass || !enforced ? 0 : 1;
 }
 
 if (require.main === module) {

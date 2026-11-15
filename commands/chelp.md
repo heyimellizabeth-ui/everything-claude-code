@@ -13,7 +13,7 @@ everything-claude-code commands tuned for a specific phase of web development.
 |---------|------|----------|-------------|-------------|
 | `/c1` | Full Web Project | Greenfield sites, design systems, major launches | `/hallmark` | `/design-gate` |
 | `/c2` | Component or Page Feature | Adding pages/components to an existing project | `/hallmark` (new pages) | `/design-gate` |
-| `/c3` | Design Iteration Sprint | Polishing UI, animations, responsive fixes | `/hallmark redesign` | `/design-gate --kept` |
+| `/c3` | Design Iteration Sprint | Polishing UI, animations, responsive fixes | `/hallmark redesign` | `/design-gate --kept --tier floor` |
 | `/c4` | Production-Ready Shipping | Hardening, security audit, PR creation | none | `/design-gate --require-render` |
 | `/c5` | Maintenance and Cleanup | Dead code removal, doc sync, codebase health | `/hallmark audit` | `/design-gate` |
 
@@ -26,6 +26,7 @@ findings are fixed or waived in the page's stamp with a real reason.
 
 - `/hallmark <brief>` builds a new page. It only touches an existing design when it is named: `/hallmark redesign <path>` or `/hallmark audit <path>`.
 - `/design-gate [path] [--url <url>] [--require-render]` checks source and the running page. A URL alone checks only the running page.
+- `/design-gate` blocks only on a project Hallmark built or polished (a stamp, `.hallmark/` or `design.md`). On any other project it reports and exits 0; add `--enforce` to block.
 - Without Hallmark installed, `/design-gate` prints SKIPPED and exits 0. In `/c4`, add `--require-hallmark` so a missing install blocks.
 
 ## Prerequisites
@@ -73,7 +74,7 @@ before designing.
 
 ## /c3 — Design Iteration Sprint
 
-**Chain:** `/model-route` → `/hallmark redesign <path> polish` → `/gan-build` (behaviour only) → `/quality-gate` → `/design-gate --kept` → `/code-review`
+**Chain:** `/model-route` → `/hallmark redesign <path> polish` → `/gan-build` (behaviour only) → `/quality-gate` → `/design-gate --kept --tier floor` → `/code-review`
 
 Pure design polish. Skips heavy planning: Hallmark records the page, fixes only what its gates name and
 checks that no link, field or test hook was dropped. Good for animations, responsive work, and visual

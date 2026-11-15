@@ -198,6 +198,7 @@ Either raise `--size-element-lg` in the theme, or waive 39b with a reason. App s
 
 Use `--scope app` for app screens. Leave it off for marketing pages. Always pass the source path with
 `--url`: a URL alone checks only the running page, and the token, overflow and stamp gates read source.
+The stamp in the global CSS (section 5) is what makes the gate block; without it the gate only reports.
 Expect the known library findings in section 5 on a real app, and list them in the hand-off.
 
 ## Where It Sits in the Chains

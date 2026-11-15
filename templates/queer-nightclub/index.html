@@ -86,6 +86,7 @@
    * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
    * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  [hidden] { display: none !important; }
 
   :root {
     --void: {{COLOR_VOID}};
@@ -615,7 +616,7 @@
   .footer-brand {
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    letter-spacing: 3px;
+    letter-spacing: 0.02em;
     color: var(--muted);
   }
   .footer-links {
@@ -946,22 +947,22 @@
       <div class="testimonial mil-up">
         <div class="testimonial-mark">"</div>
         <div>
-          <p class="testimonial-body">First time I walked in and didn't have to explain myself to anyone. The door team, the crowd, the whole energy, I felt seen before I even hit the dancefloor.</p>
-          <p class="testimonial-author">Alex T., Regular since Dec {{SITE_EST}}, First edition attendee</p>
+          <p class="testimonial-body">First time I walked in and didn't have to explain myself to anyone. I felt seen before I even hit the dancefloor.</p>
+          <p class="testimonial-author">Alex T., regular since Dec {{SITE_EST}}</p>
         </div>
       </div>
       <div class="testimonial mil-up">
         <div class="testimonial-mark">"</div>
         <div>
-          <p class="testimonial-body">Finally a queer night in {{VENUE_CITY}} where I don't have to travel to Amsterdam. The drag acts, the music, the vibe, this is exactly what {{VENUE_REGION}} needed.</p>
-          <p class="testimonial-author">Riv K., Attends every edition, {{VENUE_NAME}} regular</p>
+          <p class="testimonial-body">Finally a queer night in {{VENUE_CITY}} where I don't have to travel to Amsterdam.</p>
+          <p class="testimonial-author">Riv K., attends every edition</p>
         </div>
       </div>
       <div class="testimonial mil-up">
         <div class="testimonial-mark">"</div>
         <div>
-          <p class="testimonial-body">{{SITE_NAME}} is proof that queer nightlife doesn't have to mean a trip to the Reguliersdwarsstraat. It's right here in {{VENUE_CITY}} and it's better than I expected.</p>
-          <p class="testimonial-author">Luna S., {{VENUE_REGION}} queer community, since 2023</p>
+          <p class="testimonial-body">{{SITE_NAME}} is proof that queer nightlife doesn't need a trip to Amsterdam. It's better than I expected.</p>
+          <p class="testimonial-author">Luna S., since 2023</p>
         </div>
       </div>
     </div>
@@ -996,7 +997,7 @@
 
 <!-- Footer -->
 <footer class="footer--{{LAYOUT_FOOTER}}">
-  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">© 2026 {{SITE_NAME}}, {{VENUE_CITY}}</div>
   <ul class="footer-links">
     <li><a href="#events">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>

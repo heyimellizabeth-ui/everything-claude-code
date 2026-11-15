@@ -29,6 +29,7 @@
    * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
    * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  [hidden] { display: none !important; }
   :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     --cream-a02: color-mix(in srgb, var(--cream) 2%, transparent); --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --cream-a60: color-mix(in srgb, var(--cream) 60%, transparent); --cream-a75: color-mix(in srgb, var(--cream) 75%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a30: color-mix(in srgb, var(--red) 30%, transparent); --red-a35: color-mix(in srgb, var(--red) 35%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
   }
@@ -107,7 +108,7 @@
   .about-cta a { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--red-ink); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; text-decoration: none; }
 
   footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
-  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); }
   .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
   .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cream); }
@@ -241,17 +242,17 @@
     <div class="value-card">
       <div class="value-icon">✦</div>
       <div class="value-title">Radical inclusion</div>
-      <p class="value-body">Every body, every expression, every identity. You walk in and you belong, no questions, no explanations required.</p>
+      <p class="value-body">Every body, every expression, every identity. You walk in and you belong.</p>
     </div>
     <div class="value-card">
       <div class="value-icon">◈</div>
       <div class="value-title">Community first</div>
-      <p class="value-body">We exist for the queer community of {{VENUE_REGION}}. Not Amsterdam. Here. Local, accessible, and ours.</p>
+      <p class="value-body">We exist for the queer community of {{VENUE_REGION}}. Local, accessible, and ours.</p>
     </div>
     <div class="value-card">
       <div class="value-icon">▲</div>
       <div class="value-title">Platform for talent</div>
-      <p class="value-body">Drag artists, pole performers, DJs, and creatives, we build stages for people who deserve them.</p>
+      <p class="value-body">We build stages for drag artists, performers, DJs and creatives.</p>
     </div>
   </div>
 </div>
@@ -267,35 +268,35 @@
         <div class="timeline-year">Dec 2022</div>
         <div class="timeline-content">
           <h3>Vol. 01: The First Edition</h3>
-          <p>{{SITE_NAME}} launches at {{VENUE_NAME}}, {{VENUE_CITY}}. {{VENUE_REGION}}'s first dedicated queer night is born. Sold out. The dancefloor didn't stop until 02:00.</p>
+          <p>{{SITE_NAME}} launches at {{VENUE_NAME}}. Sold out.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">2023</div>
         <div class="timeline-content">
           <h3>Vol. 02 & 03: Finding the Rhythm</h3>
-          <p>Two more editions. The community grows. Drag lineups expand. The Kleine Zaal at {{VENUE_NAME}} becomes home.</p>
+          <p>Two more editions. The community grows.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">Sep 2024</div>
         <div class="timeline-content">
           <h3>Museumnacht {{VENUE_CITY}}: Rainbow Paradise</h3>
-          <p>First major collaboration. {{SITE_NAME}} brings queer energy to Alkmaar's Museum Night, an annual highlight ever since.</p>
+          <p>First major collaboration, an annual highlight ever since.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">2025</div>
         <div class="timeline-content">
           <h3>Vol. 06: Growing the Movement</h3>
-          <p>780+ photos archived. A loyal community. Bigger lineups, deeper roots in {{VENUE_REGION}}'s queer scene.</p>
+          <p>780+ photos archived. A loyal community.</p>
         </div>
       </div>
       <div class="timeline-item mil-up">
         <div class="timeline-year">May 2026</div>
         <div class="timeline-content">
           <h3>Pride After Party: Grolsch Zaal</h3>
-          <p>Biggest edition yet. Moving to the Grolsch Zaal for our Pride Special. Drag, disco, and the whole community.</p>
+          <p>Biggest edition yet: our Pride Special.</p>
         </div>
       </div>
     </div>
@@ -311,17 +312,17 @@
     <div class="team-card">
       <div class="team-role">Founder, Creative Direction</div>
       <div class="team-name">{{SITE_NAME}} Team</div>
-      <p class="team-bio">100% queer-run and community-driven. The people behind KUDT are the same people on the dancefloor, we build what we want to attend.</p>
+      <p class="team-bio">100% queer-run and community-driven. The people behind {{SITE_SHORT}} are the same people on the dancefloor.</p>
     </div>
     <div class="team-card">
       <div class="team-role">Venue Partner</div>
       <div class="team-name">{{VENUE_NAME}}</div>
-      <p class="team-bio">Alkmaar's home for live music and nightlife. Our home since edition one, Kleine Zaal and Grolsch Zaal.</p>
+      <p class="team-bio">Home for live music and nightlife in {{VENUE_CITY}}. Our home since edition one.</p>
     </div>
     <div class="team-card">
       <div class="team-role">Community</div>
       <div class="team-name">{{VENUE_REGION}} Queer Scene</div>
-      <p class="team-bio">From {{VENUE_CITY}} to Den Helder, from Hoorn to Zaandam, the community that shows up, every edition, every time.</p>
+      <p class="team-bio">The community that shows up, every edition, every time.</p>
     </div>
   </div>
 </div>
@@ -334,7 +335,7 @@
 </main>
 
 <footer>
-  <div class="footer-brand">{{SITE_NAME}}, {{VENUE_CITY}}. Est. {{SITE_EST}}. © 2026 {{SITE_NAME}}</div>
+  <div class="footer-brand">© 2026 {{SITE_NAME}}, {{VENUE_CITY}}</div>
   <ul class="footer-links">
     <li><a href="events.html">Our Parties</a></li>
     <li><a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer">Tickets</a></li>

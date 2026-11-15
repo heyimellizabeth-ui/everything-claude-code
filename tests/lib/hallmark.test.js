@@ -244,6 +244,65 @@ function runTests() {
     assert.strictEqual(top[0].count, 2);
   });
 
+  console.log('\nisHallmarkProject:');
+
+  const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), 'ecc-proj-'));
+
+  check('a plain folder is not a Hallmark project', () => {
+    const dir = tmp();
+    const cwd = tmp();
+    fs.writeFileSync(path.join(dir, 'site.css'), 'body { margin: 0; }');
+    try {
+      assert.strictEqual(hallmark.isHallmarkProject(dir, { cwd }).hallmark, false);
+    } finally {
+      cleanup(dir);
+      cleanup(cwd);
+    }
+  });
+
+  check('a stamp in a stylesheet or a page marks the project', () => {
+    const dir = tmp();
+    const cwd = tmp();
+    fs.mkdirSync(path.join(dir, 'src'));
+    fs.writeFileSync(path.join(dir, 'src', 'index.css'), '/* Hallmark \u00b7 checked: 2026-11-15 */\nbody { margin: 0; }');
+    try {
+      assert.strictEqual(hallmark.isHallmarkProject(dir, { cwd }).hallmark, true);
+      assert.strictEqual(hallmark.isHallmarkProject(path.join(dir, 'src', 'index.css'), { cwd }).hallmark, true);
+    } finally {
+      cleanup(dir);
+      cleanup(cwd);
+    }
+  });
+
+  check('a .hallmark folder or a design.md marks the project', () => {
+    const withFolder = tmp();
+    const withDesign = tmp();
+    const cwd = tmp();
+    fs.mkdirSync(path.join(withFolder, '.hallmark'));
+    fs.writeFileSync(path.join(withDesign, 'design.md'), '# design');
+    try {
+      assert.strictEqual(hallmark.isHallmarkProject(withFolder, { cwd }).hallmark, true);
+      assert.strictEqual(hallmark.isHallmarkProject(withDesign, { cwd }).hallmark, true);
+    } finally {
+      cleanup(withFolder);
+      cleanup(withDesign);
+      cleanup(cwd);
+    }
+  });
+
+  check('stamps inside node_modules do not count', () => {
+    const dir = tmp();
+    const cwd = tmp();
+    fs.mkdirSync(path.join(dir, 'node_modules', 'pkg'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'node_modules', 'pkg', 'x.css'), '/* Hallmark */');
+    try {
+      assert.strictEqual(hallmark.isHallmarkProject(dir, { cwd }).hallmark, false);
+    } finally {
+      cleanup(dir);
+      cleanup(cwd);
+    }
+  });
+
   console.log('\ndesign-gate CLI:');
 
   check('parseArgs defaults to the current directory', () => {
@@ -252,7 +311,15 @@ function runTests() {
     assert.throws(() => designGate.parseArgs(['--nope']), /Unknown flag/);
   });
 
-  const runCli = (args, env) => spawnSync(process.execPath, [CLI, ...args], { encoding: 'utf8', env: { ...process.env, ...env } });
+  // Run from an empty folder so the repository's own stamps and markers are not picked up.
+  const runCli = (args, env) => {
+    const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'ecc-cwd-'));
+    try {
+      return spawnSync(process.execPath, [CLI, ...args], { encoding: 'utf8', cwd, env: { ...process.env, ...env } });
+    } finally {
+      cleanup(cwd);
+    }
+  };
 
   check('exits 0 on a clean page', () => {
     const dir = makeFakeSkill(CLEAN);
@@ -268,7 +335,7 @@ function runTests() {
   check('exits 1 when the gate fails', () => {
     const dir = makeFakeSkill({ ...CLEAN, fails: 2 }, [], 1);
     try {
-      const run = runCli(['.'], { HALLMARK_SKILL_DIR: dir });
+      const run = runCli(['.', '--enforce'], { HALLMARK_SKILL_DIR: dir });
       assert.strictEqual(run.status, 1, run.stdout + run.stderr);
       assert.ok(run.stdout.includes('BLOCKED'));
     } finally {
@@ -286,6 +353,35 @@ function runTests() {
       assert.strictEqual(runCli(['.', '--require-hallmark'], env).status, 1);
     } finally {
       cleanup(home);
+    }
+  });
+
+  check('reports only, and exits 0, for a project Hallmark did not build', () => {
+    const skill = makeFakeSkill({ ...CLEAN, fails: 3 }, [], 1);
+    const page = fs.mkdtempSync(path.join(os.tmpdir(), 'ecc-page-'));
+    fs.writeFileSync(path.join(page, 'index.html'), '<!doctype html><title>x</title>');
+    try {
+      const run = runCli([page], { HALLMARK_SKILL_DIR: skill });
+      assert.strictEqual(run.status, 0, run.stdout + run.stderr);
+      assert.ok(run.stdout.includes('REPORT ONLY') && /Not a Hallmark project/.test(run.stdout), run.stdout);
+      assert.ok(!run.stdout.includes('BLOCKED'));
+    } finally {
+      cleanup(skill);
+      cleanup(page);
+    }
+  });
+
+  check('blocks a page that carries the Hallmark stamp', () => {
+    const skill = makeFakeSkill({ ...CLEAN, fails: 3 }, [], 1);
+    const page = fs.mkdtempSync(path.join(os.tmpdir(), 'ecc-page-'));
+    fs.writeFileSync(path.join(page, 'index.html'), '<style>\n/* Hallmark \u00b7 checked: 2026-11-15 */\nbody { margin: 0; }</style>');
+    try {
+      const run = runCli([page], { HALLMARK_SKILL_DIR: skill });
+      assert.strictEqual(run.status, 1, run.stdout + run.stderr);
+      assert.ok(run.stdout.includes('BLOCKED'), run.stdout);
+    } finally {
+      cleanup(skill);
+      cleanup(page);
     }
   });
 

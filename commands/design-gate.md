@@ -27,6 +27,7 @@ Hallmark is a separate, optional skill. This command wraps it and never copies i
 | `--before` | Record the page's links, fields, handlers and headings before a redesign. Never blocks. |
 | `--kept` | After a redesign, fail if anything recorded by `--before` went missing. Run it from the same folder, on files with the same names. |
 | `--require-hallmark` | Fail instead of skipping when Hallmark is not installed. |
+| `--enforce` | Block on findings even when the project was not built with Hallmark. |
 | `--json` | Print the full result as JSON. |
 
 ## Process
@@ -53,13 +54,18 @@ Hallmark is a separate, optional skill. This command wraps it and never copies i
 
 ## Pass Rules
 
+- The gate **blocks** only on a project Hallmark built or polished: a Hallmark stamp in a stylesheet or
+  page, a `.hallmark/` folder, or a `design.md`, at or above the target or the working directory. For any
+  other project it prints `REPORT ONLY`, lists the findings and exits 0, because gate 20 (the stamp)
+  alone would fail every page Hallmark never touched. Add `--enforce` to block anyway.
 - Any `FAIL` blocks.
 - An open `REFLEX` blocks, unless `--tier floor` was given.
 - With `--require-render`, a run without the browser checks blocks. The summary says `render: NOT RUN`
   and prints the reason when `--render` or `--url` was asked for but the browser checks did not run.
 - A `--before` run only records the page and never blocks.
-- Studio sites from `/studio-build`: use `--tier floor`. A scaffolded site passes the static Floor; with `--render` it still reports the words-per-screen budget (gate 58) on sample copy, and the full tier still
-  reports Reflex findings that a project may waive in its own stamp.
+- Studio sites from `/studio-build`: use `--tier floor`. A freshly scaffolded site passes it with the browser
+  checks (`--render --require-render`). The full tier still reports Reflex findings that a project may
+  waive in its own stamp, and longer copy brings back the words-per-screen budget (gate 58).
 
 Exit codes: `0` pass or skipped, `1` blocked, `2` usage or runtime error.
 

@@ -50,6 +50,88 @@ function resolveSkillDir(options = {}) {
   return null;
 }
 
+const STAMP_RE = /\/\*\s*Hallmark\b/;
+const SCAN_EXT = /\.(css|html?|vue|svelte|astro)$/i;
+const SKIP_DIRS = new Set(['node_modules', '.git', 'dist', 'build', '.next', '.hallmark', 'coverage']);
+const MARKER_FILES = ['design.md', 'DESIGN.md'];
+const MAX_SCAN_FILES = 400;
+
+function hasMarkerAbove(start, steps = 8) {
+  let dir = start;
+  for (let i = 0; i < steps; i++) {
+    if (fs.existsSync(path.join(dir, '.hallmark'))) return `.hallmark/ in ${dir}`;
+    for (const name of MARKER_FILES) {
+      if (fs.existsSync(path.join(dir, name))) return `${name} in ${dir}`;
+    }
+    const up = path.dirname(dir);
+    if (up === dir) break;
+    dir = up;
+  }
+  return null;
+}
+
+function fileHasStamp(file) {
+  try {
+    const fd = fs.openSync(file, 'r');
+    const buffer = Buffer.alloc(65536);
+    const bytes = fs.readSync(fd, buffer, 0, buffer.length, 0);
+    fs.closeSync(fd);
+    return STAMP_RE.test(buffer.toString('utf8', 0, bytes));
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Was this target built or polished with Hallmark? True when a `.hallmark/`
+ * folder or a design.md sits at or above the target or the working directory,
+ * or a stylesheet or page under the target carries the Hallmark stamp.
+ * Pages Hallmark never touched have none of these.
+ *
+ * @param {string} [target] - File or folder; empty checks the working directory only
+ * @param {{ cwd?: string }} [options]
+ * @returns {{ hallmark: boolean, reason: string }}
+ */
+function isHallmarkProject(target, options = {}) {
+  const cwd = options.cwd || process.cwd();
+  const resolved = target ? path.resolve(cwd, target) : null;
+  let stat = null;
+  try { stat = resolved ? fs.statSync(resolved) : null; } catch { stat = null; }
+  const starts = [cwd];
+  if (resolved) starts.unshift(stat && stat.isFile() ? path.dirname(resolved) : resolved);
+
+  for (const start of starts) {
+    const marker = hasMarkerAbove(start);
+    if (marker) return { hallmark: true, reason: marker };
+  }
+  if (!resolved || !stat) return { hallmark: false, reason: 'no stamp, .hallmark/ or design.md found' };
+
+  if (stat.isFile()) {
+    return fileHasStamp(resolved)
+      ? { hallmark: true, reason: `Hallmark stamp in ${path.basename(resolved)}` }
+      : { hallmark: false, reason: 'no stamp, .hallmark/ or design.md found' };
+  }
+
+  let scanned = 0;
+  const queue = [resolved];
+  while (queue.length && scanned < MAX_SCAN_FILES) {
+    const dir = queue.shift();
+    let entries = [];
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { continue; }
+    for (const entry of entries) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (!SKIP_DIRS.has(entry.name)) queue.push(full);
+      } else if (SCAN_EXT.test(entry.name)) {
+        scanned += 1;
+        if (fileHasStamp(full)) return { hallmark: true, reason: `Hallmark stamp in ${path.relative(resolved, full) || entry.name}` };
+        if (scanned >= MAX_SCAN_FILES) break;
+      }
+    }
+  }
+  return { hallmark: false, reason: 'no stamp, .hallmark/ or design.md found' };
+}
+
 /**
  * Build the sloplint argument list from gate options.
  * @param {string} target - File, directory, or empty when only urls are given
@@ -235,6 +317,7 @@ module.exports = {
   resolveSkillDir,
   buildArgs,
   parseSloplintOutput,
+  isHallmarkProject,
   runSloplint,
   evaluateGate,
   summarize,

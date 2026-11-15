@@ -43,7 +43,7 @@ test('validate passes on clean scaffold output', () => {
   try {
     scaffold(EXAMPLE_CONFIG, out);
     let caught = null;
-    try { validate(out, null); } catch (e) { caught = e; }
+    try { validate(out, null, { design: false }); } catch (e) { caught = e; }
     assert(!caught, `validate threw: ${caught}`);
   } finally {
     cleanTmp(out);
@@ -59,7 +59,7 @@ test('validate catches {{LEFTOVER_TOKEN}} in HTML and calls process.exit', () =>
     let exited = false;
     const origExit = process.exit;
     process.exit = () => { exited = true; throw new Error('exit called'); };
-    try { validate(out, null); } catch (_) { /* expected: stubbed process.exit throws */ }
+    try { validate(out, null, { design: false }); } catch (_) { /* expected: stubbed process.exit throws */ }
     process.exit = origExit;
     assert(exited, 'validate did not call process.exit on leftover token');
   } finally {
@@ -84,7 +84,7 @@ test('validate warns when original brand string remains after rename', () => {
     const origWarn = console.warn;
     console.warn = (msg) => { if (msg && msg.includes('source')) _warnFired = true; origWarn(msg); };
     let caught = null;
-    try { validate(out, altCfgPath); } catch (e) { caught = e; }
+    try { validate(out, altCfgPath, { design: false }); } catch (e) { caught = e; }
     console.warn = origWarn;
     // Should either warn or pass — main assertion is no crash
     assert(!caught || caught.message === 'exit called', `unexpected error: ${caught}`);
@@ -103,7 +103,7 @@ test('validate skips binary files (.ico, .png)', () => {
     let exited = false;
     const origExit = process.exit;
     process.exit = () => { exited = true; throw new Error('exit called'); };
-    try { validate(out, null); } catch (_) { /* expected: stubbed process.exit throws */ }
+    try { validate(out, null, { design: false }); } catch (_) { /* expected: stubbed process.exit throws */ }
     process.exit = origExit;
     assert(!exited, 'validate scanned binary .ico file and exited unexpectedly');
   } finally {
