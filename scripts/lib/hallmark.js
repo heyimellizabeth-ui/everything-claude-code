@@ -54,12 +54,17 @@ const STAMP_RE = /\/\*\s*Hallmark\b/;
 const SCAN_EXT = /\.(css|html?|vue|svelte|astro)$/i;
 const SKIP_DIRS = new Set(['node_modules', '.git', 'dist', 'build', '.next', '.hallmark', 'coverage']);
 const MARKER_FILES = ['design.md', 'DESIGN.md'];
+// Files a Hallmark build or redesign writes into .hallmark/. The folder alone is not
+// a marker: the linter's own --render and --url runs create .hallmark/shots/.
+const HALLMARK_DIR_MARKERS = ['log.json', 'before.json', 'preflight.json', 'brand-spec.md'];
 const MAX_SCAN_FILES = 400;
 
 function hasMarkerAbove(start, steps = 8) {
   let dir = start;
   for (let i = 0; i < steps; i++) {
-    if (fs.existsSync(path.join(dir, '.hallmark'))) return `.hallmark/ in ${dir}`;
+    for (const name of HALLMARK_DIR_MARKERS) {
+      if (fs.existsSync(path.join(dir, '.hallmark', name))) return `.hallmark/${name} in ${dir}`;
+    }
     for (const name of MARKER_FILES) {
       if (fs.existsSync(path.join(dir, name))) return `${name} in ${dir}`;
     }
@@ -83,10 +88,12 @@ function fileHasStamp(file) {
 }
 
 /**
- * Was this target built or polished with Hallmark? True when a `.hallmark/`
- * folder or a design.md sits at or above the target or the working directory,
- * or a stylesheet or page under the target carries the Hallmark stamp.
- * Pages Hallmark never touched have none of these.
+ * Was this target built or polished with Hallmark? True when a design.md or a
+ * `.hallmark/` record (log.json, before.json, preflight.json, brand-spec.md)
+ * sits at or above the target or the working directory, or a stylesheet or
+ * page under the target carries the Hallmark stamp. A bare `.hallmark/` folder
+ * does not count: the linter creates one for its screenshots. Call this before
+ * running the linter. Pages Hallmark never touched have none of these.
  *
  * @param {string} [target] - File or folder; empty checks the working directory only
  * @param {{ cwd?: string }} [options]

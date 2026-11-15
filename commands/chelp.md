@@ -42,7 +42,7 @@ Opus 5.5, and each consultation is logged to `.chelp/advisor-log.md` so the play
 
 ## Prerequisites
 
-- **Hallmark:** `npx skills add nutlope/hallmark -g` (checked with version 2.0.0). Node 18 or later.
+- **Hallmark:** `npx skills add nutlope/hallmark -g` (checked with version 2.0.0), or from a clone `node skills/hallmark/scripts/install.mjs`. Both put it in `~/.claude/skills/hallmark`, where `/design-gate` finds it and the command is `/hallmark`. Installing it as a Claude Code plugin makes the command `/hallmark:hallmark` instead, so use the skills route. Node 18 or later.
 - **Browser checks** (`--render`, `--require-render`): `npm i -g puppeteer-core` and Chrome or Chromium. Playwright alone is not enough.
 - **Studio sites** from `/studio-build`: use `/design-gate <folder> --tier floor`.
 

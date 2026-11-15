@@ -849,6 +849,22 @@ function runTests() {
     }
   })) passed++; else failed++;
 
+  if (test('the design gate script and the chelp advisor playbook ship with the default modules', () => {
+    const repoRoot = path.resolve(__dirname, '..', '..');
+    const modules = new Map(loadInstallManifests({ repoRoot }).modules.map(module => [module.id, module]));
+    const covers = (id, relPath) => (modules.get(id).paths || []).some(p => relPath === p || relPath.startsWith(`${p}/`));
+    assert.ok(covers('platform-configs', 'scripts/design-gate.js'), 'scripts/design-gate.js is not in platform-configs');
+    assert.ok(covers('workflow-quality', 'skills/chelp-advisor'), 'skills/chelp-advisor is not in workflow-quality');
+    assert.ok(covers('hooks-runtime', 'scripts/lib/hallmark.js'), 'scripts/lib/hallmark.js is not covered by hooks-runtime');
+    assert.ok(covers('agents-core', 'agents/chelp-advisor.md'), 'agents/chelp-advisor.md is not in agents-core');
+    assert.ok(covers('commands-core', 'commands/chelp-advisor.md'), 'commands/chelp-advisor.md is not in commands-core');
+    const profiles = loadInstallManifests({ repoRoot }).profiles;
+    for (const [id, profile] of Object.entries(profiles)) {
+      assert.ok(profile.modules.includes('workflow-quality'), `profile ${id} lacks workflow-quality`);
+      assert.ok(profile.modules.includes('platform-configs'), `profile ${id} lacks platform-configs`);
+    }
+  })) passed++; else failed++;
+
   console.log(`\nResults: Passed: ${passed}, Failed: ${failed}`);
   process.exit(failed > 0 ? 1 : 0);
 }

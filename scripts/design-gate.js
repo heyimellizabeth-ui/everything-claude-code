@@ -54,12 +54,13 @@ function main(argv) {
   }
 
   const { target, options } = parsed;
+  // Decide this before the run: the linter writes .hallmark/ files of its own.
+  const project = hallmark.isHallmarkProject(target);
   const result = hallmark.runSloplint(target, options);
   const gate = hallmark.evaluateGate(result, { tier: options.tier, requireRender: options.requireRender });
   const summary = hallmark.summarize(result);
   // Blocking applies to pages Hallmark built or polished. Elsewhere the gate
   // reports and exits 0, unless --enforce is passed.
-  const project = hallmark.isHallmarkProject(target);
   const enforced = Boolean(options.enforce || project.hallmark);
 
   if (options.json) {

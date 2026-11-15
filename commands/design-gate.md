@@ -35,10 +35,12 @@ Hallmark is a separate, optional skill. This command wraps it and never copies i
 1. Run the gate:
 
    ```bash
-   node "${CLAUDE_PLUGIN_ROOT}/scripts/design-gate.js" $ARGUMENTS
+   ECC_ROOT="${CLAUDE_PLUGIN_ROOT:-$(node -e "var r=(()=>{var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var p=require('path'),f=require('fs'),h=require('os').homedir(),d=p.join(h,'.claude'),q=p.join('scripts','lib','utils.js');if(f.existsSync(p.join(d,q)))return d;for(var s of [['ecc'],['ecc@ecc'],['marketplaces','ecc'],['everything-claude-code'],['everything-claude-code@everything-claude-code'],['marketplaces','everything-claude-code']]){var l=p.join(d,'plugins',...s);if(f.existsSync(p.join(l,q)))return l}try{for(var g of ['ecc','everything-claude-code']){var b=p.join(d,'plugins','cache',g);for(var o of f.readdirSync(b,{withFileTypes:true})){if(!o.isDirectory())continue;for(var v of f.readdirSync(p.join(b,o.name),{withFileTypes:true})){if(!v.isDirectory())continue;var c=p.join(b,o.name,v.name);if(f.existsSync(p.join(c,q)))return c}}}}catch(x){}return d})();console.log(r)")}"
+   node "$ECC_ROOT/scripts/design-gate.js" $ARGUMENTS
    ```
 
-   With a manual install, use `node ~/.claude/scripts/design-gate.js $ARGUMENTS`.
+   The first line finds the plugin root when `CLAUDE_PLUGIN_ROOT` is not set, the same way the other ECC
+   commands do.
 
 2. Read the summary line, for example
    `Floor 0 FAIL · Reflex 2 (1 waived) · 4 WARN · render: skipped`, and report it to the user as
@@ -64,7 +66,7 @@ Hallmark is a separate, optional skill. This command wraps it and never copies i
   and prints the reason when `--render` or `--url` was asked for but the browser checks did not run.
 - A `--before` run only records the page and never blocks.
 - Studio sites from `/studio-build`: use `--tier floor`. A freshly scaffolded site passes it with the browser
-  checks (`--render --require-render`). The full tier still reports Reflex findings that a project may
+  checks (`--render --require-render`): checked on all 16 Design Studio colour presets and two other brands. The full tier still reports Reflex findings that a project may
   waive in its own stamp, and longer copy brings back the words-per-screen budget (gate 58).
 
 Exit codes: `0` pass or skipped, `1` blocked, `2` usage or runtime error.

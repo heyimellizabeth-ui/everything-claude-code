@@ -274,11 +274,26 @@ function runTests() {
     }
   });
 
+  check('a bare .hallmark folder, as the linter leaves for its screenshots, does not mark a project', () => {
+    const dir = tmp();
+    const cwd = tmp();
+    fs.mkdirSync(path.join(cwd, '.hallmark', 'shots'), { recursive: true });
+    fs.writeFileSync(path.join(cwd, '.hallmark', '.gitignore'), '*\n');
+    fs.writeFileSync(path.join(dir, 'site.css'), 'body { margin: 0; }');
+    try {
+      assert.strictEqual(hallmark.isHallmarkProject(dir, { cwd }).hallmark, false);
+    } finally {
+      cleanup(dir);
+      cleanup(cwd);
+    }
+  });
+
   check('a .hallmark folder or a design.md marks the project', () => {
     const withFolder = tmp();
     const withDesign = tmp();
     const cwd = tmp();
     fs.mkdirSync(path.join(withFolder, '.hallmark'));
+    fs.writeFileSync(path.join(withFolder, '.hallmark', 'log.json'), '[]');
     fs.writeFileSync(path.join(withDesign, 'design.md'), '# design');
     try {
       assert.strictEqual(hallmark.isHallmarkProject(withFolder, { cwd }).hallmark, true);
@@ -365,6 +380,25 @@ function runTests() {
       assert.strictEqual(run.status, 0, run.stdout + run.stderr);
       assert.ok(run.stdout.includes('REPORT ONLY') && /Not a Hallmark project/.test(run.stdout), run.stdout);
       assert.ok(!run.stdout.includes('BLOCKED'));
+    } finally {
+      cleanup(skill);
+      cleanup(page);
+    }
+  });
+
+  check('the linter writing .hallmark/ files during the run does not turn a report-only run into a block', () => {
+    // A fake linter that behaves like the real one: it leaves .hallmark/ files in the working directory.
+    const skill = fs.mkdtempSync(path.join(os.tmpdir(), 'ecc-hallmark-'));
+    fs.mkdirSync(path.join(skill, 'scripts'));
+    fs.writeFileSync(path.join(skill, 'scripts', 'sloplint.mjs'),
+      "import fs from 'node:fs'; fs.mkdirSync('.hallmark/shots', { recursive: true }); fs.writeFileSync('.hallmark/log.json', '[]');" +
+      `process.stdout.write(JSON.stringify(${JSON.stringify({ summary: { ...CLEAN, fails: 3 }, findings: [] })})); process.exit(1);`);
+    const page = fs.mkdtempSync(path.join(os.tmpdir(), 'ecc-page-'));
+    fs.writeFileSync(path.join(page, 'index.html'), '<!doctype html><title>x</title>');
+    try {
+      const run = runCli([page], { HALLMARK_SKILL_DIR: skill });
+      assert.strictEqual(run.status, 0, run.stdout + run.stderr);
+      assert.ok(run.stdout.includes('REPORT ONLY'), run.stdout);
     } finally {
       cleanup(skill);
       cleanup(page);
