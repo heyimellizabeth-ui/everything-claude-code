@@ -21,6 +21,7 @@ skills:
   - api-design
   - architecture-decision-records
   - article-writing
+  - astryx-components
   - autonomous-loops
   - backend-patterns
   - benchmark
@@ -29,6 +30,7 @@ skills:
   - bun-runtime
   - canary-watch
   - carrier-relationship-management
+  - chelp-advisor
   - ck
   - claude-devfleet
   - click-path-audit
@@ -162,6 +164,7 @@ commands:
   - c4
   - c5
   - chelp
+  - chelp-advisor
   - checkpoint
   - code-review
   - cost-report

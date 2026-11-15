@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 89,
+  "totalCommands": 90,
   "commands": [
     {
       "command": "aside",
@@ -35,7 +35,9 @@
       "type": "orchestration",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c1.md"
     },
     {
@@ -44,7 +46,9 @@
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c2.md"
     },
     {
@@ -53,7 +57,9 @@
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c3.md"
     },
     {
@@ -63,6 +69,7 @@
       "primaryAgents": [],
       "allAgents": [],
       "skills": [
+        "chelp-advisor",
         "security-scan"
       ],
       "path": "commands/c4.md"
@@ -73,7 +80,9 @@
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/c5.md"
     },
     {
@@ -86,12 +95,24 @@
       "path": "commands/checkpoint.md"
     },
     {
+      "command": "chelp-advisor",
+      "description": "Consult the chelp advisor (Opus) at a chain checkpoint, before building or before shipping, and get ranked, evidence-backed advice.",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "chelp-advisor"
+      ],
+      "path": "commands/chelp-advisor.md"
+    },
+    {
       "command": "chelp",
       "description": "List all web design command chains (c1–c5) with descriptions and when to use each",
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
       "skills": [
+        "chelp-advisor",
         "security-scan"
       ],
       "path": "commands/chelp.md"
@@ -899,7 +920,9 @@
       "type": "review",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "chelp-advisor"
+      ],
       "path": "commands/studio-build.md"
     },
     {
@@ -937,7 +960,7 @@
       "orchestration": 7,
       "planning": 2,
       "refactoring": 1,
-      "review": 13,
+      "review": 14,
       "testing": 56
     },
     "topAgents": [
@@ -984,6 +1007,10 @@
     ],
     "topSkills": [
       {
+        "skill": "chelp-advisor",
+        "count": 8
+      },
+      {
         "skill": "continuous-learning-v2",
         "count": 6
       },
@@ -1017,10 +1044,6 @@
       },
       {
         "skill": "golang-patterns",
-        "count": 2
-      },
-      {
-        "skill": "golang-testing",
         "count": 2
       }
     ]

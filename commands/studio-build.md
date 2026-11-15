@@ -108,6 +108,12 @@ Tell the user:
   - Formspree keys if placeholders remain
 - Next step: open `projects/<projectName>/index.html` in a browser to review
 
+### 9b — Advisor check
+
+Before the handoff and the next-step offer, run `/chelp-advisor pre-ship studio-build`. It checks that
+the validate step ran the design check (not "skipped"), that step 11's gate command was run on this
+scaffold with the summary line pasted, and that the template was not changed without being asked.
+
 ### 10 — Offer session handoff
 
 After the report, ask the user:

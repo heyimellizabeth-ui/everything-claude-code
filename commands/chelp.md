@@ -29,6 +29,17 @@ findings are fixed or waived in the page's stamp with a real reason.
 - `/design-gate` blocks only on a project Hallmark built or polished (a stamp, `.hallmark/` or `design.md`). On any other project it reports and exits 0; add `--enforce` to block.
 - Without Hallmark installed, `/design-gate` prints SKIPPED and exits 0. In `/c4`, add `--require-hallmark` so a missing install blocks.
 
+## Advisor: Opus
+
+`/chelp-advisor` consults an Opus advisor at two checkpoints in each chain: `pre-build` (after the plan)
+and `pre-ship` (after the design gate). The advisor reads the real files, runs the real commands and
+quotes the printed gate line, then answers with a verdict, at most three blocking items with evidence,
+and what to tell the user. Its habits are in `skills/chelp-advisor/SKILL.md`, written by Fable 5.2 for
+Opus 5.5, and each consultation is logged to `.chelp/advisor-log.md` so the playbook keeps improving.
+
+- Set it once with Claude Code's `/advisor opus`, read the skill, then call the advisor tool, or run `/chelp-advisor`.
+- The advisor does not replace `/code-review` or `/santa-loop`. It checks that the chain's own claims are true.
+
 ## Prerequisites
 
 - **Hallmark:** `npx skills add nutlope/hallmark -g` (checked with version 2.0.0). Node 18 or later.
