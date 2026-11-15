@@ -59,6 +59,10 @@ function validateFrontmatter(file, content) {
   return errors;
 }
 
+// Slash commands that come from separately installed skills. They have no
+// file in commands/, but a command doc may reference them.
+const EXTERNAL_COMMANDS = new Set(['hallmark']);
+
 function validateCommands() {
   if (!fs.existsSync(COMMANDS_DIR)) {
     console.log('No commands directory found, skipping validation');
@@ -133,7 +137,7 @@ function validateCommands() {
       const lineRefs = line.matchAll(/`\/([a-z][-a-z0-9]*)`/g);
       for (const match of lineRefs) {
         const refName = match[1];
-        if (!validCommands.has(refName)) {
+        if (!validCommands.has(refName) && !EXTERNAL_COMMANDS.has(refName)) {
           console.error(`ERROR: ${file} - references non-existent command /${refName}`);
           hasErrors = true;
         }

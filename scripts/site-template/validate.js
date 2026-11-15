@@ -2,9 +2,10 @@
 
 const fs = require('fs');
 const path = require('path');
+const hallmark = require('../lib/hallmark');
 
 function usage() {
-  console.error('Usage: node validate.js --dir <output-dir> [--config <brand.config.json>]');
+  console.error('Usage: node validate.js --dir <output-dir> [--config <brand.config.json>] [--no-design] [--require-hallmark]');
   process.exit(1);
 }
 
@@ -13,6 +14,8 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--dir') args.dir = argv[++i];
     if (argv[i] === '--config') args.config = argv[++i];
+    if (argv[i] === '--no-design') args.noDesign = true;
+    if (argv[i] === '--require-hallmark') args.requireHallmark = true;
   }
   return args;
 }
@@ -40,7 +43,29 @@ function walkFiles(dir, base = dir, acc = []) {
   return acc;
 }
 
-function validate(outDir, configPath) {
+/**
+ * Run the Hallmark design linter at the Floor tier on the output.
+ * Hallmark is optional: when it is not installed this adds a warning, or an
+ * error with requireHallmark.
+ * @returns {{ errors: string[], warnings: string[], ran: boolean }}
+ */
+function designCheck(outDir, options = {}) {
+  const errors = [];
+  const warnings = [];
+  const result = hallmark.runSloplint(outDir, { tier: 'floor', skillDir: options.skillDir, env: options.env, homedir: options.homedir });
+  if (!result.available) {
+    (options.requireHallmark ? errors : warnings).push('design check skipped: Hallmark is not installed (npx skills add nutlope/hallmark -g)');
+  } else if (!result.ok) {
+    errors.push(`design check could not run: ${result.error}`);
+  } else if (result.fails > 0) {
+    const top = hallmark.topGates(result.findings.filter(f => f.grade === 'FAIL'), 5)
+      .map(g => `gate ${g.gate} x${g.count}`).join(', ');
+    errors.push(`design check: ${result.fails} Hallmark Floor FAIL (${top}). Run /design-gate ${outDir} --tier floor`);
+  }
+  return { errors, warnings, ran: result.available && result.ok };
+}
+
+function validate(outDir, configPath, options = {}) {
   if (!fs.existsSync(outDir)) {
     console.error(`[validate] Output dir not found: ${outDir}`);
     process.exit(1);
@@ -106,6 +131,14 @@ function validate(outDir, configPath) {
     }
   }
 
+  let designRan = false;
+  if (options.design !== false) {
+    const design = designCheck(outDir, options);
+    errors.push(...design.errors);
+    warnings.push(...design.warnings);
+    designRan = design.ran;
+  }
+
   if (warnings.length) {
     console.warn('[validate] Warnings:');
     warnings.forEach(w => console.warn(`  WARNING: ${w}`));
@@ -117,13 +150,16 @@ function validate(outDir, configPath) {
     process.exit(1);
   }
 
-  console.log(`[validate] ✓ ${files.length} files checked — no unsubstituted tokens`);
+  console.log(`[validate] ✓ ${files.length} files checked, no unsubstituted tokens${designRan ? ', Hallmark Floor checked' : ''}`);
 }
 
 if (require.main === module) {
   const args = parseArgs(process.argv.slice(2));
   if (!args.dir) usage();
-  validate(path.resolve(args.dir), args.config ? path.resolve(args.config) : null);
+  validate(path.resolve(args.dir), args.config ? path.resolve(args.config) : null, {
+    design: !args.noDesign,
+    requireHallmark: Boolean(args.requireHallmark)
+  });
 }
 
-module.exports = { validate };
+module.exports = { validate, designCheck };
