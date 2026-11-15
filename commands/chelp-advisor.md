@@ -53,8 +53,8 @@ honest. Its habits live in the `chelp-advisor` skill.
 
 ## Notes
 
-- The advisor appends to `.chelp/advisor-log.md` in the project. Keep that file in git. It is how the
-  playbook improves: a miss that recurs becomes a new habit in `skills/chelp-advisor/SKILL.md`.
+- The advisor appends to `.chelp/advisor-log.md` in the project. In a site project keep that file in git;
+  in the ECC repository itself it is git-ignored. It is how the playbook improves: a miss that recurs becomes a new habit in `skills/chelp-advisor/SKILL.md`.
 - Make the work durable (written, committed) before you ask for the pre-ship review; a consultation can
   take a while.
 - The advisor does not replace `/code-review` or `/santa-loop`. It checks that the chain's own claims are

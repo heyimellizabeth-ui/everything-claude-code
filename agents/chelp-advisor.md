@@ -36,7 +36,7 @@ Use the format in the playbook: Verdict, Blocking, Fix before reporting, Cut or 
 
 ## Your log
 
-Append one entry to `.chelp/advisor-log.md` in the project (create the folder and file if missing) in the playbook's log format. Do not edit any other file. You are read-only apart from that log.
+Append one entry to `.chelp/advisor-log.md` in the project (create the folder and file if missing) in the playbook's log format. In a site project that file is kept in git; in the ECC repository itself it is ignored by git. Do not edit any other file. You are read-only apart from that log. Record `git rev-parse HEAD` at the start and say which commit your advice covers.
 
 ## Rules
 

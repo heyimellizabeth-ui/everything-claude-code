@@ -50,7 +50,7 @@ Terms you need (repo: `/home/user/everything-claude-code`):
 9. **Read the user-facing report as the user.** Unanswered decisions go first. Every promise made earlier is either kept or withdrawn in words. *Example: the template's colours changed without the user's answer, and "this will be a second PR" was no longer true.*
 10. **Sweep for stale text and contradictions.** After any change of fact, grep the old fact across command docs, the skill, the plan, the PR body and the tutorial. *Example: the plan says three gate-58 failures remain on a scaffold in the browser tier while `commands/design-gate.md` says a fresh scaffold passes. One is stale; make the worker run it.*
 11. **Check tests for hidden dependencies.** The suite must pass with Hallmark absent, or an upstream change breaks it. *Example: tests leaned on the installed linter; prove otherwise with `HOME=$(mktemp -d) HALLMARK_SKILL_DIR= node tests/site-template/validate.test.js`.*
-12. **Durable before done; smallest slice first.** At the start, name the smallest slice that proves value and its exact exit command. At the end, require commit and push before "done", then one more consultation before the final report. *Example: the last consultation still found stale PR text.*
+12. **Durable and pinned before done; smallest slice first.** At the start, name the smallest slice that proves value and its exact exit command, and record `git rev-parse HEAD`: your advice covers that commit, so say so, and re-check it at the end because the worker may have kept editing. Require commit and push before "done", then one more consultation before the final report. *Example: a review ran on a clean HEAD while uncommitted edits appeared.*
 
 ## 3. Checkpoints per chain
 
@@ -64,7 +64,7 @@ npm run lint                     # eslint and markdownlint
 node tests/lib/hallmark.test.js && node tests/site-template/validate.test.js
 ```
 
-Expect zero failures. For a new command or skill, counts are synced with `npm run catalog:sync` and `npm run command-registry:write`, never hand-edited.
+Expect zero failures. For a new command or skill, counts are synced with `npm run catalog:sync` and `npm run command-registry:write`, never hand-edited. After any test run check `git status`: `npm test` can rewrite `yarn.lock` on some machines; restore it and tell the user. For a whole PR rather than one chain, run every chain checkpoint below that the diff touches, and read the PR body against the commits, not against memory.
 
 ### /c1 new project
 
@@ -109,7 +109,7 @@ Expect zero failures. For a new command or skill, counts are synced with `npm ru
 
 - Did step 7 (`node scripts/site-template/validate.js --dir projects/<slug>`) run the design check, or print "design check skipped: Hallmark is not installed"? A skip is not a pass.
 - Run step 11's command on the fresh scaffold: `/design-gate projects/<slug> --tier floor --render --require-render`. Paste the line. If gate 58 (words per screen) fails on sample copy, the doc's "freshly scaffolded site passes" is stale.
-- Was a second brand config tried? Text on the accent colour depends on the computed `--red-ink`.
+- Were the Design Studio's own colour presets tried, not one hand-tuned brand? Extract `COLOR_PRESETS` from `projects/design-studio/index.html` and scaffold each one (16, light and dark). Each render run takes about 18 seconds, so run them in parallel in the background. Text on the accent and muted colours depends on the scaffold's `--red-text`, `--muted-text` and `--red-ink`.
 - Did a template change alter colours or copy unasked? That is the user's decision.
 
 ## 4. How to deliver advice
@@ -134,8 +134,7 @@ What to tell the user: decisions first, then results, then what was not run
 
 - Approving from a green test run without asking what the tests ran against.
 - Generic advice with no file, command or expected output.
-- Twenty equal items that bury the one false pass.
-- Praising effort.
+- Twenty equal items that bury the one false pass, or praise for effort.
 - Re-litigating the user's choice.
 - Advising from the worker's summary instead of the files.
 - Missing that two docs, or the plan and the report, now contradict each other.
@@ -146,7 +145,7 @@ What to tell the user: decisions first, then results, then what was not run
 After each consultation, append one short entry to `.chelp/advisor-log.md` in the project (create it if absent):
 
 ```
-## 2026-11-15 c4 before-shipping
+## 2026-11-15 c4 pre-ship
 Advised: run the gate with --require-hallmark; PR line was from an older commit
 Worker did: re-ran, pasted new line
 Outcome: render NOT RUN surfaced, puppeteer-core installed, then PASS
@@ -196,7 +195,6 @@ exactly as `commands/c4.md` prints it, quotes the summary line, and answers in t
 Verdict: fix then ship
 Blocking:
 1. The PR body quotes "Floor 0 FAIL" from an older commit. Re-run on HEAD and paste the new line.
-Fix before reporting: commands/design-gate.md still says a scaffold needs --tier floor; the browser run passes without it.
 Cut or defer: the optional edit-time hook.
 What to tell the user: the template colours changed and are not yet confirmed.
 ```
