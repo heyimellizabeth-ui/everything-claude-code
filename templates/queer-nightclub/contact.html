@@ -44,7 +44,7 @@
    * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   [hidden] { display: none !important; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --red-text: {{COLOR_ACCENT_TEXT}}; --muted-text: {{COLOR_MUTED_TEXT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a10: color-mix(in srgb, var(--cream) 10%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
   }
   html { scroll-behavior: smooth; }
@@ -59,25 +59,25 @@
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: var(--void-a85); backdrop-filter: blur(8px); }
   .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--cream); }
 
   .page-header { padding: 10rem 3rem 4rem; border-bottom: 1px solid var(--cream-a08); }
   .page-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 1rem; }
+  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); margin-bottom: 1rem; }
   .page-title { font-family: var(--font-mono); font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; letter-spacing: 2px; line-height: 0.9; }
-  .page-title span { color: var(--red); }
-  .page-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); text-align: right; line-height: 2; }
+  .page-title span { color: var(--red-text); }
+  .page-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted-text); text-align: right; line-height: 2; }
 
   /* CONTACT LAYOUT */
   .contact-main { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
 
   /* FORM */
-  .contact-form-section h2 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; color: var(--muted); }
+  .contact-form-section h2 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; color: var(--muted-text); }
   .form-group { margin-bottom: 1.5rem; }
-  .form-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); display: block; margin-bottom: 0.5rem; }
+  .form-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted-text); display: block; margin-bottom: 0.5rem; }
   .form-input, .form-select, .form-textarea {
-    width: 100%; background: var(--surface); border: 1px solid var(--muted); color: var(--cream);
+    width: 100%; background: var(--surface); border: 1px solid var(--muted-text); color: var(--cream);
     font-family: var(--font-mono); font-size: 0.85rem; padding: 0.85rem 1rem;
     outline: none; transition: border-color 0.2s; appearance: none;
   }
@@ -88,34 +88,34 @@
   .form-submit:hover { opacity: 0.85; }
 
   /* INFO */
-  .contact-info h2 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; color: var(--muted); }
+  .contact-info h2 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; color: var(--muted-text); }
   .info-block { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--cream-a08); }
   .info-block:last-child { border-bottom: none; }
-  .info-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 0.75rem; }
+  .info-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--red-text); margin-bottom: 0.75rem; }
   .info-value { font-family: var(--font-mono); font-size: 0.85rem; color: var(--cream); letter-spacing: 0.02em; line-height: 1.8; }
   .info-value a { color: var(--cream); text-decoration: none; transition: color 0.2s; }
-  .info-value a:hover { color: var(--red); }
-  .info-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+  .info-value a:hover { color: var(--red-text); }
+  .info-sub { font-size: 0.75rem; color: var(--muted-text); margin-top: 0.25rem; }
 
   /* SOCIALS */
   .social-links { display: flex; flex-direction: column; gap: 0.75rem; }
-  .social-link { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.75rem; }
+  .social-link { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted-text); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.75rem; }
   .social-link:hover { color: var(--cream); }
-  .social-link::before { content: '→'; color: var(--red); }
+  .social-link::before { content: '→'; color: var(--red-text); }
 
   /* MAP PLACEHOLDER */
   .map-section { padding: 0 3rem 6rem; max-width: 1200px; margin: 0 auto; }
   .map-placeholder { background: var(--surface); border: 1px solid var(--cream-a08); padding: 4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1rem; }
   .map-placeholder h3 { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 2px; }
-  .map-placeholder p { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); }
-  .map-placeholder a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--red); text-decoration: none; margin-top: 0.5rem; }
+  .map-placeholder p { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted-text); }
+  .map-placeholder a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--red-text); text-decoration: none; margin-top: 0.5rem; }
 
   footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
-  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); }
   .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
-  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted-text); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cream); }
-  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted-text); }
   .js .mil-up { opacity: 0; transform: translateY(30px); }
 
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
@@ -126,7 +126,7 @@
   .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
   .nav-drawer.open { display: flex; }
   .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; transition: color 0.2s; }
-  .nav-drawer a:hover { color: var(--red); }
+  .nav-drawer a:hover { color: var(--red-text); }
 
   @media (max-width: 768px) {
     body { cursor: auto; } .cursor { display: none; }
@@ -228,7 +228,7 @@
         {{VENUE_REGION}}, NL
       </div>
       <div class="info-sub" style="margin-top:0.75rem;">
-        <a href="https://www.podiumvictorie.nl" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:1px;">podiumvictorie.nl</a>
+        <a href="https://www.podiumvictorie.nl" target="_blank" rel="noopener noreferrer" style="color:var(--muted-text);text-decoration:none;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:1px;">podiumvictorie.nl</a>
       </div>
     </div>
 
@@ -263,7 +263,7 @@
 <!-- Checkout module -->
 <div style="{{MODULE_CHECKOUT}};padding:60px 5vw;text-align:center;border-top:1px solid var(--cream-a08)">
   <h2 style="font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;color:var(--cream)">Buy Tickets</h2>
-  <p style="color:var(--muted);margin-bottom:28px">Secure checkout via {{MODULE_CHECKOUT_URL}}</p>
+  <p style="color:var(--muted-text);margin-bottom:28px">Secure checkout via {{MODULE_CHECKOUT_URL}}</p>
   <a href="{{MODULE_CHECKOUT_URL}}" target="_blank" rel="noopener noreferrer"
      style="display:inline-block;background:var(--red);color:var(--cream);padding:14px 36px;font-weight:700;letter-spacing:.08em;text-decoration:none;font-size:13px;text-transform:uppercase">
     Buy Tickets
@@ -281,9 +281,9 @@
     <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
     <input type="hidden" name="_type" value="planner">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Preferred date</label>
+      <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-text);display:block;margin-bottom:6px">Preferred date</label>
         <input type="date" name="date" style="width:100%;background:transparent;border:1px solid var(--cream-a15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
-      <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Party size</label>
+      <div><label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-text);display:block;margin-bottom:6px">Party size</label>
         <input type="number" name="guests" min="1" max="20" placeholder="2" style="width:100%;background:transparent;border:1px solid var(--cream-a15);color:var(--cream);padding:10px 12px;font-size:.9rem"></div>
     </div>
     <input type="email" name="email" placeholder="your@email.com" required

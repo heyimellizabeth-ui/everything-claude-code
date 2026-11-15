@@ -3,7 +3,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { scaffold, buildTokenMap, applyTokens, accentInk } = require('../../scripts/site-template/scaffold');
+const { scaffold, buildTokenMap, applyTokens, accentInk, textSafe, contrastRatio } = require('../../scripts/site-template/scaffold');
 const { validate } = require('../../scripts/site-template/validate');
 
 const TEMPLATE_DIR = path.resolve(__dirname, '../../templates/queer-nightclub');
@@ -246,6 +246,61 @@ test('accent ink follows the accent: a green accent takes the dark colour, a dar
 
 test('accent ink falls back to the light colour for a non-hex value', () => {
   assert(accentInk({ void: '#000000', cream: '#FFFFFF', accent: 'rebeccapurple' }) === '#FFFFFF', 'non-hex accent should fall back');
+});
+
+test('accent ink reaches 4.5:1 even for a mid-tone accent where neither brand colour does', () => {
+  const crimson = { void: '#0A0003', cream: '#F5ECED', accent: '#DC143C' };
+  const blue = { void: '#0B1020', cream: '#F2F4FA', accent: '#3B6CFF' };
+  for (const colors of [crimson, blue]) {
+    const ink = accentInk(colors);
+    assert(contrastRatio(ink, colors.accent) >= 4.5, `ink ${ink} on ${colors.accent} is ${contrastRatio(ink, colors.accent).toFixed(2)}:1`);
+  }
+});
+
+test('textSafe leaves a readable colour alone and lifts an unreadable one on both backgrounds', () => {
+  const colors = { void: '#0D0D0D', cream: '#F5F0E8', surface: '#1A1A1A' };
+  assert(textSafe('#948B7A', colors) === '#948B7A', 'a readable colour should be unchanged');
+  const lifted = textSafe('#555555', colors);
+  assert(lifted !== '#555555', 'an unreadable colour should change');
+  for (const bg of [colors.void, colors.surface]) {
+    assert(contrastRatio(lifted, bg) >= 4.5, `${lifted} on ${bg} is ${contrastRatio(lifted, bg).toFixed(2)}:1`);
+  }
+});
+
+test('textSafe handles three-digit hex, light schemes and non-hex values', () => {
+  const light = { void: '#F5F5F5', cream: '#111111', surface: '#E8E8E8' };
+  const fixed = textSafe('#999', light);
+  assert(contrastRatio(fixed.length === 4 ? '#999999' : fixed, '#E8E8E8') >= 4.5, `light scheme: ${fixed}`);
+  assert(textSafe('rebeccapurple', light) === 'rebeccapurple', 'non-hex value should be returned as is');
+});
+
+test('every Design Studio colour preset scaffolds readable accent text, muted text and button text', () => {
+  const studio = fs.readFileSync(path.resolve(__dirname, '../../projects/design-studio/index.html'), 'utf8');
+  const block = /const COLOR_PRESETS = \{([\s\S]*?)\n\};/.exec(studio);
+  assert(block, 'COLOR_PRESETS not found in the Design Studio');
+  const re = /(\w+):\s*\{\s*void:\s*'([^']+)',\s*cream:\s*'([^']+)',\s*accent:\s*'([^']+)',\s*surface:\s*'([^']+)',\s*muted:\s*'([^']+)'\s*\}/g;
+  let count = 0;
+  let m;
+  while ((m = re.exec(block[1]))) {
+    count++;
+    const [, name, v, cr, ac, su, mu] = m;
+    const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+    cfg.colors = { void: v, cream: cr, accent: ac, surface: su, muted: mu };
+    const map = buildTokenMap(cfg);
+    const expand = (h) => (h.length === 4 ? '#' + h.slice(1).split('').map((c) => c + c).join('') : h);
+    const checks = [
+      ['accent ink on accent', map['{{COLOR_ACCENT_INK}}'], [ac]],
+      ['accent text', map['{{COLOR_ACCENT_TEXT}}'], [v, su]],
+      ['muted text', map['{{COLOR_MUTED_TEXT}}'], [v, su]],
+    ];
+    for (const [label, fg, bgs] of checks) {
+      for (const bg of bgs) {
+        const r = contrastRatio(expand(fg), expand(bg));
+        assert(r >= 4.5, `${name}: ${label} ${fg} on ${bg} is ${r.toFixed(2)}:1`);
+      }
+    }
+  }
+  assert(count >= 16, `expected at least 16 presets, found ${count}`);
 });
 
 // ── new token groups ────────────────────────────────────────────────────────

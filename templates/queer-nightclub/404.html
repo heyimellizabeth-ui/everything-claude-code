@@ -14,7 +14,7 @@
    * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   [hidden] { display: none !important; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: system-ui, -apple-system, sans-serif;
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --red-text: {{COLOR_ACCENT_TEXT}}; --muted-text: {{COLOR_MUTED_TEXT}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: system-ui, -apple-system, sans-serif;
     --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a06: color-mix(in srgb, var(--cream) 6%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent);
   }
   html, body { height: 100%; }
@@ -26,25 +26,25 @@
   nav { padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
   .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--cream); }
 
   .error-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem; position: relative; }
 
   .error-num { font-family: var(--font-mono); font-size: clamp(8rem, 25vw, 22rem); font-weight: 700; letter-spacing: 0.05em; line-height: 0.85; color: var(--cream-a04); position: absolute; user-select: none; }
   .error-content { position: relative; z-index: 2; }
-  .error-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 1.5rem; }
+  .error-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--red-text); margin-bottom: 1.5rem; }
   .error-title { font-family: var(--font-mono); font-size: clamp(1.5rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: 2px; line-height: 1.1; margin-bottom: 1.5rem; }
-  .error-title span { color: var(--red); }
-  .error-sub { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 3rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .error-title span { color: var(--red-text); }
+  .error-sub { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; color: var(--muted-text); margin-bottom: 3rem; max-width: 400px; margin-left: auto; margin-right: auto; }
   .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
   .btn-primary { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--red-ink); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; text-decoration: none; }
-  .btn-secondary { display: inline-block; padding: 1rem 2.5rem; background: transparent; border: 1px solid var(--cream-a20); color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; text-decoration: none; transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s; }
+  .btn-secondary { display: inline-block; padding: 1rem 2.5rem; background: transparent; border: 1px solid var(--cream-a20); color: var(--muted-text); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; text-decoration: none; transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s; }
   .btn-secondary:hover { border-color: var(--cream); color: var(--cream); }
 
   footer { padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a06); }
-  .footer-brand { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
-  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted-text); }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted-text); }
 
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; position: relative; }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); transition: transform 0.3s, opacity 0.3s; }
@@ -54,7 +54,7 @@
   .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
   .nav-drawer.open { display: flex; }
   .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; transition: color 0.2s; }
-  .nav-drawer a:hover { color: var(--red); }
+  .nav-drawer a:hover { color: var(--red-text); }
 
   @media (max-width: 768px) {
     body { cursor: auto; overflow-y: auto; } .cursor { display: none; }

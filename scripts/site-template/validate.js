@@ -150,7 +150,10 @@ function validate(outDir, configPath, options = {}) {
     process.exit(1);
   }
 
-  console.log(`[validate] ✓ ${files.length} files checked, no unsubstituted tokens${designRan ? ', Hallmark Floor checked' : ''}`);
+  if (designRan) {
+    console.log('[validate] The static check does not render the pages. For the browser checks run: /design-gate <dir> --tier floor --render --require-render');
+  }
+  console.log(`[validate] ✓ ${files.length} files checked, no unsubstituted tokens${designRan ? ', Hallmark static Floor checked' : ''}`);
 }
 
 if (require.main === module) {

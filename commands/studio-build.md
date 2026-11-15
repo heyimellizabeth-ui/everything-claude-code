@@ -82,8 +82,8 @@ node scripts/site-template/validate.js --dir projects/<projectName>
 
 Fix any remaining `{{TOKEN}}` placeholders before continuing.
 
-`validate.js` also runs Hallmark's Floor check on the output when Hallmark is installed, and fails on any
-Floor FAIL. Without Hallmark it prints a warning and continues. Pass `--no-design` to skip the check, or
+`validate.js` also runs Hallmark's static Floor check on the output when Hallmark is installed, and fails on
+any Floor FAIL. It does not render the pages: step 11's gate command adds the browser checks. Without Hallmark it prints a warning and continues. Pass `--no-design` to skip the check, or
 `--require-hallmark` to fail when Hallmark is missing.
 
 ### 8 — Generate brand assets
@@ -147,7 +147,8 @@ After the session handoff offer, prompt:
 Run the chosen chain with the project slug and `projects/<slug>/` as the working context.
 Pass the `brand.config.json` path so the chain has access to brand values without re-reading the scaffold.
 
-A freshly scaffolded site passes `--tier floor` with the browser checks. Keep the club's own copy short:
+A freshly scaffolded site passes `--tier floor` with the browser checks, checked on all 16 Design Studio
+colour presets and two other brands. Keep the club's own copy short:
 more than about 95 words in any one screen brings back the words-per-screen failure (gate 58).
 
 ## Usage Examples

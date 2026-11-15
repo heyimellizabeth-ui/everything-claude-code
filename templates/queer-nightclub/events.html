@@ -53,7 +53,7 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   [hidden] { display: none !important; }
   :root {
-    --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}};
+    --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --red-text: {{COLOR_ACCENT_TEXT}}; --muted-text: {{COLOR_MUTED_TEXT}};
     --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}};
     --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a10: color-mix(in srgb, var(--cream) 10%, transparent); --cream-a12: color-mix(in srgb, var(--cream) 12%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent); --cream-a30: color-mix(in srgb, var(--cream) 30%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a08: color-mix(in srgb, var(--red) 8%, transparent); --red-a20: color-mix(in srgb, var(--red) 20%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
@@ -73,25 +73,25 @@
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: var(--void-a85); backdrop-filter: blur(8px); }
   .nav-logo { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 4px; color: var(--cream); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--cream); }
 
   /* PAGE HEADER */
   .page-header { padding: 10rem 3rem 4rem; border-bottom: 1px solid var(--cream-a08); }
   .page-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 1rem; }
+  .page-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); margin-bottom: 1rem; }
   .page-title { font-family: var(--font-mono); font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; letter-spacing: 2px; line-height: 0.9; }
-  .page-title span { color: var(--red); }
-  .page-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); text-align: right; line-height: 2; }
+  .page-title span { color: var(--red-text); }
+  .page-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted-text); text-align: right; line-height: 2; }
 
   /* FILTER TABS */
   .filter-bar { padding: 2rem 3rem; max-width: 1200px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap; }
-  .filter-btn { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; padding: 0.5rem 1.2rem; border: 1px solid var(--cream-a15); background: transparent; color: var(--muted); cursor: none; transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s; }
+  .filter-btn { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; padding: 0.5rem 1.2rem; border: 1px solid var(--cream-a15); background: transparent; color: var(--muted-text); cursor: none; transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s; }
   .filter-btn:hover, .filter-btn.active { border-color: var(--red); color: var(--cream); background: var(--red-a08); }
 
   /* EVENTS GRID */
   .events-main { padding: 2rem 3rem 6rem; max-width: 1200px; margin: 0 auto; }
-  .section-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--red-a20); }
+  .section-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--red-text); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--red-a20); }
   .events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 4rem; }
   .event-card { border: 1px solid var(--cream-a12); padding: 2rem; position: relative; transition: border-color 0.3s; }
   .event-card:hover { border-color: var(--cream-a30); }
@@ -99,23 +99,23 @@
   .event-card.featured:hover { border-color: var(--red); }
   .event-card.past { opacity: 0.5; }
   .event-card.past:hover { opacity: 0.75; }
-  .event-badge { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--red); margin-bottom: 1.5rem; }
+  .event-badge { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--red-text); margin-bottom: 1.5rem; }
   .event-name { font-family: var(--font-mono); font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 700; letter-spacing: 0.02em; margin-bottom: 1rem; line-height: 1.1; }
   .event-meta { display: flex; flex-direction: column; gap: 0.3rem; }
-  .event-meta span { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); }
+  .event-meta span { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); }
   .event-cta { display: inline-block; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--red); color: var(--red-ink); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; text-decoration: none; transition: opacity 0.2s; }
   .event-cta:hover { opacity: 0.8; }
-  .event-cta.outline { background: transparent; border: 1px solid var(--cream-a20); color: var(--muted); }
+  .event-cta.outline { background: transparent; border: 1px solid var(--cream-a20); color: var(--muted-text); }
   .event-cta.outline:hover { border-color: var(--cream); color: var(--cream); }
   .event-number { position: absolute; bottom: 1.5rem; right: 2rem; font-family: var(--font-mono); font-size: 3rem; font-weight: 700; color: var(--cream-a04); line-height: 1; }
 
   /* FOOTER */
   footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
-  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); }
+  .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted-text); }
   .footer-links { display: flex; gap: 1.2rem 2rem; list-style: none; flex-wrap: wrap; }
-  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted-text); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cream); }
-  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted); }
+  .footer-bpm { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.02em; color: var(--muted-text); }
 
   /* UTIL */
   .js .mil-up { opacity: 0; transform: translateY(30px); }
@@ -128,7 +128,7 @@
   .nav-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--void); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
   .nav-drawer.open { display: flex; }
   .nav-drawer a { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; transition: color 0.2s; }
-  .nav-drawer a:hover { color: var(--red); }
+  .nav-drawer a:hover { color: var(--red-text); }
 
   @media (max-width: 768px) {
     body { cursor: auto; }
@@ -209,14 +209,14 @@
         <a href="{{TICKET_URL}}" target="_blank" rel="noopener noreferrer" class="event-cta">Get tickets</a>
       </div>
       <div>
-        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted);line-height:1.8;">
+        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted-text);line-height:1.8;">
           Alkmaar's biggest queer night goes Pride. Drag performances, pole acts, and the dancefloor that {{VENUE_REGION}} has been waiting for. Dress up. Show up.
         </p>
         <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
-          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">DRAG</span>
-          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">DISCO</span>
-          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">POP</span>
-          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">PRIDE</span>
+          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted-text);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">DRAG</span>
+          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted-text);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">DISCO</span>
+          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted-text);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">POP</span>
+          <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:2px;color:var(--muted-text);border:1px solid var(--cream-a10);padding:0.3rem 0.7rem;">PRIDE</span>
         </div>
       </div>
       <div class="event-number">001</div>
