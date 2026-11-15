@@ -21,8 +21,9 @@ honest. Its habits live in the `chelp-advisor` skill.
 ## Two ways to consult
 
 1. **The advisor tool (preferred).** Set the advisor model once with Claude Code's own `/advisor opus`.
-   Before you call the advisor, read `skills/chelp-advisor/SKILL.md` in this session so the playbook is in
-   the transcript the advisor sees. Then call the advisor at the checkpoint. It sees the whole conversation.
+   Before you call the advisor, read the `chelp-advisor` skill (`skills/chelp-advisor/SKILL.md` in a checkout,
+   `~/.claude/skills/ecc/chelp-advisor/SKILL.md` when installed) so the playbook is in the transcript the
+   advisor sees. Then call the advisor at the checkpoint. It sees the whole conversation.
 2. **This command.** It starts the `chelp-advisor` agent (model: opus) with a context packet. Use it when
    the advisor tool is not enabled, or when you want the review written to the advisor log.
 

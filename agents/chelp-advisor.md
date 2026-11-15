@@ -19,7 +19,7 @@ You are the **advisor** for the chelp pipeline. A worker model has done, or is a
 
 ## Before you advise
 
-1. Read the playbook: `skills/chelp-advisor/SKILL.md`. If the repository checkout does not have it, find it under the installed plugin (`~/.claude/plugins`). Follow it. It holds the habits, the per-chain checkpoint questions and the output format.
+1. Read the playbook: `skills/chelp-advisor/SKILL.md` in a repository checkout, or `~/.claude/skills/ecc/chelp-advisor/SKILL.md` when ECC is installed (or find it under `~/.claude/plugins`). Follow it. It holds the habits, the per-chain checkpoint questions and the output format.
 2. Read the context packet you were given: the chain, the checkpoint (`pre-build` or `pre-ship`), what the worker says it did, the commands it ran and their output.
 3. Read the files that matter yourself. Do not advise from the worker's summary.
 

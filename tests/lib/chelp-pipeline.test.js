@@ -130,6 +130,12 @@ function runTests() {
       assert.strictEqual(missing.ok, false);
       assert.ok(missing.detail.includes('scripts/design-gate.js'));
       assert.strictEqual(pipeline.checkEccFiles(path.resolve(__dirname, '..', '..')).ok, true);
+      // The installer's layout: skills under skills/ecc/.
+      for (const f of ['scripts/design-gate.js', 'skills/ecc/chelp-advisor/SKILL.md', 'agents/chelp-advisor.md', 'commands/chelp-advisor.md']) {
+        fs.mkdirSync(path.join(root, path.dirname(f)), { recursive: true });
+        fs.writeFileSync(path.join(root, f), '');
+      }
+      assert.strictEqual(pipeline.checkEccFiles(root).ok, true, pipeline.checkEccFiles(root).detail);
     } finally {
       rm(root);
     }

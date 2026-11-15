@@ -87,8 +87,17 @@ function checkChrome(options = {}) {
 }
 
 function checkEccFiles(root = REPO_ROOT) {
-  const needed = ['scripts/design-gate.js', 'skills/chelp-advisor/SKILL.md', 'agents/chelp-advisor.md', 'commands/chelp-advisor.md'];
-  const missing = needed.filter(f => !fs.existsSync(path.join(root, f)));
+  // Each entry is a list of places the file can be: a repository checkout, or the
+  // installer's layout, which puts skills under skills/ecc/.
+  const needed = [
+    ['scripts/design-gate.js'],
+    ['skills/chelp-advisor/SKILL.md', 'skills/ecc/chelp-advisor/SKILL.md'],
+    ['agents/chelp-advisor.md'],
+    ['commands/chelp-advisor.md']
+  ];
+  const missing = needed
+    .filter(options => !options.some(f => fs.existsSync(path.join(root, f))))
+    .map(options => options[0]);
   return check('ecc', 'ECC chelp files (gate, advisor)', missing.length === 0,
     missing.length ? `missing: ${missing.join(', ')}` : root,
     'Update ECC to a version that includes the chelp advisor and /design-gate.', true);
@@ -222,7 +231,7 @@ function main(argv) {
   console.log('\nProject:');
   notes.forEach(n => console.log(`  - ${n}`));
   console.log('\nStill to do by hand:');
-  console.log('  - Run /advisor opus so the advisor tool uses Opus, then read skills/chelp-advisor/SKILL.md before consulting.');
+  console.log('  - Run /advisor opus so the advisor tool uses Opus, then read the chelp-advisor skill before consulting.');
   console.log('  - Pick a chain with /chelp.');
   console.log(`\n[chelp-pipeline] ${verdict}`);
   if (verdict === 'READY (static checks only)') {

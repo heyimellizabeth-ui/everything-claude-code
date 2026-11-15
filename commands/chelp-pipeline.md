@@ -64,10 +64,21 @@ here (a Hallmark stamp, `design.md` or `.hallmark` record) or only report.
 
 ## Cloud sessions
 
-In a cloud session the browser checks need an environment setup script that installs Hallmark and
-puppeteer-core, plus two variables: `HALLMARK_PUPPETEER` (the folder of the installed puppeteer-core) and
-`CHROME_PATH=/usr/bin/google-chrome` when that wrapper exists. It adds `--no-sandbox` for root; pointing
-straight at a Chromium binary fails as root.
+Installs do not survive between cloud sessions, so put the setup in the environment's setup script. One
+line does it:
+
+```bash
+bash everything-claude-code/scripts/setup-chelp-cloud.sh everything-claude-code
+```
+
+`scripts/setup-chelp-cloud.sh` installs the ECC commands, agents, skills and scripts into `~/.claude`, so
+`/chelp`, `/c1` to `/c5`, `/design-gate`, `/chelp-pipeline` and `/chelp-advisor` exist; puppeteer-core
+globally; and the Hallmark skill, from a `hallmark` checkout on the session or else a clone. It is best
+effort: a failed step is reported and never stops the session from starting. `--dry-run` shows what it
+would do. Run it by hand in a session to do the same, then `/chelp-pipeline` to confirm.
+
+Chrome is already at `/usr/bin/google-chrome` in a cloud session (a wrapper that adds `--no-sandbox` for
+root); `CHROME_PATH` points there. Pointing straight at a Chromium binary fails as root.
 
 ## Arguments
 
