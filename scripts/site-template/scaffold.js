@@ -36,6 +36,27 @@ function googleFontsLink(fonts) {
   return `<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?${qs}&display=swap" rel="stylesheet">`;
 }
 
+/**
+ * Pick the text colour for a surface filled with the accent: whichever of the
+ * brand's light and dark colours has the higher WCAG contrast against it.
+ * Falls back to the accent's own luminance when a colour is not a #rrggbb value.
+ */
+function accentInk(colors) {
+  const lum = (hex) => {
+    const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+    if (!m) return null;
+    const channels = [0, 2, 4].map((i) => parseInt(m[1].slice(i, i + 2), 16) / 255)
+      .map((c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)));
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  };
+  const contrast = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+  const accent = lum(colors.accent);
+  const dark = colors.void;
+  const light = colors.cream;
+  if (accent === null || lum(dark) === null || lum(light) === null) return light;
+  return contrast(accent, lum(dark)) >= contrast(accent, lum(light)) ? dark : light;
+}
+
 function buildTokenMap(cfg) {
   const social = cfg.social || {};
   const reviews = cfg.reviews || [];
@@ -58,6 +79,7 @@ function buildTokenMap(cfg) {
     '{{COLOR_VOID}}': cfg.colors.void,
     '{{COLOR_CREAM}}': cfg.colors.cream,
     '{{COLOR_ACCENT}}': cfg.colors.accent,
+    '{{COLOR_ACCENT_INK}}': accentInk(cfg.colors),
     '{{COLOR_SURFACE}}': cfg.colors.surface,
     '{{COLOR_MUTED}}': cfg.colors.muted,
 
@@ -238,4 +260,4 @@ if (require.main === module) {
   scaffold(path.resolve(args.config), path.resolve(args.out));
 }
 
-module.exports = { scaffold, buildTokenMap, applyTokens };
+module.exports = { scaffold, buildTokenMap, applyTokens, accentInk };

@@ -48,11 +48,11 @@
 <script>if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
 <style>
   /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
-   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
-   * built: the project · redesign: polish · v2.0.0 */
+   * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
+   * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}};
+    --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}};
     --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}};
     --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a10: color-mix(in srgb, var(--cream) 10%, transparent); --cream-a12: color-mix(in srgb, var(--cream) 12%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent); --cream-a30: color-mix(in srgb, var(--cream) 30%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a08: color-mix(in srgb, var(--red) 8%, transparent); --red-a20: color-mix(in srgb, var(--red) 20%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
@@ -102,7 +102,7 @@
   .event-name { font-family: var(--font-mono); font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 700; letter-spacing: 0.02em; margin-bottom: 1rem; line-height: 1.1; }
   .event-meta { display: flex; flex-direction: column; gap: 0.3rem; }
   .event-meta span { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; color: var(--muted); }
-  .event-cta { display: inline-block; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; text-decoration: none; transition: opacity 0.2s; }
+  .event-cta { display: inline-block; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--red); color: var(--red-ink); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; text-decoration: none; transition: opacity 0.2s; }
   .event-cta:hover { opacity: 0.8; }
   .event-cta.outline { background: transparent; border: 1px solid var(--cream-a20); color: var(--muted); }
   .event-cta.outline:hover { border-color: var(--cream); color: var(--cream); }
@@ -229,7 +229,7 @@
         <span>Kleine Zaal, {{VENUE_NAME}}</span>
         <span>18+, {{VENUE_CITY}}</span>
       </div>
-      <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">Check tickets at {{VENUE_NAME}}</a>
+      <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">Check venue tickets</a>
       <div class="event-number">002</div>
     </div>
 

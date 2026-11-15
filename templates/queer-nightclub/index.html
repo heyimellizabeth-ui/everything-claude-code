@@ -83,14 +83,14 @@
 <script>if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
 <style>
   /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
-   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
-   * built: the project · redesign: polish · v2.0.0 */
+   * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
+   * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
     --void: {{COLOR_VOID}};
     --cream: {{COLOR_CREAM}};
-    --red: {{COLOR_ACCENT}};
+    --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}};
     --surface: {{COLOR_SURFACE}};
     --muted: {{COLOR_MUTED}};
     --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
@@ -287,7 +287,7 @@
     margin-top: 2.5rem;
     padding: 1rem 2.5rem;
     background: var(--red);
-    color: var(--cream);
+    color: var(--red-ink);
     font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 700;
@@ -337,12 +337,13 @@
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 3px;
-    color: var(--cream);
+    color: var(--red-ink);
     padding: 0 2rem;
     text-transform: uppercase;
   }
   .ticker-dot {
-    color: var(--cream-a40);
+    color: var(--red-ink);
+    opacity: 0.6;
     margin: 0 0.5rem;
   }
   @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -577,7 +578,7 @@
   }
   .newsletter-input {
     background: transparent;
-    border: 1px solid var(--cream-a20);
+    border: 1px solid var(--muted);
     border-right: none;
     color: var(--cream);
     font-family: var(--font-mono);
@@ -592,7 +593,7 @@
   .newsletter-submit {
     background: var(--red);
     border: none;
-    color: var(--cream);
+    color: var(--red-ink);
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 700;
@@ -800,7 +801,7 @@
   <div class="preloader-words" id="preloader-words">
     <span class="preloader-word" id="pw1">Queer.</span>
     <span class="preloader-word" id="pw2">{{VENUE_CITY}}.</span>
-    <span class="preloader-word red" id="pw3">{{SITE_SHORT}}.</span>
+    <span class="preloader-word red wordmark" id="pw3">{{SITE_SHORT}}.</span>
   </div>
   <div class="preloader-reveal" id="preloader-reveal">
     <div class="preloader-bar" id="preloader-bar"></div>
@@ -916,7 +917,7 @@
           <span>{{VENUE_NAME}}, Alkmaar</span>
           <span>18+</span>
         </div>
-        <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">Check tickets at {{VENUE_NAME}}</a>
+        <a href="https://www.podiumvictorie.nl/programma/club-kudt/" target="_blank" rel="noopener noreferrer" class="event-cta">Check venue tickets</a>
         <div class="event-number">002</div>
       </div>
 

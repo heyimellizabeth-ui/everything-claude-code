@@ -26,10 +26,10 @@
 <script>if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
 <style>
   /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
-   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
-   * built: the project · redesign: polish · v2.0.0 */
+   * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
+   * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     --cream-a02: color-mix(in srgb, var(--cream) 2%, transparent); --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a15: color-mix(in srgb, var(--cream) 15%, transparent); --cream-a60: color-mix(in srgb, var(--cream) 60%, transparent); --cream-a75: color-mix(in srgb, var(--cream) 75%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a30: color-mix(in srgb, var(--red) 30%, transparent); --red-a35: color-mix(in srgb, var(--red) 35%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
   }
   html { scroll-behavior: smooth; }
@@ -104,7 +104,7 @@
   .about-cta { padding: 6rem 3rem; text-align: center; border-top: 1px solid var(--cream-a08); }
   .about-cta h2 { font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; letter-spacing: 2px; margin-bottom: 1.5rem; }
   .about-cta h2 span { color: var(--red); }
-  .about-cta a { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; text-decoration: none; }
+  .about-cta a { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--red-ink); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; text-decoration: none; }
 
   footer { padding: 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cream-a08); flex-wrap: wrap; gap: 1.5rem; }
   .footer-brand { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }

@@ -10,10 +10,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <style>
   /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
-   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
-   * built: the project · redesign: polish · v2.0.0 */
+   * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
+   * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: system-ui, -apple-system, sans-serif;
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: system-ui, -apple-system, sans-serif;
     --cream-a04: color-mix(in srgb, var(--cream) 4%, transparent); --cream-a06: color-mix(in srgb, var(--cream) 6%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent);
   }
   html, body { height: 100%; }
@@ -37,7 +37,7 @@
   .error-title span { color: var(--red); }
   .error-sub { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 3rem; max-width: 400px; margin-left: auto; margin-right: auto; }
   .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .btn-primary { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; text-decoration: none; }
+  .btn-primary { display: inline-block; padding: 1rem 2.5rem; background: var(--red); color: var(--red-ink); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; text-decoration: none; }
   .btn-secondary { display: inline-block; padding: 1rem 2.5rem; background: transparent; border: 1px solid var(--cream-a20); color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; text-decoration: none; transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s; }
   .btn-secondary:hover { border-color: var(--cream); color: var(--cream); }
 
@@ -141,11 +141,13 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
     });
   }
-  gsap.from('.error-tag', { opacity: 0, y: 20, duration: 0.6, delay: 0.2 });
-  gsap.from('.error-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.4 });
-  gsap.from('.error-sub', { opacity: 0, y: 20, duration: 0.6, delay: 0.6 });
-  gsap.from('.error-actions', { opacity: 0, y: 20, duration: 0.6, delay: 0.8 });
-  gsap.from('.error-num', { opacity: 0, duration: 1, delay: 0.1 });
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.from('.error-tag', { opacity: 0, y: 20, duration: 0.6, delay: 0.2 });
+    gsap.from('.error-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.4 });
+    gsap.from('.error-sub', { opacity: 0, y: 20, duration: 0.6, delay: 0.6 });
+    gsap.from('.error-actions', { opacity: 0, y: 20, duration: 0.6, delay: 0.8 });
+    gsap.from('.error-num', { opacity: 0, duration: 1, delay: 0.1 });
+  }
 })();
 </script>
 </body>

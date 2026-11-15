@@ -3,7 +3,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { scaffold, buildTokenMap, applyTokens } = require('../../scripts/site-template/scaffold');
+const { scaffold, buildTokenMap, applyTokens, accentInk } = require('../../scripts/site-template/scaffold');
 const { validate } = require('../../scripts/site-template/validate');
 
 const TEMPLATE_DIR = path.resolve(__dirname, '../../templates/queer-nightclub');
@@ -219,6 +219,33 @@ test('validate catches remaining {{TOKEN}} in a file', () => {
   } finally {
     cleanTmp(out);
   }
+});
+
+// ── accent ink ──────────────────────────────────────────────────────────────
+
+console.log('\n=== accent ink (text on accent fills) ===\n');
+
+const luminance = (hex) => {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+};
+const ratio = (a, b) => (Math.max(luminance(a), luminance(b)) + 0.05) / (Math.min(luminance(a), luminance(b)) + 0.05);
+
+test('accent ink reaches 4.5:1 on the default brand', () => {
+  const cfg = JSON.parse(fs.readFileSync(EXAMPLE_CONFIG, 'utf8'));
+  const ink = buildTokenMap(cfg)['{{COLOR_ACCENT_INK}}'];
+  assert(ratio(ink, cfg.colors.accent) >= 4.5, `ink ${ink} on ${cfg.colors.accent} is ${ratio(ink, cfg.colors.accent).toFixed(2)}:1`);
+});
+
+test('accent ink follows the accent: a green accent takes the dark colour, a dark accent the light one', () => {
+  const colors = { void: '#101826', cream: '#F2EFE6' };
+  assert(accentInk({ ...colors, accent: '#38C172' }) === colors.void, 'green accent should take the dark colour');
+  assert(accentInk({ ...colors, accent: '#101010' }) === colors.cream, 'dark accent should take the light colour');
+});
+
+test('accent ink falls back to the light colour for a non-hex value', () => {
+  assert(accentInk({ void: '#000000', cream: '#FFFFFF', accent: 'rebeccapurple' }) === '#FFFFFF', 'non-hex accent should fall back');
 });
 
 // ── new token groups ────────────────────────────────────────────────────────

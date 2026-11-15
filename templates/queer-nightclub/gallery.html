@@ -46,10 +46,10 @@
 <script>if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
 <style>
   /* Hallmark · checked: 2026-11-14 · genre: atmospheric (inferred)
-   * floor: 0 FAIL · fixed: 13 (6a, 10a, 19, 20, 26a, 27, 33, 34, 48, 54, 62, 63, 67)
-   * built: the project · redesign: polish · v2.0.0 */
+   * floor: 0 FAIL on a scaffolded site (static tier; the template itself holds unfilled tokens)
+   * built: the project · v2.0.0 */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
+  :root { --void: {{COLOR_VOID}}; --cream: {{COLOR_CREAM}}; --red: {{COLOR_ACCENT}}; --red-ink: {{COLOR_ACCENT_INK}}; --surface: {{COLOR_SURFACE}}; --muted: {{COLOR_MUTED}}; --font-mono: 'Courier New', Courier, monospace; --font-body: '{{FONT_BODY}}', system-ui, -apple-system, sans-serif;
     --cream-a06: color-mix(in srgb, var(--cream) 6%, transparent); --cream-a08: color-mix(in srgb, var(--cream) 8%, transparent); --cream-a20: color-mix(in srgb, var(--cream) 20%, transparent); --red-a04: color-mix(in srgb, var(--red) 4%, transparent); --red-a30: color-mix(in srgb, var(--red) 30%, transparent); --red-a40: color-mix(in srgb, var(--red) 40%, transparent); --void-a85: color-mix(in srgb, var(--void) 85%, transparent);
   }
   html { scroll-behavior: smooth; }
@@ -84,7 +84,7 @@
   .flickr-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 2rem 2.5rem; border: 1px solid var(--red-a30); background: var(--red-a04); flex-wrap: wrap; }
   .flickr-banner-text { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); line-height: 2; }
   .flickr-banner-text strong { color: var(--cream); display: block; font-size: 1rem; letter-spacing: 0.02em; margin-bottom: 0.25rem; }
-  .flickr-btn { display: inline-block; padding: 0.75rem 2rem; background: var(--red); color: var(--cream); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; text-decoration: none; white-space: nowrap; transition: opacity 0.2s; }
+  .flickr-btn { display: inline-block; padding: 0.75rem 2rem; background: var(--red); color: var(--red-ink); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; text-decoration: none; white-space: nowrap; transition: opacity 0.2s; }
   .flickr-btn:hover { opacity: 0.85; }
 
   /* EDITIONS GRID */
@@ -110,7 +110,7 @@
   .archive-cta-sub { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--muted); margin-bottom: 2rem; line-height: 2; }
   .archive-cta-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
   .archive-cta-links a { display: inline-block; padding: 0.75rem 2rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.02em; text-decoration: none; transition: opacity 0.2s; }
-  .archive-cta-links a.primary { background: var(--red); color: var(--cream); }
+  .archive-cta-links a.primary { background: var(--red); color: var(--red-ink); }
   .archive-cta-links a.secondary { border: 1px solid var(--cream-a20); color: var(--muted); }
   .archive-cta-links a:hover { opacity: 0.8; }
 
