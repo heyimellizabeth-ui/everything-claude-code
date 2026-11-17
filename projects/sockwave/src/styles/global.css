@@ -119,3 +119,9 @@ a {
 .motion-toggle[aria-pressed='true'] .dot {
   background: var(--muted);
 }
+
+/* No toggle when there is nothing to toggle (no JS, or the engine failed). */
+.motion-toggle[hidden],
+html:not(.js) .motion-toggle {
+  display: none;
+}

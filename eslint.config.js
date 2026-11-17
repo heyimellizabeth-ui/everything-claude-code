@@ -3,7 +3,13 @@ const globals = require('globals');
 
 module.exports = [
     {
-        ignores: ['.opencode/dist/**', '.cursor/**', 'node_modules/**']
+        ignores: [
+            '.opencode/dist/**',
+            '.cursor/**',
+            'node_modules/**',
+            'projects/sockwave/dist/**',
+            'projects/sockwave/.astro/**'
+        ]
     },
     js.configs.recommended,
     {
@@ -29,6 +35,15 @@ module.exports = [
         files: ['**/*.mjs'],
         languageOptions: {
             sourceType: 'module'
+        }
+    },
+    {
+        // Sockwave's engine is a browser ES module.
+        files: ['projects/sockwave/src/**/*.mjs'],
+        languageOptions: {
+            globals: {
+                ...globals.browser
+            }
         }
     },
     {
