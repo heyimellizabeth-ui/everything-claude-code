@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wireframe-solid — demo</title>
+<link rel="stylesheet" href="wireframe-solid.css">
+<style>
+  body { margin: 0; background: #070735; color: #fff;
+         font: 15px/1.6 system-ui, sans-serif; }
+  section { min-height: 100vh; display: flex; align-items: center;
+            gap: 80px; padding: 0 8vw; }
+  .light { background: #fff; color: #111; }
+  h2 { font-weight: 600; letter-spacing: -.02em; margin: 0 0 8px; }
+  code { font: 13px ui-monospace, monospace; opacity: .75; display: block; white-space: pre; }
+</style>
+</head>
+<body>
+
+  <section>
+    <div class="wireframe-solid"></div>
+    <div>
+      <h2>Default</h2>
+      <code>&lt;div class="wireframe-solid"&gt;&lt;/div&gt;</code>
+    </div>
+  </section>
+
+  <section>
+    <div class="wireframe-solid"
+         style="--ws-size:160px; --ws-color:#078383; --ws-line:2px; --ws-speed:40s;"></div>
+    <div>
+      <h2>Big, teal, faster, thicker</h2>
+      <code>--ws-size:160px
+--ws-color:#078383
+--ws-line:2px
+--ws-speed:40s</code>
+    </div>
+  </section>
+
+  <section class="light">
+    <div class="wireframe-solid"
+         style="--ws-size:120px; --ws-color:rgba(0,0,0,.35);"></div>
+    <div>
+      <h2>On a light background</h2>
+      <code>--ws-color:rgba(0,0,0,.35)</code>
+    </div>
+  </section>
+
+  <section>
+    <div class="wireframe-solid" data-ws-scale-from="2.2" data-ws-scale-to="0.4"
+         style="--ws-size:110px; --ws-color:rgba(255,255,255,.5);"></div>
+    <div>
+      <h2>Scroll-scrubbed scale</h2>
+      <code>data-ws-scale-from="2.2"
+data-ws-scale-to="0.4"</code>
+    </div>
+  </section>
+
+  <section>
+    <div class="wireframe-solid" style="--ws-size:90px;  --ws-delay:0s;"></div>
+    <div class="wireframe-solid" style="--ws-size:90px;  --ws-delay:3s;"></div>
+    <div class="wireframe-solid" style="--ws-size:90px;  --ws-delay:6s;"></div>
+    <div>
+      <h2>Desynced copies</h2>
+      <code>--ws-delay: 0s / 3s / 6s</code>
+    </div>
+  </section>
+
+<script src="wireframe-solid.js" defer></script>
+</body>
+</html>
