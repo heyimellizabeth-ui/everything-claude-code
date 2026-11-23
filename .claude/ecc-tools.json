@@ -122,9 +122,9 @@
     ".claude/homunculus/instincts/inherited/everything-claude-code-instincts.yaml",
     ".claude/rules/everything-claude-code-guardrails.md",
     ".claude/research/everything-claude-code-research-playbook.md",
-    ".claude/commands/database-migration.md",
-    ".claude/commands/feature-development.md",
-    ".claude/commands/add-language-rules.md"
+    ".claude/skills/database-migration/SKILL.md",
+    ".claude/skills/feature-development/SKILL.md",
+    ".claude/skills/add-language-rules/SKILL.md"
   ],
   "packageFiles": {
     "runtime-core": [
@@ -146,9 +146,9 @@
       ".claude/research/everything-claude-code-research-playbook.md"
     ],
     "workflow-pack": [
-      ".claude/commands/database-migration.md",
-      ".claude/commands/feature-development.md",
-      ".claude/commands/add-language-rules.md"
+      ".claude/skills/database-migration/SKILL.md",
+      ".claude/skills/feature-development/SKILL.md",
+      ".claude/skills/add-language-rules/SKILL.md"
     ]
   },
   "moduleFiles": {
@@ -171,9 +171,9 @@
       ".claude/research/everything-claude-code-research-playbook.md"
     ],
     "workflow-pack": [
-      ".claude/commands/database-migration.md",
-      ".claude/commands/feature-development.md",
-      ".claude/commands/add-language-rules.md"
+      ".claude/skills/database-migration/SKILL.md",
+      ".claude/skills/feature-development/SKILL.md",
+      ".claude/skills/add-language-rules/SKILL.md"
     ]
   },
   "files": [
@@ -239,42 +239,42 @@
     },
     {
       "moduleId": "workflow-pack",
-      "path": ".claude/commands/database-migration.md",
-      "description": "Workflow command scaffold for database-migration."
+      "path": ".claude/skills/database-migration/SKILL.md",
+      "description": "Workflow skill scaffold for database-migration."
     },
     {
       "moduleId": "workflow-pack",
-      "path": ".claude/commands/feature-development.md",
-      "description": "Workflow command scaffold for feature-development."
+      "path": ".claude/skills/feature-development/SKILL.md",
+      "description": "Workflow skill scaffold for feature-development."
     },
     {
       "moduleId": "workflow-pack",
-      "path": ".claude/commands/add-language-rules.md",
-      "description": "Workflow command scaffold for add-language-rules."
+      "path": ".claude/skills/add-language-rules/SKILL.md",
+      "description": "Workflow skill scaffold for add-language-rules."
     }
   ],
   "workflows": [
     {
-      "command": "database-migration",
-      "path": ".claude/commands/database-migration.md"
+      "skill": "database-migration",
+      "path": ".claude/skills/database-migration/SKILL.md"
     },
     {
-      "command": "feature-development",
-      "path": ".claude/commands/feature-development.md"
+      "skill": "feature-development",
+      "path": ".claude/skills/feature-development/SKILL.md"
     },
     {
-      "command": "add-language-rules",
-      "path": ".claude/commands/add-language-rules.md"
+      "skill": "add-language-rules",
+      "path": ".claude/skills/add-language-rules/SKILL.md"
     }
   ],
   "adapters": {
     "claudeCode": {
       "skillPath": ".claude/skills/everything-claude-code/SKILL.md",
       "identityPath": ".claude/identity.json",
-      "commandPaths": [
-        ".claude/commands/database-migration.md",
-        ".claude/commands/feature-development.md",
-        ".claude/commands/add-language-rules.md"
+      "skillPaths": [
+        ".claude/skills/database-migration/SKILL.md",
+        ".claude/skills/feature-development/SKILL.md",
+        ".claude/skills/add-language-rules/SKILL.md"
       ]
     },
     "codex": {
