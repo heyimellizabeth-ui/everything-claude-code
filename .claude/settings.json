@@ -10,5 +10,18 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "sales@synced": false,
+    "bio-research@synced": false,
+    "legal@synced": false,
+    "human-resources@synced": false,
+    "marketing@synced": false,
+    "product-management@synced": false,
+    "product-tracking-skills@synced": false,
+    "operations@synced": false,
+    "data@synced": false,
+    "cowork-plugin-management@synced": false,
+    "academy-guide@synced": false
   }
 }

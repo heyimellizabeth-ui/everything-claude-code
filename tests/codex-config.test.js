@@ -112,6 +112,48 @@ if (
   passed++;
 else failed++;
 
+function splitPackageSpec(spec) {
+  const at = spec.lastIndexOf('@');
+  return at > 0 ? { name: spec.slice(0, at), version: spec.slice(at + 1) } : { name: spec, version: null };
+}
+
+function findPackageSpec(args) {
+  return (args || []).find(arg => !arg.startsWith('-')) || null;
+}
+
+if (
+  test('active Codex MCP servers pin the same package versions as .mcp.json', () => {
+    const mcpJson = JSON.parse(fs.readFileSync(path.join(repoRoot, '.mcp.json'), 'utf8'));
+    let checked = 0;
+
+    for (const [serverName, server] of Object.entries(mcpJson.mcpServers || {})) {
+      const mcpSpec = findPackageSpec(server.args);
+      if (!mcpSpec) continue;
+      const headerPattern = new RegExp(`^\\s*\\[mcp_servers\\.${escapeRegExp(serverName)}\\]\\s*$`, 'm');
+      if (!headerPattern.test(config)) continue;
+
+      const section = getTomlSection(config, `mcp_servers.${serverName}`);
+      const argsMatch = section.match(/^\s*args\s*=\s*(\[.*\])\s*$/m);
+      if (!argsMatch) continue;
+
+      const codexSpec = findPackageSpec(JSON.parse(argsMatch[1]));
+      const mcp = splitPackageSpec(mcpSpec);
+      const codex = splitPackageSpec(codexSpec);
+      assert.strictEqual(codex.name, mcp.name, `[mcp_servers.${serverName}] package name differs from .mcp.json`);
+      assert.strictEqual(
+        codex.version,
+        mcp.version,
+        `[mcp_servers.${serverName}] pins ${codexSpec} but .mcp.json pins ${mcpSpec}`,
+      );
+      checked++;
+    }
+
+    assert.ok(checked > 0, 'Expected at least one shared npx MCP server to compare');
+  })
+)
+  passed++;
+else failed++;
+
 console.log(`\nPassed: ${passed}`);
 console.log(`Failed: ${failed}`);
 process.exit(failed > 0 ? 1 : 0);
