@@ -13,7 +13,7 @@ REA supplies the *tools*; ECC supplies the *workflow* around them. RECC is the E
 |---|---|
 | Agents | `re-planner`, `re-investigator`, `re-reconstructor`, `re-parity-verifier`, `re-security-analyst` |
 | Skills | `reverse-engineer-anything` (vendored from REA), `re-evidence-discipline`, `re-feature-to-implementation`, `re-target-playbooks`, `re-scope-and-legality` |
-| Commands | `/re-investigate`, `/re-compare`, `/re-rebuild`, `/re-verify`, `/re-doctor` |
+| Commands | `/re-pipeline`, `/re-investigate`, `/re-compare`, `/re-rebuild`, `/re-verify`, `/re-doctor` |
 | Hooks | `post:recc-evidence-log` (logs REA calls and Evidence IDs), `stop:recc-unknowns-reminder` |
 | MCP | `rea` entry in `mcp-configs/mcp-servers.json`, pinned to an exact `rea-agents` version |
 | Install | `reverse-engineering` module, `recc` profile, `capability:reverse-engineering` component |
@@ -30,7 +30,7 @@ REA supplies the *tools*; ECC supplies the *workflow* around them. RECC is the E
                    .recc/evidence-log.jsonl (hook)
 ```
 
-`re-security-analyst` and `/re-compare` branch off the investigation for defensive reviews and version diffs.
+`/re-pipeline` runs all three stages in sequence, stopping at the scope check and the spec confirmation and resuming from existing `.recc/` files. `re-security-analyst` and `/re-compare` branch off the investigation for defensive reviews and version diffs.
 
 ## Install
 
