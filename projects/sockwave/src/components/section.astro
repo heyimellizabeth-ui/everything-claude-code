@@ -1,8 +1,4 @@
 ---
-interface Props {
-  eyebrow?: string;
-  id?: string;
-}
 const { eyebrow, id } = Astro.props;
 ---
 
@@ -16,18 +12,21 @@ const { eyebrow, id } = Astro.props;
 <style>
   .reveal {
     padding-block: clamp(5rem, 16vh, 12rem);
+  }
+  /* Hidden start state only applies once JS is confirmed (html.js). */
+  :global(html.js) .reveal {
     opacity: 0;
     transform: translateY(2.5rem);
     transition:
       opacity 0.8s var(--ease),
       transform 0.8s var(--ease);
   }
-  .reveal.is-visible {
+  :global(html.js) .reveal.is-visible {
     opacity: 1;
     transform: none;
   }
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
+    :global(html.js) .reveal {
       opacity: 1;
       transform: none;
       transition: none;
