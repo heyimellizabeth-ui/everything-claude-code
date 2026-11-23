@@ -1,3 +1,4 @@
+/* global document, window, requestAnimationFrame */
 /* ============================================================
    wireframe-solid.js — optional helper. The CSS works without it.
 
