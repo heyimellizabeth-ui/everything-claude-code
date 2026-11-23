@@ -3,19 +3,19 @@
   "schemaVersion": "1.0",
   "generatedBy": "ecc-tools",
   "generatedAt": "2026-03-20T12:07:36.496Z",
-  "repo": "https://github.com/affaan-m/everything-claude-code",
+  "repo": "https://github.com/heyimellizabeth-ui/everything-claude-code",
   "profiles": {
-    "requested": "full",
-    "recommended": "full",
-    "effective": "full",
-    "requestedAlias": "full",
-    "recommendedAlias": "full",
-    "effectiveAlias": "full"
+    "requested": "developer",
+    "recommended": "developer",
+    "effective": "developer",
+    "requestedAlias": "developer",
+    "recommendedAlias": "developer",
+    "effectiveAlias": "developer"
   },
-  "requestedProfile": "full",
-  "profile": "full",
-  "recommendedProfile": "full",
-  "effectiveProfile": "full",
+  "requestedProfile": "developer",
+  "profile": "developer",
+  "recommendedProfile": "developer",
+  "effectiveProfile": "developer",
   "tier": "enterprise",
   "requestedComponents": [
     "repo-baseline",
@@ -41,25 +41,19 @@
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "selectedRootPackages": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "requestedPackages": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "requestedAddPackages": [],
   "requestedRemovePackages": [],
@@ -67,17 +61,13 @@
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "packages": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "blockedRemovalPackages": [],
   "tierFilteredRootPackages": [],
@@ -93,45 +83,31 @@
     ],
     "research-pack": [
       "workflow-pack"
-    ],
-    "team-config-sync": [
-      "runtime-core"
-    ],
-    "enterprise-controls": [
-      "team-config-sync"
     ]
   },
   "resolutionOrder": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "requestedModules": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "selectedModules": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "modules": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack",
-    "research-pack",
-    "team-config-sync",
-    "enterprise-controls"
+    "research-pack"
   ],
   "managedFiles": [
     ".claude/skills/everything-claude-code/SKILL.md",
@@ -146,8 +122,6 @@
     ".claude/homunculus/instincts/inherited/everything-claude-code-instincts.yaml",
     ".claude/rules/everything-claude-code-guardrails.md",
     ".claude/research/everything-claude-code-research-playbook.md",
-    ".claude/team/everything-claude-code-team-config.json",
-    ".claude/enterprise/controls.md",
     ".claude/commands/database-migration.md",
     ".claude/commands/feature-development.md",
     ".claude/commands/add-language-rules.md"
@@ -170,12 +144,6 @@
     ],
     "research-pack": [
       ".claude/research/everything-claude-code-research-playbook.md"
-    ],
-    "team-config-sync": [
-      ".claude/team/everything-claude-code-team-config.json"
-    ],
-    "enterprise-controls": [
-      ".claude/enterprise/controls.md"
     ],
     "workflow-pack": [
       ".claude/commands/database-migration.md",
@@ -201,12 +169,6 @@
     ],
     "research-pack": [
       ".claude/research/everything-claude-code-research-playbook.md"
-    ],
-    "team-config-sync": [
-      ".claude/team/everything-claude-code-team-config.json"
-    ],
-    "enterprise-controls": [
-      ".claude/enterprise/controls.md"
     ],
     "workflow-pack": [
       ".claude/commands/database-migration.md",
@@ -274,16 +236,6 @@
       "moduleId": "research-pack",
       "path": ".claude/research/everything-claude-code-research-playbook.md",
       "description": "Research workflow playbook for source attribution and long-context tasks."
-    },
-    {
-      "moduleId": "team-config-sync",
-      "path": ".claude/team/everything-claude-code-team-config.json",
-      "description": "Team config scaffold that points collaborators at the shared ECC bundle."
-    },
-    {
-      "moduleId": "enterprise-controls",
-      "path": ".claude/enterprise/controls.md",
-      "description": "Enterprise governance scaffold for approvals, audit posture, and escalation."
     },
     {
       "moduleId": "workflow-pack",
