@@ -124,8 +124,8 @@ function diff(oldInput, newInput) {
   return inPlace.length;
 }
 
-function curlGet(url) {
-  const r = spawnSync('curl', ['-sL', '--max-time', '30', '-o', '-', '-w', '\n%{http_code}', url], { maxBuffer: 64 * 1024 * 1024 });
+function curlGet(url, follow = true) {
+  const r = spawnSync('curl', [follow ? '-sL' : '-s', '--max-time', '30', '-o', '-', '-w', '\n%{http_code}', url], { maxBuffer: 64 * 1024 * 1024 });
   if (r.status !== 0) return { code: 0, body: Buffer.alloc(0) };
   const buf = r.stdout;
   const nl = buf.lastIndexOf(10);
@@ -156,7 +156,8 @@ function live(newInput, base, oldInput) {
   if (oldInput) {
     const keep = new Set(listFiles(root));
     const gone = listFiles(loadRoot(oldInput).root).filter(f => !keep.has(f) && !/^\.htaccess$|\.md$/i.test(f));
-    const still = gone.filter(f => curlGet(`${site}/${f.split('/').map(encodeURIComponent).join('/')}`).code === 200);
+    // Don't follow redirects here: a removed page that 301s to its replacement is handled, not left behind.
+    const still = gone.filter(f => curlGet(`${site}/${f.split('/').map(encodeURIComponent).join('/')}`, false).code === 200);
     still.forEach(f => console.log(`ERROR  ${f} was removed from the release but is still online: delete it on the server`));
     if (gone.length && !still.length) console.log(`OK     all ${gone.length} removed files are gone from the server`);
     errors += still.length;
