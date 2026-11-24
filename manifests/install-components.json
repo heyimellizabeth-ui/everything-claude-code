@@ -54,7 +54,8 @@
       "family": "language",
       "description": "TypeScript and frontend/backend application-engineering guidance. Currently resolves through the shared framework-language module.",
       "modules": [
-        "framework-language"
+        "framework-language",
+        "web-design"
       ]
     },
     {
@@ -94,7 +95,8 @@
       "family": "framework",
       "description": "React-focused engineering guidance. Currently resolves through the shared framework-language module.",
       "modules": [
-        "framework-language"
+        "framework-language",
+        "web-design"
       ]
     },
     {
@@ -102,7 +104,8 @@
       "family": "framework",
       "description": "Next.js-focused engineering guidance. Currently resolves through the shared framework-language module.",
       "modules": [
-        "framework-language"
+        "framework-language",
+        "web-design"
       ]
     },
     {
@@ -499,7 +502,7 @@
       "family": "skill",
       "description": "React and frontend engineering patterns.",
       "modules": [
-        "framework-language"
+        "web-design"
       ]
     },
     {

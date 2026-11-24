@@ -242,6 +242,12 @@ Add hooks later only if you want runtime enforcement:
 ./install.sh --target claude --modules hooks-runtime
 ```
 
+If you mainly build websites, the `web` profile installs the core workflow plus the frontend, design, motion, SEO, accessibility and browser-QA skills the `/c1`–`/c5` chains use, without the other language and domain packs:
+
+```bash
+./install.sh --profile web --target claude
+```
+
 ### Find the right components first
 
 If you are not sure which ECC profile or component to install, ask the packaged advisor from any project:
