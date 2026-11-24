@@ -1,0 +1,86 @@
+/* ============================================================
+   wireframe-solid — a rotating wireframe dodecahedron
+   Pure CSS 3D. No canvas, no WebGL, no dependencies.
+
+   Everything is driven by custom properties, so one copy of
+   this file can serve many different looks:
+
+     .wireframe-solid {
+       --ws-size:    100px;                  face edge length
+       --ws-color:   rgba(255,255,255,.45);  line colour
+       --ws-line:    1px;                    line thickness
+       --ws-speed:   100s;                   one full tumble
+       --ws-delay:   0s;                     desync multiple copies
+     }
+   ============================================================ */
+
+.wireframe-solid {
+  --ws-size: 100px;
+  --ws-color: rgba(255, 255, 255, 0.45);
+  --ws-line: 1px;
+  --ws-speed: 100s;
+  --ws-delay: 0s;
+
+  /* 0.688 = pentagon apothem / edge length. Keeps the solid in
+     proportion no matter what --ws-size is set to. */
+  --ws-depth: calc(var(--ws-size) * 0.688);
+
+  position: relative;
+  width: var(--ws-size);
+  height: calc(var(--ws-size) * 2.23);
+  transform-style: preserve-3d;
+  animation: ws-rotate var(--ws-speed) infinite linear;
+  animation-delay: var(--ws-delay);
+  pointer-events: none;
+}
+
+@keyframes ws-rotate {
+  from { transform: rotateX(0deg)   rotateY(360deg) rotateZ(360deg); }
+  to   { transform: rotateX(360deg) rotateY(0deg)   rotateZ(-360deg); }
+}
+
+/* --- one pentagon, assembled from five rotated rectangles --- */
+.wireframe-solid__face {
+  position: absolute;
+  width: var(--ws-size);
+}
+
+.wireframe-solid__face > i {
+  position: absolute;
+  display: block;
+  width: var(--ws-size);
+  height: var(--ws-depth);
+  transform-origin: bottom;
+  border-top: var(--ws-line) solid var(--ws-color);
+}
+
+/* five segments fanned 72° apart == a pentagon outline */
+.wireframe-solid__face > i:nth-child(1) { transform: rotate(0.2turn); }
+.wireframe-solid__face > i:nth-child(2) { transform: rotate(0.4turn); }
+.wireframe-solid__face > i:nth-child(3) { transform: rotate(0.6turn); }
+.wireframe-solid__face > i:nth-child(4) { transform: rotate(0.8turn); }
+.wireframe-solid__face > i:nth-child(5) { transform: rotate(1turn); }
+
+/* --- twelve pentagons folded into a dodecahedron ---
+   26.5deg is half the dihedral angle; --ws-depth pushes each
+   face out from the centre. */
+.wireframe-solid__face:nth-child(1)  { transform: rotateY(0.2turn) translateZ(var(--ws-depth))              rotateX(26.5deg); }
+.wireframe-solid__face:nth-child(2)  { transform: rotateY(0.4turn) translateZ(var(--ws-depth))              rotateX(26.5deg); }
+.wireframe-solid__face:nth-child(3)  { transform: rotateY(0.6turn) translateZ(var(--ws-depth))              rotateX(26.5deg); }
+.wireframe-solid__face:nth-child(4)  { transform: rotateY(0.8turn) translateZ(var(--ws-depth))              rotateX(26.5deg); }
+.wireframe-solid__face:nth-child(5)  { transform: rotateY(1turn)   translateZ(var(--ws-depth))              rotateX(26.5deg); }
+
+.wireframe-solid__face:nth-child(6)  { bottom: 0; transform: rotateY(0.2turn) translateZ(calc(var(--ws-depth) * -1)) rotateX(206.5deg); }
+.wireframe-solid__face:nth-child(7)  { bottom: 0; transform: rotateY(0.4turn) translateZ(calc(var(--ws-depth) * -1)) rotateX(206.5deg); }
+.wireframe-solid__face:nth-child(8)  { bottom: 0; transform: rotateY(0.6turn) translateZ(calc(var(--ws-depth) * -1)) rotateX(206.5deg); }
+.wireframe-solid__face:nth-child(9)  { bottom: 0; transform: rotateY(0.8turn) translateZ(calc(var(--ws-depth) * -1)) rotateX(206.5deg); }
+.wireframe-solid__face:nth-child(10) { bottom: 0; transform: rotateY(1turn)   translateZ(calc(var(--ws-depth) * -1)) rotateX(206.5deg); }
+
+/* top and bottom caps */
+.wireframe-solid__face:nth-child(11) {            transform: translateZ(var(--ws-depth))              rotateX(-90deg); }
+.wireframe-solid__face:nth-child(12) { bottom: 0; transform: translateZ(calc(var(--ws-depth) * -1)) rotateX(90deg); }
+
+/* --- respect reduced-motion preferences --- */
+@media (prefers-reduced-motion: reduce) {
+  .wireframe-solid { animation: none; }
+}

@@ -3,30 +3,40 @@
  *
  * Pink particles drift across an ink field, their direction sampled from a
  * cheap animated value-noise field. The pointer bends nearby particles toward
- * it; scroll progress retunes the field (speed, swirl, hue spread) so the
- * visual evolves as you move down the page.
+ * it; scrolling the hero away retunes the field (speed, swirl, hue spread) as
+ * it slides out of view. The loop pauses when the hero is offscreen or the tab
+ * is hidden.
  *
  * Zero dependencies, Canvas 2D, reduced-motion aware. No network, no assets.
  */
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  life: number;
-  maxLife: number;
-  hueShift: number;
-}
+/**
+ * @typedef {object} Particle
+ * @property {number} x
+ * @property {number} y
+ * @property {number} vx
+ * @property {number} vy
+ * @property {number} life
+ * @property {number} maxLife
+ * @property {number} hueShift
+ */
 
-export interface Sockwave {
-  destroy(): void;
-  setReducedMotion(reduced: boolean): void;
-}
+/**
+ * @typedef {object} Sockwave
+ * @property {() => void} destroy
+ * @property {(reduced: boolean) => void} setReducedMotion
+ */
 
 // Smooth, seamless pseudo-noise from summed sines — good enough for a flow
 // field and far cheaper than Perlin/simplex for this purpose.
-function flowAngle(x: number, y: number, t: number, swirl: number): number {
+/**
+ * @param {number} x
+ * @param {number} y
+ * @param {number} t
+ * @param {number} swirl
+ * @returns {number}
+ */
+function flowAngle(x, y, t, swirl) {
   const a =
     Math.sin(x * 0.0016 + t) +
     Math.sin(y * 0.0021 - t * 0.8) +
@@ -34,30 +44,41 @@ function flowAngle(x: number, y: number, t: number, swirl: number): number {
   return a * swirl;
 }
 
-export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
-  const ctx = canvas.getContext('2d', { alpha: false })!;
+/**
+ * @param {HTMLCanvasElement} canvas
+ * @returns {Sockwave | null} null when a 2D context is unavailable
+ */
+export function createSockwave(canvas) {
+  const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return null;
   let width = 0;
   let height = 0;
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-  let particles: Particle[] = [];
+  /** @type {Particle[]} */
+  let particles = [];
   let raf = 0;
   let running = false;
   let reduced = false;
+  let inView = true;
   let t = 0;
 
   const pointer = { x: 0, y: 0, active: false };
   let scrollProgress = 0;
 
-  function targetCount(): number {
+  function targetCount() {
     // Scale particle count with viewport area, capped for perf.
     const area = width * height;
     return Math.max(120, Math.min(720, Math.round(area / 2600)));
   }
 
-  function spawn(p?: Particle): Particle {
+  /**
+   * @param {Particle} [p]
+   * @returns {Particle}
+   */
+  function spawn(p) {
     const maxLife = 120 + Math.random() * 200;
-    const part: Particle = p ?? ({} as Particle);
+    const part = p || /** @type {Particle} */ ({});
     part.x = Math.random() * width;
     part.y = Math.random() * height;
     part.vx = 0;
@@ -68,7 +89,7 @@ export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
     return part;
   }
 
-  function resize(): void {
+  function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = canvas.clientWidth;
     height = canvas.clientHeight;
@@ -86,13 +107,14 @@ export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
     if (reduced) renderPoster();
   }
 
-  function paintBackground(alpha: number): void {
+  /** @param {number} alpha */
+  function paintBackground(alpha) {
     // Translucent fill creates the motion-trail effect when animating.
     ctx.fillStyle = `rgba(10, 10, 11, ${alpha})`;
     ctx.fillRect(0, 0, width, height);
   }
 
-  function step(): void {
+  function step() {
     const speed = 0.6 + scrollProgress * 1.7;
     const swirl = 0.9 + scrollProgress * 1.6;
     t += 0.0016 * (reduced ? 0 : 1);
@@ -147,7 +169,7 @@ export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  function loop(): void {
+  function loop() {
     if (!running) return;
     step();
     raf = window.requestAnimationFrame(loop);
@@ -155,7 +177,7 @@ export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
 
   // A single dense frame for users who prefer reduced motion: trace the flow
   // field once into static filaments, no animation loop.
-  function renderPoster(): void {
+  function renderPoster() {
     paintBackground(1);
     ctx.globalCompositeOperation = 'lighter';
     const lines = Math.min(900, Math.round((width * height) / 1700));
@@ -178,19 +200,24 @@ export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  function start(): void {
-    if (running || reduced) return;
+  function canAnimate() {
+    return !reduced && inView && !document.hidden;
+  }
+
+  function start() {
+    if (running || !canAnimate()) return;
     running = true;
     raf = window.requestAnimationFrame(loop);
   }
 
-  function stop(): void {
+  function stop() {
     running = false;
     if (raf) window.cancelAnimationFrame(raf);
     raf = 0;
   }
 
-  function setReducedMotion(value: boolean): void {
+  /** @param {boolean} value */
+  function setReducedMotion(value) {
     reduced = value;
     if (reduced) {
       stop();
@@ -204,29 +231,57 @@ export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
 
   // ---- wiring -------------------------------------------------------------
 
-  function onPointerMove(e: PointerEvent): void {
+  /** @param {PointerEvent} e */
+  function onPointerMove(e) {
     const rect = canvas.getBoundingClientRect();
     pointer.x = e.clientX - rect.left;
     pointer.y = e.clientY - rect.top;
     pointer.active = true;
   }
-  function onPointerLeave(): void {
+  /** @param {PointerEvent} e */
+  function onPointerOut(e) {
+    // Only when the pointer leaves the window, not when it crosses elements.
+    if (!e.relatedTarget) pointer.active = false;
+  }
+  /** @param {PointerEvent} e */
+  function onPointerEnd(e) {
+    // Touch and pen have no hover: stop attracting once the contact ends.
+    if (e.pointerType !== 'mouse') pointer.active = false;
+  }
+  function onBlur() {
     pointer.active = false;
   }
-  function onScroll(): void {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    scrollProgress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+  function onScroll() {
+    // Progress is how far the hero has slid out of view (0 at top, 1 gone).
+    const r = canvas.getBoundingClientRect();
+    scrollProgress = Math.min(1, Math.max(0, -r.top / (r.height || window.innerHeight)));
   }
-  function onVisibility(): void {
-    if (document.hidden) stop();
-    else if (!reduced) start();
+  function onVisibility() {
+    if (canAnimate()) start();
+    else stop();
   }
 
-  const ro = new ResizeObserver(() => resize());
-  ro.observe(canvas);
+  // Pause the loop while the hero canvas is scrolled out of view.
+  const io =
+    'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => {
+          inView = entries[entries.length - 1].isIntersecting;
+          if (inView) start();
+          else stop();
+        })
+      : null;
+  if (io) io.observe(canvas);
+
+  // Fall back to window resize where ResizeObserver is missing.
+  const ro = 'ResizeObserver' in window ? new ResizeObserver(() => resize()) : null;
+  if (ro) ro.observe(canvas);
+  else window.addEventListener('resize', resize);
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });
-  window.addEventListener('pointerout', onPointerLeave, { passive: true });
+  window.addEventListener('pointerout', onPointerOut, { passive: true });
+  window.addEventListener('pointerup', onPointerEnd, { passive: true });
+  window.addEventListener('pointercancel', onPointerEnd, { passive: true });
+  window.addEventListener('blur', onBlur);
   window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('visibilitychange', onVisibility);
 
@@ -236,11 +291,16 @@ export function createSockwave(canvas: HTMLCanvasElement): Sockwave {
 
   return {
     setReducedMotion,
-    destroy(): void {
+    destroy() {
       stop();
-      ro.disconnect();
+      if (ro) ro.disconnect();
+      else window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerout', onPointerLeave);
+      if (io) io.disconnect();
+      window.removeEventListener('pointerout', onPointerOut);
+      window.removeEventListener('pointerup', onPointerEnd);
+      window.removeEventListener('pointercancel', onPointerEnd);
+      window.removeEventListener('blur', onBlur);
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibility);
       particles = [];

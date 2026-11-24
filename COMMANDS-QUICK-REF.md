@@ -150,6 +150,7 @@ Requires the REA MCP server (`rea-agents`). See [docs/RECC.md](docs/RECC.md).
 
 | Command | What it does |
 |---------|-------------|
+| `/re-pipeline` | Run investigate → rebuild → verify in one go, pausing at the scope check and spec confirmation |
 | `/re-investigate` | Plan and run an evidence-first REA investigation of a binary, app, package, firmware, or site |
 | `/re-compare` | Explain behavior changes between two versions of a shipped app |
 | `/re-rebuild` | Turn findings into a clean-room spec and a test-first implementation |
@@ -170,5 +171,5 @@ Resuming next day?              → /resume-session
 Context getting heavy?          → /context-budget then /checkpoint
 Want to extract what you learned? → /learn-eval then /evolve
 Running repeated tasks?         → /loop-start
-How does a shipped app do X?    → /re-investigate, then /re-rebuild
+How does a shipped app do X?    → /re-investigate, then /re-rebuild (or /re-pipeline for all stages)
 ```

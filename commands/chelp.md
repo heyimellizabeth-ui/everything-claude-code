@@ -71,6 +71,15 @@ sites from `/studio-build` do not use Astryx.
 
 ---
 
+## Motion Motif: wireframe-solid
+
+For a quiet 3D accent (hero, divider, background), `/c1` to `/c3` can use the `wireframe-solid` skill: a
+rotating wireframe dodecahedron in pure CSS 3D, themed with `--ws-*` custom properties. It honours
+`prefers-reduced-motion`. Copy its files from `skills/wireframe-solid/assets/` into the project, set
+`--ws-color` from a colour token, add `aria-hidden="true"`, then run `/design-gate`.
+
+---
+
 ## /c1 — Full Web Project from Scratch
 
 **Chain:** `/prp-prd` → `/prp-plan` → `/update-codemaps` → `/hallmark` → `/gan-design` (optional) → `/multi-frontend` → `/quality-gate` → `/design-gate` → `/santa-loop`
