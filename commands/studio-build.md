@@ -10,7 +10,7 @@ scaffolds a complete static website into `projects/<site-name>/`.
 
 ## When to Use
 
-- After downloading a config from the Design Studio
+- After downloading a config from the Design Studio, or after `/brief-to-brand` wrote one from a client brief
 - Re-building / updating an existing project after changing brand values
 - Automating the design → site pipeline end-to-end
 

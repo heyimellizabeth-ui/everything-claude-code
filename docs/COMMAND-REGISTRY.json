@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 89,
+  "totalCommands": 93,
   "commands": [
     {
       "command": "aside",
@@ -19,6 +19,15 @@
       "allAgents": [],
       "skills": [],
       "path": "commands/auto-update.md"
+    },
+    {
+      "command": "brief-to-brand",
+      "description": "Turn a client brand brief (Markdown) into a brand-config.json that /studio-build can scaffold",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/brief-to-brand.md"
     },
     {
       "command": "build-fix",
@@ -124,7 +133,8 @@
       "allAgents": [],
       "skills": [
         "chelp-advisor",
-        "security-scan"
+        "security-scan",
+        "wireframe-solid"
       ],
       "path": "commands/chelp.md"
     },
@@ -980,8 +990,8 @@
       "orchestration": 7,
       "planning": 2,
       "refactoring": 1,
-      "review": 14,
-      "testing": 55
+      "review": 15,
+      "testing": 58
     },
     "topAgents": [
       {

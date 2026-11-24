@@ -157,6 +157,7 @@ skills:
 commands:
   - aside
   - auto-update
+  - brief-to-brand
   - build-fix
   - c1
   - c2
