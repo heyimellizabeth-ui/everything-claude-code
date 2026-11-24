@@ -40,14 +40,14 @@ persistent_instructions = "Follow project AGENTS.md guidelines. Use available MC
 # the launching environment or can be supplied by a user-level ~/.codex/config.toml.
 [mcp_servers.github]
 command = "npx"
-args = ["-y", "@modelcontextprotocol/server-github"]
+args = ["-y", "@modelcontextprotocol/server-github@2025.4.8"]
 startup_timeout_sec = 30
 
 [mcp_servers.context7]
 command = "npx"
 # Canonical Codex section name is `context7`; the package itself remains
 # `@upstash/context7-mcp`.
-args = ["-y", "@upstash/context7-mcp@latest"]
+args = ["-y", "@upstash/context7-mcp@2.1.4"]
 startup_timeout_sec = 30
 
 [mcp_servers.exa]
@@ -55,17 +55,17 @@ url = "https://mcp.exa.ai/mcp"
 
 [mcp_servers.memory]
 command = "npx"
-args = ["-y", "@modelcontextprotocol/server-memory"]
+args = ["-y", "@modelcontextprotocol/server-memory@2026.1.26"]
 startup_timeout_sec = 30
 
 [mcp_servers.playwright]
 command = "npx"
-args = ["-y", "@playwright/mcp@latest", "--extension"]
+args = ["-y", "@playwright/mcp@0.0.69", "--extension"]
 startup_timeout_sec = 30
 
 [mcp_servers.sequential-thinking]
 command = "npx"
-args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking@2025.12.18"]
 startup_timeout_sec = 30
 
 # Additional MCP servers (uncomment as needed):

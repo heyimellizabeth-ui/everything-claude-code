@@ -1,0 +1,4 @@
+anthropic>=0.25.0
+streamlit>=1.30
+# Optional, for local speech-to-text (Claude does not accept audio):
+# faster-whisper>=1.0

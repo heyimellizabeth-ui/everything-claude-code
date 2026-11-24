@@ -24,10 +24,10 @@ jobs:
         with:
           persist-credentials: false
 
-      # Publish the site folder as the root of gh-pages. The branch is a
-      # parentless snapshot, force-replaced on each deploy; GitHub Pages
-      # serves it (source: gh-pages branch).
-      - name: Push site to gh-pages
+      # Publish the site folder as the root of gh-pages. This is non-destructive
+      # for /sockwave: everything at the root is replaced except sockwave/ (owned
+      # by deploy-sockwave.yml) and .nojekyll. GitHub Pages serves the branch.
+      - name: Publish to gh-pages root
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -35,8 +35,35 @@ jobs:
           export GIT_AUTHOR_EMAIL="41898282+github-actions[bot]@users.noreply.github.com"
           export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
           export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-          SITE_TREE=$(git rev-parse "HEAD:projects/bks26-volunteer/site")
-          COMMIT=$(git commit-tree "$SITE_TREE" -m "deploy: bks26 volunteer guide (${GITHUB_SHA})")
-          git push --force \
-            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-            "${COMMIT}:refs/heads/gh-pages"
+
+          SITE="projects/bks26-volunteer/site"
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          # The guide must not ship its own sockwave/ folder: it would collide
+          # with the Sockwave deploy.
+          if [ -e "$SITE/sockwave" ]; then
+            echo "::error::$SITE/sockwave collides with the Sockwave deploy path"
+            exit 1
+          fi
+
+          # Create gh-pages if it does not exist yet, then add a worktree on it.
+          if git ls-remote --exit-code --heads "$REMOTE" gh-pages >/dev/null 2>&1; then
+            git fetch --no-tags "$REMOTE" gh-pages:gh-pages
+            git worktree add ghp gh-pages
+          else
+            git worktree add --orphan -b gh-pages ghp
+          fi
+
+          find ghp -mindepth 1 -maxdepth 1 \
+            ! -name .git ! -name sockwave ! -name .nojekyll -exec rm -rf {} +
+          cp -r "$SITE"/. ghp/
+          touch ghp/.nojekyll
+
+          cd ghp
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+          else
+            git commit -m "deploy: bks26 volunteer guide (${GITHUB_SHA})"
+            git push "$REMOTE" gh-pages
+          fi

@@ -11,8 +11,8 @@ fi
 
 cd "$CLAUDE_PROJECT_DIR"
 
-echo "[session-start] Installing Node dependencies (npm install)..."
-npm install
+echo "[session-start] Installing Node dependencies (npm ci)..."
+npm ci
 
 if [ -f pyproject.toml ]; then
   echo "[session-start] Installing Python dev dependencies..."
