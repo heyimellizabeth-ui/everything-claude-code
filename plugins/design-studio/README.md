@@ -28,6 +28,10 @@ Four views sit at the top of the pane:
 | Capabilities | Every command and skill loaded in this session, design ones first and marked ◆, with a search box and a Design only / Everything switch |
 | Chains | The chelp chains c1 to c5 and studio-build, step by step as they run through the unified design system, each with a **Run** button |
 | Preferences | `design-system/PREFERENCES.md`: what you liked or rejected, with a form to add a rule (always, never, prefer). It says when rules look settled enough to move into MASTER.md |
+| Edit | Change any default: the design read, the prompt's opening and closing, the Run-a-chain text, the current preset's name, description, accent and Never list, the current kind's name and audience, and each chain's name, use and steps. Clear a box to go back to the default, or **Reset every edit** |
+
+The output box in the Studio view is editable too: press **Edit this text** to change the prompt, MASTER.md or
+CSS before you build, copy or save. **Use the generated text** goes back. Every edit is kept across sessions.
 
 Your choices are kept across sessions.
 

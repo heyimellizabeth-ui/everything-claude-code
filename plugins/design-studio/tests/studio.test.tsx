@@ -1,7 +1,7 @@
 import { expect, test } from 'claude-code/testing'
 
 import {
-  DEFAULT_STATE, addPreference, capabilityList, checks, contrast, fixAccent, parsePreferences, promotionHint, suggestedAccent, wheel,
+  DEFAULT_STATE, PRESETS, addPreference, applyOverrides, capabilityList, readText, setOverride, checks, contrast, fixAccent, parsePreferences, promotionHint, suggestedAccent, wheel,
 } from '../hooks/engine'
 
 const PANE = {
@@ -147,4 +147,39 @@ test('the Preferences view lists the log and adds a row to the file', async ($, 
   await ui.input({ key: 'pref-text', text: 'pill-shaped buttons', kind: 'submit' })
   expect(parsePreferences(file).map(r => `${r.rule} ${r.means}`)).toEqual(['always keep the purple accent', 'never pill-shaped buttons'])
   await ui.unmount()
+})
+
+test('edits override the defaults and clearing one brings the default back', () => {
+  let o = setOverride({}, 'texts', 'read', null, 'Building {kind} for {project}.')
+  o = setOverride(o, 'presets', 'soft', 'never', ['Pill buttons'])
+  applyOverrides(o)
+  expect(readText(DEFAULT_STATE)).toBe('Building landing page for My project.')
+  expect(PRESETS.soft?.never).toEqual(['Pill buttons'])
+  o = setOverride(setOverride(o, 'texts', 'read', null, ''), 'presets', 'soft', 'never', [])
+  expect(o).toEqual({})
+  applyOverrides(o)
+  expect(readText(DEFAULT_STATE)).toMatch(/^Reading this as: landing page/)
+  expect(PRESETS.soft?.never).toEqual(['Hard black borders', 'Neon accents', 'Dense data tables'])
+})
+
+test('the Edit view changes the design read, and an edited prompt is what Build sends', async ($, on) => {
+  const stored: Record<string, unknown> = {}
+  const sent: string[] = []
+  on('store.set', (_, e) => { stored[e.key] = e.value; return { value: undefined } })
+  on('prompt.submit', (_, e) => { sent.push(e.text); return { text: e.text } })
+  const ui = await $.ui.mount({ ...PANE, surface: 'desktop' })
+  await ui.press({ key: 'view-edit' })
+  await ui.input({ key: 'edit-text-read', text: 'My own read for {project}.', kind: 'submit' })
+  await ui.press({ key: 'view-studio' })
+  expect(await ui.find({ type: 'Text', text: 'My own read for My project.' })).toBeDefined()
+  await ui.press({ key: 'edit-output-toggle' })
+  await ui.input({ key: 'edit-output', text: 'Build me something bold.', kind: 'submit' })
+  await ui.press({ key: 'send' })
+  expect(sent[0]).toBe('Build me something bold.')
+  expect((stored.overrides as { texts: { read: string } }).texts.read).toBe('My own read for {project}.')
+  await ui.press({ key: 'edit-output-reset' })
+  await ui.press({ key: 'send' })
+  expect(sent[1]).toMatch(/^Use the unified-design-system skill/)
+  await ui.unmount()
+  applyOverrides({})
 })
