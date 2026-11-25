@@ -98,6 +98,7 @@ Tags: [taste-skill] taste-skill v2 and its sibling skills, [uupm] ui-ux-pro-max,
 
 - **P1** LCP under 2.5s, INP under 200ms, CLS under 0.1. [taste-skill] [mwg]
 - **P2** Hero and first-viewport images are sized, prioritised and not lazy-loaded; below-fold images are lazy. [mwg]
+- **P3** In React, isolate any perpetual or looping animation in its own small memoised leaf component (`React.memo`) so it never re-renders the parent layout. [taste-skill]
 
 ## Redesign (never silently change)
 
