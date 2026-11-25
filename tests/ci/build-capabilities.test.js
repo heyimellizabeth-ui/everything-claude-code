@@ -91,6 +91,12 @@ function runTests() {
       assert.strictEqual(byName(second, 'skill', 'design-gate').stage, 'review');
       assert.strictEqual(byName(second, 'skill', 'design-gate').scores.use, 5);
       assert.strictEqual(byName(second, 'skill', 'x').useWhen, 'kept');
+      const planner = byName(first, 'agent', 'planner');
+      planner.chains = ['c2'];
+      byName(first, 'skill', 'design-gate').chains = ['c9'];
+      const third = buildCapabilities({ root, previous: first });
+      assert.deepStrictEqual(byName(third, 'agent', 'planner').chains, ['c2']);
+      assert.deepStrictEqual(byName(third, 'skill', 'design-gate').chains, ['c1']);
     });
   })) passed++; else failed++;
 

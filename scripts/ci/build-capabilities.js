@@ -233,6 +233,8 @@ function buildCapabilities({ root = ROOT, repos = {}, previous = null } = {}) {
     const before = oldById.get(entry.id);
     // Who added a file never changes, and shallow CI clones can't tell, so keep the recorded origin.
     if (before && before.origin) entry.origin = before.origin;
+    // Chains read from the chain skills win; a chains list added by hand is kept where they find none.
+    if (!entry.chains && before && Array.isArray(before.chains)) entry.chains = before.chains;
     for (const field of DESIGN_FIELDS) {
       if (before && before[field] !== undefined) entry[field] = before[field];
     }

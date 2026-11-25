@@ -24,7 +24,17 @@
       "path": "skill-data/agentcore/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 5,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when using AWS Bedrock AgentCore cloud browsers."
     },
     {
       "id": "agent-browser:skill-data/core/SKILL.md",
@@ -36,7 +46,17 @@
       "path": "skill-data/core/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 5,
+        "uniq": 3,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Driving a real browser for visual QA: named session, snapshot-first loop, waits, annotated screenshots, console checks."
     },
     {
       "id": "agent-browser:skill-data/derive-client/SKILL.md",
@@ -48,7 +68,17 @@
       "path": "skill-data/derive-client/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 5,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only to turn a recorded HAR into an API client; unrelated to design."
     },
     {
       "id": "agent-browser:skill-data/dogfood/SKILL.md",
@@ -60,7 +90,17 @@
       "path": "skill-data/dogfood/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 5,
+        "uniq": 4,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "An optional live QA pass at the end of a build: explore, evidence each issue, severity-rank the report."
     },
     {
       "id": "agent-browser:skill-data/electron/SKILL.md",
@@ -72,7 +112,17 @@
       "path": "skill-data/electron/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 4,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when QA-ing an Electron desktop app."
     },
     {
       "id": "agent-browser:skill-data/modern-web-guidance/SKILL.md",
@@ -84,7 +134,17 @@
       "path": "skill-data/modern-web-guidance/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 5,
+        "qual": 5,
+        "uniq": 5,
+        "use": 5
+      },
+      "designStatus": "module",
+      "useWhen": "Proving each applied guide rule with browser evidence: vitals, reduced-motion, dark mode, dialog inertness."
     },
     {
       "id": "agent-browser:skill-data/slack/SKILL.md",
@@ -96,7 +156,17 @@
       "path": "skill-data/slack/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 4,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only for Slack workspace automation; unrelated to design."
     },
     {
       "id": "agent-browser:skill-data/vercel-sandbox/SKILL.md",
@@ -108,7 +178,17 @@
       "path": "skill-data/vercel-sandbox/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 4,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when running browser automation inside Vercel Sandbox microVMs."
     },
     {
       "id": "agent-browser:skill-data/vercel/SKILL.md",
@@ -120,7 +200,17 @@
       "path": "skill-data/vercel/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 4,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "Only to QA a Vercel preview behind Deployment Protection or to view a flag variant safely."
     },
     {
       "id": "agent-browser:skill-data/webmcp-gen/SKILL.md",
@@ -132,7 +222,17 @@
       "path": "skill-data/webmcp-gen/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 5,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when exposing page workflows as WebMCP tools; not design."
     },
     {
       "id": "agent-browser:skills/agent-browser/SKILL.md",
@@ -144,7 +244,17 @@
       "path": "skills/agent-browser/SKILL.md",
       "origin": "upstream",
       "group": "browser",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 2,
+        "qual": 3,
+        "uniq": 1,
+        "use": 1
+      },
+      "designStatus": "retire",
+      "useWhen": "Never; it is only a pointer to `agent-browser skills get core`."
     },
     {
       "id": "astryx:.claude/commands/create-component.md",
@@ -156,7 +266,17 @@
       "path": ".claude/commands/create-component.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "components",
+      "scores": {
+        "ease": 2,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 3,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when contributing a new component to the Astryx monorepo itself; consumers use astryx integration add component or astryx swizzle."
     },
     {
       "id": "astryx:.claude/commands/create-theme.md",
@@ -168,7 +288,17 @@
       "path": ".claude/commands/create-theme.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "tokens",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 3,
+        "uniq": 2,
+        "use": 3
+      },
+      "designStatus": "retire",
+      "useWhen": "Superseded for consumers by astryx theme template and the experimental theme editor; keep only its token and override-key rules."
     },
     {
       "id": "astryx:.claude/skills/dense-compression-protocol.md",
@@ -180,7 +310,17 @@
       "path": ".claude/skills/dense-compression-protocol.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "learn",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 2,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when writing docsDense translations of Astryx component docs as a contributor."
     },
     {
       "id": "astryx:.claude/skills/writing-component-docs.md",
@@ -192,7 +332,17 @@
       "path": ".claude/skills/writing-component-docs.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "learn",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 2,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when authoring .doc.mjs files for Astryx components as a contributor."
     },
     {
       "id": "astryx:plugins/astryx/.claude-plugin/plugin.json",
@@ -216,7 +366,17 @@
       "path": "plugins/astryx/skills/astryx/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "components",
+      "scores": {
+        "ease": 5,
+        "fit": 4,
+        "qual": 5,
+        "uniq": 3,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "A React 19 project uses Astryx and needs the template-first workflow; superseded by the owner's astryx-components skill, so keep only as reference."
     },
     {
       "id": "everything-claude-code:.agents/skills/everything-claude-code/SKILL.md",
@@ -324,7 +484,25 @@
       "path": "agents/chelp-advisor.md",
       "origin": "lizzy",
       "group": "web chains",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "studio-build"
+      ],
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 4,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Opus reviewer that reruns real checks and logs misses"
     },
     {
       "id": "everything-claude-code:agents/chief-of-staff.md",
@@ -888,7 +1066,17 @@
       "path": "agents/re-investigator.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Answer plan questions with REA and cite evidence"
     },
     {
       "id": "everything-claude-code:agents/re-parity-verifier.md",
@@ -900,7 +1088,17 @@
       "path": "agents/re-parity-verifier.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "module",
+      "useWhen": "Covered, divergent, unverified status per rule"
     },
     {
       "id": "everything-claude-code:agents/re-planner.md",
@@ -912,7 +1110,17 @@
       "path": "agents/re-planner.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Scope check and falsifiable question plan for a study"
     },
     {
       "id": "everything-claude-code:agents/re-reconstructor.md",
@@ -924,7 +1132,17 @@
       "path": "agents/re-reconstructor.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Clean-room spec of behaviour, adaptable to a rules table"
     },
     {
       "id": "everything-claude-code:agents/re-security-analyst.md",
@@ -936,7 +1154,17 @@
       "path": "agents/re-security-analyst.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 3,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Defensive security review of shipped artifacts, not design"
     },
     {
       "id": "everything-claude-code:agents/refactor-cleaner.md",
@@ -1139,7 +1367,17 @@
         "c3",
         "c4",
         "c5"
-      ]
+      ],
+      "stage": "review",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 4,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Pre-build or pre-ship second opinion with evidence"
     },
     {
       "id": "everything-claude-code:commands/code-review.md",
@@ -2788,7 +3026,17 @@
       "path": "plugins/design-studio/.claude-plugin/plugin.json",
       "origin": "lizzy",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 3,
+        "fit": 5,
+        "qual": 4,
+        "uniq": 4,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Pick preset, dials, accent in a pane and save MASTER.md in one click"
     },
     {
       "id": "everything-claude-code:skills/accessibility/SKILL.md",
@@ -2800,7 +3048,17 @@
       "path": "skills/accessibility/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Deep WCAG 2.2 AA review and ARIA for components"
     },
     {
       "id": "everything-claude-code:skills/agent-architecture-audit/SKILL.md",
@@ -3004,7 +3262,17 @@
       "path": "skills/astryx-components/SKILL.md",
       "origin": "lizzy",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "components",
+      "scores": {
+        "ease": 4,
+        "fit": 5,
+        "qual": 4,
+        "uniq": 4,
+        "use": 5
+      },
+      "designStatus": "core",
+      "useWhen": "Step 4 of the unified skill for any React 19 app or app screen; extend it with the MASTER-to-Astryx-theme recipe and replace its Hallmark and chain wording with the 7 steps."
     },
     {
       "id": "everything-claude-code:skills/automation-audit-ops/SKILL.md",
@@ -3088,7 +3356,17 @@
       "path": "skills/brand-voice/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 4,
+        "use": 3
+      },
+      "designStatus": "separate",
+      "useWhen": "Deriving a reusable writing voice from real samples; method reusable for style profiles"
     },
     {
       "id": "everything-claude-code:skills/browser-qa/SKILL.md",
@@ -3100,7 +3378,20 @@
       "path": "skills/browser-qa/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c4"
+      ],
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 3,
+        "qual": 3,
+        "uniq": 2,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Render-side QA when Hallmark browser checks are unavailable"
     },
     {
       "id": "everything-claude-code:skills/bun-runtime/SKILL.md",
@@ -3127,7 +3418,17 @@
       "status": "available",
       "chains": [
         "c1"
-      ]
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Greenfield site or app: PRD, plan, design, build, gates, review"
     },
     {
       "id": "everything-claude-code:skills/c2/SKILL.md",
@@ -3142,7 +3443,17 @@
       "status": "available",
       "chains": [
         "c2"
-      ]
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Adding a page or component to an existing project"
     },
     {
       "id": "everything-claude-code:skills/c3/SKILL.md",
@@ -3157,7 +3468,17 @@
       "status": "available",
       "chains": [
         "c3"
-      ]
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 4,
+        "fit": 5,
+        "qual": 4,
+        "uniq": 4,
+        "use": 5
+      },
+      "designStatus": "module",
+      "useWhen": "Polishing or restyling existing UI with a before/after kept check"
     },
     {
       "id": "everything-claude-code:skills/c4/SKILL.md",
@@ -3172,7 +3493,17 @@
       "status": "available",
       "chains": [
         "c4"
-      ]
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Hardening, security, coverage, render-required gate and PR before merge"
     },
     {
       "id": "everything-claude-code:skills/c5/SKILL.md",
@@ -3187,7 +3518,17 @@
       "status": "available",
       "chains": [
         "c5"
-      ]
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 4,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 2,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Cleanup and drift audit after launch"
     },
     {
       "id": "everything-claude-code:skills/canary-watch/SKILL.md",
@@ -3230,7 +3571,17 @@
         "c3",
         "c4",
         "c5"
-      ]
+      ],
+      "stage": "review",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 5,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Habits for reviewing claims against real output; split off ECC-repo-specific lines"
     },
     {
       "id": "everything-claude-code:skills/chelp-pipeline/SKILL.md",
@@ -3242,7 +3593,25 @@
       "path": "skills/chelp-pipeline/SKILL.md",
       "origin": "lizzy",
       "group": "web chains",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "studio-build"
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "First run on a machine or project, to check Hallmark, Chrome and puppeteer and see READY or NOT READY"
     },
     {
       "id": "everything-claude-code:skills/chelp/SKILL.md",
@@ -3254,7 +3623,25 @@
       "path": "skills/chelp/SKILL.md",
       "origin": "lizzy",
       "group": "web chains",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "studio-build"
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 5,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Picking which of the five web chains to run; becomes the build-engine index"
     },
     {
       "id": "everything-claude-code:skills/cisco-ios-patterns/SKILL.md",
@@ -3669,7 +4056,17 @@
         "c3",
         "c4",
         "c5"
-      ]
+      ],
+      "stage": "review",
+      "scores": {
+        "ease": 3,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 5,
+        "use": 4
+      },
+      "designStatus": "core",
+      "useWhen": "Shared gate: run Hallmark Floor on source and running page before shipping UI"
     },
     {
       "id": "everything-claude-code:skills/design-system/SKILL.md",
@@ -3681,7 +4078,17 @@
       "path": "skills/design-system/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 3,
+        "qual": 3,
+        "uniq": 2,
+        "use": 3
+      },
+      "designStatus": "retire",
+      "useWhen": "Absorb into unified: competitor research, 10-dimension audit, slop list"
     },
     {
       "id": "everything-claude-code:skills/django-celery/SKILL.md",
@@ -3993,7 +4400,17 @@
       "path": "skills/frontend-design-direction/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 5,
+        "fit": 5,
+        "qual": 4,
+        "uniq": 2,
+        "use": 4
+      },
+      "designStatus": "core",
+      "useWhen": "Purpose, audience, tone, memorable detail before coding; absorbed into the design read"
     },
     {
       "id": "everything-claude-code:skills/frontend-patterns/SKILL.md",
@@ -4005,7 +4422,17 @@
       "path": "skills/frontend-patterns/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "components",
+      "scores": {
+        "ease": 4,
+        "fit": 2,
+        "qual": 3,
+        "uniq": 2,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "React engineering patterns, not design direction"
     },
     {
       "id": "everything-claude-code:skills/frontend-slides/SKILL.md",
@@ -4017,7 +4444,17 @@
       "path": "skills/frontend-slides/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 4,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "HTML slide decks that fit the viewport, chosen from three previews"
     },
     {
       "id": "everything-claude-code:skills/fsharp-testing/SKILL.md",
@@ -4521,7 +4958,17 @@
       "path": "skills/liquid-glass-design/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "components",
+      "scores": {
+        "ease": 4,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 4,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "SwiftUI or iOS 26 Liquid Glass work only"
     },
     {
       "id": "everything-claude-code:skills/llm-trading-agent-security/SKILL.md",
@@ -4557,7 +5004,20 @@
       "path": "skills/make-interfaces-feel-better/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c3"
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 5,
+        "fit": 5,
+        "qual": 5,
+        "uniq": 4,
+        "use": 5
+      },
+      "designStatus": "module",
+      "useWhen": "Final polish on spacing, radius, text wrap, hit areas, transitions"
     },
     {
       "id": "everything-claude-code:skills/manim-video/SKILL.md",
@@ -4629,7 +5089,17 @@
       "path": "skills/motion-advanced/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "stage": "components",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "module",
+      "useWhen": "Drag, gestures, SVG drawing and sequences; only on demand"
     },
     {
       "id": "everything-claude-code:skills/motion-foundations/SKILL.md",
@@ -4641,7 +5111,17 @@
       "path": "skills/motion-foundations/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "stage": "tokens",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 4,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Motion tokens, springs and non-negotiable rules for React projects"
     },
     {
       "id": "everything-claude-code:skills/motion-patterns/SKILL.md",
@@ -4653,7 +5133,17 @@
       "path": "skills/motion-patterns/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "stage": "components",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Copy-paste button, modal, toast, stagger and page transitions in React"
     },
     {
       "id": "everything-claude-code:skills/motion-ui/SKILL.md",
@@ -4665,7 +5155,17 @@
       "path": "skills/motion-ui/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 3,
+        "uniq": 1,
+        "use": 3
+      },
+      "designStatus": "retire",
+      "useWhen": "Duplicate monolith of the motion-foundations, patterns and advanced set"
     },
     {
       "id": "everything-claude-code:skills/mysql-patterns/SKILL.md",
@@ -5097,7 +5597,17 @@
       "path": "skills/re-compare/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 4,
+        "use": 2
+      },
+      "designStatus": "module",
+      "useWhen": "Compare two versions of a site or app"
     },
     {
       "id": "everything-claude-code:skills/re-doctor/SKILL.md",
@@ -5109,7 +5619,17 @@
       "path": "skills/re-doctor/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "module",
+      "useWhen": "Diagnose why REA tools are missing"
     },
     {
       "id": "everything-claude-code:skills/re-evidence-discipline/SKILL.md",
@@ -5121,7 +5641,17 @@
       "path": "skills/re-evidence-discipline/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 5,
+        "uniq": 4,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Splitting observed, derived, inferred and unknown claims"
     },
     {
       "id": "everything-claude-code:skills/re-feature-to-implementation/SKILL.md",
@@ -5133,7 +5663,17 @@
       "path": "skills/re-feature-to-implementation/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Workflow from seeing a feature to a verified rebuild"
     },
     {
       "id": "everything-claude-code:skills/re-investigate/SKILL.md",
@@ -5145,7 +5685,17 @@
       "path": "skills/re-investigate/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 4,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Plan and investigate a reference site or app with evidence"
     },
     {
       "id": "everything-claude-code:skills/re-pipeline/SKILL.md",
@@ -5157,7 +5707,17 @@
       "path": "skills/re-pipeline/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 4,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Investigate, rebuild and verify with scope and confirmation gates"
     },
     {
       "id": "everything-claude-code:skills/re-rebuild/SKILL.md",
@@ -5169,7 +5729,17 @@
       "path": "skills/re-rebuild/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Turn findings into a clean-room spec; rules table for design"
     },
     {
       "id": "everything-claude-code:skills/re-scope-and-legality/SKILL.md",
@@ -5181,7 +5751,17 @@
       "path": "skills/re-scope-and-legality/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 4,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Recording basis and clean-room limits before studying a third-party site"
     },
     {
       "id": "everything-claude-code:skills/re-target-playbooks/SKILL.md",
@@ -5193,7 +5773,17 @@
       "path": "skills/re-target-playbooks/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Choosing REA tools by target type; web row for sites"
     },
     {
       "id": "everything-claude-code:skills/re-verify/SKILL.md",
@@ -5205,7 +5795,17 @@
       "path": "skills/re-verify/SKILL.md",
       "origin": "lizzy",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "module",
+      "useWhen": "Compare the build against the reference with a parity verdict"
     },
     {
       "id": "everything-claude-code:skills/recsys-pipeline-architect/SKILL.md",
@@ -5484,7 +6084,17 @@
       "path": "skills/seo/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "separate",
+      "useWhen": "Search visibility, meta and schema for finished sites"
     },
     {
       "id": "everything-claude-code:skills/site-init/SKILL.md",
@@ -5496,7 +6106,17 @@
       "path": "skills/site-init/SKILL.md",
       "origin": "lizzy",
       "group": "web chains",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 3,
+        "uniq": 2,
+        "use": 2
+      },
+      "designStatus": "retire",
+      "useWhen": "Duplicate of studio-build scaffold with hard-coded nightclub defaults"
     },
     {
       "id": "everything-claude-code:skills/skill-comply/SKILL.md",
@@ -5604,7 +6224,21 @@
       "path": "skills/static-site-release/SKILL.md",
       "origin": "lizzy",
       "group": "web chains",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c4",
+        "studio-build"
+      ],
+      "stage": "review",
+      "scores": {
+        "ease": 3,
+        "fit": 4,
+        "qual": 5,
+        "uniq": 5,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Checking and verifying a hand-uploaded static site zip and its live copy"
     },
     {
       "id": "everything-claude-code:skills/strategic-compact/SKILL.md",
@@ -5631,7 +6265,17 @@
       "status": "available",
       "chains": [
         "studio-build"
-      ]
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 4,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Turn a Design Studio brand-config.json into a scaffolded static site"
     },
     {
       "id": "everything-claude-code:skills/swift-actor-persistence/SKILL.md",
@@ -5751,7 +6395,17 @@
       "path": "skills/ui-demo/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "Recording a polished Playwright demo video of a web app"
     },
     {
       "id": "everything-claude-code:skills/ui-to-vue/SKILL.md",
@@ -5763,7 +6417,17 @@
       "path": "skills/ui-to-vue/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 3,
+        "uniq": 2,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Batch converting screenshots to Vue 3 with a paid external API"
     },
     {
       "id": "everything-claude-code:skills/unified-design-system/SKILL.md",
@@ -5871,7 +6535,22 @@
       "path": "skills/wireframe-solid/SKILL.md",
       "origin": "lizzy",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "stage": "build",
+      "scores": {
+        "ease": 5,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 5,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "A quiet rotating 3D wireframe accent in a hero or divider"
     },
     {
       "id": "everything-claude-code:skills/workspace-surface-audit/SKILL.md",
@@ -5907,7 +6586,17 @@
       "path": "skills/chrome-extensions/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 4,
+        "fit": 1,
+        "qual": 5,
+        "uniq": 5,
+        "use": 1
+      },
+      "designStatus": "separate",
+      "useWhen": "Only when building or publishing a Chrome extension (Manifest V3 and Web Store)."
     },
     {
       "id": "modern-web-guidance:skills/modern-web-guidance/SKILL.md",
@@ -5919,7 +6608,17 @@
       "path": "skills/modern-web-guidance/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 5,
+        "qual": 5,
+        "uniq": 5,
+        "use": 5
+      },
+      "designStatus": "module",
+      "useWhen": "Before writing any HTML, CSS or client JS for a platform feature, and again in review to verify guide rules."
     },
     {
       "id": "rea:.agents/skills/rea-analysis-optimization/SKILL.md",
@@ -5979,7 +6678,17 @@
       "path": ".agents/skills/reverse-engineer-anything/SKILL.md",
       "origin": "upstream",
       "group": "RECC",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 4,
+        "use": 3
+      },
+      "designStatus": "separate",
+      "useWhen": "Driving REA tools; web tools give structure and screenshots, not styles"
     },
     {
       "id": "taste-skill:skills/brandkit/SKILL.md",
@@ -5991,7 +6700,17 @@
       "path": "skills/brandkit/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "Only with an image generator, for brand-guideline boards and logo concepts; the brand module covers the rest."
     },
     {
       "id": "taste-skill:skills/brutalist-skill/SKILL.md",
@@ -6003,7 +6722,17 @@
       "path": "skills/brutalist-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 4,
+        "use": 2
+      },
+      "designStatus": "module",
+      "useWhen": "When the brutalist preset is chosen for a Swiss print or CRT terminal look."
     },
     {
       "id": "taste-skill:skills/gpt-tasteskill/SKILL.md",
@@ -6015,7 +6744,17 @@
       "path": "skills/gpt-tasteskill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 2,
+        "uniq": 1,
+        "use": 2
+      },
+      "designStatus": "retire",
+      "useWhen": "Never by default; its hero-line and gapless-bento rules already live in taste-skill v2."
     },
     {
       "id": "taste-skill:skills/image-to-code-skill/SKILL.md",
@@ -6027,7 +6766,17 @@
       "path": "skills/image-to-code-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 2,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "separate",
+      "useWhen": "When the user supplies or wants a reference image to be implemented faithfully; anti-drift checklist is reusable."
     },
     {
       "id": "taste-skill:skills/imagegen-frontend-mobile/SKILL.md",
@@ -6039,7 +6788,17 @@
       "path": "skills/imagegen-frontend-mobile/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 4,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "Only with an image tool, for mobile screen and flow concepts; mine it for safe-area and nav rules."
     },
     {
       "id": "taste-skill:skills/imagegen-frontend-web/SKILL.md",
@@ -6051,7 +6810,17 @@
       "path": "skills/imagegen-frontend-web/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "research",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "Only with an image tool, to produce one reference image per website section before building."
     },
     {
       "id": "taste-skill:skills/minimalist-skill/SKILL.md",
@@ -6063,7 +6832,17 @@
       "path": "skills/minimalist-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "When the minimal preset is chosen and an editorial Notion/Linear look needs concrete tokens."
     },
     {
       "id": "taste-skill:skills/output-skill/SKILL.md",
@@ -6075,7 +6854,17 @@
       "path": "skills/output-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "build",
+      "scores": {
+        "ease": 5,
+        "fit": 1,
+        "qual": 4,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "When the agent truncates or leaves placeholders; a general output rule, not a design one."
     },
     {
       "id": "taste-skill:skills/redesign-skill/SKILL.md",
@@ -6087,7 +6876,17 @@
       "path": "skills/redesign-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "review",
+      "scores": {
+        "ease": 4,
+        "fit": 5,
+        "qual": 4,
+        "uniq": 3,
+        "use": 5
+      },
+      "designStatus": "module",
+      "useWhen": "Upgrading an existing site or app: audit the stack first, then fix in priority order without rewriting."
     },
     {
       "id": "taste-skill:skills/soft-skill/SKILL.md",
@@ -6099,7 +6898,17 @@
       "path": "skills/soft-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "When the soft preset is chosen and the project needs bezel cards, island buttons and heavy-easing motion."
     },
     {
       "id": "taste-skill:skills/stitch-skill/SKILL.md",
@@ -6111,7 +6920,17 @@
       "path": "skills/stitch-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "tokens",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 2,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Writing a DESIGN.md with named colours and a viewport test list; fold into the existing DESIGN.md template."
     },
     {
       "id": "taste-skill:skills/taste-skill-v1/SKILL.md",
@@ -6123,7 +6942,17 @@
       "path": "skills/taste-skill-v1/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 3,
+        "fit": 1,
+        "qual": 3,
+        "uniq": 1,
+        "use": 2
+      },
+      "designStatus": "retire",
+      "useWhen": "Only to pin the old behaviour; superseded by v2 apart from the memoised-leaf and dashboard-serif rules."
     },
     {
       "id": "taste-skill:skills/taste-skill/SKILL.md",
@@ -6135,7 +6964,17 @@
       "path": "skills/taste-skill/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "stage": "direction",
+      "scores": {
+        "ease": 3,
+        "fit": 5,
+        "qual": 4,
+        "uniq": 4,
+        "use": 5
+      },
+      "designStatus": "module",
+      "useWhen": "Setting the design read, dials and hard anti-slop thresholds for landing pages, portfolios and redesigns; also source of the pre-flight rules."
     },
     {
       "id": "ui-ux-pro-max-skill:.claude/skills/banner-design/SKILL.md",
@@ -6147,7 +6986,17 @@
       "path": ".claude/skills/banner-design/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "build",
+      "scores": {
+        "ease": 2,
+        "fit": 3,
+        "qual": 3,
+        "uniq": 3,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Making banners, social covers or ad sizes: use its size table, 22 art directions and HTML-then-screenshot export; skip the Gemini and Pinterest steps."
     },
     {
       "id": "ui-ux-pro-max-skill:.claude/skills/brand/SKILL.md",
@@ -6159,7 +7008,17 @@
       "path": ".claude/skills/brand/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "direction",
+      "scores": {
+        "ease": 3,
+        "fit": 3,
+        "qual": 3,
+        "uniq": 2,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "A task needs a brand kit: voice and tone, palette structure, logo usage and a consistency audit; point its colour and type output at MASTER.md."
     },
     {
       "id": "ui-ux-pro-max-skill:.claude/skills/design-system/SKILL.md",
@@ -6171,7 +7030,17 @@
       "path": ".claude/skills/design-system/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "tokens",
+      "scores": {
+        "ease": 4,
+        "fit": 4,
+        "qual": 4,
+        "uniq": 3,
+        "use": 4
+      },
+      "designStatus": "module",
+      "useWhen": "Defining three-layer tokens, component state rules and Tailwind mapping, or smoke-testing hard-coded values with validate-tokens.cjs; ignore its slide system."
     },
     {
       "id": "ui-ux-pro-max-skill:.claude/skills/design/SKILL.md",
@@ -6183,7 +7052,17 @@
       "path": ".claude/skills/design/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "direction",
+      "scores": {
+        "ease": 2,
+        "fit": 2,
+        "qual": 3,
+        "uniq": 3,
+        "use": 2
+      },
+      "designStatus": "separate",
+      "useWhen": "Only for AI logo, corporate identity mockup or icon generation with a Gemini key; the routing and the duplicated banner and slides text are retired."
     },
     {
       "id": "ui-ux-pro-max-skill:.claude/skills/slides/SKILL.md",
@@ -6195,7 +7074,17 @@
       "path": ".claude/skills/slides/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "build",
+      "scores": {
+        "ease": 3,
+        "fit": 2,
+        "qual": 2,
+        "uniq": 2,
+        "use": 2
+      },
+      "designStatus": "retire",
+      "useWhen": "Never as a skill (42-line router); salvage its deck strategies, copy formulas and 8 slide CSVs as data for frontend-slides."
     },
     {
       "id": "ui-ux-pro-max-skill:.claude/skills/ui-styling/SKILL.md",
@@ -6207,7 +7096,17 @@
       "path": ".claude/skills/ui-styling/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "components",
+      "scores": {
+        "ease": 4,
+        "fit": 3,
+        "qual": 3,
+        "uniq": 2,
+        "use": 3
+      },
+      "designStatus": "module",
+      "useWhen": "Only when the project already uses shadcn/ui or Tailwind; never mixed with Astryx, and its canvas mode is retired."
     },
     {
       "id": "ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max/SKILL.md",
@@ -6219,7 +7118,17 @@
       "path": ".claude/skills/ui-ux-pro-max/SKILL.md",
       "origin": "upstream",
       "group": "design",
-      "status": "active"
+      "status": "active",
+      "stage": "research",
+      "scores": {
+        "ease": 4,
+        "fit": 5,
+        "qual": 4,
+        "uniq": 5,
+        "use": 5
+      },
+      "designStatus": "core",
+      "useWhen": "Choosing product-fit style, palette, font pair, landing pattern, stack rules and UX rules by running search.py in steps 2, 3, 5 and 6; treat output as candidates, not answers."
     }
   ]
 }
