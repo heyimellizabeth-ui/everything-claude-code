@@ -29,8 +29,8 @@ test('typing /c1 starts the chain and a skill run ticks its step', async ($, on)
 
   for (const surface of ['terminal', 'desktop'] as const) {
     const ui = await $.ui.mount({ ...PANE, surface })
-    expect((await ui.find({ type: 'Text', text: /steps done/ }))?.text).toBe('1 of 10 steps done')
-    expect((await ui.find({ type: 'Text', text: /→/ }))?.text).toBe('→ /prp-plan')
+    expect((await ui.find({ type: 'Text', text: /steps done/ }))?.text).toBe('1 of 11 steps done')
+    expect((await ui.find({ type: 'Text', text: /→/ }))?.text).toBe('→ /unified-design-system')
     await ui.unmount()
   }
 })

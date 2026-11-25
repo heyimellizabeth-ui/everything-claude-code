@@ -8,11 +8,11 @@ const TITLE = 'Chain progress'
 
 // Steps of each web chain, in order, from ECC's skills/c1/SKILL.md to skills/c5/SKILL.md.
 export const CHAINS: Record<ChainId, { name: string; steps: string[] }> = {
-  c1: { name: 'New site from scratch', steps: ['prp-prd', 'prp-plan', 'chelp-advisor', 'update-codemaps', 'hallmark', 'gan-design', 'multi-frontend', 'quality-gate', 'design-gate', 'santa-loop'] },
-  c2: { name: 'Add a component or page', steps: ['plan', 'chelp-advisor', 'feature-dev', 'hallmark', 'gan-design', 'code-review', 'test-coverage', 'design-gate', 'checkpoint'] },
-  c3: { name: 'Design polish sprint', steps: ['model-route', 'hallmark', 'gan-build', 'quality-gate', 'design-gate', 'chelp-advisor', 'code-review'] },
-  c4: { name: 'Production ship', steps: ['multi-plan', 'multi-execute', 'multi-frontend', 'security-scan', 'test-coverage', 'design-gate', 'chelp-advisor', 'santa-loop', 'prp-pr'] },
-  c5: { name: 'Post-launch cleanup', steps: ['refactor-clean', 'update-codemaps', 'update-docs', 'hallmark', 'quality-gate', 'design-gate', 'chelp-advisor', 'checkpoint'] },
+  c1: { name: 'New site from scratch', steps: ['prp-prd', 'unified-design-system', 'prp-plan', 'chelp-advisor', 'update-codemaps', 'hallmark', 'gan-design', 'multi-frontend', 'quality-gate', 'design-gate', 'santa-loop'] },
+  c2: { name: 'Add a component or page', steps: ['plan', 'chelp-advisor', 'unified-design-system', 'feature-dev', 'hallmark', 'gan-design', 'code-review', 'test-coverage', 'design-gate', 'checkpoint'] },
+  c3: { name: 'Design polish sprint', steps: ['model-route', 'unified-design-system', 'hallmark', 'gan-build', 'quality-gate', 'design-gate', 'chelp-advisor', 'code-review'] },
+  c4: { name: 'Production ship', steps: ['unified-design-system', 'multi-plan', 'multi-execute', 'security-scan', 'test-coverage', 'design-gate', 'chelp-advisor', 'santa-loop', 'prp-pr', 'multi-frontend'] },
+  c5: { name: 'Post-launch cleanup', steps: ['refactor-clean', 'update-codemaps', 'update-docs', 'unified-design-system', 'hallmark', 'quality-gate', 'design-gate', 'chelp-advisor', 'checkpoint'] },
 }
 const isChain = (name: string): name is ChainId => name in CHAINS
 
