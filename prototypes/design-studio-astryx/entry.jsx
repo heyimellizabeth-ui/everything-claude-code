@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { Button } from '@astryxdesign/core';
+import { Button } from '@astryxdesign/core/Button';
 
 function Spike() {
   return (

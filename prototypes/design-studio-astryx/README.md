@@ -21,18 +21,24 @@ It works. The page renders offline in Chromium with no errors. The primary Butto
 purple accent `#7c3aed` with white text (5.7:1) and 16px type. The theme overrides go in the
 `astryx-theme` layer in `theme.css`, so no Astryx source is changed.
 
-| Part | Size |
-| --- | --- |
-| JS (React 19 + Astryx, minified) | 378 KB |
-| Astryx CSS (whole library) | 307 KB |
-| Page | 686 KB, 171 KB gzipped |
-| Current React Lab, for comparison | 40 KB plus React from a CDN (about 45 KB gzipped) |
+The build imports only `@astryxdesign/core/Button` and keeps only the CSS rules whose class names
+appear in the bundle (postcss, in `build.js`).
 
-## What this means for the plan
+| Part | Before trim | After trim |
+| --- | --- | --- |
+| React 19 + react-dom | 178 KB | 178 KB |
+| Astryx JS, one Button (+ 32 KB i18n parser) | 191 KB | 191 KB |
+| Astryx CSS | 307 KB | 74 KB |
+| Page | 686 KB (171 KB gzipped) | 452 KB (135 KB gzipped) |
 
-- The page is far over the plan's "about 3x" size limit, mostly because esbuild cannot drop the
-  unused parts of the full `astryx.css`, and the JS bundle includes React.
-- Phase 2 should first try importing only the components it uses and trimming the CSS to their
-  rules. If the page stays above about 150 KB gzipped, keep the Astryx theme only.
-- Control height of 44px is set only on touch screens (`pointer: coarse`); on desktop the Button is
-  32px, Astryx's default.
+The current React Lab is 40 KB, with React loaded from a CDN. Leaving React out of both, the
+Astryx page is about 265 KB for one button, about 6.6 times the whole lab.
+
+## Recommendation
+
+Keep only the Astryx theme. One Button already costs about 6.6 times the whole current lab, and
+the full studio would use 10 or more components, so the plan's limit of about 3 times cannot be
+met. Bring the Studio theme values (purple accent, 16px type, 44px touch targets, 150/300/500 ms
+motion) into the React Lab and the mod pane as tokens, and drop the component rebuild.
+
+On desktop the Button is 32px, Astryx's default; 44px is set only on touch screens.
