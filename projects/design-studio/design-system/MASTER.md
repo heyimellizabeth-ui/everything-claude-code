@@ -53,8 +53,11 @@ Transitions 0.1 to 0.2s on colour and border only. Turned off under
 - Literal `</script>` inside the inline script (write `<\/script>`): it ends the
   script early and blanks the whole studio.
 
+## Decisions
+
+- 2026-11-25: Lizzy chose to keep the purple accent (#7c3aed). It is the
+  studio's own colour, not a default to flag.
+
 ## Open questions for Lizzy
 
-- The purple accent (#7c3aed) is the most common AI-generated default. Keep it,
-  or pick a colour that belongs to the studio?
 - Controls are 35 to 40px tall. Fine on desktop, small for touch (44px).
