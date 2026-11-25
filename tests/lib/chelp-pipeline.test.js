@@ -71,7 +71,7 @@ function runTests() {
       const missing = pipeline.checkHallmark({ env: {}, homedir: home });
       assert.strictEqual(missing.ok, false);
       assert.ok(missing.fix.includes('npx skills add nutlope/hallmark -g'), missing.fix);
-      assert.strictEqual(missing.required, true);
+      assert.strictEqual(missing.required, false, 'Hallmark is optional: the review checklist gates without it');
     } finally {
       rm(skill);
       rm(home);
@@ -131,7 +131,7 @@ function runTests() {
       assert.ok(missing.detail.includes('scripts/design-gate.js'));
       assert.strictEqual(pipeline.checkEccFiles(path.resolve(__dirname, '..', '..')).ok, true);
       // The installer's layout: skills under skills/ecc/.
-      for (const f of ['scripts/design-gate.js', 'skills/ecc/chelp-advisor/SKILL.md', 'agents/chelp-advisor.md', 'commands/chelp-advisor.md']) {
+      for (const f of ['scripts/design-gate.js', 'skills/ecc/unified-design-system/SKILL.md', 'skills/ecc/chelp-advisor/SKILL.md', 'agents/chelp-advisor.md', 'commands/chelp-advisor.md']) {
         fs.mkdirSync(path.join(root, path.dirname(f)), { recursive: true });
         fs.writeFileSync(path.join(root, f), '');
       }
@@ -147,8 +147,13 @@ function runTests() {
   const bad = (id, required) => ({ id, ok: false, required });
 
   check('a missing required check is NOT READY', () => {
-    const verdict = pipeline.evaluate([ok('node', true), bad('hallmark', true), ok('puppeteer', false), ok('chrome', false)], null);
+    const verdict = pipeline.evaluate([bad('node', true), ok('hallmark', false), ok('puppeteer', false), ok('chrome', false)], null);
     assert.deepStrictEqual(verdict, { verdict: 'NOT READY', ready: false });
+  });
+
+  check('missing Hallmark is READY with the checklist gate only', () => {
+    const verdict = pipeline.evaluate([ok('node', true), bad('hallmark', false), ok('ecc', true), bad('puppeteer', false), ok('chrome', false)], null);
+    assert.deepStrictEqual(verdict, { verdict: 'READY (checklist gate only)', ready: true });
   });
 
   check('missing browser checks are READY (static checks only)', () => {
@@ -174,6 +179,10 @@ function runTests() {
       assert.ok(pipeline.projectNotes(astryx).some(n => n.includes('Astryx project') && n.includes('stone')));
       const notes = pipeline.projectNotes(plain);
       assert.ok(notes.some(n => n.includes('REPORT ONLY')), notes.join('\n'));
+      fs.mkdirSync(path.join(plain, 'design-system'));
+      fs.writeFileSync(path.join(plain, 'design-system', 'MASTER.md'), '# Master\n');
+      const withMaster = pipeline.projectNotes(plain);
+      assert.ok(withMaster.some(n => n.includes('Unified design system project') && n.includes('block')), withMaster.join('\n'));
     } finally {
       rm(astryx);
       rm(plain);
@@ -187,12 +196,12 @@ function runTests() {
     assert.strictEqual(pipeline.parseArgs(['--no-smoke', '--install']).smoke, false);
   });
 
-  check('exits 1 and says NOT READY when Hallmark is missing', () => {
+  check('exits 0 with the checklist gate only when Hallmark is missing, and still prints its install command', () => {
     const home = tmp();
     try {
       const run = runCli(['--no-smoke'], { PATH: process.env.PATH, HOME: home, USERPROFILE: home });
-      assert.strictEqual(run.status, 1, run.stdout + run.stderr);
-      assert.ok(run.stdout.includes('NOT READY') && run.stdout.includes('npx skills add nutlope/hallmark -g'), run.stdout);
+      assert.strictEqual(run.status, 0, run.stdout + run.stderr);
+      assert.ok(run.stdout.includes('READY (checklist gate only)') && run.stdout.includes('npx skills add nutlope/hallmark -g'), run.stdout);
     } finally {
       rm(home);
     }
