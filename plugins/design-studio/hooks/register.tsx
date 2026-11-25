@@ -1,10 +1,10 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { Mode, StudioState, Tab } from '../types'
+import type { Mode, Rule, StudioState, Tab, View } from '../types'
 import {
-  DEFAULT_STATE, DIALS, FONTS, KINDS, PRESETS,
-  checks, kindOf, masterMd, normHex, output, presetOf, promptText, readText, suggestedAccent, tokens, validHex, wheel,
+  CHAINS, DEFAULT_STATE, DIALS, FONTS, KINDS, PRESETS, VIEWS,
+  addPreference, capabilityList, checks, isDesign, kindOf, parsePreferences, promotionHint, masterMd, normHex, output, presetOf, promptText, readText, suggestedAccent, tokens, validHex, wheel,
 } from './engine'
 
 const PANE = 'design-studio'
@@ -15,6 +15,22 @@ const STORE_KEY = 'studio'
 const studio = atom({ plugin: 'design-studio', key: 'studio' } as const, DEFAULT_STATE, { shape: 'studio-1' })
 const isOpen = atom({ plugin: 'design-studio', key: 'isOpen' } as const, false)
 const note = atom({ plugin: 'design-studio', key: 'note' } as const, '')
+const viewAtom = atom({ plugin: 'design-studio', key: 'view' } as const, 'studio' as View)
+const query = atom({ plugin: 'design-studio', key: 'query' } as const, '')
+const designOnly = atom({ plugin: 'design-studio', key: 'designOnly' } as const, true)
+const prefRule = atom({ plugin: 'design-studio', key: 'prefRule' } as const, 'prefer' as Rule)
+
+const PREFS_PATH = 'design-system/PREFERENCES.md'
+const MAX_ROWS = 40
+const RULE_COLOR = { always: 'success', never: 'error', prefer: 'warning' } as const
+
+async function readPrefs($: EngineInterface) {
+  try {
+    return (await $.fs.exists(PREFS_PATH)) ? await $.fs.read(PREFS_PATH) : ''
+  } catch {
+    return ''
+  }
+}
 
 const PILL = { ok: 'Pass', warn: 'Check', bad: 'Fail' } as const
 const PILL_COLOR = { ok: 'success', warn: 'warning', bad: 'error' } as const
@@ -100,6 +116,7 @@ export const register: Register = on => {
     const gate = checks(S)
     const fix = suggestedAccent(S)
     const passed = gate.filter(c => c.state === 'ok').length
+    const view = await read($, viewAtom)
 
     // Minimized on the desktop app: a glance and one button back in.
     if (e.props.placement === 'widget') {
@@ -118,8 +135,111 @@ export const register: Register = on => {
       </Box>
     )
 
+    const viewTabs = (
+      <Box flexDirection="row" flexWrap="wrap" gap={1}>
+        {VIEWS.map(([id, name]) => (
+          <Button key={`view-${id}`} variant={view === id ? 'primary' : 'secondary'} label={name}
+            onPress={() => update($, viewAtom, () => id)} />
+        ))}
+      </Box>
+    )
+
+    if (view === 'capabilities') {
+      const all = (await $.command.list()).map(c => ({ name: c.name, description: c.description, source: c.source, plugin: c.plugin }))
+      const q = await read($, query)
+      const only = await read($, designOnly)
+      const list = capabilityList(all, q, only)
+      const designCount = all.filter(isDesign).length
+      return (
+        <Box flexDirection="column" gap={1}>
+          {viewTabs}
+          <Text dimColor>{all.length} commands and skills in this session, {designCount} of them design. Design ones are marked ◆.</Text>
+          <Box flexDirection="row" gap={1}>
+            <Input key="cap-search" label="Search" value={q} onSubmit={v => update($, query, () => v)} />
+            <Button key="cap-design-only" variant={only ? 'primary' : 'secondary'}
+              label={only ? 'Design only' : 'Everything'} onPress={() => update($, designOnly, x => !x)} />
+          </Box>
+          <Box flexDirection="column">
+            {list.slice(0, MAX_ROWS).map(c => (
+              <Box flexDirection="row" gap={1}>
+                <Text color={isDesign(c) ? S.accent : undefined}>{isDesign(c) ? '◆' : '·'}</Text>
+                <Text bold>/{c.name}</Text>
+                <Text dimColor>{c.description.length > 90 ? `${c.description.slice(0, 89)}…` : c.description}</Text>
+              </Box>
+            ))}
+            {list.length > MAX_ROWS && <Text dimColor>and {list.length - MAX_ROWS} more; search to narrow.</Text>}
+            {list.length === 0 && <Text dimColor>Nothing matches.</Text>}
+          </Box>
+        </Box>
+      )
+    }
+
+    if (view === 'chains') {
+      return (
+        <Box flexDirection="column" gap={1}>
+          {viewTabs}
+          <Text dimColor>Every chain reads MASTER.md and PREFERENCES.md first and ends with the review gate.</Text>
+          {CHAINS.map(c => (
+            <Box flexDirection="column">
+              <Box flexDirection="row" gap={1}>
+                <Text bold>/{c.id}</Text>
+                <Text>{c.name}</Text>
+                <Text dimColor>{c.when}</Text>
+              </Box>
+              <Text dimColor>{c.steps.join(' → ')}</Text>
+              <Button key={`chain-${c.id}`} onPress={async () => {
+                await $.prompt.submit({ text: `Run the /${c.id} chain for ${S.project} with the unified design system. Ask me for the brief first.`, asUser: true })
+                await say($, `Asked Claude to run /${c.id}.`)
+              }}>Run /{c.id}</Button>
+            </Box>
+          ))}
+          {message !== '' && <Text dimColor>{message}</Text>}
+        </Box>
+      )
+    }
+
+    if (view === 'preferences') {
+      const md = await readPrefs($)
+      const prefs = parsePreferences(md)
+      const hint = promotionHint(prefs)
+      const rule = await read($, prefRule)
+      return (
+        <Box flexDirection="column" gap={1}>
+          {viewTabs}
+          <Text dimColor>{PREFS_PATH}: what you liked or rejected. Every build reads it first.</Text>
+          {prefs.length === 0 && <Text dimColor>No preferences logged in this project yet.</Text>}
+          <Box flexDirection="column">
+            {prefs.map(p => (
+              <Box flexDirection="row" gap={1}>
+                <Text color={RULE_COLOR[p.rule]} bold>{p.rule}</Text>
+                <Text>{p.means}</Text>
+                <Text dimColor>{p.date}</Text>
+              </Box>
+            ))}
+          </Box>
+          {hint !== undefined && <Text color="warning">{hint}</Text>}
+          <Box flexDirection="column" gap={1}>
+            <Text bold>Add one</Text>
+            <Select key="pref-rule" label="Rule" value={rule}
+              options={[{ value: 'always', label: 'Always' }, { value: 'never', label: 'Never' }, { value: 'prefer', label: 'Prefer' }]}
+              onSelect={v => update($, prefRule, () => v as Rule)} />
+            <Input key="pref-text" label="What it means" value=""
+              onSubmit={async v => {
+                const text = v.trim()
+                if (text === '') return
+                const date = new Date(await $.clock.now()).toISOString().slice(0, 10)
+                await $.fs.write(PREFS_PATH, addPreference(await readPrefs($), { date, rule, means: text, words: 'added in Design Studio' }))
+                await say($, `Logged: ${rule} ${text}`)
+              }} />
+          </Box>
+          {message !== '' && <Text dimColor>{message}</Text>}
+        </Box>
+      )
+    }
+
     return (
       <Box flexDirection="column" gap={1}>
+        {viewTabs}
         <Text italic>{readText(S)}</Text>
 
         <Box flexDirection="column" gap={1}>

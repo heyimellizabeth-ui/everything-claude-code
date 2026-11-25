@@ -21,6 +21,7 @@ const hallmark = require('./lib/hallmark');
 const REPO_ROOT = path.resolve(__dirname, '..');
 const HALLMARK_INSTALL = 'npx skills add nutlope/hallmark -g';
 const PUPPETEER_INSTALL = 'npm i -g puppeteer-core';
+const HALLMARK_LABEL = 'Hallmark design skill (optional: runs /design-gate)';
 const CHROME_CANDIDATES = {
   darwin: [
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
@@ -45,7 +46,7 @@ function checkNode(version = process.versions.node) {
 function checkHallmark(options = {}) {
   const dir = options.skillDir || hallmark.resolveSkillDir({ env: options.env, homedir: options.homedir });
   if (!dir) {
-    return check('hallmark', 'Hallmark design skill', false, 'not found', `${HALLMARK_INSTALL}  (or from a clone: node skills/hallmark/scripts/install.mjs). Set HALLMARK_SKILL_DIR if it lives elsewhere.`, true);
+    return check('hallmark', HALLMARK_LABEL, false, 'not found (the review checklist is the gate without it)', `${HALLMARK_INSTALL}  (or from a clone: node skills/hallmark/scripts/install.mjs). Set HALLMARK_SKILL_DIR if it lives elsewhere.`, false);
   }
   let version = '';
   try {
@@ -54,7 +55,7 @@ function checkHallmark(options = {}) {
   } catch {
     version = '';
   }
-  return check('hallmark', 'Hallmark design skill', true, `${dir}${version ? ` (version${version})` : ''}`, '', true);
+  return check('hallmark', HALLMARK_LABEL, true, `${dir}${version ? ` (version${version})` : ''}`, '', false);
 }
 
 function globalNodeModules() {
@@ -91,6 +92,7 @@ function checkEccFiles(root = REPO_ROOT) {
   // installer's layout, which puts skills under skills/ecc/.
   const needed = [
     ['scripts/design-gate.js'],
+    ['skills/unified-design-system/SKILL.md', 'skills/ecc/unified-design-system/SKILL.md'],
     ['skills/chelp-advisor/SKILL.md', 'skills/ecc/chelp-advisor/SKILL.md'],
     ['agents/chelp-advisor.md'],
     ['commands/chelp-advisor.md']
@@ -98,7 +100,7 @@ function checkEccFiles(root = REPO_ROOT) {
   const missing = needed
     .filter(options => !options.some(f => fs.existsSync(path.join(root, f))))
     .map(options => options[0]);
-  return check('ecc', 'ECC chelp files (gate, advisor)', missing.length === 0,
+  return check('ecc', 'ECC chelp files (design system, gate, advisor)', missing.length === 0,
     missing.length ? `missing: ${missing.join(', ')}` : root,
     'Update ECC to a version that includes the chelp advisor and /design-gate.', true);
 }
@@ -113,10 +115,15 @@ function projectNotes(cwd = process.cwd()) {
   } else if (deps.react) {
     notes.push('React project without Astryx: see the astryx-components skill if you want it as the component directory.');
   }
+  const master = hallmark.findDesignSystemMaster('.', { cwd });
   const project = hallmark.isHallmarkProject('.', { cwd });
-  notes.push(project.hallmark
-    ? `Hallmark project (${project.reason}): /design-gate will block on findings.`
-    : '/design-gate will REPORT ONLY here (no Hallmark stamp, design.md or .hallmark record). Use --enforce to block.');
+  if (master) {
+    notes.push(`Unified design system project (${master}): every chain reads MASTER.md and PREFERENCES.md first, and /design-gate will block on findings.`);
+  } else if (project.hallmark) {
+    notes.push(`Hallmark project (${project.reason}): /design-gate will block on findings. Run the unified-design-system skill to add design-system/MASTER.md.`);
+  } else {
+    notes.push('/design-gate will REPORT ONLY here (no design-system/MASTER.md, Hallmark stamp, design.md or .hallmark record). Use --enforce to block.');
+  }
   return notes;
 }
 
@@ -152,6 +159,7 @@ function smokeTest(options = {}) {
 function evaluate(checks, smoke) {
   const failedRequired = checks.filter(c => c.required && !c.ok);
   if (failedRequired.length) return { verdict: 'NOT READY', ready: false };
+  if (checks.some(c => c.id === 'hallmark' && !c.ok)) return { verdict: 'READY (checklist gate only)', ready: true };
   const browserOk = checks.filter(c => !c.required).every(c => c.ok);
   if (!browserOk) return { verdict: 'READY (static checks only)', ready: true };
   if (smoke === null) return { verdict: 'READY (browser checks not smoke tested)', ready: true };
@@ -234,6 +242,9 @@ function main(argv) {
   console.log('  - Run /advisor opus so the advisor tool uses Opus, then read the chelp-advisor skill before consulting.');
   console.log('  - Pick a chain with /chelp.');
   console.log(`\n[chelp-pipeline] ${verdict}`);
+  if (verdict === 'READY (checklist gate only)') {
+    console.log('[chelp-pipeline] Without Hallmark the chains run the review checklist (unified-design-system references/review-checklist.md) as the gate. Install Hallmark for the executable /design-gate.');
+  }
   if (verdict === 'READY (static checks only)') {
     console.log('[chelp-pipeline] /design-gate runs the static checks; --render and --require-render (c4) will not pass until the browser checks work.');
   }

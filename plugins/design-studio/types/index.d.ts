@@ -1,5 +1,7 @@
 export type Mode = 'light' | 'dark'
 export type Tab = 'prompt' | 'master' | 'css'
+export type View = 'studio' | 'capabilities' | 'chains' | 'preferences'
+export type Rule = 'always' | 'never' | 'prefer'
 export type StudioState = {
   project: string
   kind: string
@@ -13,6 +15,9 @@ export type StudioState = {
 
 declare module 'claude-code' {
   interface PluginState {
-    'design-studio': { studio: Shaped<StudioState>; isOpen: boolean; note: string }
+    'design-studio': {
+      studio: Shaped<StudioState>; isOpen: boolean; note: string
+      view: View; query: string; designOnly: boolean; prefRule: Rule
+    }
   }
 }

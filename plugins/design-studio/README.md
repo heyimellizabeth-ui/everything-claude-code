@@ -20,6 +20,15 @@ ported to the mod's own elements, so it runs in the terminal, the desktop app an
 | Accessible accents | Eight accents that pass on the preset; press one to use it |
 | Output | Prompt, MASTER.md or CSS tokens, with **Build with Claude** (sends the prompt), **Copy**, **Save MASTER.md** (writes `design-system/MASTER.md` in the project) and **Reset** |
 
+Four views sit at the top of the pane:
+
+| View | What it shows |
+|---|---|
+| Studio | Everything above |
+| Capabilities | Every command and skill loaded in this session, design ones first and marked ◆, with a search box and a Design only / Everything switch |
+| Chains | The chelp chains c1 to c5 and studio-build, step by step as they run through the unified design system, each with a **Run** button |
+| Preferences | `design-system/PREFERENCES.md`: what you liked or rejected, with a form to add a rule (always, never, prefer). It says when rules look settled enough to move into MASTER.md |
+
 Your choices are kept across sessions.
 
 ## Install
