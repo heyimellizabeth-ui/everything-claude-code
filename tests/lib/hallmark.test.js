@@ -288,6 +288,35 @@ function runTests() {
     }
   });
 
+  console.log('\nfindDesignSystemMaster:');
+
+  check('finds design-system/MASTER.md at or above the target', () => {
+    const dir = tmp();
+    const cwd = tmp();
+    fs.mkdirSync(path.join(dir, 'design-system'));
+    fs.writeFileSync(path.join(dir, 'design-system', 'MASTER.md'), '# Design System: Test\n');
+    fs.mkdirSync(path.join(dir, 'src'));
+    fs.writeFileSync(path.join(dir, 'src', 'index.html'), '<p>hi</p>');
+    try {
+      assert.ok(hallmark.findDesignSystemMaster(dir, { cwd }));
+      assert.ok(hallmark.findDesignSystemMaster(path.join(dir, 'src', 'index.html'), { cwd }));
+    } finally {
+      cleanup(dir);
+      cleanup(cwd);
+    }
+  });
+
+  check('returns null when there is no MASTER.md', () => {
+    const dir = tmp();
+    const cwd = tmp();
+    try {
+      assert.strictEqual(hallmark.findDesignSystemMaster(dir, { cwd }), null);
+    } finally {
+      cleanup(dir);
+      cleanup(cwd);
+    }
+  });
+
   check('a .hallmark folder or a design.md marks the project', () => {
     const withFolder = tmp();
     const withDesign = tmp();
