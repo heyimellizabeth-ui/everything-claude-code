@@ -8,7 +8,7 @@ const KINDS = [
   { id: 'dashboard', name: 'Dashboard or tool', dials: [3, 2, 7], preset: 'product', audience: 'daily users' },
   { id: 'app', name: 'App screen', dials: [4, 4, 6], preset: 'product', audience: 'signed-in users' },
   { id: 'public', name: 'Public service or health', dials: [3, 2, 5], preset: 'trust', audience: 'everyone, including assistive tech users' },
-  { id: 'experimental', name: 'Experimental or agency', dials: [9, 8, 3], preset: 'brutalist', audience: 'design-literate visitors' }
+  { id: 'experimental', name: 'Experimental or agency', dials: [9, 2, 3], preset: 'brutalist', audience: 'design-literate visitors' }
 ];
 
 const FONTS = [
