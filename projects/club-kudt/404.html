@@ -55,6 +55,14 @@
     nav { padding: 1.2rem 1.5rem; } .nav-links { display: none; } .nav-hamburger { display: flex; }
     footer { padding: 1.5rem; }
   }
+  /* Design system fixes (Phase 4, see design-system/MASTER.md) */
+  .cta-btn, .ticker-item, .newsletter-submit { color: var(--void); }
+  .ticker-dot { color: rgba(13,13,13,0.45); }
+  .nav-links a, .footer-links a { display: inline-block; padding-block: 6px; min-height: 24px; }
+  @media (pointer: coarse) { .nav-links a, .footer-links a { padding-block: 16px; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
