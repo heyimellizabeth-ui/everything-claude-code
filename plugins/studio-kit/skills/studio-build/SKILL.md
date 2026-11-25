@@ -47,7 +47,8 @@ cp <config-path> projects/<projectName>/brand.config.json
 ### 4 — Scaffold the site
 
 ```bash
-node scripts/site-template/scaffold.js \
+KIT_ROOT="$(node -e "var p=require('path'),f=require('fs'),h=p.join(require('os').homedir(),'.claude'),c=[process.env.CLAUDE_PLUGIN_ROOT,p.join(process.cwd(),'plugins','studio-kit'),h];for(var b of [p.join(h,'plugins','marketplaces'),p.join(h,'plugins','cache')])try{for(var o of f.readdirSync(b)){c.push(p.join(b,o,'plugins','studio-kit'));try{for(var v of f.readdirSync(p.join(b,o,'studio-kit')))c.push(p.join(b,o,'studio-kit',v))}catch(x){}}}catch(x){}console.log(c.find(d=>d&&f.existsSync(p.join(d,'scripts','design-gate.js')))||'.')")"
+node "$KIT_ROOT/scripts/site-template/scaffold.js" \
   --config projects/<projectName>/brand.config.json \
   --out projects/<projectName>
 ```
@@ -55,7 +56,7 @@ node scripts/site-template/scaffold.js \
 ### 4b — Write the design system
 
 ```bash
-node scripts/site-template/write-master.js \
+node "$KIT_ROOT/scripts/site-template/write-master.js" \
   --config projects/<projectName>/brand.config.json \
   --out projects/<projectName>
 ```
@@ -91,7 +92,7 @@ for (const [key, file] of Object.entries(pages)) {
 ### 7 — Validate output
 
 ```bash
-node scripts/site-template/validate.js --dir projects/<projectName>
+node "$KIT_ROOT/scripts/site-template/validate.js" --dir projects/<projectName>
 ```
 
 Fix any remaining `{{TOKEN}}` placeholders before continuing.

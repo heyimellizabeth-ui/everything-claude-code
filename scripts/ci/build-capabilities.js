@@ -125,7 +125,7 @@ function groupFor(repo, name) {
 function chainSteps(repoRoot) {
   const steps = {};
   for (const id of CHAIN_IDS) {
-    const text = readText(path.join(repoRoot, 'skills', id, 'SKILL.md'));
+    const text = readText(path.join(repoRoot, 'skills', id, 'SKILL.md')) ?? readText(path.join(repoRoot, 'plugins', 'studio-kit', 'skills', id, 'SKILL.md'));
     if (text === null) continue;
     const blocks = (text.match(/```[\s\S]*?```/g) || []).join('\n');
     steps[id] = [...new Set([...blocks.matchAll(/^\/([a-z][\w-]*)/gm)].map(m => m[1]))];
@@ -198,7 +198,7 @@ function scanRepo(repo, repoRoot) {
   }
 
   // Harness mirrors (.agents, .cursor, .kiro, ...) repeat skills found in skills/ or .claude/: keep one.
-  const rank = rel => (rel.startsWith('skills/') ? 0 : rel.startsWith('.claude/') ? 1 : 2);
+  const rank = rel => (/^(plugins\/[^/]+\/)?skills\//.test(rel) ? 0 : rel.startsWith('.claude/') ? 1 : 2);
   const best = new Map();
   for (const entry of entries) {
     const key = `${entry.kind}:${entry.name}`;

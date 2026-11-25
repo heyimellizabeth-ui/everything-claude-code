@@ -3,10 +3,10 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { scaffold } = require('../../scripts/site-template/scaffold');
-const { validate, designCheck } = require('../../scripts/site-template/validate');
+const { scaffold } = require('../../plugins/studio-kit/scripts/site-template/scaffold');
+const { validate, designCheck } = require('../../plugins/studio-kit/scripts/site-template/validate');
 
-const TEMPLATE_DIR = path.resolve(__dirname, '../../templates/queer-nightclub');
+const TEMPLATE_DIR = path.resolve(__dirname, '../../plugins/studio-kit/templates/queer-nightclub');
 const EXAMPLE_CONFIG = path.join(TEMPLATE_DIR, 'brand.config.json');
 
 let passed = 0;

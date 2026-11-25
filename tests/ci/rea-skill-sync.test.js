@@ -35,7 +35,7 @@ function withRoots(eccVersion, reaVersion, fn) {
   const eccRoot = path.join(base, 'ecc');
   const reaRoot = path.join(base, 'rea');
   try {
-    writeSkill(eccRoot, 'skills', eccVersion);
+    writeSkill(eccRoot, path.join('plugins', 'studio-kit', 'skills'), eccVersion);
     writeSkill(reaRoot, path.join('.agents', 'skills'), reaVersion);
     fn({ eccRoot, reaRoot });
   } finally {

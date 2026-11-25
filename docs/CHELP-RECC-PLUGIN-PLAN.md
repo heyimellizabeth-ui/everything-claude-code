@@ -12,35 +12,19 @@ plugin would hold and what has to change first.
 - The `chain-tracker` mod (`plugins/chain-tracker`) is its own plugin and installs on its own:
   `/plugin install chain-tracker@ecc` after adding this repository as a marketplace.
 
-## What the plugin would hold
+## Done: plugins/studio-kit (2026-11-25)
 
-| Kind | Items |
-|---|---|
-| Skills | c1 to c5, chelp, chelp-pipeline, chelp-advisor, design-gate, studio-build, astryx-components, wireframe-solid, static-site-release, re-compare, re-doctor, re-investigate, re-pipeline, re-rebuild, re-verify, re-evidence-discipline, re-scope-and-legality, re-target-playbooks, re-feature-to-implementation, reverse-engineer-anything |
-| Agents | chelp-advisor, re-investigator, re-parity-verifier, re-planner, re-reconstructor, re-security-analyst |
-| Commands | chelp-advisor |
-| Scripts | design-gate.js, chelp-pipeline.js, lib/hallmark.js, setup-chelp-cloud.sh, site-template/ |
-| Hooks | recc-evidence.js (post:recc-evidence-log, stop:recc-unknowns-reminder) |
-| Templates | templates/queer-nightclub |
-| MCP | the REA entry from mcp-configs/rea-tool-catalog.json |
+The skills, agents, the `chelp-advisor` command, the chelp and design-gate scripts, `site-template/` and
+`templates/queer-nightclub` now live in `plugins/studio-kit`, listed in this repository's marketplace as
+`studio-kit`. ECC no longer ships them: they left the install modules, `package.json` files and
+`agent.yaml`, and the `reverse-engineering` install module is gone (the `recc` profile keeps the ECC
+modules the RECC skills build on).
 
-## What blocks a clean split
+- Root lookups: the skills find their scripts through `KIT_ROOT`, which checks `CLAUDE_PLUGIN_ROOT`,
+  `plugins/studio-kit` in a checkout, `~/.claude`, then installed marketplace and cache copies.
+- Cloud sessions: `scripts/setup-chelp-cloud.sh` copies the kit into `~/.claude` after the ECC install.
+- Still in ECC: the RECC evidence hooks (they need ECC's hook runtime), the REA MCP entry and its
+  contract test, and `setup-chelp-cloud.sh`.
+- The chains still call ECC skills, so install `ecc` alongside the kit.
 
-1. **Plugin root lookups.** `skills/design-gate/SKILL.md` and the RECC hooks find their scripts by
-   looking for an installed plugin named `ecc` or `everything-claude-code`. A plugin with another
-   name needs those lookups to use `CLAUDE_PLUGIN_ROOT` alone.
-2. **Shared hook runtime.** The RECC hooks run through `scripts/hooks/run-with-flags.js` and
-   `scripts/lib/utils.js`. The new plugin either copies that runtime or calls `recc-evidence.js`
-   directly from its own `hooks/hooks.json`.
-3. **Steps that call other ECC skills.** The chains call ECC skills such as `/prp-prd`,
-   `/quality-gate`, `/santa-loop` and `/multi-frontend`. The plugin should declare ECC as a
-   dependency, or the chains should say which steps need ECC.
-4. **One source of truth.** Copying files into a second folder would drift. Either move the files
-   into the new plugin and have ECC depend on it, or generate the plugin folder from a list with a
-   check in CI.
-
-## Suggested order
-
-1. Make the root lookups in the design gate and RECC hooks use `CLAUDE_PLUGIN_ROOT` only.
-2. Create a separate repository for the plugin and move the files listed above into it.
-3. Add it to this repository's marketplace and list it as a dependency where ECC skills call it.
+Moving the kit to a repository of its own remains possible later; this folder is that repository's content.

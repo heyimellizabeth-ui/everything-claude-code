@@ -24,8 +24,8 @@ unless you pass `--install`.
 1. Run the check:
 
    ```bash
-   ECC_ROOT="${CLAUDE_PLUGIN_ROOT:-$(node -e "var r=(()=>{var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var p=require('path'),f=require('fs'),h=require('os').homedir(),d=p.join(h,'.claude'),q=p.join('scripts','lib','utils.js');if(f.existsSync(p.join(d,q)))return d;for(var s of [['ecc'],['ecc@ecc'],['marketplaces','ecc'],['everything-claude-code'],['everything-claude-code@everything-claude-code'],['marketplaces','everything-claude-code']]){var l=p.join(d,'plugins',...s);if(f.existsSync(p.join(l,q)))return l}try{for(var g of ['ecc','everything-claude-code']){var b=p.join(d,'plugins','cache',g);for(var o of f.readdirSync(b,{withFileTypes:true})){if(!o.isDirectory())continue;for(var v of f.readdirSync(p.join(b,o.name),{withFileTypes:true})){if(!v.isDirectory())continue;var c=p.join(b,o.name,v.name);if(f.existsSync(p.join(c,q)))return c}}}}catch(x){}return d})();console.log(r)")}"
-   node "$ECC_ROOT/scripts/chelp-pipeline.js" $ARGUMENTS
+   KIT_ROOT="$(node -e "var p=require('path'),f=require('fs'),h=p.join(require('os').homedir(),'.claude'),c=[process.env.CLAUDE_PLUGIN_ROOT,p.join(process.cwd(),'plugins','studio-kit'),h];for(var b of [p.join(h,'plugins','marketplaces'),p.join(h,'plugins','cache')])try{for(var o of f.readdirSync(b)){c.push(p.join(b,o,'plugins','studio-kit'));try{for(var v of f.readdirSync(p.join(b,o,'studio-kit')))c.push(p.join(b,o,'studio-kit',v))}catch(x){}}}catch(x){}console.log(c.find(d=>d&&f.existsSync(p.join(d,'scripts','design-gate.js')))||'.')")"
+   node "$KIT_ROOT/scripts/chelp-pipeline.js" $ARGUMENTS
    ```
 
 2. Read the verdict line at the end and report it to the user as printed:

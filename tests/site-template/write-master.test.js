@@ -3,9 +3,9 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { buildMaster, writeMaster } = require('../../scripts/site-template/write-master');
+const { buildMaster, writeMaster } = require('../../plugins/studio-kit/scripts/site-template/write-master');
 
-const EXAMPLE_CONFIG = path.resolve(__dirname, '../../templates/queer-nightclub/brand.config.json');
+const EXAMPLE_CONFIG = path.resolve(__dirname, '../../plugins/studio-kit/templates/queer-nightclub/brand.config.json');
 
 let passed = 0;
 let failed = 0;

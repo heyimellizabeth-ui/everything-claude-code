@@ -19,6 +19,8 @@ const { extractReaToolRefs, findUnknownReaRefs, getReaPin } = require('../../scr
 const { resolveInstallPlan } = require('../../scripts/lib/install-manifests');
 
 const ROOT = path.join(__dirname, '..', '..');
+// The RECC skills and agents ship in the studio-kit plugin.
+const KIT = path.join('plugins', 'studio-kit');
 const readJson = rel => JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
 const catalog = readJson('mcp-configs/rea-tool-catalog.json');
 const mcpConfig = readJson('mcp-configs/mcp-servers.json');
@@ -41,13 +43,14 @@ function test(name, fn) {
 
 function reccFiles() {
   const files = [];
-  for (const dir of ['agents', 'commands']) {
+  for (const dir of ['agents', 'commands', path.join(KIT, 'agents'), path.join(KIT, 'commands')]) {
+    if (!fs.existsSync(path.join(ROOT, dir))) continue;
     for (const name of fs.readdirSync(path.join(ROOT, dir))) {
       if (name.startsWith('re-') && name.endsWith('.md')) files.push(path.join(dir, name));
     }
   }
-  for (const name of fs.readdirSync(path.join(ROOT, 'skills'))) {
-    if (name.startsWith('re-')) files.push(path.join('skills', name, 'SKILL.md'));
+  for (const name of fs.readdirSync(path.join(ROOT, KIT, 'skills'))) {
+    if (name.startsWith('re-')) files.push(path.join(KIT, 'skills', name, 'SKILL.md'));
   }
   return files;
 }
@@ -72,7 +75,7 @@ function runTests() {
   })) passed++; else failed++;
 
   if (test('vendored reverse-engineer-anything skill matches the pinned version', () => {
-    const skill = fs.readFileSync(path.join(ROOT, 'skills', 'reverse-engineer-anything', 'SKILL.md'), 'utf8');
+    const skill = fs.readFileSync(path.join(ROOT, KIT, 'skills', 'reverse-engineer-anything', 'SKILL.md'), 'utf8');
     // Windows checkouts may use CRLF line endings.
     const origins = skill.split(/\r?\n/).filter(line => line.startsWith('origin:'));
     assert.deepStrictEqual(origins, [`origin: rea@${pin}`]);
@@ -104,20 +107,18 @@ function runTests() {
     assert.deepStrictEqual([...new Set(problems)], []);
   })) passed++; else failed++;
 
-  if (test('recc profile resolves and includes the reverse-engineering module', () => {
+  if (test('recc profile resolves to the modules the studio-kit RECC skills build on', () => {
     const plan = resolveInstallPlan({ profileId: 'recc', target: 'claude', projectRoot: ROOT });
-    assert.ok(plan.selectedModuleIds.includes('reverse-engineering'));
     assert.ok(plan.selectedModuleIds.includes('security'));
     assert.ok(plan.selectedModuleIds.includes('hooks-runtime'), 'evidence-log hooks need the hook runtime');
   })) passed++; else failed++;
 
-  if (test('reverse-engineering module paths exist', () => {
-    const modules = readJson('manifests/install-modules.json').modules;
-    const mod = modules.find(entry => entry.id === 'reverse-engineering');
-    assert.ok(mod, 'reverse-engineering module is missing');
-    for (const rel of mod.paths) {
-      assert.ok(fs.existsSync(path.join(ROOT, rel)), `missing path: ${rel}`);
+  if (test('studio-kit holds the RECC skills and is in the marketplace', () => {
+    for (const name of ['reverse-engineer-anything', 're-investigate', 're-rebuild', 're-verify']) {
+      assert.ok(fs.existsSync(path.join(ROOT, KIT, 'skills', name, 'SKILL.md')), `missing skill: ${name}`);
     }
+    const marketplace = readJson('.claude-plugin/marketplace.json');
+    assert.ok(marketplace.plugins.some(entry => entry.name === 'studio-kit' && entry.source === './plugins/studio-kit'));
   })) passed++; else failed++;
 
   if (test('RECC hooks are registered and opt-in scoped', () => {

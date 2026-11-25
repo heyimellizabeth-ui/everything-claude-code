@@ -849,17 +849,15 @@ function runTests() {
     }
   })) passed++; else failed++;
 
-  if (test('the design gate script and the chelp advisor playbook ship with the default modules', () => {
+  if (test('the design gate, chelp and RECC files ship in the studio-kit plugin, not the install modules', () => {
     const repoRoot = path.resolve(__dirname, '..', '..');
-    const modules = new Map(loadInstallManifests({ repoRoot }).modules.map(module => [module.id, module]));
-    const covers = (id, relPath) => (modules.get(id).paths || []).some(p => relPath === p || relPath.startsWith(`${p}/`));
-    assert.ok(covers('platform-configs', 'scripts/design-gate.js'), 'scripts/design-gate.js is not in platform-configs');
-    assert.ok(covers('platform-configs', 'scripts/chelp-pipeline.js'), 'scripts/chelp-pipeline.js is not in platform-configs');
-    assert.ok(covers('workflow-quality', 'skills/chelp-pipeline'), 'skills/chelp-pipeline is not in workflow-quality');
-    assert.ok(covers('workflow-quality', 'skills/chelp-advisor'), 'skills/chelp-advisor is not in workflow-quality');
-    assert.ok(covers('hooks-runtime', 'scripts/lib/hallmark.js'), 'scripts/lib/hallmark.js is not covered by hooks-runtime');
-    assert.ok(covers('agents-core', 'agents/chelp-advisor.md'), 'agents/chelp-advisor.md is not in agents-core');
-    assert.ok(covers('commands-core', 'commands/chelp-advisor.md'), 'commands/chelp-advisor.md is not in commands-core');
+    const modules = loadInstallManifests({ repoRoot }).modules;
+    const kitFiles = ['scripts/design-gate.js', 'scripts/chelp-pipeline.js', 'scripts/lib/hallmark.js', 'skills/chelp-pipeline', 'skills/chelp-advisor', 'skills/re-investigate', 'agents/chelp-advisor.md', 'commands/chelp-advisor.md'];
+    for (const relPath of kitFiles) {
+      assert.ok(fs.existsSync(path.join(repoRoot, 'plugins', 'studio-kit', relPath)), `plugins/studio-kit/${relPath} is missing`);
+      const owner = modules.find(module => (module.paths || []).includes(relPath));
+      assert.ok(!owner, `${relPath} is still listed in the ${owner && owner.id} module`);
+    }
     const profiles = loadInstallManifests({ repoRoot }).profiles;
     for (const [id, profile] of Object.entries(profiles)) {
       assert.ok(profile.modules.includes('workflow-quality'), `profile ${id} lacks workflow-quality`);

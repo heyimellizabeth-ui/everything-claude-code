@@ -475,36 +475,6 @@
       "status": "available"
     },
     {
-      "id": "everything-claude-code:agents/chelp-advisor.md",
-      "kind": "agent",
-      "name": "chelp-advisor",
-      "description": "Advisor for the chelp web-design chains (c1 to c5). Reviews a plan or a finished change against real evidence, using the chelp-advisor playbook, and returns ranked, evidence-backed advice. Use at the pre-build and pre-ship checkpoints of a chain.",
-      "invoke": "@chelp-advisor",
-      "repo": "everything-claude-code",
-      "path": "agents/chelp-advisor.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "studio-build"
-      ],
-      "stage": "review",
-      "scores": {
-        "ease": 4,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 4,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Opus reviewer that reruns real checks and logs misses"
-    },
-    {
       "id": "everything-claude-code:agents/chief-of-staff.md",
       "kind": "agent",
       "name": "chief-of-staff",
@@ -1057,116 +1027,6 @@
       "status": "available"
     },
     {
-      "id": "everything-claude-code:agents/re-investigator.md",
-      "kind": "agent",
-      "name": "re-investigator",
-      "description": "RECC investigator. Answer .recc/plan.md questions with the REA MCP server, citing Evidence IDs and separating observations, inferences, and unknowns.",
-      "invoke": "@re-investigator",
-      "repo": "everything-claude-code",
-      "path": "agents/re-investigator.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Answer plan questions with REA and cite evidence"
-    },
-    {
-      "id": "everything-claude-code:agents/re-parity-verifier.md",
-      "kind": "agent",
-      "name": "re-parity-verifier",
-      "description": "RECC parity check. Verify a reconstructed feature against observed original behavior and write a parity report.",
-      "invoke": "@re-parity-verifier",
-      "repo": "everything-claude-code",
-      "path": "agents/re-parity-verifier.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 2
-      },
-      "designStatus": "module",
-      "useWhen": "Covered, divergent, unverified status per rule"
-    },
-    {
-      "id": "everything-claude-code:agents/re-planner.md",
-      "kind": "agent",
-      "name": "re-planner",
-      "description": "RECC planner. Plan a reverse-engineering task. Checks scope and authorization, classifies the target, picks the REA provider, and writes .recc/plan.md.",
-      "invoke": "@re-planner",
-      "repo": "everything-claude-code",
-      "path": "agents/re-planner.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Scope check and falsifiable question plan for a study"
-    },
-    {
-      "id": "everything-claude-code:agents/re-reconstructor.md",
-      "kind": "agent",
-      "name": "re-reconstructor",
-      "description": "RECC reconstructor. Turn REA findings into a clean-room behavior spec and a test-first implementation in the user's project.",
-      "invoke": "@re-reconstructor",
-      "repo": "everything-claude-code",
-      "path": "agents/re-reconstructor.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Clean-room spec of behaviour, adaptable to a rules table"
-    },
-    {
-      "id": "everything-claude-code:agents/re-security-analyst.md",
-      "kind": "agent",
-      "name": "re-security-analyst",
-      "description": "RECC defensive security review of shipped artifacts the user may assess, using REA evidence.",
-      "invoke": "@re-security-analyst",
-      "repo": "everything-claude-code",
-      "path": "agents/re-security-analyst.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 1,
-        "qual": 4,
-        "uniq": 3,
-        "use": 1
-      },
-      "designStatus": "separate",
-      "useWhen": "Defensive security review of shipped artifacts, not design"
-    },
-    {
       "id": "everything-claude-code:agents/refactor-cleaner.md",
       "kind": "agent",
       "name": "refactor-cleaner",
@@ -1361,35 +1221,6 @@
         "c2",
         "c5"
       ]
-    },
-    {
-      "id": "everything-claude-code:commands/chelp-advisor.md",
-      "kind": "command",
-      "name": "chelp-advisor",
-      "description": "Consult the chelp advisor (Opus) at a chain checkpoint, before building or before shipping, and get ranked, evidence-backed advice.",
-      "invoke": "/chelp-advisor",
-      "repo": "everything-claude-code",
-      "path": "commands/chelp-advisor.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5"
-      ],
-      "stage": "review",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 4,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Pre-build or pre-ship second opinion with evidence"
     },
     {
       "id": "everything-claude-code:commands/code-review.md",
@@ -3051,6 +2882,357 @@
       "useWhen": "Pick preset, dials, accent in a pane and save MASTER.md in one click"
     },
     {
+      "id": "everything-claude-code:plugins/studio-kit/.claude-plugin/plugin.json",
+      "kind": "plugin",
+      "name": "studio-kit",
+      "description": "Lizzy's web chains (c1 to c5, chelp, design gate, studio build), unified design system and RECC reverse-engineering skills, with their agents and scripts",
+      "invoke": "/plugin install studio-kit",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/.claude-plugin/plugin.json",
+      "origin": "upstream",
+      "group": "general",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/astryx-components/SKILL.md",
+      "kind": "skill",
+      "name": "astryx-components",
+      "description": "Use the Astryx design system (@astryxdesign/core) as the component directory for React web work in the chelp chains, with Hallmark's Floor as the design gate. Use when a c1 to c5 chain builds or changes a React app, an app screen, a dashboard, a form or a page that should use Astryx components.",
+      "invoke": "/astryx-components",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/astryx-components/SKILL.md",
+      "origin": "upstream",
+      "group": "design",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/c1/SKILL.md",
+      "kind": "skill",
+      "name": "c1",
+      "description": "Web chain 1 — full web project from scratch (spec → design → build → ship)",
+      "invoke": "/c1",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/c1/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "c1"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/c2/SKILL.md",
+      "kind": "skill",
+      "name": "c2",
+      "description": "Web chain 2 — add a component or page feature to an existing project",
+      "invoke": "/c2",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/c2/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "c2"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/c3/SKILL.md",
+      "kind": "skill",
+      "name": "c3",
+      "description": "Web chain 3 — design iteration sprint for polishing UI, animations, or responsive layout",
+      "invoke": "/c3",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/c3/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "c3"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/c4/SKILL.md",
+      "kind": "skill",
+      "name": "c4",
+      "description": "Web chain 4 — production-ready shipping with multi-model execution, security audit, and PR",
+      "invoke": "/c4",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/c4/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "c4"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/c5/SKILL.md",
+      "kind": "skill",
+      "name": "c5",
+      "description": "Web chain 5 — post-launch cleanup, dead code removal, and documentation sync",
+      "invoke": "/c5",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/c5/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "c5"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/chelp-advisor/SKILL.md",
+      "kind": "skill",
+      "name": "chelp-advisor",
+      "description": "Playbook for the advisor of the chelp web-design chains (c1 to c5, studio-build). Use when consulting or acting as the advisor at a chain checkpoint, before building or before shipping, or when reviewing work that claims to pass the Hallmark design gate.",
+      "invoke": "/chelp-advisor",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/chelp-advisor/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/chelp-pipeline/SKILL.md",
+      "kind": "skill",
+      "name": "chelp-pipeline",
+      "description": "Activate the chelp pipeline: check that the design system, the advisor, and optionally Hallmark and the browser checks are ready, prove them with a smoke test, and print the exact fix for anything missing.",
+      "invoke": "/chelp-pipeline",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/chelp-pipeline/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/chelp/SKILL.md",
+      "kind": "skill",
+      "name": "chelp",
+      "description": "List all web design command chains (c1–c5) with descriptions and when to use each",
+      "invoke": "/chelp",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/chelp/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/design-gate/SKILL.md",
+      "kind": "skill",
+      "name": "design-gate",
+      "description": "Run the Hallmark design linter on a page, folder or URL and block on Floor failures.",
+      "invoke": "/design-gate",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/design-gate/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-compare/SKILL.md",
+      "kind": "skill",
+      "name": "re-compare",
+      "description": "RECC — compare two versions of a shipped application or artifact with REA and explain what changed in behavior, with evidence.",
+      "invoke": "/re-compare",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-compare/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-doctor/SKILL.md",
+      "kind": "skill",
+      "name": "re-doctor",
+      "description": "RECC — read-only diagnosis of the REA MCP connection and analysis providers for this agent, with the exact repair steps.",
+      "invoke": "/re-doctor",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-doctor/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-evidence-discipline/SKILL.md",
+      "kind": "skill",
+      "name": "re-evidence-discipline",
+      "description": "How to report reverse-engineering results in RECC so they can be trusted and reused. Separates observations, derivations, inferences, and unknowns, cites REA Evidence IDs, keeps a durable evidence log under .recc/, and audits residual unknowns before calling work done.",
+      "invoke": "/re-evidence-discipline",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-evidence-discipline/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-feature-to-implementation/SKILL.md",
+      "kind": "skill",
+      "name": "re-feature-to-implementation",
+      "description": "End-to-end RECC workflow for \"see a feature in an app, understand how it works, and build an equivalent in my project\". Chains re-planner, REA investigation, a clean-room spec, ECC test-driven implementation, and parity verification.",
+      "invoke": "/re-feature-to-implementation",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-feature-to-implementation/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-investigate/SKILL.md",
+      "kind": "skill",
+      "name": "re-investigate",
+      "description": "RECC — reverse engineer a shipped binary, app, package, firmware image, or website to answer a question, with REA evidence. Runs re-planner then re-investigator and writes .recc/plan.md and .recc/findings.md.",
+      "invoke": "/re-investigate",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-investigate/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-pipeline/SKILL.md",
+      "kind": "skill",
+      "name": "re-pipeline",
+      "description": "RECC — run the whole reverse-engineering pipeline in one go: investigate a target, rebuild the feature clean-room and test-first, then verify parity. Stops at the scope check and the spec confirmation, and resumes from existing .recc/ files.",
+      "invoke": "/re-pipeline",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-pipeline/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-rebuild/SKILL.md",
+      "kind": "skill",
+      "name": "re-rebuild",
+      "description": "RECC — turn reverse-engineering findings into a clean-room spec and a test-first implementation of an equivalent feature in this project.",
+      "invoke": "/re-rebuild",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-rebuild/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-scope-and-legality/SKILL.md",
+      "kind": "skill",
+      "name": "re-scope-and-legality",
+      "description": "Scope and authorization checklist for RECC reverse-engineering work. Use before analyzing any third-party binary, app, firmware, or website to record the authorization basis, purpose, and hard limits, and to stop on requests for credential theft, DRM or licence circumvention, malware, or attacks on systems the user does not control.",
+      "invoke": "/re-scope-and-legality",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-scope-and-legality/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-target-playbooks/SKILL.md",
+      "kind": "skill",
+      "name": "re-target-playbooks",
+      "description": "Per-target routing for RECC reverse engineering. Tells the agent which REA tools, providers, and prerequisites to use for native binaries, Electron/JavaScript, Android, .NET, WASM, firmware, packet captures, and websites, and which REA guide covers the details.",
+      "invoke": "/re-target-playbooks",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-target-playbooks/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/re-verify/SKILL.md",
+      "kind": "skill",
+      "name": "re-verify",
+      "description": "RECC — verify that a reconstructed feature matches the behavior observed in the original target, and write a parity report.",
+      "invoke": "/re-verify",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/re-verify/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/reverse-engineer-anything/SKILL.md",
+      "kind": "skill",
+      "name": "reverse-engineer-anything",
+      "description": "Reverse engineer native, managed, Electron/JavaScript, packaged, firmware, and browser targets with REA. Use shipped-artifact or requested runtime evidence to explain features, compare versions, decompile code, or guide a reconstruction. Skip REA for ordinary source-repository architecture analysis.",
+      "invoke": "/reverse-engineer-anything",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/reverse-engineer-anything/SKILL.md",
+      "origin": "upstream",
+      "group": "RECC",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/static-site-release/SKILL.md",
+      "kind": "skill",
+      "name": "static-site-release",
+      "description": "Release gate for static HTML sites that are uploaded by hand (zip, FTP, cPanel or Hostinger file manager) and served through a CDN. Checks the zip before upload and the live site after it, using the Playwright MCP and agent-browser. Use this whenever you prepare, review or verify a static-site zip, check another session's site deliverable, or someone asks 'is it live?', 'check the new zip', 'what do I delete on the server?' or 'why does the site still show the old version?', even if they never say 'release'.",
+      "invoke": "/static-site-release",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/static-site-release/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available"
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/studio-build/SKILL.md",
+      "kind": "skill",
+      "name": "studio-build",
+      "description": "Build a site from a brand-config.json downloaded from the Design Studio",
+      "invoke": "/studio-build",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/studio-build/SKILL.md",
+      "origin": "upstream",
+      "group": "web chains",
+      "status": "available",
+      "chains": [
+        "studio-build"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/unified-design-system/SKILL.md",
+      "kind": "skill",
+      "name": "unified-design-system",
+      "description": "One entry point for all UI and visual design work. Use when building, restyling, redesigning or reviewing any website, app screen, dashboard, component, landing page, brand asset or slide deck. It sets the design direction, picks a style preset, applies tokens and components, and runs one review gate, routing to the specialist design skills only when needed.",
+      "invoke": "/unified-design-system",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/unified-design-system/SKILL.md",
+      "origin": "upstream",
+      "group": "design",
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
+    },
+    {
+      "id": "everything-claude-code:plugins/studio-kit/skills/wireframe-solid/SKILL.md",
+      "kind": "skill",
+      "name": "wireframe-solid",
+      "description": "Drop-in rotating wireframe dodecahedron in pure CSS 3D (no canvas, WebGL or dependencies). Use when a /chelp chain (c1-c3) builds a hero, section accent or background that wants a quiet 3D line-art motif, or when asked for a wireframe solid.",
+      "invoke": "/wireframe-solid",
+      "repo": "everything-claude-code",
+      "path": "plugins/studio-kit/skills/wireframe-solid/SKILL.md",
+      "origin": "upstream",
+      "group": "design",
+      "status": "available"
+    },
+    {
       "id": "everything-claude-code:skills/accessibility/SKILL.md",
       "kind": "skill",
       "name": "accessibility",
@@ -3265,28 +3447,6 @@
       "status": "available"
     },
     {
-      "id": "everything-claude-code:skills/astryx-components/SKILL.md",
-      "kind": "skill",
-      "name": "astryx-components",
-      "description": "Use the Astryx design system (@astryxdesign/core) as the component directory for React web work in the chelp chains, with Hallmark's Floor as the design gate. Use when a c1 to c5 chain builds or changes a React app, an app screen, a dashboard, a form or a page that should use Astryx components.",
-      "invoke": "/astryx-components",
-      "repo": "everything-claude-code",
-      "path": "skills/astryx-components/SKILL.md",
-      "origin": "lizzy",
-      "group": "design",
-      "status": "available",
-      "stage": "components",
-      "scores": {
-        "ease": 4,
-        "fit": 5,
-        "qual": 4,
-        "uniq": 4,
-        "use": 5
-      },
-      "designStatus": "core",
-      "useWhen": "Step 4 of the unified skill for any React 19 app or app screen; extend it with the MASTER-to-Astryx-theme recipe and replace its Hallmark and chain wording with the 7 steps."
-    },
-    {
       "id": "everything-claude-code:skills/automation-audit-ops/SKILL.md",
       "kind": "skill",
       "name": "automation-audit-ops",
@@ -3418,131 +3578,6 @@
       "status": "available"
     },
     {
-      "id": "everything-claude-code:skills/c1/SKILL.md",
-      "kind": "skill",
-      "name": "c1",
-      "description": "Web chain 1 — full web project from scratch (spec → design → build → ship)",
-      "invoke": "/c1",
-      "repo": "everything-claude-code",
-      "path": "skills/c1/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c1"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 4,
-        "fit": 4,
-        "qual": 4,
-        "uniq": 3,
-        "use": 4
-      },
-      "designStatus": "module",
-      "useWhen": "Greenfield site or app: PRD, plan, design, build, gates, review"
-    },
-    {
-      "id": "everything-claude-code:skills/c2/SKILL.md",
-      "kind": "skill",
-      "name": "c2",
-      "description": "Web chain 2 — add a component or page feature to an existing project",
-      "invoke": "/c2",
-      "repo": "everything-claude-code",
-      "path": "skills/c2/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c2"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 4,
-        "fit": 4,
-        "qual": 4,
-        "uniq": 3,
-        "use": 4
-      },
-      "designStatus": "module",
-      "useWhen": "Adding a page or component to an existing project"
-    },
-    {
-      "id": "everything-claude-code:skills/c3/SKILL.md",
-      "kind": "skill",
-      "name": "c3",
-      "description": "Web chain 3 — design iteration sprint for polishing UI, animations, or responsive layout",
-      "invoke": "/c3",
-      "repo": "everything-claude-code",
-      "path": "skills/c3/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c3"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 4,
-        "fit": 5,
-        "qual": 4,
-        "uniq": 4,
-        "use": 5
-      },
-      "designStatus": "module",
-      "useWhen": "Polishing or restyling existing UI with a before/after kept check"
-    },
-    {
-      "id": "everything-claude-code:skills/c4/SKILL.md",
-      "kind": "skill",
-      "name": "c4",
-      "description": "Web chain 4 — production-ready shipping with multi-model execution, security audit, and PR",
-      "invoke": "/c4",
-      "repo": "everything-claude-code",
-      "path": "skills/c4/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c4"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Hardening, security, coverage, render-required gate and PR before merge"
-    },
-    {
-      "id": "everything-claude-code:skills/c5/SKILL.md",
-      "kind": "skill",
-      "name": "c5",
-      "description": "Web chain 5 — post-launch cleanup, dead code removal, and documentation sync",
-      "invoke": "/c5",
-      "repo": "everything-claude-code",
-      "path": "skills/c5/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c5"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 4,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 2,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Cleanup and drift audit after launch"
-    },
-    {
       "id": "everything-claude-code:skills/canary-watch/SKILL.md",
       "kind": "skill",
       "name": "canary-watch",
@@ -3565,95 +3600,6 @@
       "origin": "upstream",
       "group": "general",
       "status": "available"
-    },
-    {
-      "id": "everything-claude-code:skills/chelp-advisor/SKILL.md",
-      "kind": "skill",
-      "name": "chelp-advisor",
-      "description": "Playbook for the advisor of the chelp web-design chains (c1 to c5, studio-build). Use when consulting or acting as the advisor at a chain checkpoint, before building or before shipping, or when reviewing work that claims to pass the Hallmark design gate.",
-      "invoke": "/chelp-advisor",
-      "repo": "everything-claude-code",
-      "path": "skills/chelp-advisor/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5"
-      ],
-      "stage": "review",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 5,
-        "use": 4
-      },
-      "designStatus": "module",
-      "useWhen": "Habits for reviewing claims against real output; split off ECC-repo-specific lines"
-    },
-    {
-      "id": "everything-claude-code:skills/chelp-pipeline/SKILL.md",
-      "kind": "skill",
-      "name": "chelp-pipeline",
-      "description": "Activate the chelp pipeline: check that the design system, the advisor, and optionally Hallmark and the browser checks are ready, prove them with a smoke test, and print the exact fix for anything missing.",
-      "invoke": "/chelp-pipeline",
-      "repo": "everything-claude-code",
-      "path": "skills/chelp-pipeline/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "studio-build"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "First run on a machine or project, to check Hallmark, Chrome and puppeteer and see READY or NOT READY"
-    },
-    {
-      "id": "everything-claude-code:skills/chelp/SKILL.md",
-      "kind": "skill",
-      "name": "chelp",
-      "description": "List all web design command chains (c1–c5) with descriptions and when to use each",
-      "invoke": "/chelp",
-      "repo": "everything-claude-code",
-      "path": "skills/chelp/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "studio-build"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 5,
-        "fit": 4,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Picking which of the five web chains to run; becomes the build-engine index"
     },
     {
       "id": "everything-claude-code:skills/cisco-ios-patterns/SKILL.md",
@@ -4050,35 +3996,6 @@
       "origin": "upstream",
       "group": "general",
       "status": "available"
-    },
-    {
-      "id": "everything-claude-code:skills/design-gate/SKILL.md",
-      "kind": "skill",
-      "name": "design-gate",
-      "description": "Run the Hallmark design linter on a page, folder or URL and block on Floor failures.",
-      "invoke": "/design-gate",
-      "repo": "everything-claude-code",
-      "path": "skills/design-gate/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5"
-      ],
-      "stage": "review",
-      "scores": {
-        "ease": 3,
-        "fit": 4,
-        "qual": 4,
-        "uniq": 5,
-        "use": 4
-      },
-      "designStatus": "core",
-      "useWhen": "Shared gate: run Hallmark Floor on source and running page before shipping UI"
     },
     {
       "id": "everything-claude-code:skills/django-celery/SKILL.md",
@@ -5556,226 +5473,6 @@
       "status": "available"
     },
     {
-      "id": "everything-claude-code:skills/re-compare/SKILL.md",
-      "kind": "skill",
-      "name": "re-compare",
-      "description": "RECC — compare two versions of a shipped application or artifact with REA and explain what changed in behavior, with evidence.",
-      "invoke": "/re-compare",
-      "repo": "everything-claude-code",
-      "path": "skills/re-compare/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 4,
-        "use": 2
-      },
-      "designStatus": "module",
-      "useWhen": "Compare two versions of a site or app"
-    },
-    {
-      "id": "everything-claude-code:skills/re-doctor/SKILL.md",
-      "kind": "skill",
-      "name": "re-doctor",
-      "description": "RECC — read-only diagnosis of the REA MCP connection and analysis providers for this agent, with the exact repair steps.",
-      "invoke": "/re-doctor",
-      "repo": "everything-claude-code",
-      "path": "skills/re-doctor/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 4,
-        "fit": 2,
-        "qual": 4,
-        "uniq": 3,
-        "use": 2
-      },
-      "designStatus": "module",
-      "useWhen": "Diagnose why REA tools are missing"
-    },
-    {
-      "id": "everything-claude-code:skills/re-evidence-discipline/SKILL.md",
-      "kind": "skill",
-      "name": "re-evidence-discipline",
-      "description": "How to report reverse-engineering results in RECC so they can be trusted and reused. Separates observations, derivations, inferences, and unknowns, cites REA Evidence IDs, keeps a durable evidence log under .recc/, and audits residual unknowns before calling work done.",
-      "invoke": "/re-evidence-discipline",
-      "repo": "everything-claude-code",
-      "path": "skills/re-evidence-discipline/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 4,
-        "fit": 4,
-        "qual": 5,
-        "uniq": 4,
-        "use": 4
-      },
-      "designStatus": "module",
-      "useWhen": "Splitting observed, derived, inferred and unknown claims"
-    },
-    {
-      "id": "everything-claude-code:skills/re-feature-to-implementation/SKILL.md",
-      "kind": "skill",
-      "name": "re-feature-to-implementation",
-      "description": "End-to-end RECC workflow for \"see a feature in an app, understand how it works, and build an equivalent in my project\". Chains re-planner, REA investigation, a clean-room spec, ECC test-driven implementation, and parity verification.",
-      "invoke": "/re-feature-to-implementation",
-      "repo": "everything-claude-code",
-      "path": "skills/re-feature-to-implementation/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 4,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Workflow from seeing a feature to a verified rebuild"
-    },
-    {
-      "id": "everything-claude-code:skills/re-investigate/SKILL.md",
-      "kind": "skill",
-      "name": "re-investigate",
-      "description": "RECC — reverse engineer a shipped binary, app, package, firmware image, or website to answer a question, with REA evidence. Runs re-planner then re-investigator and writes .recc/plan.md and .recc/findings.md.",
-      "invoke": "/re-investigate",
-      "repo": "everything-claude-code",
-      "path": "skills/re-investigate/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 4,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Plan and investigate a reference site or app with evidence"
-    },
-    {
-      "id": "everything-claude-code:skills/re-pipeline/SKILL.md",
-      "kind": "skill",
-      "name": "re-pipeline",
-      "description": "RECC — run the whole reverse-engineering pipeline in one go: investigate a target, rebuild the feature clean-room and test-first, then verify parity. Stops at the scope check and the spec confirmation, and resumes from existing .recc/ files.",
-      "invoke": "/re-pipeline",
-      "repo": "everything-claude-code",
-      "path": "skills/re-pipeline/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 4,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Investigate, rebuild and verify with scope and confirmation gates"
-    },
-    {
-      "id": "everything-claude-code:skills/re-rebuild/SKILL.md",
-      "kind": "skill",
-      "name": "re-rebuild",
-      "description": "RECC — turn reverse-engineering findings into a clean-room spec and a test-first implementation of an equivalent feature in this project.",
-      "invoke": "/re-rebuild",
-      "repo": "everything-claude-code",
-      "path": "skills/re-rebuild/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Turn findings into a clean-room spec; rules table for design"
-    },
-    {
-      "id": "everything-claude-code:skills/re-scope-and-legality/SKILL.md",
-      "kind": "skill",
-      "name": "re-scope-and-legality",
-      "description": "Scope and authorization checklist for RECC reverse-engineering work. Use before analyzing any third-party binary, app, firmware, or website to record the authorization basis, purpose, and hard limits, and to stop on requests for credential theft, DRM or licence circumvention, malware, or attacks on systems the user does not control.",
-      "invoke": "/re-scope-and-legality",
-      "repo": "everything-claude-code",
-      "path": "skills/re-scope-and-legality/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 4,
-        "fit": 4,
-        "qual": 4,
-        "uniq": 4,
-        "use": 4
-      },
-      "designStatus": "module",
-      "useWhen": "Recording basis and clean-room limits before studying a third-party site"
-    },
-    {
-      "id": "everything-claude-code:skills/re-target-playbooks/SKILL.md",
-      "kind": "skill",
-      "name": "re-target-playbooks",
-      "description": "Per-target routing for RECC reverse engineering. Tells the agent which REA tools, providers, and prerequisites to use for native binaries, Electron/JavaScript, Android, .NET, WASM, firmware, packet captures, and websites, and which REA guide covers the details.",
-      "invoke": "/re-target-playbooks",
-      "repo": "everything-claude-code",
-      "path": "skills/re-target-playbooks/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 4,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "Choosing REA tools by target type; web row for sites"
-    },
-    {
-      "id": "everything-claude-code:skills/re-verify/SKILL.md",
-      "kind": "skill",
-      "name": "re-verify",
-      "description": "RECC — verify that a reconstructed feature matches the behavior observed in the original target, and write a parity report.",
-      "invoke": "/re-verify",
-      "repo": "everything-claude-code",
-      "path": "skills/re-verify/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 4,
-        "uniq": 3,
-        "use": 2
-      },
-      "designStatus": "module",
-      "useWhen": "Compare the build against the reference with a parity verdict"
-    },
-    {
       "id": "everything-claude-code:skills/recsys-pipeline-architect/SKILL.md",
       "kind": "skill",
       "name": "recsys-pipeline-architect",
@@ -5857,18 +5554,6 @@
       "path": "skills/returns-reverse-logistics/SKILL.md",
       "origin": "upstream",
       "group": "general",
-      "status": "available"
-    },
-    {
-      "id": "everything-claude-code:skills/reverse-engineer-anything/SKILL.md",
-      "kind": "skill",
-      "name": "reverse-engineer-anything",
-      "description": "Reverse engineer native, managed, Electron/JavaScript, packaged, firmware, and browser targets with REA. Use shipped-artifact or requested runtime evidence to explain features, compare versions, decompile code, or guide a reconstruction. Skip REA for ordinary source-repository architecture analysis.",
-      "invoke": "/reverse-engineer-anything",
-      "repo": "everything-claude-code",
-      "path": "skills/reverse-engineer-anything/SKILL.md",
-      "origin": "lizzy",
-      "group": "RECC",
       "status": "available"
     },
     {
@@ -6161,32 +5846,6 @@
       "status": "available"
     },
     {
-      "id": "everything-claude-code:skills/static-site-release/SKILL.md",
-      "kind": "skill",
-      "name": "static-site-release",
-      "description": "Release gate for static HTML sites that are uploaded by hand (zip, FTP, cPanel or Hostinger file manager) and served through a CDN. Checks the zip before upload and the live site after it, using the Playwright MCP and agent-browser. Use this whenever you prepare, review or verify a static-site zip, check another session's site deliverable, or someone asks 'is it live?', 'check the new zip', 'what do I delete on the server?' or 'why does the site still show the old version?', even if they never say 'release'.",
-      "invoke": "/static-site-release",
-      "repo": "everything-claude-code",
-      "path": "skills/static-site-release/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "c4",
-        "studio-build"
-      ],
-      "stage": "review",
-      "scores": {
-        "ease": 3,
-        "fit": 4,
-        "qual": 5,
-        "uniq": 5,
-        "use": 4
-      },
-      "designStatus": "module",
-      "useWhen": "Checking and verifying a hand-uploaded static site zip and its live copy"
-    },
-    {
       "id": "everything-claude-code:skills/strategic-compact/SKILL.md",
       "kind": "skill",
       "name": "strategic-compact",
@@ -6197,31 +5856,6 @@
       "origin": "upstream",
       "group": "general",
       "status": "available"
-    },
-    {
-      "id": "everything-claude-code:skills/studio-build/SKILL.md",
-      "kind": "skill",
-      "name": "studio-build",
-      "description": "Build a site from a brand-config.json downloaded from the Design Studio",
-      "invoke": "/studio-build",
-      "repo": "everything-claude-code",
-      "path": "skills/studio-build/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "chains": [
-        "studio-build"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 3,
-        "fit": 4,
-        "qual": 4,
-        "uniq": 4,
-        "use": 4
-      },
-      "designStatus": "module",
-      "useWhen": "Turn a Design Studio brand-config.json into a scaffolded static site"
     },
     {
       "id": "everything-claude-code:skills/swift-actor-persistence/SKILL.md",
@@ -6376,25 +6010,6 @@
       "useWhen": "Batch converting screenshots to Vue 3 with a paid external API"
     },
     {
-      "id": "everything-claude-code:skills/unified-design-system/SKILL.md",
-      "kind": "skill",
-      "name": "unified-design-system",
-      "description": "One entry point for all UI and visual design work. Use when building, restyling, redesigning or reviewing any website, app screen, dashboard, component, landing page, brand asset or slide deck. It sets the design direction, picks a style preset, applies tokens and components, and runs one review gate, routing to the specialist design skills only when needed.",
-      "invoke": "/unified-design-system",
-      "repo": "everything-claude-code",
-      "path": "skills/unified-design-system/SKILL.md",
-      "origin": "lizzy",
-      "group": "design",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5"
-      ]
-    },
-    {
       "id": "everything-claude-code:skills/unified-notifications-ops/SKILL.md",
       "kind": "skill",
       "name": "unified-notifications-ops",
@@ -6477,33 +6092,6 @@
       "origin": "upstream",
       "group": "general",
       "status": "available"
-    },
-    {
-      "id": "everything-claude-code:skills/wireframe-solid/SKILL.md",
-      "kind": "skill",
-      "name": "wireframe-solid",
-      "description": "Drop-in rotating wireframe dodecahedron in pure CSS 3D (no canvas, WebGL or dependencies). Use when a /chelp chain (c1-c3) builds a hero, section accent or background that wants a quiet 3D line-art motif, or when asked for a wireframe solid.",
-      "invoke": "/wireframe-solid",
-      "repo": "everything-claude-code",
-      "path": "skills/wireframe-solid/SKILL.md",
-      "origin": "lizzy",
-      "group": "design",
-      "status": "available",
-      "chains": [
-        "c1",
-        "c2",
-        "c3"
-      ],
-      "stage": "build",
-      "scores": {
-        "ease": 5,
-        "fit": 4,
-        "qual": 4,
-        "uniq": 5,
-        "use": 3
-      },
-      "designStatus": "module",
-      "useWhen": "A quiet rotating 3D wireframe accent in a hero or divider"
     },
     {
       "id": "everything-claude-code:skills/workspace-surface-audit/SKILL.md",

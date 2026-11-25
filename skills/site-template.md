@@ -2,17 +2,17 @@
 name: site-template
 description: Queer nightclub static site template — brand config, token substitution, scaffold workflow, and PHP/Formspree form backends
 triggers:
-  - templates/queer-nightclub/
+  - plugins/studio-kit/templates/queer-nightclub/
   - brand.config.json
-  - scripts/site-template/
+  - plugins/studio-kit/scripts/site-template/
 ---
 
 # Site Template — Queer Nightclub
 
 ## When to Use
 
-Auto-activates when working on files in `templates/queer-nightclub/`, `brand.config.json`,
-or `scripts/site-template/`. Use when:
+Auto-activates when working on files in `plugins/studio-kit/templates/queer-nightclub/`, `brand.config.json`,
+or `plugins/studio-kit/scripts/site-template/`. Use when:
 
 - Creating a new site from the template
 - Adding a new brand token to the template
@@ -28,7 +28,7 @@ projects/design-studio/index.html  ← paste reviews, images, social, pick modul
 brand.config.json
       │
       ▼
-scaffold.js  ──reads──  templates/queer-nightclub/*.html
+scaffold.js  ──reads──  plugins/studio-kit/templates/queer-nightclub/*.html
       │                  (token placeholders: {{TOKEN}})
       ▼
 projects/<name>/         ← fully substituted, production-ready
@@ -131,9 +131,9 @@ Modules default to `display:none` when the `modules` key is absent (backwards-co
 ## Adding a New Token
 
 1. Add the value to `brand.config.json` schema
-2. Add the `{{TOKEN}}` → config mapping to `buildTokenMap()` in `scripts/site-template/scaffold.js`
-3. Place `{{TOKEN}}` in the relevant template file(s) under `templates/queer-nightclub/`
-4. Run `node scripts/site-template/scaffold.js` and `validate.js` to confirm
+2. Add the `{{TOKEN}}` → config mapping to `buildTokenMap()` in `plugins/studio-kit/scripts/site-template/scaffold.js`
+3. Place `{{TOKEN}}` in the relevant template file(s) under `plugins/studio-kit/templates/queer-nightclub/`
+4. Run `node plugins/studio-kit/scripts/site-template/scaffold.js` and `validate.js` to confirm
 
 ## Form Backends
 
@@ -152,11 +152,11 @@ Modules default to `display:none` when the `modules` key is absent (backwards-co
 
 ```bash
 # Scaffold a new site
-node scripts/site-template/scaffold.js --config projects/my-club/brand.config.json --out projects/my-club
+node plugins/studio-kit/scripts/site-template/scaffold.js --config projects/my-club/brand.config.json --out projects/my-club
 
 # Validate no tokens missed (also runs Hallmark's Floor check when Hallmark is installed;
 # --no-design skips it, --require-hallmark fails when Hallmark is missing)
-node scripts/site-template/validate.js --dir projects/my-club
+node plugins/studio-kit/scripts/site-template/validate.js --dir projects/my-club
 
 # Run tests
 node tests/site-template/scaffold.test.js
@@ -166,11 +166,11 @@ node tests/site-template/scaffold.test.js
 
 | Path | Purpose |
 |------|---------|
-| `templates/queer-nightclub/brand.config.json` | Example config (Club KUDT values) |
-| `templates/queer-nightclub/*.html` | Token-substituted HTML pages |
-| `templates/queer-nightclub/form-handler.php` | PHP form backend |
-| `scripts/site-template/scaffold.js` | Scaffold engine |
-| `scripts/site-template/validate.js` | Token completeness checker, plus the optional Hallmark Floor check |
+| `plugins/studio-kit/templates/queer-nightclub/brand.config.json` | Example config (Club KUDT values) |
+| `plugins/studio-kit/templates/queer-nightclub/*.html` | Token-substituted HTML pages |
+| `plugins/studio-kit/templates/queer-nightclub/form-handler.php` | PHP form backend |
+| `plugins/studio-kit/scripts/site-template/scaffold.js` | Scaffold engine |
+| `plugins/studio-kit/scripts/site-template/validate.js` | Token completeness checker, plus the optional Hallmark Floor check |
 | `tests/site-template/scaffold.test.js` | Test suite |
 | `skills/studio-build/SKILL.md` | `/studio-build` skill |
 | `projects/design-studio/index.html` | Browser-based brand config builder |

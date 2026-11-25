@@ -11,7 +11,7 @@
     {
       "name": "ecc",
       "source": "./",
-      "description": "The most comprehensive Claude Code plugin — 66 agents, 253 skills, 77 legacy command shims, selective install profiles, and production-ready hooks for TDD, security scanning, code review, and continuous learning",
+      "description": "The most comprehensive Claude Code plugin — 60 agents, 228 skills, 76 legacy command shims, selective install profiles, and production-ready hooks for TDD, security scanning, code review, and continuous learning",
       "version": "2.0.0-rc.1",
       "author": {
         "name": "Affaan Mustafa",
@@ -58,6 +58,14 @@
       "version": "0.1.0",
       "license": "MIT",
       "category": "design"
+    },
+    {
+      "name": "studio-kit",
+      "source": "./plugins/studio-kit",
+      "description": "Lizzy's web chains, unified design system and RECC reverse-engineering skills, agents and scripts. Works best with ecc installed, since the chains call ECC skills.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "workflow"
     }
   ]
 }
