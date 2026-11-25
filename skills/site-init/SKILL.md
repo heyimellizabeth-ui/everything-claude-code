@@ -1,6 +1,8 @@
 ---
+name: site-init
 description: Scaffold a new site from the queer-nightclub template using a brand config
 argument-hint: "[project-name] [--config path/to/brand.config.json]"
+origin: ECC
 ---
 
 # site-init — Scaffold a New Site from Template

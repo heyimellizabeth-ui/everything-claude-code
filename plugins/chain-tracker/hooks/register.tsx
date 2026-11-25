@@ -6,7 +6,7 @@ import type { ChainId, ChainRun } from '../types'
 const PANE = 'chain-tracker'
 const TITLE = 'Chain progress'
 
-// Steps of each web chain, in order, from ECC's commands/c1.md to c5.md.
+// Steps of each web chain, in order, from ECC's skills/c1/SKILL.md to skills/c5/SKILL.md.
 export const CHAINS: Record<ChainId, { name: string; steps: string[] }> = {
   c1: { name: 'New site from scratch', steps: ['prp-prd', 'prp-plan', 'chelp-advisor', 'update-codemaps', 'hallmark', 'gan-design', 'multi-frontend', 'quality-gate', 'design-gate', 'santa-loop'] },
   c2: { name: 'Add a component or page', steps: ['plan', 'chelp-advisor', 'feature-dev', 'hallmark', 'gan-design', 'code-review', 'test-coverage', 'design-gate', 'checkpoint'] },

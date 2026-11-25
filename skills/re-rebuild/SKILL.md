@@ -1,6 +1,8 @@
 ---
+name: re-rebuild
 description: RECC — turn reverse-engineering findings into a clean-room spec and a test-first implementation of an equivalent feature in this project.
 argument-hint: "\"<feature name>\""
+origin: ECC
 ---
 
 # RE Rebuild

@@ -249,7 +249,17 @@
         "skills/strategic-compact",
         "skills/tdd-workflow",
         "skills/verification-loop",
-        "skills/windows-desktop-e2e"
+        "skills/windows-desktop-e2e",
+        "skills/c1",
+        "skills/c2",
+        "skills/c3",
+        "skills/c4",
+        "skills/c5",
+        "skills/chelp",
+        "skills/chelp-pipeline",
+        "skills/design-gate",
+        "skills/site-init",
+        "skills/studio-build"
       ],
       "targets": [
         "claude",
@@ -688,7 +698,13 @@
         "skills/re-evidence-discipline",
         "skills/re-feature-to-implementation",
         "skills/re-target-playbooks",
-        "skills/re-scope-and-legality"
+        "skills/re-scope-and-legality",
+        "skills/re-compare",
+        "skills/re-doctor",
+        "skills/re-investigate",
+        "skills/re-pipeline",
+        "skills/re-rebuild",
+        "skills/re-verify"
       ],
       "targets": [
         "claude",

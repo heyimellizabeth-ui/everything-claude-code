@@ -1,6 +1,8 @@
 ---
+name: re-investigate
 description: RECC — reverse engineer a shipped binary, app, package, firmware image, or website to answer a question, with REA evidence. Runs re-planner then re-investigator and writes .recc/plan.md and .recc/findings.md.
 argument-hint: "<target-path-or-url> \"<question>\""
+origin: ECC
 ---
 
 # RE Investigate

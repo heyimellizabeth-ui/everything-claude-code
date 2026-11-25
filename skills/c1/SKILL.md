@@ -1,6 +1,8 @@
 ---
+name: c1
 description: Web chain 1 — full web project from scratch (spec → design → build → ship)
 argument-hint: "[project description]"
+origin: ECC
 ---
 
 # C1 — Full Web Project from Scratch

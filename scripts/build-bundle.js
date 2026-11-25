@@ -33,8 +33,8 @@ const FILES = [
   { name: 'template/sitemap.xml', group: 'Template', path: 'templates/queer-nightclub/sitemap.xml' },
   { name: 'template/og-image.svg', group: 'Template', path: 'templates/queer-nightclub/og-image.svg' },
   // Commands & Skills
-  { name: 'studio-build.md', group: 'Commands & Skills', path: 'commands/studio-build.md' },
-  { name: 'site-init.md', group: 'Commands & Skills', path: 'commands/site-init.md' },
+  { name: 'studio-build/SKILL.md', group: 'Commands & Skills', path: 'skills/studio-build/SKILL.md' },
+  { name: 'site-init/SKILL.md', group: 'Commands & Skills', path: 'skills/site-init/SKILL.md' },
   { name: 'site-template.md', group: 'Commands & Skills', path: 'skills/site-template.md' },
 ];
 

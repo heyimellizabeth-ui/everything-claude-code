@@ -1,6 +1,8 @@
 ---
+name: re-compare
 description: RECC — compare two versions of a shipped application or artifact with REA and explain what changed in behavior, with evidence.
 argument-hint: "<old-path> <new-path> [\"<focus>\"]"
+origin: ECC
 ---
 
 # RE Compare

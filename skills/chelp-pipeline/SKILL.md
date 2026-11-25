@@ -1,6 +1,8 @@
 ---
+name: chelp-pipeline
 description: Activate the chelp pipeline: check that Hallmark, the browser checks and the advisor are ready, prove them with a smoke test, and print the exact fix for anything missing.
 argument-hint: "[--install] [--no-smoke] [--json]"
+origin: ECC
 ---
 
 # chelp Pipeline

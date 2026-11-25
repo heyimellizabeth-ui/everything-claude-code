@@ -1,6 +1,8 @@
 ---
+name: studio-build
 description: Build a site from a brand-config.json downloaded from the Design Studio
 argument-hint: "[path/to/brand-config.json]"
+origin: ECC
 ---
 
 # /studio-build — Build Site from Design Studio Config

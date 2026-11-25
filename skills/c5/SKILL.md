@@ -1,6 +1,8 @@
 ---
+name: c5
 description: Web chain 5 — post-launch cleanup, dead code removal, and documentation sync
 argument-hint: "[scope or path, e.g. src/components]"
+origin: ECC
 ---
 
 # C5 — Maintenance and Cleanup

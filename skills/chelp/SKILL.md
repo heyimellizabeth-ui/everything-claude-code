@@ -1,5 +1,7 @@
 ---
+name: chelp
 description: List all web design command chains (c1–c5) with descriptions and when to use each
+origin: ECC
 ---
 
 # chelp — Web Design Chain Reference
