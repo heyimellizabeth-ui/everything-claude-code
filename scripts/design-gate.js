@@ -66,7 +66,7 @@ function main(argv) {
   const enforced = Boolean(options.enforce || project.hallmark || master);
 
   if (options.json) {
-    console.log(JSON.stringify({ pass: gate.pass, enforced, master, reasons: gate.reasons, summary, result }, null, 2));
+    console.log(JSON.stringify({ pass: gate.pass, skipped: !result.available && !options.requireHallmark, enforced, master, reasons: gate.reasons, summary, result }, null, 2));
   } else {
     console.log(`[design-gate] ${summary}`);
     if (result.renderNote) console.log(`[design-gate] ${result.renderNote}`);
