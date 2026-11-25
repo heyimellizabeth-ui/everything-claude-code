@@ -23,5 +23,11 @@
     "data@synced": false,
     "cowork-plugin-management@synced": false,
     "academy-guide@synced": false
-  }
+  },
+  "disabledMcpjsonServers": [
+    "exa",
+    "memory",
+    "playwright",
+    "sequential-thinking"
+  ]
 }
