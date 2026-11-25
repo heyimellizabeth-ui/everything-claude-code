@@ -137,7 +137,8 @@ function validateCommands() {
       const lineRefs = line.matchAll(/`\/([a-z][-a-z0-9]*)`/g);
       for (const match of lineRefs) {
         const refName = match[1];
-        if (!validCommands.has(refName) && !EXTERNAL_COMMANDS.has(refName)) {
+        // A skill is invoked with the same slash syntax as a command.
+        if (!validCommands.has(refName) && !validSkills.has(refName) && !EXTERNAL_COMMANDS.has(refName)) {
           console.error(`ERROR: ${file} - references non-existent command /${refName}`);
           hasErrors = true;
         }

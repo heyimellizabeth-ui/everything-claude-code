@@ -1,5 +1,7 @@
 ---
+name: re-doctor
 description: RECC — read-only diagnosis of the REA MCP connection and analysis providers for this agent, with the exact repair steps.
+origin: ECC
 ---
 
 # RE Doctor

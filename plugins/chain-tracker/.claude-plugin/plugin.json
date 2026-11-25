@@ -1,0 +1,10 @@
+{
+  "name": "chain-tracker",
+  "version": "0.1.0",
+  "description": "Shows where a site is in the c1 to c5 web chains, and REA calls to back with evidence, in a pane and the status line",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Lizzy"
+  },
+  "license": "MIT"
+}

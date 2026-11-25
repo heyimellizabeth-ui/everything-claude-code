@@ -1,6 +1,8 @@
 ---
+name: design-gate
 description: Run the Hallmark design linter on a page, folder or URL and block on Floor failures.
 argument-hint: "[path|.] [--tier floor] [--scope app|component] [--render] [--require-render] [--before] [--kept] [--url <url>]"
+origin: ECC
 ---
 
 # Design Gate Command

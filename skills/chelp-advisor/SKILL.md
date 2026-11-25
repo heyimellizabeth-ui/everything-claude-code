@@ -50,7 +50,7 @@ Terms you need. Paths are relative to the ECC checkout, wherever it lives; on a 
 7. **Put numbers on the same footing.** A before/after pair must share pages, tier, flags and brand. If not, measure again at the earlier commit. *Example: "8 to 3" mixed three pages with six.*
 8. **Audit self-descriptions.** Stamps, example output and status lines are claims too. *Example: a shipped stamp said "redesign: polish" with no polish run; an example stamp said "floor: 0 FAIL" against its own findings; waiver syntax was never run.*
 9. **Read the user-facing report as the user.** Unanswered decisions go first. Every promise made earlier is either kept or withdrawn in words. *Example: the template's colours changed without the user's answer, and "this will be a second PR" was no longer true.*
-10. **Sweep for stale text and contradictions.** After any change of fact, grep the old fact across command docs, the skill, the plan, the PR body and the tutorial. *Example: the plan says three gate-58 failures remain on a scaffold in the browser tier while `commands/design-gate.md` says a fresh scaffold passes. One is stale; make the worker run it.*
+10. **Sweep for stale text and contradictions.** After any change of fact, grep the old fact across command docs, the skill, the plan, the PR body and the tutorial. *Example: the plan says three gate-58 failures remain on a scaffold in the browser tier while `skills/design-gate/SKILL.md` says a fresh scaffold passes. One is stale; make the worker run it.*
 11. **Check tests for hidden dependencies.** The suite must pass with Hallmark absent, or an upstream change breaks it. *Example: tests leaned on the installed linter; prove otherwise with `HOME=$(mktemp -d) HALLMARK_SKILL_DIR= node tests/site-template/validate.test.js`.*
 12. **Durable and pinned before done; smallest slice first.** At the start, name the smallest slice that proves value and its exact exit command, and record `git rev-parse HEAD`: your advice covers that commit, so say so, and re-check it at the end because the worker may have kept editing. Require commit and push before "done", then one more consultation before the final report. *Example: a review ran on a clean HEAD while uncommitted edits appeared.*
 
@@ -191,7 +191,7 @@ A consultation, end to end:
 ```
 
 The agent reads the changed files and docs, runs `/design-gate src --url http://localhost:3000/ --require-render --require-hallmark`
-exactly as `commands/c4.md` prints it, quotes the summary line, and answers in this shape:
+exactly as `skills/c4/SKILL.md` prints it, quotes the summary line, and answers in this shape:
 
 ```
 Verdict: fix then ship

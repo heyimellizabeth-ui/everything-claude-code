@@ -1,6 +1,8 @@
 ---
+name: c3
 description: Web chain 3 — design iteration sprint for polishing UI, animations, or responsive layout
 argument-hint: "[design brief]"
+origin: ECC
 ---
 
 # C3 — Design Iteration Sprint
