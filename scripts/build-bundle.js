@@ -34,7 +34,6 @@ const FILES = [
   { name: 'template/og-image.svg', group: 'Template', path: 'templates/queer-nightclub/og-image.svg' },
   // Commands & Skills
   { name: 'studio-build.md', group: 'Commands & Skills', path: 'commands/studio-build.md' },
-  { name: 'site-init.md', group: 'Commands & Skills', path: 'commands/site-init.md' },
   { name: 'site-template.md', group: 'Commands & Skills', path: 'skills/site-template.md' },
 ];
 
