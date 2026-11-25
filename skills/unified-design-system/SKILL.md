@@ -23,8 +23,8 @@ Skip it for pure logic, API or data work with no visible UI.
 
 ## How It Works
 
-Run the six steps in order. Steps 1, 2 and 6 always run; the others scale with
-the size of the task.
+Run the seven steps in order. Steps 1, 2, 6 and 7 always run; the others
+scale with the size of the task.
 
 ### 1. Load what already exists
 
@@ -32,7 +32,10 @@ Check, in this order, and treat what you find as binding:
 
 1. `design-system/pages/<page>.md` for the page being built (overrides MASTER).
 2. `design-system/MASTER.md` or `DESIGN.md` at the project root.
-3. Existing tokens, theme files and component library in the codebase.
+3. `design-system/PREFERENCES.md` in the project, then
+   `~/.claude/design-preferences.md` for preferences that apply everywhere.
+   Follow every entry marked `always` or `never`.
+4. Existing tokens, theme files and component library in the codebase.
 
 If none exist and the task is bigger than one component, create
 `design-system/MASTER.md` from `references/design-md-template.md` at the end of
@@ -99,6 +102,24 @@ contradicts this skill, this skill and the project's MASTER.md win.
 Run `references/review-checklist.md` before calling the work done. Fix every
 "must" item. Report the "should" items you chose not to fix and why.
 
+### 7. Learn from the user's reaction
+
+This is how the system gets better the longer it is used. Whenever the user
+accepts, rejects or corrects a design choice, append one entry to
+`design-system/PREFERENCES.md` (create it from
+`references/preferences-template.md` if missing):
+
+- Record what they reacted to, their words, and the rule it implies.
+- Mark the rule `always`, `never` or `prefer`.
+- If the user says it applies to all their projects, add it to
+  `~/.claude/design-preferences.md` instead.
+- Do not log your own guesses as preferences. Only log what the user said or
+  clearly chose.
+
+When the same rule appears three or more times, or the log passes 20 entries,
+propose moving the settled rules into `MASTER.md` (or into this skill's
+presets, if they hold across projects) and ask before changing either.
+
 ## Examples
 
 **New landing page, no existing system**
@@ -121,3 +142,11 @@ the review gate with focus on density and states.
 
 Runs step 1 to load the project's rules, then only step 6, reporting each
 failed item with file and line.
+
+**The user rejects a choice**
+
+> "Too rounded, I hate pill buttons."
+
+Fixes the buttons, then appends to `design-system/PREFERENCES.md`:
+`2026-11-25 | never | pill-shaped buttons; max radius 8px on controls | "Too rounded, I hate pill buttons."`
+The next build reads it in step 1 and starts square.
