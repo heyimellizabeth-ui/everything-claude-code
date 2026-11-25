@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 91,
+  "totalCommands": 92,
   "commands": [
     {
       "command": "aside",
@@ -986,7 +986,7 @@
       "orchestration": 7,
       "planning": 2,
       "refactoring": 1,
-      "review": 13,
+      "review": 14,
       "testing": 58
     },
     "topAgents": [
