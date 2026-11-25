@@ -56,15 +56,17 @@ function main(argv) {
   const { target, options } = parsed;
   // Decide this before the run: the linter writes .hallmark/ files of its own.
   const project = hallmark.isHallmarkProject(target);
+  const master = hallmark.findDesignSystemMaster(target);
   const result = hallmark.runSloplint(target, options);
   const gate = hallmark.evaluateGate(result, { tier: options.tier, requireRender: options.requireRender });
   const summary = hallmark.summarize(result);
-  // Blocking applies to pages Hallmark built or polished. Elsewhere the gate
-  // reports and exits 0, unless --enforce is passed.
-  const enforced = Boolean(options.enforce || project.hallmark);
+  // Blocking applies to pages Hallmark built or polished, and to projects with a
+  // unified-design-system MASTER.md. Elsewhere the gate reports and exits 0,
+  // unless --enforce is passed.
+  const enforced = Boolean(options.enforce || project.hallmark || master);
 
   if (options.json) {
-    console.log(JSON.stringify({ pass: gate.pass, enforced, reasons: gate.reasons, summary, result }, null, 2));
+    console.log(JSON.stringify({ pass: gate.pass, enforced, master, reasons: gate.reasons, summary, result }, null, 2));
   } else {
     console.log(`[design-gate] ${summary}`);
     if (result.renderNote) console.log(`[design-gate] ${result.renderNote}`);
@@ -77,7 +79,7 @@ function main(argv) {
     if (!result.available && !options.requireHallmark) console.log('[design-gate] SKIPPED');
     else if (!gate.pass && !enforced) {
       console.log(`[design-gate] REPORT ONLY: ${gate.reasons.join('; ')}`);
-      console.log(`[design-gate] Not a Hallmark project (${project.reason}), so nothing is blocked. Add --enforce to block, or run /hallmark audit <path> for a full report.`);
+      console.log(`[design-gate] Not a Hallmark project and no design-system/MASTER.md (${project.reason}), so nothing is blocked. Add --enforce to block, or run /hallmark audit <path> for a full report.`);
     } else if (!gate.pass) console.log(`[design-gate] BLOCKED: ${gate.reasons.join('; ')}`);
     else console.log('[design-gate] PASS');
   }

@@ -1,0 +1,10 @@
+{
+  "name": "design-studio",
+  "version": "0.1.0",
+  "description": "Unified Design Studio as a pane beside the chat: pick a preset, tune dials and accent, see the live review gate, then send the prompt to Claude or save MASTER.md",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Lizzy"
+  },
+  "license": "MIT"
+}

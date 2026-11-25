@@ -75,6 +75,36 @@ function hasMarkerAbove(start, steps = 8) {
   return null;
 }
 
+/**
+ * Does a unified-design-system MASTER.md (design-system/MASTER.md) sit at or
+ * above the target or the working directory? Projects with one have agreed
+ * design rules, so the design gate blocks there as it does on Hallmark pages.
+ *
+ * @param {string} [target] - File or folder; empty checks the working directory only
+ * @param {{ cwd?: string }} [options]
+ * @returns {string|null} Where it was found, or null
+ */
+function findDesignSystemMaster(target, options = {}) {
+  const cwd = options.cwd || process.cwd();
+  const starts = [cwd];
+  if (target) {
+    const resolved = path.resolve(cwd, target);
+    let isFile = false;
+    try { isFile = fs.statSync(resolved).isFile(); } catch { isFile = false; }
+    starts.unshift(isFile ? path.dirname(resolved) : resolved);
+  }
+  for (const start of starts) {
+    let dir = start;
+    for (let i = 0; i < 8; i++) {
+      if (fs.existsSync(path.join(dir, 'design-system', 'MASTER.md'))) return `design-system/MASTER.md in ${dir}`;
+      const up = path.dirname(dir);
+      if (up === dir) break;
+      dir = up;
+    }
+  }
+  return null;
+}
+
 function fileHasStamp(file) {
   try {
     const fd = fs.openSync(file, 'r');
@@ -325,6 +355,7 @@ module.exports = {
   buildArgs,
   parseSloplintOutput,
   isHallmarkProject,
+  findDesignSystemMaster,
   runSloplint,
   evaluateGate,
   summarize,
