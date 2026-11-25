@@ -316,7 +316,7 @@ export function output(S: StudioState, o: Overrides = {}) {
 
 export type { View } from '../types'
 export const VIEWS: [View, string][] = [
-  ['studio', 'Studio'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'], ['edit', 'Edit'],
+  ['studio', 'Studio'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'], ['health', 'Health'], ['edit', 'Edit'],
 ]
 
 export type Capability = { name: string; description: string; source: string; plugin?: string }
@@ -399,6 +399,38 @@ export function promotionHint(prefs: readonly Preference[]): string | undefined 
   const repeated = [...counts.values()].some(n => n >= 3)
   if (repeated || prefs.length > 20) return 'Some rules look settled. Ask Claude to move them into MASTER.md.'
   return undefined
+}
+
+// ---- Phase 4: Health view ----
+
+/** Skills retired in favour of unified-design-system (2026-11-25). Still installed means an old copy is around. */
+export const RETIRED = ['design-system', 'motion-ui', 'site-init', 'taste-skill-v1', 'gpt-tasteskill', 'slides', 'create-theme']
+
+export type HealthItem = { level: 'ok' | 'warn' | 'bad'; text: string }
+
+const bare = (name: string) => name.split(':').pop()!.toLowerCase()
+
+/** What needs attention: missing commands the chains call, retired skills still installed, settled preferences, no MASTER.md. */
+export function health(names: readonly string[], hasMaster: boolean, prefs: readonly Preference[], chains: readonly Chain[] = CHAINS): HealthItem[] {
+  const have = new Set(names.map(bare))
+  const missing = new Map<string, string[]>()
+  for (const c of chains) {
+    for (const step of c.steps) {
+      const m = /^\/([a-z0-9-]+)/i.exec(step)
+      const cmd = m ? m[1]!.toLowerCase() : /^unified-design-system/.test(step) ? 'unified-design-system' : undefined
+      if (cmd === undefined || cmd === 'hallmark' || have.has(cmd)) continue
+      missing.set(cmd, [...new Set([...(missing.get(cmd) ?? []), c.id])])
+    }
+  }
+  const items: HealthItem[] = []
+  if (!hasMaster) items.push({ level: 'warn', text: 'No design-system/MASTER.md here yet. Save one from the Studio view so every chain reads your tokens.' })
+  for (const [cmd, ids] of missing) items.push({ level: 'bad', text: `Missing /${cmd}, used by ${ids.map(i => `/${i}`).join(', ')}.` })
+  if (!have.has('hallmark')) items.push({ level: 'warn', text: 'Hallmark is not installed, so /design-gate runs the review checklist only.' })
+  const old = RETIRED.filter(r => have.has(r))
+  if (old.length > 0) items.push({ level: 'warn', text: `Retired but still installed: ${old.map(r => `/${r}`).join(', ')}. Use /unified-design-system instead.` })
+  const hint = promotionHint(prefs)
+  if (hint !== undefined) items.push({ level: 'warn', text: hint })
+  return items.length > 0 ? items : [{ level: 'ok', text: 'Everything the chains need is installed and nothing needs attention.' }]
 }
 
 // ---- Editable defaults ----

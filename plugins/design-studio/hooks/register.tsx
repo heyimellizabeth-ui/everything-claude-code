@@ -4,7 +4,7 @@ import type { EngineInterface, Register } from 'claude-code'
 import type { Mode, Overrides, Rule, StudioState, Tab, TextKey, View } from '../types'
 import {
   CHAINS, DEFAULT_STATE, DIALS, FONTS, KINDS, PRESETS, TEXT_DEFAULTS, TEXT_LABELS, VIEWS,
-  addPreference, applyOverrides, capabilityList, chainPrompt, checks, editCount, generated, isDesign, kindOf, lines, setOverride, textOf, parsePreferences, promotionHint, normHex, output, presetOf, readText, suggestedAccent, tokens, validHex, wheel,
+  addPreference, applyOverrides, health, capabilityList, chainPrompt, checks, editCount, generated, isDesign, kindOf, lines, setOverride, textOf, parsePreferences, promotionHint, normHex, output, presetOf, readText, suggestedAccent, tokens, validHex, wheel,
 } from './engine'
 
 const PANE = 'design-studio'
@@ -251,6 +251,27 @@ export const register: Register = on => {
               }} />
           </Box>
           {message !== '' && <Text dimColor>{message}</Text>}
+        </Box>
+      )
+    }
+
+    if (view === 'health') {
+      const names = (await $.command.list()).map(c => c.name)
+      let hasMaster = false
+      try { hasMaster = await $.fs.exists('design-system/MASTER.md') } catch { hasMaster = false }
+      const items = health(names, hasMaster, parsePreferences(await readPrefs($)))
+      return (
+        <Box flexDirection="column" gap={1}>
+          {viewTabs}
+          <Text dimColor>Checks this session and project against what the design system needs.</Text>
+          <Box flexDirection="column">
+            {items.map(i => (
+              <Box flexDirection="row" gap={1}>
+                <Text color={PILL_COLOR[i.level]} bold>{PILL[i.level]}</Text>
+                <Text>{i.text}</Text>
+              </Box>
+            ))}
+          </Box>
         </Box>
       )
     }
