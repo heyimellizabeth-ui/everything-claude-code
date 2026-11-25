@@ -4,6 +4,19 @@ The skill reads this file at steps 2, 3 and 5 to set direction, tokens and build
 
 Tags: [taste-skill] taste-skill v2 and its sibling skills, [uupm] ui-ux-pro-max, [astryx] Astryx docs, [mwg] modern-web-guidance (CC-BY 4.0), [ecc:name] an ECC skill, [hallmark] Hallmark gates, [agent-browser] agent-browser dogfood and core. Decision N marks one of the eight owner decisions.
 
+## Owner decisions (confirmed 2026-11-25)
+
+The owner confirmed all eight. They are settled rules, not defaults waiting for an answer; change one only when the owner asks.
+
+1. Serif display: soft preset only, with a stated reason; never in product UI (T2).
+2. Warm off-white: minimal preset only, by explicit choice (C3).
+3. Touch targets: 44px on touch, 24px floor elsewhere, marketing controls 44 to 52px (S3).
+4. Inter: never the default; fine when asked, for trust-first or product-tool, or when Astryx sets it (T1).
+5. Perpetual loops: only for real live state (M7).
+6. Brutalist motion dial: 2 (M10).
+7. Only `design-system/MASTER.md`; never a root `DESIGN.md`.
+8. MASTER.md wins over Hallmark's dealt theme or any stock theme (C9).
+
 ## Direction and copy
 
 - **D1** State a one-line design read before any code: page kind, audience, vibe, preset. [taste-skill]

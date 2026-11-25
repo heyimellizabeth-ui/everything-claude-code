@@ -4,7 +4,7 @@ Pick one per project at step 3. Each preset is a starting point; the project's M
 
 The ui-ux-pro-max search output (see `knowledge-uupm.md`) can supply candidates for palette, font pairing and style within a preset. Treat them as options to adapt, not as the answer: drop its raw CSS blocks and hover lifts, derive dark values yourself, and treat an Inter/Inter fallback as "no match".
 
-Decisions shown here: Decision 1 (serif only in soft), Decision 2 (warm off-white only in minimal, by explicit choice), Decision 4 (Inter never a default), Decision 5 (loops only for live state), Decision 6 (brutalist motion dial 2).
+Owner decisions (confirmed 2026-11-25, see rules.md) shown here: Decision 1 (serif only in soft), Decision 2 (warm off-white only in minimal, by explicit choice), Decision 4 (Inter never a default), Decision 5 (loops only for live state), Decision 6 (brutalist motion dial 2).
 
 Shared defaults for all presets: one accent, saturation under 80 percent; tinted neutrals, no pure black or white; body 16px or more; controls 44px on touch, 24px floor elsewhere; motion tokens fast 150, medium 300, slow 500 ms; `prefers-reduced-motion` removes movement.
 

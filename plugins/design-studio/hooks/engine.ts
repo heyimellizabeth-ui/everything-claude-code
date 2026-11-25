@@ -1,6 +1,6 @@
 // The Design Studio engine, ported from the React Lab (prototypes/design-studio-lab/engine):
 // presets and copy, the colour maths, and the studio outputs. Pure functions, no `$`.
-import type { Rule, StudioState, View } from '../types'
+import type { Overrides, Rule, StudioState, Tab, TextKey, View } from '../types'
 
 export type Palette = { bg: string; surface: string; text: string; muted: string; border: string }
 export type Preset = {
@@ -167,10 +167,39 @@ export function tokens(S: StudioState) {
 
 const VIBE: Record<string, string> = { soft: 'soft, premium', minimal: 'calm editorial', brutalist: 'raw brutalist', product: 'quiet product-tool', trust: 'plain trust-first' }
 
-export function readText(S: StudioState) {
+// Editable texts: every one can be changed in the Edit view. {name} fills in from the studio.
+export const TEXT_DEFAULTS: Record<TextKey, string> = {
+  read: 'Reading this as: {kind} for {audience}, with a {vibe} language, leaning toward the {preset} preset. Dials {dials}.',
+  promptIntro: 'Use the unified-design-system skill for {project}.',
+  promptClose: 'If design-system/MASTER.md does not exist yet, create it from these choices before building. Run the review gate before calling it done. Log what I like or reject to design-system/PREFERENCES.md so the next build remembers it.',
+  chainRun: 'Run the /{chain} chain for {project} with the unified design system. Ask me for the brief first.',
+}
+export const TEXT_LABELS: Record<TextKey, string> = {
+  read: 'Design read', promptIntro: 'Prompt opening', promptClose: 'Prompt closing', chainRun: 'Run a chain',
+}
+let TEXTS: Record<TextKey, string> = { ...TEXT_DEFAULTS }
+
+/** Replace {name} with its value; an unknown name stays as written. */
+export const fill = (template: string, values: Record<string, string>) =>
+  template.replace(/\{(\w+)\}/g, (all, k: string) => values[k] ?? all)
+
+export const textOf = (key: TextKey) => TEXTS[key]
+
+function values(S: StudioState): Record<string, string> {
   const kind = kindOf(S)
   const p = presetOf(S)
-  return `Reading this as: ${kind.name.toLowerCase()} for ${kind.audience}, with a ${VIBE[S.preset] ?? p.name} language, leaning toward the ${p.name} preset. Dials ${S.dials.join('/')}.`
+  return {
+    kind: kind.name.toLowerCase(), audience: kind.audience, vibe: VIBE[S.preset] ?? p.name.toLowerCase(),
+    preset: p.name, dials: S.dials.join('/'), project: S.project || 'this project', accent: S.accent,
+  }
+}
+
+export function readText(S: StudioState) {
+  return fill(TEXTS.read, values(S))
+}
+
+export function chainPrompt(S: StudioState, chain: string) {
+  return fill(TEXTS.chainRun, { ...values(S), chain })
 }
 
 export function checks(S: StudioState): Check[] {
@@ -263,25 +292,31 @@ export function promptText(S: StudioState) {
   const p = presetOf(S)
   const f = fontOf(S)
   return [
-    `Use the unified-design-system skill for ${S.project || 'this project'}.`, '',
+    fill(TEXTS.promptIntro, values(S)), '',
     readText(S), '',
     `Preset: ${p.name}`, `Accent: ${S.accent}`, `Fonts: ${f.name}`,
     `Dials: VARIANCE ${S.dials[0]} / MOTION ${S.dials[1]} / DENSITY ${S.dials[2]}`, '',
-    'If design-system/MASTER.md does not exist yet, create it from these choices before building. Run the review gate before calling it done. Log what I like or reject to design-system/PREFERENCES.md so the next build remembers it.',
+    fill(TEXTS.promptClose, values(S)),
   ].join('\n')
 }
 
-export function output(S: StudioState) {
+export function generated(S: StudioState) {
   if (S.tab === 'css') return cssTokens(S)
   if (S.tab === 'master') return masterMd(S)
   return promptText(S)
+}
+
+/** What the output box holds: the person's own edit of this tab when there is one, else the generated text. */
+export function output(S: StudioState, o: Overrides = {}) {
+  const edited = o.outputs?.[S.tab]
+  return edited !== undefined && edited !== '' ? edited : generated(S)
 }
 
 // ---- Phase 3: Capabilities, Chains and Preferences views ----
 
 export type { View } from '../types'
 export const VIEWS: [View, string][] = [
-  ['studio', 'Studio'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'],
+  ['studio', 'Studio'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'], ['edit', 'Edit'],
 ]
 
 export type Capability = { name: string; description: string; source: string; plugin?: string }
@@ -364,4 +399,51 @@ export function promotionHint(prefs: readonly Preference[]): string | undefined 
   const repeated = [...counts.values()].some(n => n >= 3)
   if (repeated || prefs.length > 20) return 'Some rules look settled. Ask Claude to move them into MASTER.md.'
   return undefined
+}
+
+// ---- Editable defaults ----
+
+const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T
+const BASE = { presets: clone(PRESETS), kinds: clone(KINDS), chains: clone(CHAINS) }
+
+export const lines = (text: string) => text.split('\n').map(l => l.trim()).filter(l => l !== '')
+
+/**
+ * Rebuild presets, kinds, chains and texts from the shipped defaults plus the person's edits.
+ * Always starts from the defaults, so removing an edit brings the default back.
+ */
+export function applyOverrides(o: Overrides = {}) {
+  for (const [id, base] of Object.entries(BASE.presets)) {
+    Object.assign(PRESETS[id]!, clone(base), o.presets?.[id] ?? {})
+  }
+  BASE.kinds.forEach((base, i) => Object.assign(KINDS[i]!, clone(base), o.kinds?.[base.id] ?? {}))
+  BASE.chains.forEach((base, i) => Object.assign(CHAINS[i]!, clone(base), o.chains?.[base.id] ?? {}))
+  TEXTS = { ...TEXT_DEFAULTS }
+  for (const [k, v] of Object.entries(o.texts ?? {})) if (typeof v === 'string' && v.trim() !== '') TEXTS[k as TextKey] = v
+}
+
+export const editCount = (o: Overrides) =>
+  Object.keys(o.texts ?? {}).length + Object.keys(o.presets ?? {}).length + Object.keys(o.kinds ?? {}).length +
+  Object.keys(o.chains ?? {}).length + Object.values(o.outputs ?? {}).filter(v => v !== '').length
+
+/** One edit merged in: `section.id.field = value`. An empty value drops that edit. */
+export function setOverride(o: Overrides, section: 'presets' | 'kinds' | 'chains', id: string, field: string, value: unknown): Overrides
+export function setOverride(o: Overrides, section: 'texts', id: TextKey, field: null, value: string): Overrides
+export function setOverride(o: Overrides, section: 'outputs', id: Tab, field: null, value: string): Overrides
+export function setOverride(o: Overrides, section: keyof Overrides, id: string, field: string | null, value: unknown): Overrides {
+  const next = clone(o) as Record<string, Record<string, unknown>>
+  const bucket = (next[section] ??= {})
+  const empty = value === '' || (Array.isArray(value) && value.length === 0)
+  if (field === null) {
+    if (empty) delete bucket[id]
+    else bucket[id] = value
+  } else {
+    const entry = { ...(bucket[id] as Record<string, unknown> | undefined) }
+    if (empty) delete entry[field]
+    else entry[field] = value
+    if (Object.keys(entry).length === 0) delete bucket[id]
+    else bucket[id] = entry
+  }
+  if (Object.keys(bucket).length === 0) delete next[section]
+  return next as Overrides
 }
