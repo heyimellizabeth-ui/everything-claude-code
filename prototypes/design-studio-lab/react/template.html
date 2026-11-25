@@ -7,26 +7,32 @@
 /* Layout: same two-pane console as the live studio, plus a Studio / Compare switch in the header. */
 :root {
   --bg: #f5f6f4; --panel: #ffffff; --ink: #1b1f1d; --muted: #5d6662; --line: #dde1de;
-  --accent: #1f5f8b; --accent-ink: #ffffff; --good: #1d7a46; --warn: #a35f00; --bad: #b3261e;
+  --accent: #7c3aed; --accent-ink: #ffffff; --good: #1d7a46; --warn: #a35f00; --bad: #b3261e;
   --f-display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
   --f-body: "Inter", system-ui, -apple-system, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  /* Studio theme (from the Astryx spike): 16px base, 44px touch targets, 150/300/500 ms motion. */
+  --font-size-base: 1rem; --control-h: 36px;
+  --dur-fast: 150ms; --dur-medium: 300ms; --dur-slow: 500ms;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #121514; --panel: #1a1e1c; --ink: #e8ece9; --muted: #9aa39f; --line: #2c322f;
-    --accent: #6fb3e0; --accent-ink: #0b1a24; --good: #5fcf8e; --warn: #f0b45a; --bad: #ff8a80;
+    --accent: #a78bfa; --accent-ink: #1a1033; --good: #5fcf8e; --warn: #f0b45a; --bad: #ff8a80;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #121514; --panel: #1a1e1c; --ink: #e8ece9; --muted: #9aa39f; --line: #2c322f;
-  --accent: #6fb3e0; --accent-ink: #0b1a24; --good: #5fcf8e; --warn: #f0b45a; --bad: #ff8a80;
+  --accent: #a78bfa; --accent-ink: #1a1033; --good: #5fcf8e; --warn: #f0b45a; --bad: #ff8a80;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.5; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: var(--font-size-base); line-height: 1.5; }
+@media (pointer: coarse) { :root { --control-h: 44px; } }
+button, select, input[type="text"] { min-height: var(--control-h); transition: background var(--dur-fast) ease, border-color var(--dur-fast) ease, color var(--dur-fast) ease; }
+@media (prefers-reduced-motion: reduce) { button, select, input { transition: none !important; } }
 .wrap { max-width: 1280px; margin: 0 auto; padding-block: 24px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; margin-bottom: 20px; }
 header.top > div { min-width: 0; }

@@ -48,3 +48,10 @@ Bugs in the live studio found while porting:
 
 Move the studio to React. A Rust engine was tried and removed: it was slower than
 JavaScript in the browser and added a second toolchain.
+
+## Studio theme (from the Astryx spike)
+
+The lab's own page uses the Studio theme values in `react/template.html`: purple accent (`#7c3aed`
+light, `#a78bfa` dark), 16px base type, 44px controls on touch screens (36px otherwise), and
+150/300/500 ms motion as `--dur-fast/-medium/-slow`. The pane in `plugins/design-studio` draws with
+terminal elements, so it has no type size, control height or motion to set; it is unchanged.
