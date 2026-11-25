@@ -11,7 +11,7 @@
     {
       "name": "ecc",
       "source": "./",
-      "description": "The most comprehensive Claude Code plugin — 66 agents, 239 skills, 93 legacy command shims, selective install profiles, and production-ready hooks for TDD, security scanning, code review, and continuous learning",
+      "description": "The most comprehensive Claude Code plugin — 66 agents, 238 skills, 92 legacy command shims, selective install profiles, and production-ready hooks for TDD, security scanning, code review, and continuous learning",
       "version": "2.0.0-rc.1",
       "author": {
         "name": "Affaan Mustafa",
@@ -42,6 +42,14 @@
         "best-practices"
       ],
       "strict": false
+    },
+    {
+      "name": "design-studio",
+      "source": "./plugins/design-studio",
+      "description": "Mod: the Unified Design Studio as a pane beside the chat, opened from a Design Studio button above the prompt or /design-studio",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "design"
     }
   ]
 }

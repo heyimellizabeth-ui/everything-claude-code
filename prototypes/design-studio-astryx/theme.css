@@ -1,0 +1,14 @@
+/* Studio theme for the spike: purple accent and the fixed Astryx defaults. */
+@layer astryx-theme {
+  :root {
+    --color-accent: #7c3aed;       /* white text on it: 5.7:1 */
+    --color-on-accent: #ffffff;
+    --font-size-base: 1rem;        /* 16px, was 14px */
+    --duration-fast: 150ms;        /* was 175ms */
+    --duration-medium: 300ms;      /* was 410ms */
+    --duration-slow: 500ms;
+  }
+  @media (pointer: coarse) {
+    button { min-height: 44px; }   /* touch target */
+  }
+}

@@ -123,8 +123,10 @@ is the system, and name it (for example "the project's Astryx neutral theme"), s
 inside that theme instead of dealing its own. Do not expect it to infer this from `package.json`. This landing-page flow has not been run end to end.
 The settings-page flow (template, components, gate) has.
 
-When the two disagree, the order is: the user's own words, then Hallmark's Floor, then the project's
-Astryx theme and rules, then Hallmark's Reflex gates and the ECC design skills.
+When they disagree, the order is: the user's own words and `design-system/PREFERENCES.md`, then
+Hallmark's Floor, then `design-system/MASTER.md`, then the project's Astryx theme and rules, then
+Hallmark's Reflex gates and the ECC design skills. When MASTER.md exists, tell Hallmark not to deal a
+theme (see `unified-design-system`).
 
 ### 5. Close the known Floor gaps
 

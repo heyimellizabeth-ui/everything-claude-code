@@ -1,0 +1,449 @@
+// The Design Studio engine, ported from the React Lab (prototypes/design-studio-lab/engine):
+// presets and copy, the colour maths, and the studio outputs. Pure functions, no `$`.
+import type { Overrides, Rule, StudioState, Tab, TextKey, View } from '../types'
+
+export type Palette = { bg: string; surface: string; text: string; muted: string; border: string }
+export type Preset = {
+  name: string
+  blurb: string
+  accent: string
+  font: string
+  radius: number
+  bw: number
+  shadow: string
+  shadowDark: string
+  upper: boolean
+  light: Palette
+  dark: Palette
+  never: string[]
+}
+export type Kind = { id: string; name: string; dials: [number, number, number]; preset: string; audience: string }
+export type Font = { id: string; name: string; display: string; body: string; dw: number; gf: string }
+export type CheckState = 'ok' | 'warn' | 'bad'
+export type Check = { id: string; name: string; state: CheckState; detail: string }
+
+export const KINDS: Kind[] = [
+  { id: 'landing', name: 'Landing page', dials: [7, 6, 4], preset: 'soft', audience: 'new visitors' },
+  { id: 'portfolio', name: 'Portfolio', dials: [8, 7, 3], preset: 'minimal', audience: 'clients and recruiters' },
+  { id: 'editorial', name: 'Editorial or blog', dials: [6, 4, 3], preset: 'minimal', audience: 'readers' },
+  { id: 'dashboard', name: 'Dashboard or tool', dials: [3, 2, 7], preset: 'product', audience: 'daily users' },
+  { id: 'app', name: 'App screen', dials: [4, 4, 6], preset: 'product', audience: 'signed-in users' },
+  { id: 'public', name: 'Public service or health', dials: [3, 2, 5], preset: 'trust', audience: 'everyone, including assistive tech users' },
+  { id: 'experimental', name: 'Experimental or agency', dials: [9, 2, 3], preset: 'brutalist', audience: 'design-literate visitors' },
+]
+
+export const FONTS: Font[] = [
+  { id: 'fraunces', name: 'Fraunces + Manrope', display: '"Fraunces", Georgia, serif', body: '"Manrope", system-ui, sans-serif', dw: 600, gf: 'Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;600' },
+  { id: 'newsreader', name: 'Newsreader + Inter Tight', display: '"Newsreader", Georgia, serif', body: '"Inter Tight", system-ui, sans-serif', dw: 500, gf: 'Newsreader:opsz,wght@6..72,500&family=Inter+Tight:wght@400;600' },
+  { id: 'archivo', name: 'Archivo Black + Space Mono', display: '"Archivo Black", Impact, sans-serif', body: '"Space Mono", ui-monospace, monospace', dw: 400, gf: 'Archivo+Black&family=Space+Mono:wght@400;700' },
+  { id: 'plex', name: 'IBM Plex Sans', display: '"IBM Plex Sans", system-ui, sans-serif', body: '"IBM Plex Sans", system-ui, sans-serif', dw: 600, gf: 'IBM+Plex+Sans:wght@400;600' },
+  { id: 'atkinson', name: 'Atkinson Hyperlegible', display: '"Atkinson Hyperlegible", Verdana, sans-serif', body: '"Atkinson Hyperlegible", Verdana, sans-serif', dw: 700, gf: 'Atkinson+Hyperlegible:wght@400;700' },
+]
+
+export const PRESETS: Record<string, Preset> = {
+  soft: { name: 'Soft', blurb: 'Agency polish, airy, gentle depth', accent: '#c2577a', font: 'fraunces', radius: 20, bw: 1, shadow: '0 1px 2px rgba(30,20,40,.06), 0 12px 32px -12px rgba(30,20,40,.18)', shadowDark: '0 12px 32px -12px rgba(0,0,0,.6)', upper: false,
+    light: { bg: '#fbf9fb', surface: '#ffffff', text: '#231c24', muted: '#6b5f6c', border: '#ece4ec' },
+    dark: { bg: '#161216', surface: '#201a21', text: '#f3ecf3', muted: '#b3a5b4', border: '#342b35' },
+    never: ['Hard black borders', 'Neon accents', 'Dense data tables'] },
+  minimal: { name: 'Minimal', blurb: 'Editorial calm, type contrast, flat', accent: '#2f6f5e', font: 'newsreader', radius: 4, bw: 1, shadow: 'none', shadowDark: 'none', upper: false,
+    light: { bg: '#f7f7f5', surface: '#ffffff', text: '#191a19', muted: '#5f625f', border: '#e2e3e0' },
+    dark: { bg: '#111211', surface: '#181a18', text: '#ecedeb', muted: '#a0a49f', border: '#2a2d2a' },
+    never: ['Gradients', 'Heavy shadows', 'More than one accent'] },
+  brutalist: { name: 'Brutalist', blurb: 'Raw grid, extreme type, square', accent: '#ff4f00', font: 'archivo', radius: 0, bw: 2, shadow: '4px 4px 0 var(--color-text)', shadowDark: '4px 4px 0 var(--color-text)', upper: true,
+    light: { bg: '#f2f2ee', surface: '#ffffff', text: '#0a0a0a', muted: '#3a3a3a', border: '#0a0a0a' },
+    dark: { bg: '#0a0a0a', surface: '#141414', text: '#f2f2ee', muted: '#c4c4c0', border: '#f2f2ee' },
+    never: ['Soft shadows', 'Rounded pills', 'Pastel palettes'] },
+  product: { name: 'Product tool', blurb: 'Quiet, compact, clear states', accent: '#2563c9', font: 'plex', radius: 8, bw: 1, shadow: '0 1px 2px rgba(15,23,42,.08)', shadowDark: '0 1px 2px rgba(0,0,0,.5)', upper: false,
+    light: { bg: '#f6f7f9', surface: '#ffffff', text: '#141922', muted: '#5a6372', border: '#e1e5eb' },
+    dark: { bg: '#0f1217', surface: '#171b22', text: '#e7eaef', muted: '#9aa3b2', border: '#283040' },
+    never: ['Decorative motion', 'Marketing hero on a tool', 'Cards inside cards'] },
+  trust: { name: 'Trust-first', blurb: 'Plain, legible, high contrast', accent: '#1d4f91', font: 'atkinson', radius: 4, bw: 2, shadow: 'none', shadowDark: 'none', upper: false,
+    light: { bg: '#ffffff', surface: '#f3f5f8', text: '#0b0c0c', muted: '#3b4046', border: '#505a5f' },
+    dark: { bg: '#0b0c0c', surface: '#16191b', text: '#ffffff', muted: '#c9ced2', border: '#8a9499' },
+    never: ['Low-contrast grey text', 'Motion that carries meaning', 'Jargon'] },
+}
+
+export const DIALS = [
+  { id: 'variance', name: 'Variance', lo: 'Symmetric', hi: 'Expressive' },
+  { id: 'motion', name: 'Motion', lo: 'Static', hi: 'Cinematic' },
+  { id: 'density', name: 'Density', lo: 'Airy', hi: 'Packed' },
+] as const
+
+export const DEFAULT_STATE: StudioState = {
+  project: 'My project', kind: 'landing', preset: 'soft', dials: [7, 6, 4], accent: '#c2577a', font: 'fraunces', mode: 'light', tab: 'prompt',
+}
+
+// ---- colour maths -------------------------------------------------------
+
+type Rgb = [number, number, number]
+
+export const validHex = (v: string) => /^#?[0-9a-f]{6}$/i.test(v.trim())
+export const normHex = (v: string) => {
+  const t = v.trim().toLowerCase()
+  return t.startsWith('#') ? t : '#' + t
+}
+const toRgb = (hex: string): Rgb => {
+  const n = parseInt(hex.replace('#', ''), 16) >>> 0
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+}
+const toHex = ([r, g, b]: Rgb) => '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')
+
+const luminance = (hex: string) => {
+  const w = [0.2126, 0.7152, 0.0722]
+  return toRgb(hex).reduce((acc, v, i) => {
+    const c = v / 255
+    return acc + (w[i] ?? 0) * (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4))
+  }, 0)
+}
+export const contrast = (a: string, b: string) => {
+  const x = luminance(a)
+  const y = luminance(b)
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05)
+}
+export const mix = (a: string, b: string, t: number) => {
+  const ca = toRgb(a)
+  const cb = toRgb(b)
+  return toHex([0, 1, 2].map(i => Math.round(ca[i]! + (cb[i]! - ca[i]!) * t)) as Rgb)
+}
+const toHsl = (hex: string): Rgb => {
+  const [r, g, b] = toRgb(hex).map(v => v / 255) as Rgb
+  const mx = Math.max(r, g, b)
+  const mn = Math.min(r, g, b)
+  const d = mx - mn
+  const l = (mx + mn) / 2
+  if (d === 0) return [0, 0, l]
+  const s = d / (1 - Math.abs(2 * l - 1))
+  const h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4
+  return [(h * 60 + 360) % 360, s, l]
+}
+const fromHsl = (h: number, s: number, l: number) => {
+  const c = (1 - Math.abs(2 * l - 1)) * s
+  const hp = h / 60
+  const x = c * (1 - Math.abs((hp % 2) - 1))
+  const m = l - c / 2
+  const rgb: Rgb = hp < 1 ? [c, x, 0] : hp < 2 ? [x, c, 0] : hp < 3 ? [0, c, x] : hp < 4 ? [0, x, c] : hp < 5 ? [x, 0, c] : [c, 0, x]
+  return toHex(rgb.map(v => Math.round((v + m) * 255)) as Rgb)
+}
+
+const accentPasses = (c: string, bg: string) =>
+  contrast(c, bg) >= 4.5 && Math.max(contrast('#ffffff', c), contrast('#111111', c)) >= 4.5
+
+// Nearest accent (same hue and saturation, lightness moved as little as possible)
+// that works as a link colour on bg and carries a readable button label.
+export const fixAccent = (accent: string, bg: string) => {
+  const [h, s, l] = toHsl(accent)
+  for (let k = 0; k <= 200; k++) {
+    for (const sign of [-1, 1]) {
+      const l2 = l + sign * k * 0.005
+      if (l2 < 0 || l2 > 1) continue
+      const c = fromHsl(h, s, l2)
+      if (accentPasses(c, bg)) return c
+    }
+  }
+  return accent
+}
+
+// One passing accent per hue step: the accessible accent wheel.
+export const wheel = (bg: string, steps = 8, sat = 0.65) =>
+  Array.from({ length: steps }, (_, i) => fixAccent(fromHsl((i * 360) / steps, sat, 0.5), bg))
+
+// ---- studio outputs -----------------------------------------------------
+
+export const presetOf = (S: StudioState): Preset => PRESETS[S.preset] ?? PRESETS.soft!
+export const kindOf = (S: StudioState): Kind => KINDS.find(k => k.id === S.kind) ?? KINDS[0]!
+export const fontOf = (S: StudioState): Font => FONTS.find(f => f.id === S.font) ?? FONTS[0]!
+
+const darkAccent = (accent: string, darkBg: string) =>
+  contrast(accent, darkBg) < 4.5 ? mix(accent, '#ffffff', 0.35) : accent
+
+export function tokens(S: StudioState) {
+  const p = presetOf(S)
+  const pal = p[S.mode]
+  const accent = S.mode === 'dark' ? darkAccent(S.accent, pal.bg) : S.accent
+  const onAccent = contrast('#ffffff', accent) >= contrast('#111111', accent) ? '#ffffff' : '#111111'
+  const [, m, d] = S.dials
+  return { p, pal, accent, onAccent, space: Math.round(22 - d * 1.4), radius: p.radius, dur: m <= 2 ? 0 : Math.round(60 + m * 40) }
+}
+
+const VIBE: Record<string, string> = { soft: 'soft, premium', minimal: 'calm editorial', brutalist: 'raw brutalist', product: 'quiet product-tool', trust: 'plain trust-first' }
+
+// Editable texts: every one can be changed in the Edit view. {name} fills in from the studio.
+export const TEXT_DEFAULTS: Record<TextKey, string> = {
+  read: 'Reading this as: {kind} for {audience}, with a {vibe} language, leaning toward the {preset} preset. Dials {dials}.',
+  promptIntro: 'Use the unified-design-system skill for {project}.',
+  promptClose: 'If design-system/MASTER.md does not exist yet, create it from these choices before building. Run the review gate before calling it done. Log what I like or reject to design-system/PREFERENCES.md so the next build remembers it.',
+  chainRun: 'Run the /{chain} chain for {project} with the unified design system. Ask me for the brief first.',
+}
+export const TEXT_LABELS: Record<TextKey, string> = {
+  read: 'Design read', promptIntro: 'Prompt opening', promptClose: 'Prompt closing', chainRun: 'Run a chain',
+}
+let TEXTS: Record<TextKey, string> = { ...TEXT_DEFAULTS }
+
+/** Replace {name} with its value; an unknown name stays as written. */
+export const fill = (template: string, values: Record<string, string>) =>
+  template.replace(/\{(\w+)\}/g, (all, k: string) => values[k] ?? all)
+
+export const textOf = (key: TextKey) => TEXTS[key]
+
+function values(S: StudioState): Record<string, string> {
+  const kind = kindOf(S)
+  const p = presetOf(S)
+  return {
+    kind: kind.name.toLowerCase(), audience: kind.audience, vibe: VIBE[S.preset] ?? p.name.toLowerCase(),
+    preset: p.name, dials: S.dials.join('/'), project: S.project || 'this project', accent: S.accent,
+  }
+}
+
+export function readText(S: StudioState) {
+  return fill(TEXTS.read, values(S))
+}
+
+export function chainPrompt(S: StudioState, chain: string) {
+  return fill(TEXTS.chainRun, { ...values(S), chain })
+}
+
+export function checks(S: StudioState): Check[] {
+  const t = tokens(S)
+  const kind = kindOf(S)
+  const body = contrast(t.pal.text, t.pal.bg)
+  const muted = contrast(t.pal.muted, t.pal.bg)
+  const btn = contrast(t.onAccent, t.accent)
+  const acc = contrast(t.accent, t.pal.bg)
+  const [h, s] = toHsl(S.accent)
+  const busy = (S.kind === 'dashboard' || S.kind === 'public') && S.dials[1] > 4
+  const slop = s > 0.45 && h >= 230 && h <= 290
+  const grade = (x: number): CheckState => (x >= 4.5 ? 'ok' : x >= 3 ? 'warn' : 'bad')
+  return [
+    { id: 'body', name: 'Body text contrast', state: body >= 4.5 ? 'ok' : 'bad', detail: body.toFixed(1) + ':1, needs 4.5:1' },
+    { id: 'muted', name: 'Muted text contrast', state: grade(muted), detail: muted.toFixed(1) + ':1, needs 4.5:1' },
+    { id: 'button', name: 'Button label on accent', state: grade(btn), detail: btn.toFixed(1) + ':1, needs 4.5:1' },
+    { id: 'link', name: 'Accent as link colour', state: grade(acc), detail: acc.toFixed(1) + ':1 on background' },
+    { id: 'motion', name: 'Motion fits the job', state: busy ? 'warn' : 'ok', detail: busy ? 'High motion on a ' + kind.name.toLowerCase() : 'Reduced motion respected' },
+    { id: 'slop', name: 'AI-slop default', state: slop ? 'warn' : 'ok', detail: slop ? 'Purple-blue accent is the generic default' : 'Accent avoids the stock purple' },
+  ]
+}
+
+// The accent the review gate suggests, or undefined when the accent already passes.
+export function suggestedAccent(S: StudioState) {
+  const issue = checks(S).some(c => (c.id === 'button' || c.id === 'link') && c.state !== 'ok')
+  if (!issue) return undefined
+  const fix = fixAccent(S.accent, presetOf(S).light.bg)
+  return fix === S.accent ? undefined : fix
+}
+
+const fontName = (stack: string) => (stack.split(',')[0] ?? stack).replace(/"/g, '')
+
+export function cssTokens(S: StudioState) {
+  const t = tokens(S)
+  const f = fontOf(S)
+  const { light: L, dark: D } = t.p
+  const sp = t.space
+  return [
+    ':root {',
+    `  --color-bg: ${L.bg};`, `  --color-surface: ${L.surface};`, `  --color-text: ${L.text};`,
+    `  --color-text-muted: ${L.muted};`, `  --color-border: ${L.border};`, `  --color-accent: ${S.accent};`,
+    `  --font-display: ${f.display};`, `  --font-body: ${f.body};`,
+    `  --space-1: ${Math.round(sp / 2)}px;`, `  --space-2: ${sp}px;`, `  --space-3: ${sp * 2}px;`, `  --space-4: ${sp * 3}px;`,
+    `  --radius: ${t.radius}px;`, `  --border-width: ${t.p.bw}px;`, `  --shadow: ${t.p.shadow};`,
+    `  --duration: ${t.dur}ms;`,
+    '}', '',
+    '@media (prefers-color-scheme: dark) {', '  :root {',
+    `    --color-bg: ${D.bg};`, `    --color-surface: ${D.surface};`, `    --color-text: ${D.text};`,
+    `    --color-text-muted: ${D.muted};`, `    --color-border: ${D.border};`, `    --color-accent: ${darkAccent(S.accent, D.bg)};`,
+    '  }', '}', '',
+    '@media (prefers-reduced-motion: reduce) {', '  :root { --duration: 0ms; }', '}', '',
+  ].join('\n')
+}
+
+export function masterMd(S: StudioState) {
+  const t = tokens(S)
+  const f = fontOf(S)
+  const p = t.p
+  const row = (token: string, l: string, d: string, use: string) => `| ${token} | ${l} | ${d} | ${use} |`
+  return [
+    `# Design System: ${S.project || 'Project'}`, '',
+    '## 1. Design read', readText(S), `Preset: ${p.name}`,
+    `Dials: VARIANCE ${S.dials[0]} / MOTION ${S.dials[1]} / DENSITY ${S.dials[2]}`, '',
+    '## 2. Colour tokens', '| Token | Light | Dark | Use |', '|---|---|---|---|',
+    row('--color-bg', p.light.bg, p.dark.bg, 'page background'),
+    row('--color-surface', p.light.surface, p.dark.surface, 'cards, panels'),
+    row('--color-text', p.light.text, p.dark.text, 'body text'),
+    row('--color-text-muted', p.light.muted, p.dark.muted, 'secondary text'),
+    row('--color-accent', S.accent, darkAccent(S.accent, p.dark.bg), 'primary actions'),
+    row('--color-border', p.light.border, p.dark.border, 'dividers'), '',
+    '## 3. Typography',
+    `Display: ${fontName(f.display)} (weight ${f.dw}${p.upper ? ', uppercase' : ''})`,
+    `Body: ${fontName(f.body)}`,
+    `Google Fonts: https://fonts.googleapis.com/css2?family=${f.gf}&display=swap`, '',
+    '## 4. Spacing, radius, shadow',
+    `Spacing scale: ${[Math.round(t.space / 2), t.space, t.space * 2, t.space * 3].join(' / ')}px`,
+    `Radius: ${t.radius}px`, `Border: ${p.bw}px`, `Shadow: ${p.shadow === 'none' ? 'none' : 'one level, see tokens'}`, '',
+    '## 5. Components',
+    S.kind === 'dashboard' || S.kind === 'app'
+      ? 'Astryx (React) via astryx-components, theme matched to these tokens.'
+      : 'Native HTML and CSS variables unless the project already has a component library.', '',
+    '## 6. Motion',
+    `Duration: ${t.dur}ms${t.dur === 0 ? ' (static)' : ''}. Animate state changes only. Always respect prefers-reduced-motion.`, '',
+    '## 7. Never do', ...p.never.map(x => '- ' + x), '- Purple-to-blue gradient defaults', '- Cards inside cards', '',
+  ].join('\n')
+}
+
+export function promptText(S: StudioState) {
+  const p = presetOf(S)
+  const f = fontOf(S)
+  return [
+    fill(TEXTS.promptIntro, values(S)), '',
+    readText(S), '',
+    `Preset: ${p.name}`, `Accent: ${S.accent}`, `Fonts: ${f.name}`,
+    `Dials: VARIANCE ${S.dials[0]} / MOTION ${S.dials[1]} / DENSITY ${S.dials[2]}`, '',
+    fill(TEXTS.promptClose, values(S)),
+  ].join('\n')
+}
+
+export function generated(S: StudioState) {
+  if (S.tab === 'css') return cssTokens(S)
+  if (S.tab === 'master') return masterMd(S)
+  return promptText(S)
+}
+
+/** What the output box holds: the person's own edit of this tab when there is one, else the generated text. */
+export function output(S: StudioState, o: Overrides = {}) {
+  const edited = o.outputs?.[S.tab]
+  return edited !== undefined && edited !== '' ? edited : generated(S)
+}
+
+// ---- Phase 3: Capabilities, Chains and Preferences views ----
+
+export type { View } from '../types'
+export const VIEWS: [View, string][] = [
+  ['studio', 'Studio'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'], ['edit', 'Edit'],
+]
+
+export type Capability = { name: string; description: string; source: string; plugin?: string }
+
+const DESIGN_WORDS = /design|ui|ux|style|theme|brand|banner|slide|motion|css|font|colou?r|astryx|hallmark|studio|taste|redesign|wireframe|interface|visual|chelp|^c[1-5]$/i
+
+/** True when a command or skill is part of the design system, so the list can put it first. */
+export const isDesign = (c: Capability) => DESIGN_WORDS.test(c.name) || DESIGN_WORDS.test(c.plugin ?? '')
+
+/** Filter by a search string, design entries first, then by name. */
+export function capabilityList(all: readonly Capability[], query: string, designOnly: boolean) {
+  const q = query.trim().toLowerCase()
+  return all
+    .filter(c => (!designOnly || isDesign(c)) && (q === '' || `${c.name} ${c.description} ${c.plugin ?? ''}`.toLowerCase().includes(q)))
+    .sort((a, b) => Number(isDesign(b)) - Number(isDesign(a)) || a.name.localeCompare(b.name))
+}
+
+export type Chain = { id: string; name: string; when: string; steps: string[] }
+
+/** The chelp chains as they run through the unified design system (commands/c1.md to c5.md, studio-build.md). */
+export const CHAINS: Chain[] = [
+  { id: 'c1', name: 'Full web project', when: 'Greenfield site, new design system, major launch',
+    steps: ['/prp-prd', 'unified-design-system 1-3', '/prp-plan', '/chelp-advisor pre-build', '/hallmark (in MASTER.md)', '/multi-frontend', '/quality-gate', '/design-gate', '/chelp-advisor pre-ship', '/santa-loop'] },
+  { id: 'c2', name: 'Page or component', when: 'Adding to an existing project',
+    steps: ['/plan', '/chelp-advisor pre-build', 'unified-design-system 1', '/feature-dev', '/hallmark (new page)', '/code-review', '/test-coverage', '/design-gate', '/chelp-advisor pre-ship', '/checkpoint'] },
+  { id: 'c3', name: 'Design iteration', when: 'Polish, restyle, responsive fixes',
+    steps: ['/model-route', 'unified-design-system 1', '/hallmark redesign', '/quality-gate', '/design-gate --kept', '/chelp-advisor pre-ship', '/code-review'] },
+  { id: 'c4', name: 'Ship to production', when: 'Hardening, audit, PR',
+    steps: ['unified-design-system 1', '/multi-plan', '/multi-execute', '/security-scan', '/test-coverage', '/design-gate --require-render', '/chelp-advisor pre-ship', '/santa-loop', '/prp-pr'] },
+  { id: 'c5', name: 'Maintenance', when: 'Dead code, docs, design drift',
+    steps: ['/refactor-clean', '/update-codemaps', '/update-docs', 'unified-design-system 1', '/hallmark audit', '/quality-gate', '/design-gate', '/chelp-advisor pre-ship', '/checkpoint'] },
+  { id: 'studio-build', name: 'Studio to site', when: 'Turn a Design Studio brand config into a site',
+    steps: ['brand-config.json', 'scaffold', 'write MASTER.md', 'validate', 'assets', '/chelp-advisor pre-ship'] },
+]
+
+export type { Rule } from '../types'
+export type Preference = { date: string; rule: Rule; means: string; words: string }
+
+const PREF_ROW = /^\|\s*(\d{4}-\d{2}-\d{2})\s*\|\s*(always|never|prefer)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*$/
+
+/** Read the rows of design-system/PREFERENCES.md (the format in references/preferences-template.md). */
+export function parsePreferences(md: string): Preference[] {
+  return md.split('\n').flatMap(line => {
+    const m = PREF_ROW.exec(line)
+    return m ? [{ date: m[1]!, rule: m[2] as Rule, means: m[3]!, words: m[4]! }] : []
+  })
+}
+
+const cell = (s: string) => s.replace(/\|/g, '/').replace(/\s+/g, ' ').trim()
+
+export const PREFERENCES_HEAD = [
+  '# Design preferences', '',
+  'What the user liked, rejected or corrected, newest last. Read at step 1 of',
+  'every design task. Rules marked `always` or `never` are binding; `prefer`',
+  'rules break ties.', '',
+  '| Date | Rule | What it means | User\'s words |',
+  '|---|---|---|---|',
+].join('\n')
+
+/** Add one row after the last preference row, or start the file when there is none. */
+export function addPreference(md: string, p: Preference): string {
+  const row = `| ${p.date} | ${p.rule} | ${cell(p.means)} | ${cell(p.words)} |`
+  const lines = (md.trim() === '' ? PREFERENCES_HEAD : md).split('\n')
+  const promoted = lines.findIndex(l => /^## Promoted/.test(l))
+  const end = promoted === -1 ? lines.length : promoted
+  let at = -1
+  lines.forEach((l, i) => { if (i < end && (PREF_ROW.test(l) || /^\|---/.test(l))) at = i })
+  if (at === -1) {
+    lines.splice(end, 0, PREFERENCES_HEAD.split('\n').slice(-2).join('\n'), row, '')
+    return lines.join('\n').replace(/\n*$/, '\n')
+  }
+  lines.splice(at + 1, 0, row)
+  return lines.join('\n').replace(/\n*$/, '\n')
+}
+
+/** Settled rules: the same meaning logged three or more times, or a log past 20 rows (SKILL.md step 7). */
+export function promotionHint(prefs: readonly Preference[]): string | undefined {
+  const counts = new Map<string, number>()
+  for (const p of prefs) counts.set(`${p.rule} ${p.means.toLowerCase()}`, (counts.get(`${p.rule} ${p.means.toLowerCase()}`) ?? 0) + 1)
+  const repeated = [...counts.values()].some(n => n >= 3)
+  if (repeated || prefs.length > 20) return 'Some rules look settled. Ask Claude to move them into MASTER.md.'
+  return undefined
+}
+
+// ---- Editable defaults ----
+
+const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T
+const BASE = { presets: clone(PRESETS), kinds: clone(KINDS), chains: clone(CHAINS) }
+
+export const lines = (text: string) => text.split('\n').map(l => l.trim()).filter(l => l !== '')
+
+/**
+ * Rebuild presets, kinds, chains and texts from the shipped defaults plus the person's edits.
+ * Always starts from the defaults, so removing an edit brings the default back.
+ */
+export function applyOverrides(o: Overrides = {}) {
+  for (const [id, base] of Object.entries(BASE.presets)) {
+    Object.assign(PRESETS[id]!, clone(base), o.presets?.[id] ?? {})
+  }
+  BASE.kinds.forEach((base, i) => Object.assign(KINDS[i]!, clone(base), o.kinds?.[base.id] ?? {}))
+  BASE.chains.forEach((base, i) => Object.assign(CHAINS[i]!, clone(base), o.chains?.[base.id] ?? {}))
+  TEXTS = { ...TEXT_DEFAULTS }
+  for (const [k, v] of Object.entries(o.texts ?? {})) if (typeof v === 'string' && v.trim() !== '') TEXTS[k as TextKey] = v
+}
+
+export const editCount = (o: Overrides) =>
+  Object.keys(o.texts ?? {}).length + Object.keys(o.presets ?? {}).length + Object.keys(o.kinds ?? {}).length +
+  Object.keys(o.chains ?? {}).length + Object.values(o.outputs ?? {}).filter(v => v !== '').length
+
+/** One edit merged in: `section.id.field = value`. An empty value drops that edit. */
+export function setOverride(o: Overrides, section: 'presets' | 'kinds' | 'chains', id: string, field: string, value: unknown): Overrides
+export function setOverride(o: Overrides, section: 'texts', id: TextKey, field: null, value: string): Overrides
+export function setOverride(o: Overrides, section: 'outputs', id: Tab, field: null, value: string): Overrides
+export function setOverride(o: Overrides, section: keyof Overrides, id: string, field: string | null, value: unknown): Overrides {
+  const next = clone(o) as Record<string, Record<string, unknown>>
+  const bucket = (next[section] ??= {})
+  const empty = value === '' || (Array.isArray(value) && value.length === 0)
+  if (field === null) {
+    if (empty) delete bucket[id]
+    else bucket[id] = value
+  } else {
+    const entry = { ...(bucket[id] as Record<string, unknown> | undefined) }
+    if (empty) delete entry[field]
+    else entry[field] = value
+    if (Object.keys(entry).length === 0) delete bucket[id]
+    else bucket[id] = entry
+  }
+  if (Object.keys(bucket).length === 0) delete next[section]
+  return next as Overrides
+}
