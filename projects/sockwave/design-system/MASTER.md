@@ -17,7 +17,7 @@ The site is dark only; there is no light theme.
 | --color-bg | #0a0a0b | page background |
 | --color-surface | #18181b | cards, panels |
 | --color-text | #fafafa | body text (19.0:1 on bg) |
-| --color-text-muted | #71717a | secondary text (4.1:1 on bg) |
+| --color-text-muted | #8a8a93 | secondary text (5.8:1 on bg) |
 | --color-accent | #ec4899 | fills, borders, primary actions |
 | --color-accent-ink | #0a0a0b | text on an accent fill |
 | --color-accent-text | #ec4899 | accent used as text (5.6:1 on bg) |
@@ -43,4 +43,4 @@ Animate state changes only. Always respect prefers-reduced-motion.
 
 - Raw hex values in components; use the tokens above.
 - Accent colour as body text; use `--color-accent-text`.
-- `--fg-dim` (#71717a) for body text: 4.1:1 on the background, below 4.5. Use it for large text only or lighten it.
+- Darkening `--fg-dim` below #8a8a93 (5.8:1 on bg, 5.2:1 on surface). The old #71717a was 4.1:1 and failed body text.

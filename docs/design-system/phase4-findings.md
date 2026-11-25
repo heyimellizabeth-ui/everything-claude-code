@@ -24,7 +24,7 @@ Hallmark is not installed in this environment, so this is the checklist-only pat
 
 ### sockwave (static token check)
 
-- **Must, contrast:** `--fg-dim` `#71717a` on `--bg` `#0a0a0b` is 4.09:1, below 4.5 for body text. Recorded in MASTER.md's Never list.
+- **Must, contrast:** `--fg-dim` `#71717a` on `--bg` `#0a0a0b` is 4.09:1, below 4.5 for body text. Fixed: `--muted` is now `#8a8a93` (5.8:1), recorded in MASTER.md.
 - **Pass:** accent on background 5.61:1, text on accent 5.61:1, body text 18.96:1, a 2px `:focus-visible` outline, and a reduced-motion rule in `global.css`.
 - **Should:** the border token `#27272a` is 1.33:1 on the background. That's fine for a decorative divider, but not for a field outline (3:1).
 
@@ -33,7 +33,11 @@ Hallmark is not installed in this environment, so this is the checklist-only pat
 1. `scripts/design-gate.js --json` now reports `skipped: true` when Hallmark is missing. Before, it printed `pass: false, enforced: true` on a MASTER.md project even though the gate exits 0, which a script reading the JSON would treat as a block.
 2. `write-master.js` writes venue wording ("venue and events site", "queer-nightclub") because it was built for `/studio-build`. For non-studio projects the copy had to be edited by hand. Next step: take the design read from an argument, or leave it to unified-design-system step 2.
 
+## Site fixes applied
+
+- **club-kudt:** dark text `#0D0D0D` on every red fill (CTA, ticker, newsletter button), a `prefers-reduced-motion` rule that stops the ticker loop, and nav and footer links padded to 24px (44px+ on touch screens). Rerun: 0 low-contrast elements (was 30), 0 running animations under reduced motion (was 2), no overflow. The 2-3 small targets left are inline text links inside paragraphs, which WCAG 2.5.8 exempts.
+- **sockwave:** `--muted` lightened from `#71717a` to `#8a8a93` (5.8:1 on the background, 5.2:1 on surface).
+
 ## Not done (out of budget)
 
-- Fixing the club-kudt contrast, target and motion findings (it needs your go, since it changes the live site's look).
 - The sync check, health view and guide from the Phase 4 plan.
