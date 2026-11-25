@@ -1,6 +1,5 @@
 'use strict';
-// JavaScript colour engine. rust-engine/src/lib.rs implements the same functions
-// with the same maths, so the two can be swapped and compared in the studio.
+// Colour engine: contrast, mix, fix-accent and the accessible accent wheel.
 
 function hexToInt(hex) {
   let h = String(hex).replace('#', '');
@@ -74,8 +73,7 @@ const jsEngine = {
   contrast: (a, b) => contrastInt(hexToInt(a), hexToInt(b)),
   mix: (a, b, t) => intToHex(mixInt(hexToInt(a), hexToInt(b), t)),
   fixAccent: (a, bg) => intToHex(fixAccentInt(hexToInt(a), hexToInt(bg))),
-  wheel: (bg, steps, sat) => wheelInt(hexToInt(bg), steps, sat).map(intToHex),
-  wheelChecksum: (bg, steps, sat) => wheelInt(hexToInt(bg), steps, sat).reduce((a, v) => (a + v) >>> 0, 0)
+  wheel: (bg, steps, sat) => wheelInt(hexToInt(bg), steps, sat).map(intToHex)
 };
 
 function hue(hex) { const [h, s] = toHsl(hexToInt(hex)); return { h, s }; }

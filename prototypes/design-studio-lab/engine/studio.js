@@ -1,6 +1,6 @@
 'use strict';
 // Pure studio logic: state in, tokens / checks / text out. No DOM, so it is unit-tested
-// and shared by the React UI. `eng` is either the JS or the Rust (WASM) colour engine.
+// and shared by the React UI. `eng` is the colour engine from color.js.
 const { KINDS, FONTS, PRESETS } = require('./data');
 const { hue } = require('./color');
 

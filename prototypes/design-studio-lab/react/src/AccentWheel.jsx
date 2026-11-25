@@ -9,7 +9,7 @@ function AccentWheel({ S, patch, eng }) {
     <section className="panel" aria-label="Accessible accents">
       <div className="out-head">
         <span className="label" style={{ margin: 0 }}>Accents that pass on {PRESETS[S.preset].name}</span>
-        <span className="hint" style={{ margin: 0 }}>36 hues searched by {eng.name} in {ms.toFixed(2)} ms</span>
+        <span className="hint" style={{ margin: 0 }}>36 hues searched in {ms.toFixed(2)} ms</span>
       </div>
       <div className="wheel" role="group" aria-label="Pick a passing accent">
         {swatches.map((c, i) => (

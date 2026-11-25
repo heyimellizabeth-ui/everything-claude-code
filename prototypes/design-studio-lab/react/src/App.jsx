@@ -1,7 +1,6 @@
 /* global React */
 const { FONTS } = require('../../engine/data');
 const { jsEngine } = require('../../engine/color');
-const { loadWasmEngine } = require('../../engine/wasm');
 const studio = require('../../engine/studio');
 const { useStudioState } = require('./hooks');
 const { Controls } = require('./Controls.jsx');
@@ -10,19 +9,6 @@ const { ReviewGate } = require('./ReviewGate.jsx');
 const { AccentWheel } = require('./AccentWheel.jsx');
 const { Output } = require('./Output.jsx');
 const { Compare } = require('./Compare.jsx');
-
-function useEngines() {
-  const [rs, setRs] = React.useState(null);
-  const [err, setErr] = React.useState(null);
-  React.useEffect(() => {
-    try {
-      const bin = atob(window.__UDS_WASM__ || '');
-      const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
-      loadWasmEngine(bytes).then(setRs, e => setErr(String(e && e.message || e)));
-    } catch (e) { setErr(String(e && e.message || e)); }
-  }, []);
-  return { js: jsEngine, rs, err };
-}
 
 function Read({ S }) {
   return <p className="read">{studio.readParts(S).map(([text, em], i) => (em ? <em key={i}>{text}</em> : text))}</p>;
@@ -48,31 +34,24 @@ function Studio({ S, patch, eng }) {
 
 function App() {
   const [S, patch] = useStudioState();
-  const engines = useEngines();
   const [view, setView] = React.useState('studio');
-  const [which, setWhich] = React.useState('js');
-  const eng = which === 'rs' && engines.rs ? engines.rs : engines.js;
+  const eng = jsEngine;
   return (
     <div className="wrap">
       <header className="top">
         <div>
           <p className="eyebrow">Sandbox prototype</p>
           <h1>Design Studio Lab</h1>
-          <p className="sub">The Unified Design Studio rebuilt in React, with a colour engine you can switch to Rust. The live studio is unchanged.</p>
+          <p className="sub">The Unified Design Studio rebuilt in React, with two new accent tools. The live studio is unchanged.</p>
         </div>
         <div className="bar">
           <div className="seg" role="tablist" aria-label="View">
             <button type="button" role="tab" aria-selected={view === 'studio'} aria-pressed={view === 'studio'} onClick={() => setView('studio')}>Studio</button>
             <button type="button" role="tab" aria-selected={view === 'compare'} aria-pressed={view === 'compare'} onClick={() => setView('compare')}>Compare</button>
           </div>
-          <div className="seg" role="group" aria-label="Colour engine">
-            <button type="button" aria-pressed={which === 'js'} onClick={() => setWhich('js')}>JavaScript</button>
-            <button type="button" aria-pressed={which === 'rs'} disabled={!engines.rs} title={engines.err ? 'Rust engine unavailable: ' + engines.err : ''} onClick={() => setWhich('rs')}>Rust (WASM)</button>
-          </div>
-          <span className="engine-note">{engines.rs ? 'Engine: ' + eng.name : engines.err ? 'Rust engine blocked here, using JavaScript' : 'Loading Rust engine…'}</span>
         </div>
       </header>
-      {view === 'studio' ? <Studio S={S} patch={patch} eng={eng} /> : <Compare engines={engines} />}
+      {view === 'studio' ? <Studio S={S} patch={patch} eng={eng} /> : <Compare />}
     </div>
   );
 }
