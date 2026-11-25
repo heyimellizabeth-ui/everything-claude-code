@@ -1,0 +1,20 @@
+[package]
+name = "uds-engine"
+version = "0.1.0"
+edition = "2021"
+description = "Colour engine for the Unified Design Studio, compiled to WebAssembly"
+license = "MIT"
+publish = false
+
+# Standalone crate: kept out of any workspace so the prototype stays sandboxed.
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+strip = true
