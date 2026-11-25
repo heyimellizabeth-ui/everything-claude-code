@@ -140,7 +140,6 @@
         "skills/dotnet-patterns",
         "skills/fastapi-patterns",
         "skills/frontend-slides",
-        "skills/make-interfaces-feel-better",
         "skills/golang-patterns",
         "skills/golang-testing",
         "skills/java-coding-standards",
@@ -167,8 +166,7 @@
         "skills/springboot-patterns",
         "skills/springboot-tdd",
         "skills/springboot-verification",
-        "skills/ui-to-vue",
-        "skills/unified-design-system"
+        "skills/ui-to-vue"
       ],
       "targets": [
         "claude",
@@ -199,17 +197,16 @@
         "skills/astryx-components",
         "skills/browser-qa",
         "skills/click-path-audit",
-        "skills/design-system",
         "skills/frontend-design-direction",
         "skills/frontend-patterns",
         "skills/make-interfaces-feel-better",
         "skills/motion-advanced",
         "skills/motion-foundations",
         "skills/motion-patterns",
-        "skills/motion-ui",
         "skills/nextjs-turbopack",
         "skills/seo",
         "skills/static-site-release",
+        "skills/unified-design-system",
         "skills/wireframe-solid"
       ],
       "targets": [
