@@ -98,8 +98,6 @@
         ".qwen",
         "mcp-configs",
         "scripts/auto-update.js",
-        "scripts/chelp-pipeline.js",
-        "scripts/design-gate.js",
         "scripts/setup-package-manager.js"
       ],
       "targets": [
@@ -166,8 +164,7 @@
         "skills/springboot-patterns",
         "skills/springboot-tdd",
         "skills/springboot-verification",
-        "skills/ui-to-vue",
-        "skills/unified-design-system"
+        "skills/ui-to-vue"
       ],
       "targets": [
         "claude",
@@ -195,7 +192,6 @@
       "description": "Website and frontend design skills: design direction, motion, accessibility, SEO, browser QA and static-site release for the chelp web chains.",
       "paths": [
         "skills/accessibility",
-        "skills/astryx-components",
         "skills/browser-qa",
         "skills/click-path-audit",
         "skills/frontend-design-direction",
@@ -205,9 +201,7 @@
         "skills/motion-foundations",
         "skills/motion-patterns",
         "skills/nextjs-turbopack",
-        "skills/seo",
-        "skills/static-site-release",
-        "skills/wireframe-solid"
+        "skills/seo"
       ],
       "targets": [
         "claude",
@@ -266,7 +260,6 @@
         "skills/agent-sort",
         "skills/agent-introspection-debugging",
         "skills/ai-regression-testing",
-        "skills/chelp-advisor",
         "skills/configure-ecc",
         "skills/code-tour",
         "skills/continuous-learning",
@@ -284,16 +277,7 @@
         "skills/strategic-compact",
         "skills/tdd-workflow",
         "skills/verification-loop",
-        "skills/windows-desktop-e2e",
-        "skills/c1",
-        "skills/c2",
-        "skills/c3",
-        "skills/c4",
-        "skills/c5",
-        "skills/chelp",
-        "skills/chelp-pipeline",
-        "skills/design-gate",
-        "skills/studio-build"
+        "skills/windows-desktop-e2e"
       ],
       "targets": [
         "claude",
@@ -721,40 +705,6 @@
       "defaultInstall": false,
       "cost": "medium",
       "stability": "stable"
-    },
-    {
-      "id": "reverse-engineering",
-      "kind": "skills",
-      "description": "RECC: reverse-engineering workflows that pair ECC planning, TDD, and review with the REA MCP server (rea-agents) for binaries, Electron/JS, Android, .NET, WASM, firmware, and web targets.",
-      "paths": [
-        "skills/reverse-engineer-anything",
-        "skills/re-evidence-discipline",
-        "skills/re-feature-to-implementation",
-        "skills/re-target-playbooks",
-        "skills/re-scope-and-legality",
-        "skills/re-compare",
-        "skills/re-doctor",
-        "skills/re-investigate",
-        "skills/re-pipeline",
-        "skills/re-rebuild",
-        "skills/re-verify"
-      ],
-      "targets": [
-        "claude",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen"
-      ],
-      "dependencies": [
-        "security"
-      ],
-      "defaultInstall": false,
-      "cost": "medium",
-      "stability": "beta"
     }
   ]
 }

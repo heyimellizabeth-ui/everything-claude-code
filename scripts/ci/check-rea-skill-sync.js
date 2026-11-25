@@ -2,7 +2,7 @@
 /**
  * Checks that ECC's pinned copy of the REA skill is not behind REA itself.
  *
- * skills/reverse-engineer-anything/SKILL.md is copied from the rea package
+ * plugins/studio-kit/skills/reverse-engineer-anything/SKILL.md is copied from the rea package
  * (.agents/skills/reverse-engineer-anything/SKILL.md there) and carries
  * `metadata.version`. This compares that number with a local rea checkout.
  *
@@ -19,7 +19,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ECC_SKILL = path.join('skills', 'reverse-engineer-anything', 'SKILL.md');
+const ECC_SKILL = path.join('plugins', 'studio-kit', 'skills', 'reverse-engineer-anything', 'SKILL.md');
 const REA_SKILL = path.join('.agents', 'skills', 'reverse-engineer-anything', 'SKILL.md');
 
 function readSkillVersion(filePath) {

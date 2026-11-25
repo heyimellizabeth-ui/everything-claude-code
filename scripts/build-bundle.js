@@ -14,8 +14,8 @@ const FILES = [
   { name: 'session-manager.test.js', group: 'Test Fixes', path: 'tests/lib/session-manager.test.js' },
   // Studio App
   { name: 'design-studio/USAGE.md', group: 'Studio App', path: 'projects/design-studio/USAGE.md' },
-  { name: 'scaffold.js', group: 'Studio App', path: 'scripts/site-template/scaffold.js' },
-  { name: 'validate.js', group: 'Studio App', path: 'scripts/site-template/validate.js' },
+  { name: 'scaffold.js', group: 'Studio App', path: 'plugins/studio-kit/scripts/site-template/scaffold.js' },
+  { name: 'validate.js', group: 'Studio App', path: 'plugins/studio-kit/scripts/site-template/validate.js' },
   { name: 'scaffold.test.js', group: 'Studio App', path: 'tests/site-template/scaffold.test.js' },
   { name: 'validate.test.js', group: 'Studio App', path: 'tests/site-template/validate.test.js' },
   { name: 'brand.config.json', group: 'Studio App', path: 'templates/queer-nightclub/brand.config.json' },

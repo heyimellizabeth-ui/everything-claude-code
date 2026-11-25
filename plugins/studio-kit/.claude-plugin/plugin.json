@@ -1,0 +1,15 @@
+{
+  "name": "studio-kit",
+  "version": "0.1.0",
+  "description": "Lizzy's web chains (c1 to c5, chelp, design gate, studio build), unified design system and RECC reverse-engineering skills, with their agents and scripts",
+  "author": {
+    "name": "Lizzy"
+  },
+  "license": "MIT",
+  "skills": [
+    "./skills/"
+  ],
+  "commands": [
+    "./commands/"
+  ]
+}

@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # setup-chelp-cloud.sh: prepare a cloud session so /chelp-pipeline reports READY.
 #
-# Installs, in order: the ECC commands, agents, skills and scripts into ~/.claude
-# (so /chelp, /c1 to /c5, /design-gate, /chelp-pipeline and /chelp-advisor exist),
+# Installs, in order: the ECC commands, agents, skills and scripts into ~/.claude,
+# the studio-kit plugin's skills, agents, commands, scripts and templates into
+# ~/.claude (so /chelp, /c1 to /c5, /design-gate, /chelp-pipeline and /chelp-advisor exist),
 # puppeteer-core globally (the browser checks), and the Hallmark design skill.
 #
 # Best effort: a failed step is reported and the script still exits 0, so it can
@@ -71,6 +72,22 @@ install_ecc() {
   return $status
 }
 
+# 1b. studio-kit (plugins/studio-kit) into ~/.claude, so its skills find their scripts there
+install_studio_kit() {
+  local kit="$ECC_DIR/plugins/studio-kit"
+  if [ ! -d "$kit/skills" ]; then
+    log "studio-kit not found in $ECC_DIR, skipping it"
+    return 1
+  fi
+  log "installing studio-kit into ~/.claude"
+  local dir
+  for dir in skills agents commands scripts templates; do
+    [ -d "$kit/$dir" ] || continue
+    run mkdir -p "$HOME/.claude/$dir" || return 1
+    run cp -R "$kit/$dir/." "$HOME/.claude/$dir/" || return 1
+  done
+}
+
 # 2. puppeteer-core, global, so Hallmark's browser checks can find it
 install_puppeteer() {
   log "installing puppeteer-core@$PUPPETEER_VERSION globally"
@@ -102,6 +119,7 @@ install_hallmark() {
 }
 
 install_ecc || { log "ECC install failed"; step_failed=1; }
+install_studio_kit || { log "studio-kit install failed"; step_failed=1; }
 install_puppeteer || { log "puppeteer-core install failed"; step_failed=1; }
 install_hallmark || { log "Hallmark install failed"; step_failed=1; }
 

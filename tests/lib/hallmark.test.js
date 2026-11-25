@@ -1,5 +1,5 @@
 /**
- * Tests for scripts/lib/hallmark.js and scripts/design-gate.js
+ * Tests for plugins/studio-kit/scripts/lib/hallmark.js and design-gate.js
  *
  * Run with: node tests/lib/hallmark.test.js
  *
@@ -14,10 +14,10 @@ const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const hallmark = require('../../scripts/lib/hallmark');
-const designGate = require('../../scripts/design-gate');
+const hallmark = require('../../plugins/studio-kit/scripts/lib/hallmark');
+const designGate = require('../../plugins/studio-kit/scripts/design-gate');
 
-const CLI = path.resolve(__dirname, '../../scripts/design-gate.js');
+const CLI = path.resolve(__dirname, '../../plugins/studio-kit/scripts/design-gate.js');
 
 function test(name, fn) {
   try {

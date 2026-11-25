@@ -87,10 +87,16 @@ function validateCommands() {
   }
 
   // Build set of valid skill directory names
+  // (also the skills of plugins in this repository, such as plugins/studio-kit)
   const validSkills = new Set();
-  if (fs.existsSync(SKILLS_DIR)) {
-    for (const f of fs.readdirSync(SKILLS_DIR)) {
-      const skillPath = path.join(SKILLS_DIR, f);
+  const pluginsDir = path.join(ROOT_DIR, 'plugins');
+  const pluginSkillDirs = fs.existsSync(pluginsDir)
+    ? fs.readdirSync(pluginsDir).map(name => path.join(pluginsDir, name, 'skills'))
+    : [];
+  for (const skillsDir of [SKILLS_DIR, ...pluginSkillDirs]) {
+    if (!fs.existsSync(skillsDir)) continue;
+    for (const f of fs.readdirSync(skillsDir)) {
+      const skillPath = path.join(skillsDir, f);
       try {
         if (fs.statSync(skillPath).isDirectory()) {
           validSkills.add(f);

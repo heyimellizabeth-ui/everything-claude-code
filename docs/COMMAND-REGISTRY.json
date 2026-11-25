@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 77,
+  "totalCommands": 76,
   "commands": [
     {
       "command": "aside",
@@ -26,10 +26,7 @@
       "type": "review",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [
-        "design-gate",
-        "studio-build"
-      ],
+      "skills": [],
       "path": "commands/brief-to-brand.md"
     },
     {
@@ -49,24 +46,6 @@
       "allAgents": [],
       "skills": [],
       "path": "commands/checkpoint.md"
-    },
-    {
-      "command": "chelp-advisor",
-      "description": "Consult the chelp advisor (Opus) at a chain checkpoint, before building or before shipping, and get ranked, evidence-backed advice.",
-      "type": "review",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "chelp-advisor",
-        "design-gate",
-        "studio-build"
-      ],
-      "path": "commands/chelp-advisor.md"
     },
     {
       "command": "code-review",
@@ -837,7 +816,7 @@
       "orchestration": 6,
       "planning": 2,
       "refactoring": 1,
-      "review": 11,
+      "review": 10,
       "testing": 47
     },
     "topAgents": [
@@ -908,10 +887,6 @@
         "count": 2
       },
       {
-        "skill": "design-gate",
-        "count": 2
-      },
-      {
         "skill": "ecc-guide",
         "count": 2
       },
@@ -921,6 +896,10 @@
       },
       {
         "skill": "golang-testing",
+        "count": 2
+      },
+      {
+        "skill": "kotlin-patterns",
         "count": 2
       }
     ]

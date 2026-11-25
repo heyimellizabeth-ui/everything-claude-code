@@ -1,5 +1,5 @@
 /**
- * Tests for skills/static-site-release/scripts/release-check.js
+ * Tests for plugins/studio-kit/skills/static-site-release/scripts/release-check.js
  * (structure and diff modes; the live mode needs the network and is checked by hand).
  *
  * Run with: node tests/skills/static-site-release.test.js
@@ -11,7 +11,7 @@ const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const SCRIPT = path.resolve(__dirname, '../../skills/static-site-release/scripts/release-check.js');
+const SCRIPT = path.resolve(__dirname, '../../plugins/studio-kit/skills/static-site-release/scripts/release-check.js');
 
 let passed = 0;
 let failed = 0;

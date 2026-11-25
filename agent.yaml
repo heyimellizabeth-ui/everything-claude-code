@@ -30,7 +30,6 @@ skills:
   - bun-runtime
   - canary-watch
   - carrier-relationship-management
-  - chelp-advisor
   - ck
   - claude-devfleet
   - click-path-audit
@@ -157,7 +156,6 @@ commands:
   - auto-update
   - brief-to-brand
   - build-fix
-  - chelp-advisor
   - checkpoint
   - code-review
   - cost-report

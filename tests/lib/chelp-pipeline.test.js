@@ -1,5 +1,5 @@
 /**
- * Tests for scripts/chelp-pipeline.js
+ * Tests for plugins/studio-kit/scripts/chelp-pipeline.js
  *
  * Run with: node tests/lib/chelp-pipeline.test.js
  */
@@ -10,9 +10,9 @@ const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const pipeline = require('../../scripts/chelp-pipeline');
+const pipeline = require('../../plugins/studio-kit/scripts/chelp-pipeline');
 
-const CLI = path.resolve(__dirname, '../../scripts/chelp-pipeline.js');
+const CLI = path.resolve(__dirname, '../../plugins/studio-kit/scripts/chelp-pipeline.js');
 
 function test(name, fn) {
   try {
@@ -129,7 +129,7 @@ function runTests() {
       const missing = pipeline.checkEccFiles(root);
       assert.strictEqual(missing.ok, false);
       assert.ok(missing.detail.includes('scripts/design-gate.js'));
-      assert.strictEqual(pipeline.checkEccFiles(path.resolve(__dirname, '..', '..')).ok, true);
+      assert.strictEqual(pipeline.checkEccFiles(path.resolve(__dirname, '..', '..', 'plugins', 'studio-kit')).ok, true);
       // The installer's layout: skills under skills/ecc/.
       for (const f of ['scripts/design-gate.js', 'skills/ecc/unified-design-system/SKILL.md', 'skills/ecc/chelp-advisor/SKILL.md', 'agents/chelp-advisor.md', 'commands/chelp-advisor.md']) {
         fs.mkdirSync(path.join(root, path.dirname(f)), { recursive: true });
@@ -230,7 +230,7 @@ function runTests() {
   });
 
   console.log('\nReal browser smoke test (optional):');
-  const real = require('../../scripts/lib/hallmark').resolveSkillDir();
+  const real = require('../../plugins/studio-kit/scripts/lib/hallmark').resolveSkillDir();
   const puppeteer = pipeline.checkPuppeteer();
   const chrome = pipeline.checkChrome();
   if (!real || !puppeteer.ok || !chrome.ok) {

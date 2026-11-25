@@ -11,7 +11,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '../..');
-const SKILL_DIR = path.join(ROOT, 'skills', 'unified-design-system');
+const KIT = path.join(ROOT, 'plugins', 'studio-kit');
+const SKILL_DIR = path.join(KIT, 'skills', 'unified-design-system');
 
 // Skills that live in other repos (installed separately), so they are not
 // expected under this repo's skills/ folder.
@@ -74,7 +75,7 @@ test('every module skill in the build table exists here or is a known external s
   const section = skillText.split('### 5.')[1].split('### 6.')[0];
   const names = [...section.matchAll(/`([a-z0-9-]+)`/g)].map(m => m[1]);
   assert.ok(names.length > 0, 'no module names found in step 5');
-  const missing = names.filter(n => !EXTERNAL_SKILLS.has(n) && !fs.existsSync(path.join(ROOT, 'skills', n, 'SKILL.md')));
+  const missing = names.filter(n => !EXTERNAL_SKILLS.has(n) && !fs.existsSync(path.join(ROOT, 'skills', n, 'SKILL.md')) && !fs.existsSync(path.join(KIT, 'skills', n, 'SKILL.md')));
   assert.deepStrictEqual(missing, []);
 });
 

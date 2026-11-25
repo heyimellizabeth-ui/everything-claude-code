@@ -100,12 +100,11 @@
         "devops-infra",
         "machine-learning",
         "supply-chain-domain",
-        "document-processing",
-        "reverse-engineering"
+        "document-processing"
       ]
     },
     "recc": {
-      "description": "RECC: reverse-engineering setup combining ECC workflows with the REA MCP server (evidence-first investigation, clean-room rebuilds, parity checks).",
+      "description": "RECC: the ECC workflows, security and hook runtime that the RECC skills build on. The RECC skills and agents themselves ship in the studio-kit plugin (/plugin install studio-kit@ecc); the REA MCP server is in mcp-configs.",
       "modules": [
         "rules-core",
         "agents-core",
@@ -114,8 +113,7 @@
         "platform-configs",
         "workflow-quality",
         "security",
-        "research-apis",
-        "reverse-engineering"
+        "research-apis"
       ]
     }
   }
