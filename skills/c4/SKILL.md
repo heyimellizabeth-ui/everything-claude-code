@@ -1,6 +1,8 @@
 ---
+name: c4
 description: Web chain 4 — production-ready shipping with multi-model execution, security audit, and PR
 argument-hint: "[feature or task description]"
+origin: ECC
 ---
 
 # C4 — Production-Ready Shipping

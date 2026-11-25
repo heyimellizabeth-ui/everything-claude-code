@@ -1,6 +1,8 @@
 ---
+name: re-pipeline
 description: RECC — run the whole reverse-engineering pipeline in one go: investigate a target, rebuild the feature clean-room and test-first, then verify parity. Stops at the scope check and the spec confirmation, and resumes from existing .recc/ files.
 argument-hint: "<target-path-or-url> \"<question>\" [\"<feature name>\"]"
+origin: ECC
 ---
 
 # RE Pipeline

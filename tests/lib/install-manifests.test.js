@@ -855,7 +855,7 @@ function runTests() {
     const covers = (id, relPath) => (modules.get(id).paths || []).some(p => relPath === p || relPath.startsWith(`${p}/`));
     assert.ok(covers('platform-configs', 'scripts/design-gate.js'), 'scripts/design-gate.js is not in platform-configs');
     assert.ok(covers('platform-configs', 'scripts/chelp-pipeline.js'), 'scripts/chelp-pipeline.js is not in platform-configs');
-    assert.ok(covers('commands-core', 'commands/chelp-pipeline.md'), 'commands/chelp-pipeline.md is not in commands-core');
+    assert.ok(covers('workflow-quality', 'skills/chelp-pipeline'), 'skills/chelp-pipeline is not in workflow-quality');
     assert.ok(covers('workflow-quality', 'skills/chelp-advisor'), 'skills/chelp-advisor is not in workflow-quality');
     assert.ok(covers('hooks-runtime', 'scripts/lib/hallmark.js'), 'scripts/lib/hallmark.js is not covered by hooks-runtime');
     assert.ok(covers('agents-core', 'agents/chelp-advisor.md'), 'agents/chelp-advisor.md is not in agents-core');

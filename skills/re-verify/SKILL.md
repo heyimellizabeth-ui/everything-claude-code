@@ -1,6 +1,8 @@
 ---
+name: re-verify
 description: RECC — verify that a reconstructed feature matches the behavior observed in the original target, and write a parity report.
 argument-hint: "[\"<feature name>\"]"
+origin: ECC
 ---
 
 # RE Verify

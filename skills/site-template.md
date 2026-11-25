@@ -172,7 +172,7 @@ node tests/site-template/scaffold.test.js
 | `scripts/site-template/scaffold.js` | Scaffold engine |
 | `scripts/site-template/validate.js` | Token completeness checker, plus the optional Hallmark Floor check |
 | `tests/site-template/scaffold.test.js` | Test suite |
-| `commands/studio-build.md` | `/studio-build` slash command |
+| `skills/studio-build/SKILL.md` | `/studio-build` skill |
 | `projects/design-studio/index.html` | Browser-based brand config builder |
 | `projects/design-studio/USAGE.md` | Design Studio usage guide |
 

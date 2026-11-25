@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 91,
+  "totalCommands": 77,
   "commands": [
     {
       "command": "aside",
@@ -26,7 +26,10 @@
       "type": "review",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [],
+      "skills": [
+        "design-gate",
+        "studio-build"
+      ],
       "path": "commands/brief-to-brand.md"
     },
     {
@@ -37,67 +40,6 @@
       "allAgents": [],
       "skills": [],
       "path": "commands/build-fix.md"
-    },
-    {
-      "command": "c1",
-      "description": "Web chain 1 — full web project from scratch (spec → design → build → ship)",
-      "type": "orchestration",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor",
-        "unified-design-system"
-      ],
-      "path": "commands/c1.md"
-    },
-    {
-      "command": "c2",
-      "description": "Web chain 2 — add a component or page feature to an existing project",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor",
-        "unified-design-system"
-      ],
-      "path": "commands/c2.md"
-    },
-    {
-      "command": "c3",
-      "description": "Web chain 3 — design iteration sprint for polishing UI, animations, or responsive layout",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor",
-        "unified-design-system"
-      ],
-      "path": "commands/c3.md"
-    },
-    {
-      "command": "c4",
-      "description": "Web chain 4 — production-ready shipping with multi-model execution, security audit, and PR",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor",
-        "security-scan",
-        "unified-design-system"
-      ],
-      "path": "commands/c4.md"
-    },
-    {
-      "command": "c5",
-      "description": "Web chain 5 — post-launch cleanup, dead code removal, and documentation sync",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor",
-        "unified-design-system"
-      ],
-      "path": "commands/c5.md"
     },
     {
       "command": "checkpoint",
@@ -115,33 +57,16 @@
       "primaryAgents": [],
       "allAgents": [],
       "skills": [
-        "chelp-advisor"
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "chelp-advisor",
+        "design-gate",
+        "studio-build"
       ],
       "path": "commands/chelp-advisor.md"
-    },
-    {
-      "command": "chelp-pipeline",
-      "description": "Activate the chelp pipeline: check that the design system, the advisor, and optionally Hallmark and the browser checks are ready, prove them with a smoke test, and print the exact fix for anything missing.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor"
-      ],
-      "path": "commands/chelp-pipeline.md"
-    },
-    {
-      "command": "chelp",
-      "description": "List all web design command chains (c1–c5) with descriptions and when to use each",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor",
-        "security-scan",
-        "wireframe-solid"
-      ],
-      "path": "commands/chelp.md"
     },
     {
       "command": "code-review",
@@ -203,15 +128,6 @@
         "tdd-workflow"
       ],
       "path": "commands/cpp-test.md"
-    },
-    {
-      "command": "design-gate",
-      "description": "Run the Hallmark design linter on a page, folder or URL and block on Floor failures.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/design-gate.md"
     },
     {
       "command": "ecc-guide",
@@ -748,60 +664,6 @@
       "path": "commands/quality-gate.md"
     },
     {
-      "command": "re-compare",
-      "description": "RECC — compare two versions of a shipped application or artifact with REA and explain what changed in behavior, with evidence.",
-      "type": "review",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/re-compare.md"
-    },
-    {
-      "command": "re-doctor",
-      "description": "RECC — read-only diagnosis of the REA MCP connection and analysis providers for this agent, with the exact repair steps.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/re-doctor.md"
-    },
-    {
-      "command": "re-investigate",
-      "description": "RECC — reverse engineer a shipped binary, app, package, firmware image, or website to answer a question, with REA evidence. Runs re-planner then re-investigator and writes .recc/plan.md and .recc/findings.md.",
-      "type": "review",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/re-investigate.md"
-    },
-    {
-      "command": "re-pipeline",
-      "description": "RECC — run the whole reverse-engineering pipeline in one go: investigate a target, rebuild the feature clean-room and test-first, then verify parity. Stops at the scope check and the spec confirmation, and resumes from existing .recc/ files.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/re-pipeline.md"
-    },
-    {
-      "command": "re-rebuild",
-      "description": "RECC — turn reverse-engineering findings into a clean-room spec and a test-first implementation of an equivalent feature in this project.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/re-rebuild.md"
-    },
-    {
-      "command": "re-verify",
-      "description": "RECC — verify that a reconstructed feature matches the behavior observed in the original target, and write a parity report.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/re-verify.md"
-    },
-    {
       "command": "refactor-clean",
       "description": "Safely identify and remove dead code with verification after each change.",
       "type": "testing",
@@ -941,17 +803,6 @@
       "path": "commands/skill-health.md"
     },
     {
-      "command": "studio-build",
-      "description": "Build a site from a brand-config.json downloaded from the Design Studio",
-      "type": "review",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [
-        "chelp-advisor"
-      ],
-      "path": "commands/studio-build.md"
-    },
-    {
       "command": "test-coverage",
       "description": "Analyze coverage, identify gaps, and generate missing tests toward the target threshold.",
       "type": "testing",
@@ -983,11 +834,11 @@
     "byType": {
       "build": 2,
       "general": 8,
-      "orchestration": 7,
+      "orchestration": 6,
       "planning": 2,
       "refactoring": 1,
-      "review": 13,
-      "testing": 58
+      "review": 11,
+      "testing": 47
     },
     "topAgents": [
       {
@@ -1033,20 +884,8 @@
     ],
     "topSkills": [
       {
-        "skill": "chelp-advisor",
-        "count": 9
-      },
-      {
         "skill": "continuous-learning-v2",
         "count": 6
-      },
-      {
-        "skill": "unified-design-system",
-        "count": 5
-      },
-      {
-        "skill": "security-scan",
-        "count": 4
       },
       {
         "skill": "flutter-dart-code-review",
@@ -1069,7 +908,19 @@
         "count": 2
       },
       {
+        "skill": "design-gate",
+        "count": 2
+      },
+      {
         "skill": "ecc-guide",
+        "count": 2
+      },
+      {
+        "skill": "golang-patterns",
+        "count": 2
+      },
+      {
+        "skill": "golang-testing",
         "count": 2
       }
     ]

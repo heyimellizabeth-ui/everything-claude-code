@@ -1,6 +1,8 @@
 ---
+name: c2
 description: Web chain 2 — add a component or page feature to an existing project
 argument-hint: "[feature description]"
+origin: ECC
 ---
 
 # C2 — Component or Page Feature
