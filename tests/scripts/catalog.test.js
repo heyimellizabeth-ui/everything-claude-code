@@ -80,7 +80,7 @@ function runTests() {
     const parsed = JSON.parse(result.stdout);
     assert.strictEqual(parsed.id, 'framework:nextjs');
     assert.strictEqual(parsed.family, 'framework');
-    assert.deepStrictEqual(parsed.moduleIds, ['framework-language']);
+    assert.deepStrictEqual(parsed.moduleIds, ['framework-language', 'web-design']);
     assert.ok(Array.isArray(parsed.modules));
     assert.strictEqual(parsed.modules[0].id, 'framework-language');
   })) passed++; else failed++;

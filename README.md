@@ -242,6 +242,12 @@ Add hooks later only if you want runtime enforcement:
 ./install.sh --target claude --modules hooks-runtime
 ```
 
+If you mainly build websites, the `web` profile installs the core workflow plus the frontend, design, motion, SEO, accessibility and browser-QA skills the `/c1`–`/c5` chains use, without the other language and domain packs:
+
+```bash
+./install.sh --profile web --target claude
+```
+
 ### Find the right components first
 
 If you are not sure which ECC profile or component to install, ask the packaged advisor from any project:
@@ -1558,8 +1564,8 @@ ECC is the **first plugin to maximize every major AI coding tool**. Here's how e
 | Feature | Claude Code | Cursor IDE | Codex CLI | OpenCode | GitHub Copilot |
 |---------|------------|------------|-----------|----------|----------------|
 | **Agents** | 66 | Shared (AGENTS.md) | Shared (AGENTS.md) | 12 | N/A |
-| **Commands** | 91 | Shared | Instruction-based | 35 | 6 prompts |
-| **Skills** | 238 | Shared | 10 (native format) | 37 | Via instructions |
+| **Commands** | 93 | Shared | Instruction-based | 35 | 6 prompts |
+| **Skills** | 239 | Shared | 10 (native format) | 37 | Via instructions |
 | **Hook Events** | 8 types | 15 types | None yet | 11 types | None |
 | **Hook Scripts** | 20+ scripts | 16 scripts (DRY adapter) | N/A | Plugin hooks | N/A |
 | **Rules** | 34 (common + lang) | 34 (YAML frontmatter) | Instruction-based | 13 instructions | 1 always-on file |
