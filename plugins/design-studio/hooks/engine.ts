@@ -161,8 +161,69 @@ export function tokens(S: StudioState) {
   const pal = p[S.mode]
   const accent = S.mode === 'dark' ? darkAccent(S.accent, pal.bg) : S.accent
   const onAccent = contrast('#ffffff', accent) >= contrast('#111111', accent) ? '#ffffff' : '#111111'
-  const [, m, d] = S.dials
-  return { p, pal, accent, onAccent, space: Math.round(22 - d * 1.4), radius: p.radius, dur: m <= 2 ? 0 : Math.round(60 + m * 40) }
+  const d = S.dials[2]
+  return { p, pal, accent, onAccent, space: Math.round(22 - d * 1.4), radius: p.radius }
+}
+
+// ---- Motion (rules M1 to M10 of the unified design system) ----
+
+export type MotionTier = 'cut' | 'calm' | 'lively'
+export type MotionSpec = {
+  tier: MotionTier; label: string; summary: string
+  fast: number; medium: number; slow: number; ease: string; enter: number; stagger: number; press: number
+}
+
+// Preset easings from presets.md; anything else uses the shared ease-out.
+const EASE: Record<string, string> = {
+  soft: 'cubic-bezier(0.32, 0.72, 0, 1)',
+  minimal: 'cubic-bezier(0.16, 1, 0.3, 1)',
+}
+const EASE_OUT = 'cubic-bezier(0.22, 1, 0.36, 1)'
+
+/** Motion tokens for the current preset and motion dial (M10: 2 or below hard cuts, 3 to 5 fast and medium, 6+ allows slow). */
+export function motionSpec(S: StudioState): MotionSpec {
+  const m = S.dials[1]
+  const ease = EASE[S.preset] ?? EASE_OUT
+  if (m <= 2) return {
+    tier: 'cut', label: 'Hard cuts', summary: 'State changes are instant or up to 100ms. No easing flourishes, no entrance animation.',
+    fast: 0, medium: 100, slow: 100, ease: 'linear', enter: 0, stagger: 0, press: 1,
+  }
+  if (m <= 5) return {
+    tier: 'calm', label: 'Calm', summary: 'Feedback at 150ms and panels at 300ms. Elements appear with a short 8px fade, no choreography.',
+    fast: 150, medium: 300, slow: 300, ease, enter: 8, stagger: 0, press: 0.96,
+  }
+  return {
+    tier: 'lively', label: 'Lively', summary: 'Feedback at 150ms, transitions at 300ms and deliberate entrances at 500ms, staggered 70ms. Entrances play once.',
+    fast: 150, medium: 300, slow: 500, ease, enter: S.preset === 'minimal' ? 12 : 16, stagger: 70, press: 0.96,
+  }
+}
+
+export const MOTION_RULES = [
+  'Every animation guides attention, shows state or keeps continuity; otherwise remove it.',
+  'Animate transform and opacity only, never width, height, top, left, margin or padding.',
+  'List the properties you transition; never transition: all.',
+  'Exits are shorter and quieter than entries, about 150ms.',
+  'Loops only for real live state, like a recording dot or live feed.',
+  'Press feedback is scale(0.96) and can be switched off.',
+  'Scroll effects use IntersectionObserver or animation-timeline, never scroll listeners.',
+  'prefers-reduced-motion removes movement and keeps fades of 150ms or less.',
+]
+
+/** The motion block of the CSS tokens, with the reduced-motion fallback. */
+export function motionCss(S: StudioState) {
+  const m = motionSpec(S)
+  const cap = (x: number) => Math.min(x, 150)
+  return [
+    ':root {',
+    `  --duration-fast: ${m.fast}ms;`, `  --duration-medium: ${m.medium}ms;`, `  --duration-slow: ${m.slow}ms;`,
+    '  --duration: var(--duration-medium);',
+    `  --ease-out: ${m.ease};`, `  --enter-distance: ${m.enter}px;`, `  --stagger: ${m.stagger}ms;`, `  --press-scale: ${m.press};`,
+    '}', '',
+    '@media (prefers-reduced-motion: reduce) {', '  :root {',
+    `    --duration-medium: ${cap(m.medium)}ms; --duration-slow: ${cap(m.slow)}ms;`,
+    '    --enter-distance: 0px; --stagger: 0ms; --press-scale: 1;',
+    '  }', '}', '',
+  ].join('\n')
 }
 
 const VIBE: Record<string, string> = { soft: 'soft, premium', minimal: 'calm editorial', brutalist: 'raw brutalist', product: 'quiet product-tool', trust: 'plain trust-first' }
@@ -245,18 +306,17 @@ export function cssTokens(S: StudioState) {
     `  --font-display: ${f.display};`, `  --font-body: ${f.body};`,
     `  --space-1: ${Math.round(sp / 2)}px;`, `  --space-2: ${sp}px;`, `  --space-3: ${sp * 2}px;`, `  --space-4: ${sp * 3}px;`,
     `  --radius: ${t.radius}px;`, `  --border-width: ${t.p.bw}px;`, `  --shadow: ${t.p.shadow};`,
-    `  --duration: ${t.dur}ms;`,
     '}', '',
     '@media (prefers-color-scheme: dark) {', '  :root {',
     `    --color-bg: ${D.bg};`, `    --color-surface: ${D.surface};`, `    --color-text: ${D.text};`,
     `    --color-text-muted: ${D.muted};`, `    --color-border: ${D.border};`, `    --color-accent: ${darkAccent(S.accent, D.bg)};`,
     '  }', '}', '',
-    '@media (prefers-reduced-motion: reduce) {', '  :root { --duration: 0ms; }', '}', '',
-  ].join('\n')
+  ].join('\n') + '\n' + motionCss(S)
 }
 
 export function masterMd(S: StudioState) {
   const t = tokens(S)
+  const mo = motionSpec(S)
   const f = fontOf(S)
   const p = t.p
   const row = (token: string, l: string, d: string, use: string) => `| ${token} | ${l} | ${d} | ${use} |`
@@ -283,7 +343,11 @@ export function masterMd(S: StudioState) {
       ? 'Astryx (React) via astryx-components, theme matched to these tokens.'
       : 'Native HTML and CSS variables unless the project already has a component library.', '',
     '## 6. Motion',
-    `Duration: ${t.dur}ms${t.dur === 0 ? ' (static)' : ''}. Animate state changes only. Always respect prefers-reduced-motion.`, '',
+    `${mo.label} (motion dial ${S.dials[1]}). ${mo.summary}`, '',
+    '| Token | Value |', '|---|---|',
+    `| --duration-fast | ${mo.fast}ms |`, `| --duration-medium | ${mo.medium}ms |`, `| --duration-slow | ${mo.slow}ms |`,
+    `| --ease-out | ${mo.ease} |`, `| --enter-distance | ${mo.enter}px |`, `| --stagger | ${mo.stagger}ms |`, `| --press-scale | ${mo.press} |`, '',
+    ...MOTION_RULES.map(x => '- ' + x), '',
     '## 7. Never do', ...p.never.map(x => '- ' + x), '- Purple-to-blue gradient defaults', '- Cards inside cards', '',
   ].join('\n')
 }
@@ -316,7 +380,7 @@ export function output(S: StudioState, o: Overrides = {}) {
 
 export type { View } from '../types'
 export const VIEWS: [View, string][] = [
-  ['studio', 'Studio'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'], ['health', 'Health'], ['edit', 'Edit'],
+  ['studio', 'Studio'], ['motion', 'Motion'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'], ['health', 'Health'], ['edit', 'Edit'],
 ]
 
 export type Capability = { name: string; description: string; source: string; plugin?: string }

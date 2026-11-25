@@ -20,11 +20,12 @@ ported to the mod's own elements, so it runs in the terminal, the desktop app an
 | Accessible accents | Eight accents that pass on the preset; press one to use it |
 | Output | Prompt, MASTER.md or CSS tokens, with **Build with Claude** (sends the prompt), **Copy**, **Save MASTER.md** (writes `design-system/MASTER.md` in the project) and **Reset** |
 
-Six views sit at the top of the pane:
+Seven views sit at the top of the pane:
 
 | View | What it shows |
 |---|---|
 | Studio | Everything above |
+| Motion | Motion tokens for the preset and motion dial (hard cuts at 2 or below, calm at 3 to 5, lively at 6 and up), the motion rules, and the CSS block with its reduced-motion fallback. **Add motion with Claude**, **Copy motion CSS** and **Save MASTER.md**. The same tokens go into the CSS tokens and MASTER.md outputs |
 | Capabilities | Every command and skill loaded in this session, design ones first and marked ◆, with a search box and a Design only / Everything switch |
 | Chains | The chelp chains c1 to c5 and studio-build, step by step as they run through the unified design system, each with a **Run** button |
 | Preferences | `design-system/PREFERENCES.md`: what you liked or rejected, with a form to add a rule (always, never, prefer). It says when rules look settled enough to move into MASTER.md |
