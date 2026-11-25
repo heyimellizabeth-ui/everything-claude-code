@@ -3,8 +3,8 @@ import type { EngineInterface, Register } from 'claude-code'
 
 import type { Mode, Overrides, Rule, StudioState, Tab, TextKey, View } from '../types'
 import {
-  CHAINS, DEFAULT_STATE, DIALS, FONTS, KINDS, PRESETS, TEXT_DEFAULTS, TEXT_LABELS, VIEWS,
-  addPreference, applyOverrides, health, capabilityList, chainPrompt, checks, editCount, generated, isDesign, kindOf, lines, setOverride, textOf, parsePreferences, promotionHint, normHex, output, presetOf, readText, suggestedAccent, tokens, validHex, wheel,
+  CHAINS, DEFAULT_STATE, DIALS, FONTS, KINDS, MOTION_RULES, PRESETS, TEXT_DEFAULTS, TEXT_LABELS, VIEWS,
+  addPreference, applyOverrides, health, capabilityList, motionCss, motionSpec, chainPrompt, checks, editCount, generated, isDesign, kindOf, lines, setOverride, textOf, parsePreferences, promotionHint, normHex, output, presetOf, readText, suggestedAccent, tokens, validHex, wheel,
 } from './engine'
 
 const PANE = 'design-studio'
@@ -77,6 +77,11 @@ const pickKind = ($: EngineInterface, id: string) => {
 const pickPreset = ($: EngineInterface, id: string) => {
   const p = PRESETS[id] ?? PRESETS.soft!
   return patch($, { preset: id, accent: p.accent, font: p.font })
+}
+const setMotion = async ($: EngineInterface, level: number) => {
+  const dials = [...(await read($, studio)).dials] as StudioState['dials']
+  dials[1] = Math.min(10, Math.max(1, level))
+  return patch($, { dials })
 }
 const nudgeDial = async ($: EngineInterface, i: 0 | 1 | 2, by: number) => {
   const dials = [...(await read($, studio)).dials] as StudioState['dials']
@@ -161,6 +166,73 @@ export const register: Register = on => {
         ))}
       </Box>
     )
+
+    if (view === 'motion') {
+      const mo = motionSpec(S)
+      const css = motionCss(S)
+      const rows: [string, string][] = [
+        ['--duration-fast', `${mo.fast}ms`], ['--duration-medium', `${mo.medium}ms`], ['--duration-slow', `${mo.slow}ms`],
+        ['--ease-out', mo.ease], ['--enter-distance', `${mo.enter}px`], ['--stagger', `${mo.stagger}ms`], ['--press-scale', String(mo.press)],
+      ]
+      return (
+        <Box flexDirection="column" gap={1}>
+          {viewTabs}
+          <Text dimColor>Motion tokens for {p.name} at motion dial {S.dials[1]}. They go into the CSS tokens and MASTER.md, so every site built from this studio gets them.</Text>
+
+          <Box flexDirection="column" gap={1}>
+            <Text bold>Motion dial</Text>
+            <Box flexDirection="row" gap={1}>
+              <Button key="motion-dial-down" label="−" onPress={() => nudgeDial($, 1, -1)} />
+              <Text tabular>Motion {S.dials[1]}</Text>
+              <Button key="motion-dial-up" label="+" onPress={() => nudgeDial($, 1, 1)} />
+            </Box>
+            <Box flexDirection="row" flexWrap="wrap" gap={1}>
+              {([[2, 'Hard cuts'], [4, 'Calm'], [7, 'Lively']] as const).map(([level, name]) => (
+                <Button key={`motion-level-${level}`} variant={motionSpec({ ...S, dials: [S.dials[0], level, S.dials[2]] }).tier === mo.tier ? 'primary' : 'secondary'}
+                  label={`${level} ${name}`} onPress={() => setMotion($, level)} />
+              ))}
+            </Box>
+            <Text bold>{mo.label}</Text>
+            <Text>{mo.summary}</Text>
+          </Box>
+
+          <Box flexDirection="column">
+            <Text bold>Tokens</Text>
+            {rows.map(([name, value]) => (
+              <Box flexDirection="row" gap={1}>
+                <Text tabular>{name}</Text>
+                <Text dimColor>{value}</Text>
+              </Box>
+            ))}
+          </Box>
+
+          <Box flexDirection="column">
+            <Text bold>Rules every animation follows</Text>
+            {MOTION_RULES.map(r => <Text>• {r}</Text>)}
+          </Box>
+
+          <Code source={css} language="css" />
+          <Box flexDirection="row" flexWrap="wrap" gap={1}>
+            <Button key="motion-build" variant="primary" onPress={async () => {
+              await $.prompt.submit({
+                text: `Add motion to ${S.project} with the motion-patterns skill. Use the Motion section of design-system/MASTER.md (create it from the Design Studio if it is missing): ${mo.label.toLowerCase()}, ${mo.summary} Follow these rules: ${MOTION_RULES.join(' ')}`,
+                asUser: true,
+              })
+              await say($, 'Sent the motion prompt to Claude.')
+            }}>Add motion with Claude</Button>
+            <Button key="motion-copy" onPress={async press => {
+              const copied = await $.ui.copy({ text: css, surface: press.surface })
+              await say($, copied.isCopied ? 'Copied the motion CSS.' : `Could not copy: ${copied.reason}`)
+            }}>Copy motion CSS</Button>
+            <Button key="motion-save" onPress={async () => {
+              await $.fs.write('design-system/MASTER.md', output({ ...S, tab: 'master' }, O))
+              await say($, 'Saved design-system/MASTER.md with these motion tokens.')
+            }}>Save MASTER.md</Button>
+          </Box>
+          {message !== '' && <Text dimColor>{message}</Text>}
+        </Box>
+      )
+    }
 
     if (view === 'capabilities') {
       const all = (await $.command.list()).map(c => ({ name: c.name, description: c.description, source: c.source, plugin: c.plugin }))

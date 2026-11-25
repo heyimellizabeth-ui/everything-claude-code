@@ -1,7 +1,7 @@
 import { expect, test } from 'claude-code/testing'
 
 import {
-  DEFAULT_STATE, PRESETS, addPreference, applyOverrides, health, capabilityList, readText, setOverride, checks, contrast, fixAccent, parsePreferences, promotionHint, suggestedAccent, wheel,
+  DEFAULT_STATE, PRESETS, addPreference, cssTokens, masterMd, motionSpec, applyOverrides, health, capabilityList, readText, setOverride, checks, contrast, fixAccent, parsePreferences, promotionHint, suggestedAccent, wheel,
 } from '../hooks/engine'
 
 const PANE = {
@@ -197,5 +197,33 @@ test('health flags missing chain commands, retired skills and a missing MASTER.m
   const ui = await $.ui.mount({ ...PANE, surface: 'desktop' })
   await ui.press({ key: 'view-health' })
   expect(await ui.find({ type: 'Text', text: /Missing \/feature-dev/ })).toBeDefined()
+  await ui.unmount()
+})
+
+test('the motion dial maps to hard cuts, calm or lively tokens', () => {
+  const at = (m: number, preset = 'soft') => motionSpec({ ...DEFAULT_STATE, preset, dials: [5, m, 5] })
+  expect(at(2).tier).toBe('cut')
+  expect(at(2).press).toBe(1)
+  expect(at(4)).toMatchObject({ tier: 'calm', fast: 150, medium: 300, slow: 300, stagger: 0 })
+  expect(at(7)).toMatchObject({ tier: 'lively', fast: 150, medium: 300, slow: 500, stagger: 70, press: 0.96 })
+  expect(at(7, 'minimal').enter).toBe(12)
+  const css = cssTokens({ ...DEFAULT_STATE, dials: [5, 7, 5] })
+  expect(css).toMatch(/--duration-slow: 500ms;/)
+  expect(css).toMatch(/prefers-reduced-motion: reduce[\s\S]*--duration-slow: 150ms;[\s\S]*--enter-distance: 0px;/)
+  expect(masterMd(DEFAULT_STATE)).toMatch(/## 6\. Motion\nLively \(motion dial 6\)[\s\S]*\| --press-scale \| 0\.96 \|[\s\S]*Loops only for real live state/)
+})
+
+test('the Motion view changes the dial and sends a motion prompt', async ($, on) => {
+  const sent: string[] = []
+  on('store.set', () => ({ value: undefined }))
+  on('prompt.submit', (_, e) => { sent.push(e.text); return { text: e.text } })
+  const ui = await $.ui.mount({ ...PANE, surface: 'desktop' })
+  await ui.press({ key: 'view-motion' })
+  expect(await ui.find({ type: 'Text', text: 'Lively' })).toBeDefined()
+  await ui.press({ key: 'motion-level-2' })
+  expect(await ui.find({ type: 'Text', text: 'Hard cuts' })).toBeDefined()
+  expect(await ui.find({ type: 'Text', text: 'Motion 2' })).toBeDefined()
+  await ui.press({ key: 'motion-build' })
+  expect(sent[0]).toMatch(/^Add motion to My project with the motion-patterns skill/)
   await ui.unmount()
 })
