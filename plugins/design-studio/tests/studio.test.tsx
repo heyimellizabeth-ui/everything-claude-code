@@ -1,7 +1,7 @@
 import { expect, test } from 'claude-code/testing'
 
 import {
-  DEFAULT_STATE, PRESETS, addPreference, applyOverrides, capabilityList, readText, setOverride, checks, contrast, fixAccent, parsePreferences, promotionHint, suggestedAccent, wheel,
+  DEFAULT_STATE, PRESETS, addPreference, applyOverrides, health, capabilityList, readText, setOverride, checks, contrast, fixAccent, parsePreferences, promotionHint, suggestedAccent, wheel,
 } from '../hooks/engine'
 
 const PANE = {
@@ -182,4 +182,20 @@ test('the Edit view changes the design read, and an edited prompt is what Build 
   expect(sent[1]).toMatch(/^Use the unified-design-system skill/)
   await ui.unmount()
   applyOverrides({})
+})
+
+test('health flags missing chain commands, retired skills and a missing MASTER.md', async ($, on) => {
+  const all = ['unified-design-system', 'plan', 'design-gate', 'chelp-advisor', 'taste-skill:gpt-tasteskill']
+  const items = health(all, false, [])
+  const text = items.map(i => i.text).join('\n')
+  expect(text).toMatch(/No design-system\/MASTER.md/)
+  expect(text).toMatch(/Missing \/feature-dev, used by \/c2\./)
+  expect(text).toMatch(/Retired but still installed: \/gpt-tasteskill/)
+  expect(text).not.toMatch(/Missing \/hallmark/)
+  on('command.list', () => ({ value: all.map(name => ({ name, description: '', source: 'plugin' })) }))
+  on('fs.exists', () => ({ value: false }))
+  const ui = await $.ui.mount({ ...PANE, surface: 'desktop' })
+  await ui.press({ key: 'view-health' })
+  expect(await ui.find({ type: 'Text', text: /Missing \/feature-dev/ })).toBeDefined()
+  await ui.unmount()
 })

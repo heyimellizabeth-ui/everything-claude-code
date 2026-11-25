@@ -1,6 +1,6 @@
 export type Mode = 'light' | 'dark'
 export type Tab = 'prompt' | 'master' | 'css'
-export type View = 'studio' | 'capabilities' | 'chains' | 'preferences' | 'edit'
+export type View = 'studio' | 'capabilities' | 'chains' | 'preferences' | 'health' | 'edit'
 export type TextKey = 'read' | 'promptIntro' | 'promptClose' | 'chainRun'
 /** The person's edits to the studio's defaults; anything missing uses the shipped default. */
 export type Overrides = {

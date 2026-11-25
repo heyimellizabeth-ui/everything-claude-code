@@ -38,6 +38,6 @@ Hallmark is not installed in this environment, so this is the checklist-only pat
 - **club-kudt:** dark text `#0D0D0D` on every red fill (CTA, ticker, newsletter button), a `prefers-reduced-motion` rule that stops the ticker loop, and nav and footer links padded to 24px (44px+ on touch screens). Rerun: 0 low-contrast elements (was 30), 0 running animations under reduced motion (was 2), no overflow. The 2-3 small targets left are inline text links inside paragraphs, which WCAG 2.5.8 exempts.
 - **sockwave:** `--muted` lightened from `#71717a` to `#8a8a93` (5.8:1 on the background, 5.2:1 on surface).
 
-## Not done (out of budget)
+## Phase 4 extras
 
-- The sync check, health view and guide from the Phase 4 plan.
+- Done. The sync check came with `docs/capabilities.json` (`npm run capabilities:check`), the health view is in Design Studio, and the guide is `GUIDE.md`.
