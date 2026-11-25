@@ -217,7 +217,7 @@
     <div class="stats-grid">
       <div class="mil-up"><div class="stat-num">2022</div><div class="stat-label">Founded in Alkmaar</div></div>
       <div class="mil-up"><div class="stat-num">780+</div><div class="stat-label">Event photos on Flickr</div></div>
-      <div class="mil-up"><div class="stat-num">€15</div><div class="stat-label">Tickets vanaf</div></div>
+      <div class="mil-up"><div class="stat-num">€14,75</div><div class="stat-label">Tickets vanaf</div></div>
       <div class="mil-up"><div class="stat-num">100%</div><div class="stat-label">Queer-run</div></div>
     </div>
   </div>
@@ -409,7 +409,7 @@
   const statDefs = [
     { el: null, target: 2022, prefix: '', suffix: '', decimals: 0 },
     { el: null, target: 780, prefix: '', suffix: '+', decimals: 0 },
-    { el: null, target: 15, prefix: '€', suffix: '', decimals: 0 },
+    { el: null, target: 14.75, prefix: '€', suffix: '', decimals: 2 },
     { el: null, target: 100, prefix: '', suffix: '%', decimals: 0 }
   ];
   document.querySelectorAll('.stat-num').forEach((el, i) => {
@@ -428,7 +428,7 @@
           duration: 1.4,
           ease: 'power2.out',
           onUpdate: () => {
-            def.el.textContent = def.prefix + Math.round(obj.val) + def.suffix;
+            def.el.textContent = def.prefix + (def.decimals ? obj.val.toFixed(def.decimals).replace('.', ',') : Math.round(obj.val)) + def.suffix;
           }
         });
       }

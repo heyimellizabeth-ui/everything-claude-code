@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 76,
+  "totalCommands": 77,
   "commands": [
     {
       "command": "aside",
@@ -19,6 +19,18 @@
       "allAgents": [],
       "skills": [],
       "path": "commands/auto-update.md"
+    },
+    {
+      "command": "brief-to-brand",
+      "description": "Turn a client brand brief (Markdown) into a brand-config.json that /studio-build can scaffold",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "design-gate",
+        "studio-build"
+      ],
+      "path": "commands/brief-to-brand.md"
     },
     {
       "command": "build-fix",
@@ -825,7 +837,7 @@
       "orchestration": 6,
       "planning": 2,
       "refactoring": 1,
-      "review": 10,
+      "review": 11,
       "testing": 47
     },
     "topAgents": [
@@ -896,6 +908,10 @@
         "count": 2
       },
       {
+        "skill": "design-gate",
+        "count": 2
+      },
+      {
         "skill": "ecc-guide",
         "count": 2
       },
@@ -905,10 +921,6 @@
       },
       {
         "skill": "golang-testing",
-        "count": 2
-      },
-      {
-        "skill": "kotlin-patterns",
         "count": 2
       }
     ]

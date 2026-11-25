@@ -12,7 +12,7 @@ scaffolds a complete static website into `projects/<site-name>/`.
 
 ## When to Use
 
-- After downloading a config from the Design Studio
+- After downloading a config from the Design Studio, or after `/brief-to-brand` wrote one from a client brief
 - Re-building / updating an existing project after changing brand values
 - Automating the design → site pipeline end-to-end
 
@@ -51,6 +51,18 @@ node scripts/site-template/scaffold.js \
   --config projects/<projectName>/brand.config.json \
   --out projects/<projectName>
 ```
+
+### 4b — Write the design system
+
+```bash
+node scripts/site-template/write-master.js \
+  --config projects/<projectName>/brand.config.json \
+  --out projects/<projectName>
+```
+
+This writes `projects/<projectName>/design-system/MASTER.md` from the studio's colours and fonts, so
+`/c3`, `/c4`, `/c5` and the unified-design-system skill read the same tokens, and `/design-gate` blocks
+on this project. It never replaces an existing MASTER.md (pass `--force` to do that on purpose).
 
 ### 5 — Font tokens (handled automatically by scaffold)
 

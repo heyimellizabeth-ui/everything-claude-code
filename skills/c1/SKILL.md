@@ -17,14 +17,15 @@ Run each command in sequence. Each step hands context forward to the next.
 
 ```
 /prp-prd         Interactive PRD — nail down audience, layout goals, component scope
+/unified-design-system  Steps 1 to 3: read MASTER.md and PREFERENCES.md, write the design read and dials, create MASTER.md if missing
 /prp-plan        Deep codebase analysis → full implementation blueprint
 /chelp-advisor   Pre-build review of the plan: which gate command, which theme, what has never been run
 /update-codemaps Architecture snapshot so AI context stays accurate
-/hallmark        Build the design: one round of questions, a dealt theme (or the project's own system), hero reviewed first, fresh-context finish review
+/hallmark        Build the design in the MASTER.md system (pass its tokens, preset and Never list; no dealt theme), hero reviewed first, fresh-context finish review
 /gan-design      Optional: extra originality inside the system Hallmark chose
 /multi-frontend  Research → Ideation → Execute → Optimize → Review (Gemini-led): wiring, data and routing, not the look
 /quality-gate    Lint, type check, format check — mirrors CI
-/design-gate     Hallmark Floor on the source and the running page: blocks on any FAIL
+/design-gate     Review checklist plus Hallmark Floor on the source and the running page: blocks on any FAIL
 /chelp-advisor   Pre-ship review: every gate line quoted as printed, claims run as written
 /santa-loop      Two independent reviewers must both PASS before merge
 ```
@@ -37,8 +38,8 @@ Run each command in sequence. Each step hands context forward to the next.
 
 ## Prerequisites
 
-- **Design gate:** Hallmark is needed for `/hallmark` and `/design-gate`.
-  Install with `npx skills add nutlope/hallmark -g`. Without it `/design-gate` prints SKIPPED and no design check runs.
+- **Design gate:** Hallmark runs `/hallmark` and the executable `/design-gate`.
+  Install with `npx skills add nutlope/hallmark -g`. Optional: without it `/design-gate` prints SKIPPED and the review checklist (unified-design-system step 6) is the gate. Without Hallmark, build with unified-design-system step 5.
 - **Browser checks** for `--render` and `--require-render`: `npm i -g puppeteer-core` and Chrome. Playwright alone is not enough.
 - **React projects:** install Astryx and run `npx astryx init --agent claude` after `/prp-plan`. App screens start from `npx astryx build`; see the `astryx-components` skill.
 - **Gemini CLI** must be installed for `/multi-frontend` (it orchestrates a Gemini-led execution pass).
@@ -48,11 +49,13 @@ Run each command in sequence. Each step hands context forward to the next.
 
 - `/prp-prd` will ask you questions — answer them thoroughly; that spec drives everything downstream.
 - `/chelp-advisor pre-build c1` after `/prp-plan` and `/chelp-advisor pre-ship c1` after `/design-gate` (see the `chelp-advisor` skill).
-- Paste your `/prp-prd` answers (audience, the one action, tone, real material) into `/hallmark`; they are what it asks for in its one round of questions.
+- Paste your `/prp-prd` answers (audience, the one action, tone, real material) into the design read; pass the read and MASTER.md to `/hallmark` so it builds in that system instead of dealing a theme.
 - `/gan-design` is optional here. It defaults to 10 iterations with a 7.5/10 pass threshold; it never overrides Hallmark's Floor.
 - Static sites: `/design-gate <folder> --render`. Framework apps: `/design-gate src --url http://localhost:3000/ --require-render`.
 - In an Astryx project, name the Astryx theme in the `/hallmark` prompt (see the `astryx-components` skill).
 - `/santa-loop` requires two external model CLIs (Codex or Gemini). If unavailable it falls back to two context-isolated Claude Opus agents.
+
+- When the user accepts, rejects or corrects a design choice, log it in `design-system/PREFERENCES.md` (unified-design-system step 7). The next run reads it in step 1.
 
 ## Usage
 

@@ -11,11 +11,22 @@ skills. It is the single front door: it decides the direction, then pulls in
 exactly one specialist module per need. The specialist skills stay installed,
 but they are called from here instead of competing for the same request.
 
+It stands on three pillars:
+
+| Pillar | Role | Reference |
+|---|---|---|
+| ui-ux-pro-max | Knowledge: styles, palettes, fonts, UX rules, stack guides | `references/knowledge-uupm.md` |
+| Astryx | Components for React work, themed from MASTER.md | `references/components-astryx.md` |
+| chelp pipeline | Build: the c1 to c5 chains and `/studio-build`, checked by `/design-gate` | `chelp` skill |
+
+The merged rules from every source live in `references/rules.md`; credits and
+licences in `references/sources.md`.
+
 ## When to Use
 
 - Building a new page, app screen, dashboard, component or site.
 - Making existing UI look less generic, more polished or more on-brand.
-- Creating a DESIGN.md, design tokens or a theme for a project.
+- Creating a project's `design-system/MASTER.md`, design tokens or a theme.
 - Reviewing a PR or screen for visual consistency, accessibility or "AI slop".
 - Brand, banner or slide work that must match the project's look.
 
@@ -24,14 +35,16 @@ Skip it for pure logic, API or data work with no visible UI.
 ## How It Works
 
 Run the seven steps in order. Steps 1, 2, 6 and 7 always run; the others
-scale with the size of the task.
+scale with the size of the task. When the user names a site or app they like,
+run the research module (`references/research.md`) before step 2.
 
 ### 1. Load what already exists
 
 Check, in this order, and treat what you find as binding:
 
 1. `design-system/pages/<page>.md` for the page being built (overrides MASTER).
-2. `design-system/MASTER.md` or `DESIGN.md` at the project root.
+2. `design-system/MASTER.md`. Never create a root `DESIGN.md`: Hallmark treats
+   that file as its own project marker.
 3. `design-system/PREFERENCES.md` in the project, then
    `~/.claude/design-preferences.md` for preferences that apply everywhere.
    Follow every entry marked `always` or `never`.
@@ -56,9 +69,13 @@ Then set three dials from 1 to 10 and say them:
 | DENSITY | airy, gallery | packed, cockpit |
 
 Starting values: tools and dashboards 4/3/7, landing pages 7/6/4, portfolios
-8/7/3, editorial 6/4/3, trust-first or public-sector 3/2/5. Ask one question
-only if two readings would produce clearly different results; otherwise
-proceed.
+8/7/3, editorial 6/4/3, trust-first or public-sector 3/2/5, experimental 9/2/3.
+Ask one question only if two readings would produce clearly different results;
+otherwise proceed.
+
+For candidates, search ui-ux-pro-max by product type
+(`references/knowledge-uupm.md`). Treat its results as suggestions, never as
+the answer.
 
 ### 3. Pick one preset and the token spine
 
@@ -70,12 +87,16 @@ look. Express every colour, size, radius, shadow and duration as a token:
   `--color-text-muted`) → component tokens (`--button-bg`).
 - Components use semantic or component tokens only, never raw hex values.
 - Define light and dark values together.
+- Apply the colour, type, spacing and motion rules in `references/rules.md`.
+- Record the result in `design-system/MASTER.md` using
+  `references/design-md-template.md`. MASTER.md is the only source of brand
+  tokens; skills that expect `docs/brand-guidelines.md` read MASTER.md instead.
 
 ### 4. Choose the component layer
 
 | Project | Use |
 |---|---|
-| React app or app screen | Astryx via `astryx-components` |
+| React app or app screen | Astryx via `astryx-components`, themed from MASTER.md (`references/components-astryx.md`) |
 | Existing shadcn, MUI or other library | keep it; do not mix libraries |
 | Static HTML site, no build step | native HTML + CSS variables |
 | SwiftUI / iOS 26 | `liquid-glass-design` |
@@ -86,9 +107,10 @@ look. Express every colour, size, radius, shadow and duration as a token:
 |---|---|
 | Style, palette or font ideas, UX rules by product type | `ui-ux-pro-max` (search its data) |
 | Upgrade an existing site | `redesign-skill` |
-| Motion beyond simple transitions | `motion-ui` |
+| Motion beyond simple transitions | `motion-foundations`, then `motion-patterns` |
 | Fine polish: spacing, hit areas, text wrap | `make-interfaces-feel-better` |
-| Current CSS and web platform features | `modern-web-guidance` |
+| Current CSS and web platform features | `modern-web-guidance` (steps 5 and 6 only) |
+| Study a site or app the user likes | `references/research.md` (RECC, rea, agent-browser) |
 | Brand identity or brand kit | `brand` |
 | Banners and social assets | `banner-design` |
 | Slide decks | `frontend-slides` |
@@ -101,6 +123,13 @@ contradicts this skill, this skill and the project's MASTER.md win.
 
 Run `references/review-checklist.md` before calling the work done. Fix every
 "must" item. Report the "should" items you chose not to fix and why.
+
+Check the running page, not only the code: `references/visual-check.md` runs
+the viewport, theme, motion, overflow, contrast and focus checks with
+Playwright or agent-browser. When Hallmark is installed, `/design-gate` is the
+executable half of the checklist. It blocks on any project with a
+`design-system/MASTER.md`. When MASTER.md exists, tell Hallmark not to deal a
+theme of its own: MASTER.md wins.
 
 ### 7. Learn from the user's reaction
 

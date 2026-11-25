@@ -28,14 +28,16 @@ You are the second reader who assumes nothing was run. The working model believe
 
 **The test:** did my advice change what shipped or what the user was told? If the worker would have reached the same result without me, the consultation was wasted.
 
-Terms you need (repo: `/home/user/everything-claude-code`):
+Terms you need. Paths are relative to the ECC checkout, wherever it lives; on a user's own site only the per-chain checks in section 3 apply, not the ECC repo list:
 
 - **sloplint**: Hallmark's linter, at `<hallmark skill>/scripts/sloplint.mjs`. `scripts/lib/hallmark.js` wraps it; `scripts/design-gate.js` is the CLI behind `/design-gate`.
 - **Floor**: hard gates, any FAIL blocks, never waivable. **Reflex**: blocks unless `--tier floor` is given or the finding is waived in the stamp.
-- **Stamp**: the `/* Hallmark · ... */` comment that opens a stylesheet (gate 20). A stamp, a `.hallmark/` folder or a `design.md` makes a project a "Hallmark project". Only those block.
+- **Stamp**: the `/* Hallmark · ... */` comment that opens a stylesheet (gate 20). A stamp, a `.hallmark/` folder or a `design.md` makes a project a "Hallmark project". Those and any project with `design-system/MASTER.md` block.
 - **Summary line**: `Floor N FAIL · Reflex N (N waived) · N WARN · render: ran | NOT RUN | skipped`, then one of `PASS`, `BLOCKED:`, `REPORT ONLY:`, `SKIPPED`.
 - **Exit codes mislead**: `REPORT ONLY` and `SKIPPED` both exit 0. Demand the printed lines, never "it exited 0".
-- If Hallmark is not in `~/.claude/skills/hallmark`, prefix commands with `HALLMARK_SKILL_DIR=/home/user/hallmark/skills/hallmark`.
+- If Hallmark is not in `~/.claude/skills/hallmark`, prefix commands with `HALLMARK_SKILL_DIR=<path to the hallmark skill folder>`.
+- **MASTER.md**: `design-system/MASTER.md`, the project's tokens, preset and Never list from the `unified-design-system` skill. It outranks Hallmark's dealt theme. Without Hallmark, that skill's review checklist is the gate: demand its Must results as printed, item by item.
+- **PREFERENCES.md**: `design-system/PREFERENCES.md`, the user's logged likes and rejections. Pre-build: ask whether the plan honours its `always` and `never` rows. Pre-ship: ask whether the user's reactions in this run were logged.
 
 ## 2. The moves that made the difference
 

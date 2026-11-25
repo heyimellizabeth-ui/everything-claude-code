@@ -113,7 +113,7 @@ function addedBy(repoRoot) {
 }
 
 function groupFor(repo, name) {
-  if (/^(c[1-5]|chelp.*|design-gate|site-init|studio-build|site-template|static-site-release)$/.test(name)) return 'web chains';
+  if (/^(c[1-5]|chelp.*|design-gate|studio-build|site-template|static-site-release)$/.test(name)) return 'web chains';
   if (/^(re-|rea-|reverse-engineer)/.test(name) || repo === 'rea') return 'RECC';
   if (['taste-skill', 'ui-ux-pro-max-skill', 'astryx', 'modern-web-guidance'].includes(repo)) return 'design';
   if (/design|astryx|wireframe|hallmark|frontend|ui-|brand/.test(name)) return 'design';

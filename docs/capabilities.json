@@ -1323,6 +1323,18 @@
       "status": "available"
     },
     {
+      "id": "everything-claude-code:commands/brief-to-brand.md",
+      "kind": "command",
+      "name": "brief-to-brand",
+      "description": "Turn a client brand brief (Markdown) into a brand-config.json that /studio-build can scaffold",
+      "invoke": "/brief-to-brand",
+      "repo": "everything-claude-code",
+      "path": "commands/brief-to-brand.md",
+      "origin": "upstream",
+      "group": "design",
+      "status": "available"
+    },
+    {
       "id": "everything-claude-code:commands/build-fix.md",
       "kind": "command",
       "name": "build-fix",
@@ -3587,7 +3599,7 @@
       "id": "everything-claude-code:skills/chelp-pipeline/SKILL.md",
       "kind": "skill",
       "name": "chelp-pipeline",
-      "description": "Activate the chelp pipeline: check that Hallmark, the browser checks and the advisor are ready, prove them with a smoke test, and print the exact fix for anything missing.",
+      "description": "Activate the chelp pipeline: check that the design system, the advisor, and optionally Hallmark and the browser checks are ready, prove them with a smoke test, and print the exact fix for anything missing.",
       "invoke": "/chelp-pipeline",
       "repo": "everything-claude-code",
       "path": "skills/chelp-pipeline/SKILL.md",
@@ -4067,28 +4079,6 @@
       },
       "designStatus": "core",
       "useWhen": "Shared gate: run Hallmark Floor on source and running page before shipping UI"
-    },
-    {
-      "id": "everything-claude-code:skills/design-system/SKILL.md",
-      "kind": "skill",
-      "name": "design-system",
-      "description": "Use this skill to generate or audit design systems, check visual consistency, and review PRs that touch styling.",
-      "invoke": "/design-system",
-      "repo": "everything-claude-code",
-      "path": "skills/design-system/SKILL.md",
-      "origin": "upstream",
-      "group": "design",
-      "status": "available",
-      "stage": "research",
-      "scores": {
-        "ease": 4,
-        "fit": 3,
-        "qual": 3,
-        "uniq": 2,
-        "use": 3
-      },
-      "designStatus": "retire",
-      "useWhen": "Absorb into unified: competitor research, 10-dimension audit, slop list"
     },
     {
       "id": "everything-claude-code:skills/django-celery/SKILL.md",
@@ -5146,28 +5136,6 @@
       "useWhen": "Copy-paste button, modal, toast, stagger and page transitions in React"
     },
     {
-      "id": "everything-claude-code:skills/motion-ui/SKILL.md",
-      "kind": "skill",
-      "name": "motion-ui",
-      "description": "Production-ready UI motion system for React/Next.js. Use when implementing animations, transitions, or motion patterns.",
-      "invoke": "/motion-ui",
-      "repo": "everything-claude-code",
-      "path": "skills/motion-ui/SKILL.md",
-      "origin": "upstream",
-      "group": "general",
-      "status": "available",
-      "stage": "build",
-      "scores": {
-        "ease": 3,
-        "fit": 3,
-        "qual": 3,
-        "uniq": 1,
-        "use": 3
-      },
-      "designStatus": "retire",
-      "useWhen": "Duplicate monolith of the motion-foundations, patterns and advanced set"
-    },
-    {
       "id": "everything-claude-code:skills/mysql-patterns/SKILL.md",
       "kind": "skill",
       "name": "mysql-patterns",
@@ -6097,28 +6065,6 @@
       "useWhen": "Search visibility, meta and schema for finished sites"
     },
     {
-      "id": "everything-claude-code:skills/site-init/SKILL.md",
-      "kind": "skill",
-      "name": "site-init",
-      "description": "Scaffold a new site from the queer-nightclub template using a brand config",
-      "invoke": "/site-init",
-      "repo": "everything-claude-code",
-      "path": "skills/site-init/SKILL.md",
-      "origin": "lizzy",
-      "group": "web chains",
-      "status": "available",
-      "stage": "build",
-      "scores": {
-        "ease": 3,
-        "fit": 2,
-        "qual": 3,
-        "uniq": 2,
-        "use": 2
-      },
-      "designStatus": "retire",
-      "useWhen": "Duplicate of studio-build scaffold with hard-coded nightclub defaults"
-    },
-    {
       "id": "everything-claude-code:skills/skill-comply/SKILL.md",
       "kind": "skill",
       "name": "skill-comply",
@@ -6439,7 +6385,14 @@
       "path": "skills/unified-design-system/SKILL.md",
       "origin": "lizzy",
       "group": "design",
-      "status": "available"
+      "status": "available",
+      "chains": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
     },
     {
       "id": "everything-claude-code:skills/unified-notifications-ops/SKILL.md",

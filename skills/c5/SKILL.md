@@ -17,6 +17,7 @@ documentation, and leaves a clean checkpoint.
 /refactor-clean  Detect and remove dead code — safe/caution/danger tiers with test verification
 /update-codemaps Regenerate architecture docs so AI context reflects current structure
 /update-docs     Sync CONTRIBUTING, RUNBOOK, and env docs from source-of-truth files
+/unified-design-system  Step 1: read MASTER.md so the audit also reports drift from its tokens
 /hallmark audit <scope>   Report-only: findings by tier with file:line, and the lightest depth that would settle them. Changes nothing
 /quality-gate    Lint, type check, format — confirm nothing broke during cleanup
 /design-gate     Hallmark Floor on the source: confirm cleanup removed no focus ring, token or reduced-motion rule
@@ -33,7 +34,7 @@ documentation, and leaves a clean checkpoint.
 
 ## Prerequisites
 
-- **Hallmark** (design skill and gate): `npx skills add nutlope/hallmark -g`. Without it `/design-gate` prints SKIPPED and no design check runs.
+- **Hallmark** (design skill and gate): `npx skills add nutlope/hallmark -g`. Optional: without it `/design-gate` prints SKIPPED and the review checklist (unified-design-system step 6) is the gate.
 - **Browser checks** for `--render` and `--require-render`: `npm i -g puppeteer-core` and Chrome. Playwright alone is not enough.
 
 ## Tips
@@ -42,7 +43,7 @@ documentation, and leaves a clean checkpoint.
 - `/refactor-clean` categorizes findings into SAFE, CAUTION, and DANGER — review CAUTION items manually.
 - `/chelp-advisor pre-ship c5` after `/design-gate` (see the `chelp-advisor` skill).
 - `/hallmark audit` is report-only. Act on what it finds in a `/c3` run, not here.
-- `/design-gate` blocks only on a project Hallmark built or polished. On any other project it reports and exits 0; add `--enforce` to block.
+- `/design-gate` blocks only on a project with `design-system/MASTER.md` or one Hallmark built or polished. On any other project it reports and exits 0; add `--enforce` to block.
 - Keep `design.md` and `.hallmark/log.json` in git. Hallmark's theme rotation reads the log.
 - `/update-codemaps` will show a diff if changes exceed 30%; approve before it overwrites.
 - `/checkpoint create post-cleanup` creates a named checkpoint you can verify against later with `/checkpoint verify post-cleanup`.

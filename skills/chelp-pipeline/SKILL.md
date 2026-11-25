@@ -1,6 +1,6 @@
 ---
 name: chelp-pipeline
-description: Activate the chelp pipeline: check that Hallmark, the browser checks and the advisor are ready, prove them with a smoke test, and print the exact fix for anything missing.
+description: Activate the chelp pipeline: check that the design system, the advisor, and optionally Hallmark and the browser checks are ready, prove them with a smoke test, and print the exact fix for anything missing.
 argument-hint: "[--install] [--no-smoke] [--json]"
 origin: ECC
 ---
@@ -35,7 +35,8 @@ unless you pass `--install`.
    | `READY` | Hallmark, puppeteer-core and Chrome are present and the browser-tier smoke test printed `render: ran`. Every chain works, including `/c4`'s `--require-render`. |
    | `READY (static checks only)` | Hallmark works but the browser checks do not. `/design-gate` runs the static checks; `--render` and `--require-render` will not pass until puppeteer-core and Chrome work. |
    | `READY (browser checks not smoke tested)` | Everything is present; `--no-smoke` skipped the proof. |
-   | `NOT READY` | Node, Hallmark or the ECC chelp files are missing. |
+   | `READY (checklist gate only)` | Hallmark is not installed. The chains build with the `unified-design-system` skill and its review checklist is the gate; `/design-gate` prints SKIPPED. Install Hallmark for the executable gate and `/c4`'s `--require-hallmark`. |
+   | `NOT READY` | Node or the ECC chelp files (design system, gate, advisor) are missing. |
 
 3. For each `MISSING` line, give the user the printed `fix:` command. Do not install anything yourself
    unless the user asks. `--install` runs the two install commands for them
@@ -55,14 +56,14 @@ unless you pass `--install`.
 | Check | Needed for |
 |-------|------------|
 | Node 18 or later | everything |
-| Hallmark design skill (found at its install location or `HALLMARK_SKILL_DIR`) | `/hallmark`, `/design-gate` |
-| ECC chelp files: the gate script, the advisor agent, command and playbook | the chains |
+| Hallmark design skill, optional (found at its install location or `HALLMARK_SKILL_DIR`) | `/hallmark`, the executable `/design-gate` |
+| ECC chelp files: the unified-design-system skill, the gate script, the advisor agent, command and playbook | the chains |
 | puppeteer-core (local, global or `HALLMARK_PUPPETEER`) | `--render`, `--require-render` |
 | Chrome or Chromium (`CHROME_PATH` or a usual location) | `--render`, `--require-render` |
 | Smoke test: lint a tiny page with `--render` and read `render: ran` | proves the two lines above work together |
 
 It also reads the current folder: whether it is an Astryx project, and whether `/design-gate` would block
-here (a Hallmark stamp, `design.md` or `.hallmark` record) or only report.
+here (a `design-system/MASTER.md`, a Hallmark stamp, `design.md` or `.hallmark` record) or only report.
 
 ## Cloud sessions
 

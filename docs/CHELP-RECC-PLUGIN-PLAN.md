@@ -7,7 +7,7 @@ plugin would hold and what has to change first.
 ## Done in this branch
 
 - The chain and RECC commands moved to skills (`skills/c1` to `skills/c5`, `skills/chelp`,
-  `skills/chelp-pipeline`, `skills/design-gate`, `skills/site-init`, `skills/studio-build`,
+  `skills/chelp-pipeline`, `skills/design-gate`, `skills/studio-build`,
   `skills/re-*`), so the content is one kind of file.
 - The `chain-tracker` mod (`plugins/chain-tracker`) is its own plugin and installs on its own:
   `/plugin install chain-tracker@ecc` after adding this repository as a marketplace.
@@ -16,7 +16,7 @@ plugin would hold and what has to change first.
 
 | Kind | Items |
 |---|---|
-| Skills | c1 to c5, chelp, chelp-pipeline, chelp-advisor, design-gate, site-init, studio-build, astryx-components, wireframe-solid, static-site-release, re-compare, re-doctor, re-investigate, re-pipeline, re-rebuild, re-verify, re-evidence-discipline, re-scope-and-legality, re-target-playbooks, re-feature-to-implementation, reverse-engineer-anything |
+| Skills | c1 to c5, chelp, chelp-pipeline, chelp-advisor, design-gate, studio-build, astryx-components, wireframe-solid, static-site-release, re-compare, re-doctor, re-investigate, re-pipeline, re-rebuild, re-verify, re-evidence-discipline, re-scope-and-legality, re-target-playbooks, re-feature-to-implementation, reverse-engineer-anything |
 | Agents | chelp-advisor, re-investigator, re-parity-verifier, re-planner, re-reconstructor, re-security-analyst |
 | Commands | chelp-advisor |
 | Scripts | design-gate.js, chelp-pipeline.js, lib/hallmark.js, setup-chelp-cloud.sh, site-template/ |

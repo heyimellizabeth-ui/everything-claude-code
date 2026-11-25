@@ -16,26 +16,36 @@ everything-claude-code commands tuned for a specific phase of web development.
 | `/c1` | Full Web Project | Greenfield sites, design systems, major launches | `/hallmark` | `/design-gate` |
 | `/c2` | Component or Page Feature | Adding pages/components to an existing project | `/hallmark` (new pages) | `/design-gate` |
 | `/c3` | Design Iteration Sprint | Polishing UI, animations, responsive fixes | `/hallmark redesign` | `/design-gate --kept --tier floor` |
-| `/c4` | Production-Ready Shipping | Hardening, security audit, PR creation | none | `/design-gate --require-render` |
+| `/c4` | Production-Ready Shipping | Hardening, security audit, PR creation | MASTER.md (read only) | `/design-gate --require-render` |
 | `/c5` | Maintenance and Cleanup | Dead code removal, doc sync, codebase health | `/hallmark audit` | `/design-gate` |
 
 ## Get Started: /chelp-pipeline
 
 Run `/chelp-pipeline` once on a new machine or project. It checks that Hallmark, puppeteer-core and Chrome
 are present, proves the browser checks work with a smoke test, and prints the exact fix for anything
-missing (`--install` runs the installs). It ends with `READY`, `READY (static checks only)` or `NOT READY`.
+missing (`--install` runs the installs). It ends with `READY`, `READY (static checks only)`, `READY (checklist gate only)` (no Hallmark) or `NOT READY`.
+
+## Design System: unified-design-system
+
+Every chain starts its design work with the `unified-design-system` skill. It reads
+`design-system/MASTER.md` (the project's tokens, preset and Never list) and `design-system/PREFERENCES.md`
+(what you liked or rejected before), and creates MASTER.md when a project has none. MASTER.md is the
+authority: Hallmark builds inside it instead of dealing a theme, and `/design-gate` blocks on any project
+that has it. `/studio-build` writes MASTER.md from the Design Studio colours. When you react to a result,
+the chain logs it in PREFERENCES.md, so the next run starts from your taste.
 
 ## Design Quality: Hallmark
 
-The chains use the [Hallmark](https://github.com/nutlope/hallmark) design skill. It builds pages that do
+The chains use the [Hallmark](https://github.com/nutlope/hallmark) design skill as the build engine and Floor
+checker when it is installed; it is optional. It builds pages that do
 not look generated and checks them with a linter, `sloplint`. `/design-gate` runs that linter. A hard
 Floor (contrast, focus rings, reduced motion, colour tokens, phone layout) blocks on any FAIL; Reflex
 findings are fixed or waived in the page's stamp with a real reason.
 
 - `/hallmark <brief>` builds a new page. It only touches an existing design when it is named: `/hallmark redesign <path>` or `/hallmark audit <path>`.
 - `/design-gate [path] [--url <url>] [--require-render]` checks source and the running page. A URL alone checks only the running page.
-- `/design-gate` blocks only on a project Hallmark built or polished (a stamp, `.hallmark/` or `design.md`). On any other project it reports and exits 0; add `--enforce` to block.
-- Without Hallmark installed, `/design-gate` prints SKIPPED and exits 0. In `/c4`, add `--require-hallmark` so a missing install blocks.
+- `/design-gate` blocks only on a project with `design-system/MASTER.md` or one Hallmark built or polished (a stamp, `.hallmark/` or `design.md`). On any other project it reports and exits 0; add `--enforce` to block.
+- Without Hallmark installed, `/design-gate` prints SKIPPED and exits 0, and the review checklist (unified-design-system step 6) is the gate. In `/c4`, add `--require-hallmark` so a missing install blocks.
 
 ## Advisor: Opus
 
@@ -141,4 +151,5 @@ Ready to ship?               → /c4
 Cleaning up after launch?    → /c5
 Existing UI looks generated? → /hallmark audit <path>, then /c3
 Studio site (from /studio-build)? → /design-gate <folder> --tier floor
+Pitch preview from a brief?  → /brief-to-brand <brief.md>, then /studio-build
 ```

@@ -65,8 +65,9 @@ Five semantic color tokens:
 | Surface | Nav, cards, footer bg |
 | Muted | Subtitles, borders, metadata |
 
-Six built-in presets: **Void Dark**, **Dusk Purple**, **Deep Ocean**,
-**Ember**, **Jade Night**, **Quartz** (light mode).
+Sixteen built-in presets: Void, Dusk, Ocean, Ember, Jade, Quartz (light),
+Berlin, Tokyo, Brutalist, Velvet, Forest, Coastal, Crimson, Arctic, Sunset
+and Mono.
 
 You can also type any hex value directly — the color picker and hex field
 stay in sync.

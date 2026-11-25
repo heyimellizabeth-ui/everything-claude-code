@@ -1,6 +1,6 @@
 // The Design Studio engine, ported from the React Lab (prototypes/design-studio-lab/engine):
 // presets and copy, the colour maths, and the studio outputs. Pure functions, no `$`.
-import type { StudioState } from '../types'
+import type { Overrides, Rule, StudioState, Tab, TextKey, View } from '../types'
 
 export type Palette = { bg: string; surface: string; text: string; muted: string; border: string }
 export type Preset = {
@@ -29,7 +29,7 @@ export const KINDS: Kind[] = [
   { id: 'dashboard', name: 'Dashboard or tool', dials: [3, 2, 7], preset: 'product', audience: 'daily users' },
   { id: 'app', name: 'App screen', dials: [4, 4, 6], preset: 'product', audience: 'signed-in users' },
   { id: 'public', name: 'Public service or health', dials: [3, 2, 5], preset: 'trust', audience: 'everyone, including assistive tech users' },
-  { id: 'experimental', name: 'Experimental or agency', dials: [9, 8, 3], preset: 'brutalist', audience: 'design-literate visitors' },
+  { id: 'experimental', name: 'Experimental or agency', dials: [9, 2, 3], preset: 'brutalist', audience: 'design-literate visitors' },
 ]
 
 export const FONTS: Font[] = [
@@ -167,10 +167,39 @@ export function tokens(S: StudioState) {
 
 const VIBE: Record<string, string> = { soft: 'soft, premium', minimal: 'calm editorial', brutalist: 'raw brutalist', product: 'quiet product-tool', trust: 'plain trust-first' }
 
-export function readText(S: StudioState) {
+// Editable texts: every one can be changed in the Edit view. {name} fills in from the studio.
+export const TEXT_DEFAULTS: Record<TextKey, string> = {
+  read: 'Reading this as: {kind} for {audience}, with a {vibe} language, leaning toward the {preset} preset. Dials {dials}.',
+  promptIntro: 'Use the unified-design-system skill for {project}.',
+  promptClose: 'If design-system/MASTER.md does not exist yet, create it from these choices before building. Run the review gate before calling it done. Log what I like or reject to design-system/PREFERENCES.md so the next build remembers it.',
+  chainRun: 'Run the /{chain} chain for {project} with the unified design system. Ask me for the brief first.',
+}
+export const TEXT_LABELS: Record<TextKey, string> = {
+  read: 'Design read', promptIntro: 'Prompt opening', promptClose: 'Prompt closing', chainRun: 'Run a chain',
+}
+let TEXTS: Record<TextKey, string> = { ...TEXT_DEFAULTS }
+
+/** Replace {name} with its value; an unknown name stays as written. */
+export const fill = (template: string, values: Record<string, string>) =>
+  template.replace(/\{(\w+)\}/g, (all, k: string) => values[k] ?? all)
+
+export const textOf = (key: TextKey) => TEXTS[key]
+
+function values(S: StudioState): Record<string, string> {
   const kind = kindOf(S)
   const p = presetOf(S)
-  return `Reading this as: ${kind.name.toLowerCase()} for ${kind.audience}, with a ${VIBE[S.preset] ?? p.name} language, leaning toward the ${p.name} preset. Dials ${S.dials.join('/')}.`
+  return {
+    kind: kind.name.toLowerCase(), audience: kind.audience, vibe: VIBE[S.preset] ?? p.name.toLowerCase(),
+    preset: p.name, dials: S.dials.join('/'), project: S.project || 'this project', accent: S.accent,
+  }
+}
+
+export function readText(S: StudioState) {
+  return fill(TEXTS.read, values(S))
+}
+
+export function chainPrompt(S: StudioState, chain: string) {
+  return fill(TEXTS.chainRun, { ...values(S), chain })
 }
 
 export function checks(S: StudioState): Check[] {
@@ -263,16 +292,158 @@ export function promptText(S: StudioState) {
   const p = presetOf(S)
   const f = fontOf(S)
   return [
-    `Use the unified-design-system skill for ${S.project || 'this project'}.`, '',
+    fill(TEXTS.promptIntro, values(S)), '',
     readText(S), '',
     `Preset: ${p.name}`, `Accent: ${S.accent}`, `Fonts: ${f.name}`,
     `Dials: VARIANCE ${S.dials[0]} / MOTION ${S.dials[1]} / DENSITY ${S.dials[2]}`, '',
-    'If design-system/MASTER.md does not exist yet, create it from these choices before building. Run the review gate before calling it done. Log what I like or reject to design-system/PREFERENCES.md so the next build remembers it.',
+    fill(TEXTS.promptClose, values(S)),
   ].join('\n')
 }
 
-export function output(S: StudioState) {
+export function generated(S: StudioState) {
   if (S.tab === 'css') return cssTokens(S)
   if (S.tab === 'master') return masterMd(S)
   return promptText(S)
+}
+
+/** What the output box holds: the person's own edit of this tab when there is one, else the generated text. */
+export function output(S: StudioState, o: Overrides = {}) {
+  const edited = o.outputs?.[S.tab]
+  return edited !== undefined && edited !== '' ? edited : generated(S)
+}
+
+// ---- Phase 3: Capabilities, Chains and Preferences views ----
+
+export type { View } from '../types'
+export const VIEWS: [View, string][] = [
+  ['studio', 'Studio'], ['capabilities', 'Capabilities'], ['chains', 'Chains'], ['preferences', 'Preferences'], ['edit', 'Edit'],
+]
+
+export type Capability = { name: string; description: string; source: string; plugin?: string }
+
+const DESIGN_WORDS = /design|ui|ux|style|theme|brand|banner|slide|motion|css|font|colou?r|astryx|hallmark|studio|taste|redesign|wireframe|interface|visual|chelp|^c[1-5]$/i
+
+/** True when a command or skill is part of the design system, so the list can put it first. */
+export const isDesign = (c: Capability) => DESIGN_WORDS.test(c.name) || DESIGN_WORDS.test(c.plugin ?? '')
+
+/** Filter by a search string, design entries first, then by name. */
+export function capabilityList(all: readonly Capability[], query: string, designOnly: boolean) {
+  const q = query.trim().toLowerCase()
+  return all
+    .filter(c => (!designOnly || isDesign(c)) && (q === '' || `${c.name} ${c.description} ${c.plugin ?? ''}`.toLowerCase().includes(q)))
+    .sort((a, b) => Number(isDesign(b)) - Number(isDesign(a)) || a.name.localeCompare(b.name))
+}
+
+export type Chain = { id: string; name: string; when: string; steps: string[] }
+
+/** The chelp chains as they run through the unified design system (commands/c1.md to c5.md, studio-build.md). */
+export const CHAINS: Chain[] = [
+  { id: 'c1', name: 'Full web project', when: 'Greenfield site, new design system, major launch',
+    steps: ['/prp-prd', 'unified-design-system 1-3', '/prp-plan', '/chelp-advisor pre-build', '/hallmark (in MASTER.md)', '/multi-frontend', '/quality-gate', '/design-gate', '/chelp-advisor pre-ship', '/santa-loop'] },
+  { id: 'c2', name: 'Page or component', when: 'Adding to an existing project',
+    steps: ['/plan', '/chelp-advisor pre-build', 'unified-design-system 1', '/feature-dev', '/hallmark (new page)', '/code-review', '/test-coverage', '/design-gate', '/chelp-advisor pre-ship', '/checkpoint'] },
+  { id: 'c3', name: 'Design iteration', when: 'Polish, restyle, responsive fixes',
+    steps: ['/model-route', 'unified-design-system 1', '/hallmark redesign', '/quality-gate', '/design-gate --kept', '/chelp-advisor pre-ship', '/code-review'] },
+  { id: 'c4', name: 'Ship to production', when: 'Hardening, audit, PR',
+    steps: ['unified-design-system 1', '/multi-plan', '/multi-execute', '/security-scan', '/test-coverage', '/design-gate --require-render', '/chelp-advisor pre-ship', '/santa-loop', '/prp-pr'] },
+  { id: 'c5', name: 'Maintenance', when: 'Dead code, docs, design drift',
+    steps: ['/refactor-clean', '/update-codemaps', '/update-docs', 'unified-design-system 1', '/hallmark audit', '/quality-gate', '/design-gate', '/chelp-advisor pre-ship', '/checkpoint'] },
+  { id: 'studio-build', name: 'Studio to site', when: 'Turn a Design Studio brand config into a site',
+    steps: ['brand-config.json', 'scaffold', 'write MASTER.md', 'validate', 'assets', '/chelp-advisor pre-ship'] },
+]
+
+export type { Rule } from '../types'
+export type Preference = { date: string; rule: Rule; means: string; words: string }
+
+const PREF_ROW = /^\|\s*(\d{4}-\d{2}-\d{2})\s*\|\s*(always|never|prefer)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*$/
+
+/** Read the rows of design-system/PREFERENCES.md (the format in references/preferences-template.md). */
+export function parsePreferences(md: string): Preference[] {
+  return md.split('\n').flatMap(line => {
+    const m = PREF_ROW.exec(line)
+    return m ? [{ date: m[1]!, rule: m[2] as Rule, means: m[3]!, words: m[4]! }] : []
+  })
+}
+
+const cell = (s: string) => s.replace(/\|/g, '/').replace(/\s+/g, ' ').trim()
+
+export const PREFERENCES_HEAD = [
+  '# Design preferences', '',
+  'What the user liked, rejected or corrected, newest last. Read at step 1 of',
+  'every design task. Rules marked `always` or `never` are binding; `prefer`',
+  'rules break ties.', '',
+  '| Date | Rule | What it means | User\'s words |',
+  '|---|---|---|---|',
+].join('\n')
+
+/** Add one row after the last preference row, or start the file when there is none. */
+export function addPreference(md: string, p: Preference): string {
+  const row = `| ${p.date} | ${p.rule} | ${cell(p.means)} | ${cell(p.words)} |`
+  const lines = (md.trim() === '' ? PREFERENCES_HEAD : md).split('\n')
+  const promoted = lines.findIndex(l => /^## Promoted/.test(l))
+  const end = promoted === -1 ? lines.length : promoted
+  let at = -1
+  lines.forEach((l, i) => { if (i < end && (PREF_ROW.test(l) || /^\|---/.test(l))) at = i })
+  if (at === -1) {
+    lines.splice(end, 0, PREFERENCES_HEAD.split('\n').slice(-2).join('\n'), row, '')
+    return lines.join('\n').replace(/\n*$/, '\n')
+  }
+  lines.splice(at + 1, 0, row)
+  return lines.join('\n').replace(/\n*$/, '\n')
+}
+
+/** Settled rules: the same meaning logged three or more times, or a log past 20 rows (SKILL.md step 7). */
+export function promotionHint(prefs: readonly Preference[]): string | undefined {
+  const counts = new Map<string, number>()
+  for (const p of prefs) counts.set(`${p.rule} ${p.means.toLowerCase()}`, (counts.get(`${p.rule} ${p.means.toLowerCase()}`) ?? 0) + 1)
+  const repeated = [...counts.values()].some(n => n >= 3)
+  if (repeated || prefs.length > 20) return 'Some rules look settled. Ask Claude to move them into MASTER.md.'
+  return undefined
+}
+
+// ---- Editable defaults ----
+
+const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T
+const BASE = { presets: clone(PRESETS), kinds: clone(KINDS), chains: clone(CHAINS) }
+
+export const lines = (text: string) => text.split('\n').map(l => l.trim()).filter(l => l !== '')
+
+/**
+ * Rebuild presets, kinds, chains and texts from the shipped defaults plus the person's edits.
+ * Always starts from the defaults, so removing an edit brings the default back.
+ */
+export function applyOverrides(o: Overrides = {}) {
+  for (const [id, base] of Object.entries(BASE.presets)) {
+    Object.assign(PRESETS[id]!, clone(base), o.presets?.[id] ?? {})
+  }
+  BASE.kinds.forEach((base, i) => Object.assign(KINDS[i]!, clone(base), o.kinds?.[base.id] ?? {}))
+  BASE.chains.forEach((base, i) => Object.assign(CHAINS[i]!, clone(base), o.chains?.[base.id] ?? {}))
+  TEXTS = { ...TEXT_DEFAULTS }
+  for (const [k, v] of Object.entries(o.texts ?? {})) if (typeof v === 'string' && v.trim() !== '') TEXTS[k as TextKey] = v
+}
+
+export const editCount = (o: Overrides) =>
+  Object.keys(o.texts ?? {}).length + Object.keys(o.presets ?? {}).length + Object.keys(o.kinds ?? {}).length +
+  Object.keys(o.chains ?? {}).length + Object.values(o.outputs ?? {}).filter(v => v !== '').length
+
+/** One edit merged in: `section.id.field = value`. An empty value drops that edit. */
+export function setOverride(o: Overrides, section: 'presets' | 'kinds' | 'chains', id: string, field: string, value: unknown): Overrides
+export function setOverride(o: Overrides, section: 'texts', id: TextKey, field: null, value: string): Overrides
+export function setOverride(o: Overrides, section: 'outputs', id: Tab, field: null, value: string): Overrides
+export function setOverride(o: Overrides, section: keyof Overrides, id: string, field: string | null, value: unknown): Overrides {
+  const next = clone(o) as Record<string, Record<string, unknown>>
+  const bucket = (next[section] ??= {})
+  const empty = value === '' || (Array.isArray(value) && value.length === 0)
+  if (field === null) {
+    if (empty) delete bucket[id]
+    else bucket[id] = value
+  } else {
+    const entry = { ...(bucket[id] as Record<string, unknown> | undefined) }
+    if (empty) delete entry[field]
+    else entry[field] = value
+    if (Object.keys(entry).length === 0) delete bucket[id]
+    else bucket[id] = entry
+  }
+  if (Object.keys(bucket).length === 0) delete next[section]
+  return next as Overrides
 }
