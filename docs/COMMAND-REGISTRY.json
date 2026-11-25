@@ -21,6 +21,15 @@
       "path": "commands/auto-update.md"
     },
     {
+      "command": "brief-to-brand",
+      "description": "Turn a client brand brief (Markdown) into a brand-config.json that /studio-build can scaffold",
+      "type": "review",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [],
+      "path": "commands/brief-to-brand.md"
+    },
+    {
       "command": "build-fix",
       "description": "Detect the project build system and incrementally fix build/type errors with minimal safe changes.",
       "type": "refactoring",

@@ -105,7 +105,7 @@ function main() {
       assert.strictEqual(result.status, 0, result.stderr);
       const payload = parseJson(result.stdout);
       assert.strictEqual(payload.id, 'framework:nextjs');
-      assert.deepStrictEqual(payload.moduleIds, ['framework-language']);
+      assert.deepStrictEqual(payload.moduleIds, ['framework-language', 'web-design']);
     }],
     ['delegates consult command', () => {
       const result = runCli(['consult', 'security', 'reviews', '--json']);

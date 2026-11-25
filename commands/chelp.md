@@ -149,4 +149,5 @@ Ready to ship?               → /c4
 Cleaning up after launch?    → /c5
 Existing UI looks generated? → /hallmark audit <path>, then /c3
 Studio site (from /studio-build)? → /design-gate <folder> --tier floor
+Pitch preview from a brief?  → /brief-to-brand <brief.md>, then /studio-build
 ```

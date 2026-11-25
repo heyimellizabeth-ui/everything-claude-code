@@ -38,7 +38,7 @@ Promotional website for **Club KUDT** — Alkmaar's first and only queer night, 
 - **Nav hide-on-scroll** — nav slides out on scroll down, returns on scroll up (all pages)
 - **Hero parallax** — `hero-content` moves at 18% scroll rate via GSAP scrub
 - **Section line animation** — `.section-line` scales in from left when scrolled into view
-- **Animated stat counters** (`about.html`) — 2022 / 780+ / €15 / 100% count up on scroll
+- **Animated stat counters** (`about.html`) — 2022 / 780+ / €14,75 / 100% count up on scroll
 - **Staggered tag reveals** — tags animate in sequence (60ms apart)
 - **Staggered testimonials** — 150ms stagger between quote cards
 - **Value card hover** — red border + icon scale on hover (`about.html`)

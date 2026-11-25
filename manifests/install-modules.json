@@ -139,10 +139,6 @@
         "skills/django-verification",
         "skills/dotnet-patterns",
         "skills/fastapi-patterns",
-        "skills/astryx-components",
-        "skills/wireframe-solid",
-        "skills/frontend-design-direction",
-        "skills/frontend-patterns",
         "skills/frontend-slides",
         "skills/make-interfaces-feel-better",
         "skills/golang-patterns",
@@ -173,6 +169,48 @@
         "skills/springboot-verification",
         "skills/ui-to-vue",
         "skills/unified-design-system"
+      ],
+      "targets": [
+        "claude",
+        "cursor",
+        "antigravity",
+        "codex",
+        "opencode",
+        "codebuddy",
+        "joycode",
+        "qwen"
+      ],
+      "dependencies": [
+        "rules-core",
+        "agents-core",
+        "commands-core",
+        "platform-configs"
+      ],
+      "defaultInstall": false,
+      "cost": "medium",
+      "stability": "stable"
+    },
+    {
+      "id": "web-design",
+      "kind": "skills",
+      "description": "Website and frontend design skills: design direction, motion, accessibility, SEO, browser QA and static-site release for the chelp web chains.",
+      "paths": [
+        "skills/accessibility",
+        "skills/astryx-components",
+        "skills/browser-qa",
+        "skills/click-path-audit",
+        "skills/design-system",
+        "skills/frontend-design-direction",
+        "skills/frontend-patterns",
+        "skills/make-interfaces-feel-better",
+        "skills/motion-advanced",
+        "skills/motion-foundations",
+        "skills/motion-patterns",
+        "skills/motion-ui",
+        "skills/nextjs-turbopack",
+        "skills/seo",
+        "skills/static-site-release",
+        "skills/wireframe-solid"
       ],
       "targets": [
         "claude",
@@ -350,7 +388,6 @@
         "skills/lead-intelligence",
         "skills/product-capability",
         "skills/social-graph-ranker",
-        "skills/seo",
         "skills/market-research"
       ],
       "targets": [
