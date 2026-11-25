@@ -42,6 +42,14 @@
         "best-practices"
       ],
       "strict": false
+    },
+    {
+      "name": "chain-tracker",
+      "source": "./plugins/chain-tracker",
+      "description": "Mod: shows where a site is in the c1 to c5 web chains, and REA calls to back with evidence, in a pane and the status line",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "workflow"
     }
   ]
 }
