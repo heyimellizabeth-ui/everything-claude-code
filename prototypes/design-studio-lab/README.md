@@ -55,3 +55,15 @@ The lab's own page uses the Studio theme values in `react/template.html`: purple
 light, `#a78bfa` dark), 16px base type, 44px controls on touch screens (36px otherwise), and
 150/300/500 ms motion as `--dur-fast/-medium/-slow`. The pane in `plugins/design-studio` draws with
 terminal elements, so it has no type size, control height or motion to set; it is unchanged.
+
+## Published Design Studio page
+
+`react/build-studio.js` builds `out/design-studio.html`, the page in Lizzy's Custom view
+(<https://claude.ai/artifact/Q9eWp3eff8GRgrMHTrRwW7>). It is the Lab's Studio view plus the mod's
+Capabilities, Chains, Preferences and Health views (`react/src/Views.jsx`), whose logic is imported
+from `plugins/design-studio/hooks/engine.ts`. Capabilities is a snapshot of `docs/capabilities.json`
+taken at build time; Preferences is kept in the browser and copied out as PREFERENCES.md.
+
+```bash
+node prototypes/design-studio-lab/react/build-studio.js
+```
