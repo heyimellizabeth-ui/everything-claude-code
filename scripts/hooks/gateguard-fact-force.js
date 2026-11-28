@@ -9,7 +9,8 @@
  * The act of investigation creates awareness that self-evaluation never did.
  *
  * Gates:
- *   - Edit/Write: list importers, affected API, verify data schemas, quote instruction
+ *   - Edit: list importers, affected API, verify data schemas, quote instruction (once per file)
+ *   - Write: name callers, confirm no duplicate, quote instruction (once per folder)
  *   - Bash (destructive): list targets, rollback plan, quote instruction
  *   - Bash (routine): quote current instruction (once per session)
  *
@@ -22,6 +23,7 @@
 
 'use strict';
 const crypto = require('crypto');
+const path = require('path');
 const { isDestructiveBash } = require('../lib/gateguard/bash-analysis');
 const { isReadOnlyGitIntrospection } = require('../lib/gateguard/git-commands');
 const { isGateGuardDisabled, isClaudeSettingsPath, isSubagentInvocation } = require('../lib/gateguard/context');
@@ -42,6 +44,11 @@ const store = createStateStore();
 store.pruneStaleFiles();
 
 // --- Core logic (exported for run-with-flags.js) ---
+
+function writeDirKey(filePath) {
+  const normalized = String(filePath).replace(/\\/g, '/');
+  return '__write_dir__' + path.posix.dirname(normalized);
+}
 
 function run(rawInput) {
   let data;
@@ -75,11 +82,24 @@ function run(rawInput) {
       return rawInput; // parent session already passed the first-touch file gate
     }
 
+    if (toolName === 'Write') {
+      // New files are gated once per folder: after the facts are presented for
+      // one new file, sibling files in the same folder pass without re-asking.
+      const dirKey = writeDirKey(filePath);
+      if (store.isChecked(filePath) || store.isChecked(dirKey)) {
+        return rawInput; // allow
+      }
+      if (!store.markChecked(dirKey) || !store.markChecked(filePath)) {
+        return allowWithStateWarning();
+      }
+      return denyResult(writeGateMsg(filePath));
+    }
+
     if (!store.isChecked(filePath)) {
       if (!store.markChecked(filePath)) {
         return allowWithStateWarning();
       }
-      return denyResult(toolName === 'Edit' ? editGateMsg(filePath) : writeGateMsg(filePath));
+      return denyResult(editGateMsg(filePath));
     }
 
     return rawInput; // allow

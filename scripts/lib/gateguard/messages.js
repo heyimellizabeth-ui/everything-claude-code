@@ -48,7 +48,8 @@ function writeGateMsg(filePath) {
     '3. If this file reads/writes data files, show field names, structure, and date format (use redacted or synthetic values, not raw production data)',
     "4. Quote the user's current instruction verbatim",
     '',
-    'Present the facts, then retry the same operation.'
+    'Present the facts, then retry the same operation.',
+    'Other new files in this folder will not be gated again this session.'
   ].join('\n');
 }
 
