@@ -191,6 +191,33 @@ function runTests() {
     assert.ok(output.hookSpecificOutput.permissionDecisionReason.includes('call this new file'));
   })) passed++; else failed++;
 
+  // --- Test 3a: Write retry and sibling new files pass after one gate ---
+  clearState();
+  if (test('gates new files once per folder: retry and siblings pass, other folders still gated', () => {
+    const write = filePath => parseOutput(runHook({
+      tool_name: 'Write',
+      tool_input: { file_path: filePath, content: 'export {};' }
+    }).stdout);
+    const isDeny = out => !!(out && out.hookSpecificOutput && out.hookSpecificOutput.permissionDecision === 'deny');
+
+    const first = write('/app/src/sections/EnquiryButton.tsx');
+    assert.ok(isDeny(first), 'first new file in a folder should be gated');
+    assert.ok(first.hookSpecificOutput.permissionDecisionReason.includes('not be gated again'),
+      'gate message should say siblings will pass');
+
+    assert.ok(!isDeny(write('/app/src/sections/EnquiryButton.tsx')), 'retry of the same file should pass');
+    assert.ok(!isDeny(write('/app/src/sections/EnquiryForm.tsx')), 'sibling new file should pass');
+    assert.ok(isDeny(write('C:\\app\\win\\A.tsx')), 'first file in a Windows folder should be gated');
+    assert.ok(!isDeny(write('C:\\app\\win\\B.tsx')), 'Windows sibling should pass');
+    assert.ok(isDeny(write('/app/src/hooks/useEnquiry.ts')), 'a different folder should still be gated once');
+
+    const edit = parseOutput(runHook({
+      tool_name: 'Edit',
+      tool_input: { file_path: '/app/src/sections/Hero.tsx', old_string: 'a', new_string: 'b' }
+    }).stdout);
+    assert.ok(isDeny(edit), 'Edit of an existing file stays gated per file');
+  })) passed++; else failed++;
+
   // --- Test 3b: fails open when retry state cannot be persisted ---
   clearState();
   if (test('fails open with warning when state path cannot be persisted', () => {
